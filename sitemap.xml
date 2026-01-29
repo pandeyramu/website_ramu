@@ -1,36 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home -->
   <url>
     <loc>https://ramup.com.np/</loc>
-    <lastmod>2025-09-17</lastmod>
+    <lastmod>2026-01-29</lastmod>
     <priority>1.0</priority>
   </url>
+
+  <!-- CEE Main Pages -->
+  <url>
+    <loc>https://ramup.com.np/cee/</loc>
+    <lastmod>2026-01-29</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://ramup.com.np/cee/physics/</loc>
+    <lastmod>2026-01-29</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://ramup.com.np/cee/chemistry/</loc>
+    <lastmod>2026-01-29</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://ramup.com.np/cee/biology/</loc>
+    <lastmod>2026-01-29</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Utility / Tools (Lower SEO priority) -->
   <url>
     <loc>https://ramup.com.np/tictactoe/tic</loc>
-    <lastmod>2025-09-15</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-01-28</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://ramup.com.np/rockpaperscissors/rock</loc>
-    <lastmod>2025-09-14</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-01-28</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://ramup.com.np/calculator/calculator</loc>
-    <lastmod>2025-09-13</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-01-28</lastmod>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://ramup.com.np/typingspeedtest/typing</loc>
-    <lastmod>2025-09-17</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-01-28</lastmod>
+    <priority>0.5</priority>
   </url>
+
+  <!-- Required Pages (AdSense + Trust) -->
   <url>
-    <loc>https://ramup.com.np/contact</loc>
-    <lastmod>2025-09-17</lastmod>
+    <loc>https://ramup.com.np/about</loc>
+    <lastmod>2026-01-29</lastmod>
     <priority>0.7</priority>
   </url>
+
+  <url>
+    <loc>https://ramup.com.np/contact</loc>
+    <lastmod>2026-01-29</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://ramup.com.np/privacy-policy</loc>
+    <lastmod>2026-01-29</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://ramup.com.np/terms</loc>
+    <lastmod>2026-01-29</lastmod>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>
