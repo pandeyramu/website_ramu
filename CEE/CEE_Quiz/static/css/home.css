@@ -214,16 +214,15 @@ li {
     display: flex;
     flex-wrap: wrap;           /* allows links to wrap */
     justify-content: center;
-    gap: 15px;                 /* space between links */
+    gap: 30px;                 /* space between links */
 }
 
 /* Footer links style */
 #site-footer .footer-links a,
 #site-footer .footer-nav a {
-    flex: 0 0 calc(33.333% - 10px); /* 3 links per row */
-    max-width: 200px;               /* optional max width */
+    flex: 0 0 calc(33.333% - 10px); 
     display: inline-block;
-    padding: 8px 12px;
+    padding: 10px 15px;
     background: #6c757d;
     color: #fff;
     text-decoration: none;
