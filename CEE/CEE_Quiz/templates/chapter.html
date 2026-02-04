@@ -4,22 +4,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Chapters - {{ subject.name }} | Pandey Ramu CEE Quiz</title>
+    <title>Chapters - {{ subject.name }} | Ramu Pandey CEE Quiz</title>
     <meta name="description" content="Explore all chapters for {{ subject.name }} in Pandey Ramu's CEE Quiz. Practice quizzes, multiple-choice questions, and exercises.">
     <meta name="keywords" content="CEE Quiz, {{ subject.name }}, Chapters, Online Quiz, Practice Questions">
     <meta name="author" content="Pandey Ramu">
 
-    <!-- Open Graph / Social Meta -->
+    <!-- Open Graph / Social -->
     <meta property="og:title" content="Chapters - {{ subject.name }} | Pandey Ramu CEE Quiz">
     <meta property="og:description" content="Practice quizzes and exercises for {{ subject.name }} chapters in Pandey Ramu's CEE Quiz.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-     <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
+    <meta property="og:image" content="{% static 'images/favicon.png' %}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Chapters - {{ subject.name }} | Pandey Ramu CEE Quiz">
+    <meta name="twitter:description" content="Practice quizzes and exercises for {{ subject.name }} chapters in Pandey Ramu's CEE Quiz.">
+    <meta name="twitter:image" content="{% static 'images/favicon.png' %}">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
+
+    <!-- Favicon (all browsers) -->
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
- 
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}">
 </head>
 
 <body>
