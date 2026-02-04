@@ -161,21 +161,27 @@ p {
     box-shadow: 0 2px 8px rgba(208, 132, 0, 0.8);
 }
 .home-btn {
-    display: inline-block;
-    background-color: #344a84;
+      display: flex;
+    justify-self: center;
+    width: fit-content;
+    padding: 12px;
+    margin-top: 20px;
+    background: #007bff;
     color: #fff;
-    padding: 14px 30px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: bold;
     font-size: 16px;
-    transition: background-color 0.3s, transform 0.3s;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    overflow: hidden;
     margin: 20px 0;
 }
 
 .home-btn:hover {
-    background-color: #46c467;
-    transform: translateY(-3px);
+    background: #15b300;
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 2px 8px rgba(208, 132, 0, 0.8);
 }
 .quiz-form.submitted .option,
 .quiz-form.submitted .option input,
