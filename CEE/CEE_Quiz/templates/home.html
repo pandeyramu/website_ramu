@@ -235,20 +235,20 @@
         </section>
 
         <section class="subjects">
-            <h2>Welcome to CEE Chapter-wise Quiz</h2>
-            <p>Select a subject and start practicing!</p>
-            <h3>Subjects:</h3>
-            <ul>
-                {% for sub in subjects %}
-                    <li><a class="subject-link" href="{% url 'chapters' sub.id %}">{{ sub.name }}</a></li>
-                {% empty %}
-                    <li>No subjects available</li>
-                {% endfor %}
-            </ul>
-            <div class="full-test-btn">
-                <a href="{% url 'full_test' %}" class="start_test">Start Full Test</a>
-            </div>
-        </section>
+    <h2>Welcome to CEE Chapter-wise Quiz</h2>
+    <p>Select a subject and start practicing!</p>
+
+    <div class="button-group">
+        {% for sub in subjects %}
+            <a href="{% url 'chapters' sub.id %}" class="btn">{{ sub.name }}</a>
+        {% empty %}
+            <p>No subjects available</p>
+        {% endfor %}
+
+        <!-- Full Test Button -->
+        <a href="{% url 'full_test' %}" class="btn">Start Full Test</a>
+    </div>
+</section>
     </main>
 
  <footer id="site-footer" class="fade-in">
