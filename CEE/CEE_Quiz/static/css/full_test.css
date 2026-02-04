@@ -257,3 +257,48 @@ p {
     transform: scale(1.02) translateY(-3px);
     box-shadow: 5px 2px 8px rgba(122, 10, 202, 0.8);
 }
+.full-test-footer {
+    text-align: center;
+    background: #1a237e;
+    color: #fff;
+    padding: 30px 15px;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+}
+
+.full-test-footer h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #ffd700;
+}
+
+.full-test-footer p {
+    margin: 5px 0 15px 0;
+    font-size: 16px;
+    color: #fff;
+}
+
+.full-test-footer .footer-links a {
+    display: inline-block;
+    margin: 5px 10px;
+    padding: 8px 12px;
+    background: #6c757d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.full-test-footer .footer-links a:hover {
+    background: #ffd700;
+    color: #1a237e;
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.footer-copy {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #ccc;
+}
+

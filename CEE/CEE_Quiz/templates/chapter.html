@@ -17,17 +17,13 @@
     <meta property="og:description" content="Practice quizzes and exercises for {{ subject.name }} chapters in Pandey Ramu's CEE Quiz.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{% static 'images/logo.jpg' %}">
-
+     <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
+ 
 </head>
 
 <body>
     <header class="header-container">
-        <div class="logo">
-            <img src="{% static 'images/logo.jpg' %}" alt="Pandey Ramu CEE Quiz Logo">
-        </div>
         <h1>Chapters for {{ subject.name }}</h1>
         <p>Practice multiple-choice questions and exercises for better preparation!</p>
     </header>
@@ -51,7 +47,7 @@
     </main>
 
     <footer class="footer">
-        <p>© 2026 Pandey Ramu. All Rights Reserved.</p>
+        <p>© 2026  Ramu Pandey. All Rights Reserved.</p>
         <p>Follow me on 
             <a href="https://github.com/pandeyramu" target="_blank">GitHub</a> | 
             <a href="https://www.facebook.com/ramu.pandey38" target="_blank">Facebook</a>

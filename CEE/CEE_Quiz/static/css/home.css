@@ -135,68 +135,121 @@ li {
     margin: 0;
 }
 
-a.subject-link , .full-test-btn a {
-    display: inline-block;
-    padding: 20px 30px;
-    background: #3498db;
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-    min-width: 150px;
+/* --- Subjects Section --- */
+.subjects {
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto 60px auto;
+    padding: 30px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     text-align: center;
+}
+
+.subjects h2, .subjects h3 {
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+.subjects p {
+    color: #2c3e50;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.subjects ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+.subjects li {
+    list-style: none;
+}
+
+.subject-link {
+    display: inline-block;
+    padding: 18px 28px;
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    text-decoration: none;
+    min-width: 140px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.subject-link:hover {
+    background: #2980b9;
+    transform: translateY(-4px) scale(1.03);
+}
+
+/* Full Test Button */
+.full-test-btn {
+    margin-top: 25px;
+}
+
+.full-test-btn a {
+    padding: 18px 28px;
     font-size: 18px;
 }
 
-a.subject-link:hover, .full-test-btn a:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-    background: #2980b9;
-}
-.footer-nav {
-    margin: 15px 0;
-    font-size: 16px;
+/* --- Footer fixes --- */
+#site-footer {
+    background: #1a237e;
+    color: #fff;
+    padding: 40px 20px 20px 20px;
+    margin-top: 60px;
+    border-top: 3px solid #2980b9;
+    text-align: center;
 }
 
-.footer-nav a {
-    color: #f1f1f1;
+.footer-links, .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.footer-links a, .footer-nav a {
+    padding: 8px 15px;
+    background: #6c757d;
+    color: #fff;
     text-decoration: none;
-    margin: 0 8px;
-    transition: color 0.3s ease;
+    border-radius: 5px;
+    transition: 0.3s;
 }
 
-.footer-nav a:hover {
-    color: #4a90e2;
-    text-decoration: underline;
+.footer-links a:hover, .footer-nav a:hover {
+    background: #78840f;
+    transform: scale(1.05);
 }
 
-
+/* Mobile Fixes */
 @media (max-width: 768px) {
-    .table-wrapper {
-        padding: 20px;
-        overflow-x: auto;
+    .subjects ul {
+        flex-direction: column;
+        gap: 15px;
     }
 
-    table {
-        font-size: 13px;
+    .full-test-btn a, .subject-link {
+        width: 80%;
+        font-size: 16px;
     }
 
-    table th,
-    table td {
-        padding: 10px;
+    #site-footer {
+        padding: 30px 15px;
     }
 
-    h1 {
-        font-size: 28px;
-    }
-
-    p {
-        font-size: 20px;
-    }
-
-    .container {
-        padding: 20px;
+    .footer-links a, .footer-nav a {
+        width: 80%;
+        text-align: center;
+        margin: 5px 0;
     }
 }
