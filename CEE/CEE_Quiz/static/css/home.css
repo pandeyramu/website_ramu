@@ -186,7 +186,7 @@ li {
     gap: 10px;
     margin-bottom: 25px;
 }
-.site-footer {
+#site-footer {
     text-align: center;
     background: #1a237e;
     color: #fff;
@@ -195,28 +195,26 @@ li {
     margin-top: 50px;
 }
 
-.site-footer h2 {
+#site-footer h2 {
     margin-bottom: 10px;
     font-size: 24px;
     color: #ffd700;
 }
 
-.site-footer p {
+#site-footer p {
     margin: 5px 0 15px 0;
     font-size: 16px;
     color: #fff;
 }
 
-/* Flex container for footer links */
-.site-footer .footer-links {
+#site-footer .footer-links {
     display: flex;
     flex-wrap: wrap;       
     justify-content: center;
     gap: 15px;            
 }
 
-/* Footer link style */
-.site-footer .footer-links a {
+#site-footer .footer-links a {
     flex: 1 1 30%;      
     max-width: 200px;     
     padding: 8px 12px;
@@ -229,22 +227,37 @@ li {
     box-sizing: border-box;
 }
 
-.site-footer .footer-links a:hover {
+#site-footer .footer-links a:hover {
     background: #ffd700;
     color: #1a237e;
     transform: scale(1.05);
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-.footer-nav {
+#site-footer .footer-nav {
+    margin-top: 15px;
+}
+
+#site-footer .footer-nav a {
+    color: #ffd700;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: 0.3s;
+}
+
+#site-footer .footer-nav a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+#site-footer .copyright {
     margin-top: 15px;
     font-size: 0.9em;
     color: #ccc;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
-    .site-footer .footer-links a {
+    #site-footer .footer-links a {
         flex: 1 1 80%; 
         max-width: none; 
     }
