@@ -5,52 +5,88 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="rock.css">
+
+    <title>Rock Paper Scissors Online Game | Pandey Ramu Projects</title>
+    <meta name="description" content="Play Rock Paper Scissors online! A fun interactive web game developed by Pandey Ramu as part of web development projects.">
+    <meta name="keywords" content="Rock Paper Scissors, online game, web project, Pandey Ramu, interactive game">
+    <meta name="author" content="Pandey Ramu">
+
+    <!-- Open Graph / Social Meta -->
+    <meta property="og:title" content="Rock Paper Scissors Online Game | Pandey Ramu">
+    <meta property="og:description" content="Play Rock Paper Scissors online! Fun interactive web game by Pandey Ramu.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandeyramu.com.np/rockpaperscissors/rock.html">
+    <meta property="og:image" content="Favicon2.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rock Paper Scissors Online Game | Pandey Ramu">
+    <meta name="twitter:description" content="Play Rock Paper Scissors online! Fun interactive web game by Pandey Ramu.">
+    <meta name="twitter:image" content="Favicon2.png">
+
     <link rel="icon" href="Favicon2.png" type="image/png">
-    <title> Rock Paper Scissor</title>
+    <link rel="stylesheet" href="rock.css">
 </head>
 
 <body>
-   <body>
-    <h1 id="header">Rock Paper Scissors</h1>
-    
-    <div class="msgc">
-        <p id="message">Play your move!</p>
-    </div>
-    
-    <div class="selectedch">
-        <div class="uch">
-            <p id="uchoice">Make your choice</p>
-        </div>
-        <div class="compch">
-            <p id="compchoice">Computer thinking...</p>
-        </div>
-    </div>
-    
-    <div class="choices">
-        <div class="choice" id="Rock">
-            <img src="rock.png" alt="Rock">
-        </div>
-        <div class="choice" id="Paper">
-            <img src="paper.png" alt="Paper">
-        </div>
-        <div class="choice" id="Scissor">
-            <img src="scissors.png" alt="Scissors">
-        </div>
-    </div>
-    
-    <div class="scoreb">
-        <div class="score">
-            <p id="usersc">0</p>
-            <p>You</p>
-        </div>
-        <div class="score">
-            <p id="compsc">0</p>
-            <p>Computer</p>
-        </div>
-    </div>
-  <button id="reset">RESET GAME</button>
-    <script src="rock.js"> </script>
+    <main>
+        <h1 id="header">Rock Paper Scissors Online Game</h1>
+
+        <section class="msgc" aria-live="polite">
+            <p id="message">Play your move!</p>
+        </section>
+
+        <section class="selectedch">
+            <div class="uch">
+                <p id="uchoice">Make your choice</p>
+            </div>
+            <div class="compch">
+                <p id="compchoice">Computer thinking...</p>
+            </div>
+        </section>
+
+        <section class="choices" aria-label="Game choices">
+            <div class="choice" id="Rock" role="button" aria-label="Choose Rock">
+                <img src="rock.png" alt="Rock">
+            </div>
+            <div class="choice" id="Paper" role="button" aria-label="Choose Paper">
+                <img src="paper.png" alt="Paper">
+            </div>
+            <div class="choice" id="Scissor" role="button" aria-label="Choose Scissors">
+                <img src="scissors.png" alt="Scissors">
+            </div>
+        </section>
+
+        <section class="scoreb" aria-label="Score Board">
+            <div class="score">
+                <p id="usersc">0</p>
+                <p>You</p>
+            </div>
+            <div class="score">
+                <p id="compsc">0</p>
+                <p>Computer</p>
+            </div>
+        </section>
+
+        <button id="reset">RESET GAME</button>
+    </main>
+
+    <script src="rock.js"></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "Rock Paper Scissors Online",
+      "url": "https://pandeyramu.com.np/rockpaperscissors/rock.html",
+      "author": {
+        "@type": "Person",
+        "name": "Pandey Ramu"
+      },
+      "description": "Fun interactive Rock Paper Scissors game developed by Pandey Ramu as part of web development projects."
+    }
+    </script>
 </body>
 
 </html>

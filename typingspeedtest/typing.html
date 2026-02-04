@@ -1,73 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="typing.css">
-    <link rel="icon" href="favicon.png" type="image/png">
-    <title>Typing Speed Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Typing Speed Test Online | Pandey Ramu Projects</title>
+<meta name="description" content="Test your typing speed and accuracy online with this interactive Typing Speed Test developed by Pandey Ramu. Measure WPM, accuracy, and improve your typing skills.">
+<meta name="keywords" content="Typing Speed Test, online typing game, WPM test, typing practice, Pandey Ramu, web projects">
+<meta name="author" content="Pandey Ramu">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Typing Speed Test Online | Pandey Ramu">
+<meta property="og:description" content="Test your typing speed and accuracy online with this interactive Typing Speed Test developed by Pandey Ramu.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pandeyramu.com.np/typingspeedtest/typing.html">
+<meta property="og:image" content="favicon.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Typing Speed Test Online | Pandey Ramu">
+<meta name="twitter:description" content="Test your typing speed and accuracy online with this interactive Typing Speed Test developed by Pandey Ramu.">
+<meta name="twitter:image" content="favicon.png">
+
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" href="typing.css">
 </head>
+
 <body>
+<main>
     <div class="container">
-    <div class="header"><h1>⚡ Typing Speed Test </h1>
-    <p> Test your typing speed and accuracy</p>
-    </div>
-    <div class="stats-grid">
+    <header class="header">
+        <h1>⚡ Typing Speed Test</h1>
+        <p>Test your typing speed and accuracy</p>
+    </header>
+
+    <section class="stats-grid" aria-label="Typing Test Statistics">
         <div class="stat-card">
             <div class="stat-value" id="wpm">0</div>
-            <div class="stat-label">WPM</div> 
+            <div class="stat-label">WPM</div>
         </div>
-         <div class="stat-card">
-                <div class="stat-value" id="accuracy">100%</div>
-                <div class="stat-label">Accuracy</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="timer">60</div>
-                <div class="stat-label">Seconds</div>
-            </div>
-            </div>
-    <div class="text-display">
+        <div class="stat-card">
+            <div class="stat-value" id="accuracy">100%</div>
+            <div class="stat-label">Accuracy</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="timer">60</div>
+            <div class="stat-label">Seconds</div>
+        </div>
+    </section>
+
+    <section class="text-display">
         <div id="text-content" class="text-content"></div>
-    </div>
-    <div class="input-area">
-        <textarea rows="3" id="typing-input" class="typing-input" placeholder="Click here and start typing..." disabled></textarea>
-    </div>
-    <div class="controls">
-<button id="start-btn" class=" btn btn-start">Start Test</button>
-<button id="reset-btn" class="btn btn-reset" disabled>Reset</button>
-<select id="time-select" class="time-select">
-    <option value="60" selected>1 Minute</option>
-    <option value="120">2 Minutes</option>
-    <option value="300">5 Minutes</option>
-</select>
-    </div>
-</div>
-<div id="results-modal" class="modal hidden">
-    <div class="modal-content">
-        <h2>🎉 Test Complete!</h2>
-        <div class="results-grid">
-            <div class="result-card">
-                <div class="result-value result-wpm" id="final-wpm">0</div>
-                <div class="result-label">Words Per Minute</div>
-            </div>
-             <div class="result-card">
+    </section>
+
+    <section class="input-area">
+        <textarea id="typing-input" class="typing-input" rows="3" placeholder="Click here and start typing..." aria-label="Typing input area" disabled></textarea>
+    </section>
+
+    <section class="controls" aria-label="Typing Test Controls">
+        <button id="start-btn" class="btn btn-start">Start Test</button>
+        <button id="reset-btn" class="btn btn-reset" disabled>Reset</button>
+        <select id="time-select" class="time-select" aria-label="Select test duration">
+            <option value="60" selected>1 Minute</option>
+            <option value="120">2 Minutes</option>
+            <option value="300">5 Minutes</option>
+        </select>
+    </section>
+
+    <div id="results-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="results-header">
+        <div class="modal-content">
+            <h2 id="results-header">🎉 Test Complete!</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value" id="final-wpm">0</div>
+                    <div class="result-label">Words Per Minute</div>
+                </div>
+                <div class="result-card">
                     <div class="result-value" id="final-accuracy">100%</div>
                     <div class="result-label">Accuracy</div>
                 </div>
                 <div class="small-results">
-                <div class="result-card">
-                    <div class="result-value" id="final-correct">0</div>
-                    <div class="result-label">Correct</div>
+                    <div class="result-card">
+                        <div class="result-value" id="final-correct">0</div>
+                        <div class="result-label">Correct</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-value" id="final-incorrect">0</div>
+                        <div class="result-label">Incorrect</div>
+                    </div>
                 </div>
-                 <div class="result-card">
-                    <div class="result-value" id="final-incorrect">0</div>
-                    <div class="result-label">Incorrect</div>
-                </div>
+            </div>
+            <button id="try-again-btn" class="btn btn-blue">Try Again</button>
+        </div>
         </div>
     </div>
-    <button id="try-again-btn" class="btn btn-blue">Try Again</button>
-</div>
-</div>
-    <script src="typing.js"></script>
+</main>
+
+<script src="typing.js"></script>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Game",
+  "name": "Typing Speed Test",
+  "url": "https://pandeyramu.com.np/typingspeedtest/typing.html",
+  "author": {
+    "@type": "Person",
+    "name": "Pandey Ramu"
+  },
+  "description": "Interactive Typing Speed Test to measure WPM and accuracy. Developed by Pandey Ramu as a web development project."
+}
+</script>
 </body>
 </html>

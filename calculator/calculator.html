@@ -1,47 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Calculator</title>
-    <link rel="stylesheet" href="calculator.css">
-    <link rel="icon" href="favicon.png" type="image/png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Calculator | Pandey Ramu Projects</title>
+<meta name="description" content="Use this interactive online calculator by Pandey Ramu to perform basic and advanced calculations. Easy to use, responsive, and perfect for practice.">
+<meta name="keywords" content="Calculator, Online Calculator, Pandey Ramu, Web Development Project, Math Tool">
+<meta name="author" content="Pandey Ramu">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Online Calculator | Pandey Ramu">
+<meta property="og:description" content="Use this interactive online calculator by Pandey Ramu to perform basic and advanced calculations.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pandeyramu.com.np/calculator/calculator.html">
+<meta property="og:image" content="favicon.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Online Calculator | Pandey Ramu">
+<meta name="twitter:description" content="Use this interactive online calculator by Pandey Ramu to perform basic and advanced calculations.">
+<meta name="twitter:image" content="favicon.png">
+
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" href="calculator.css">
 </head>
+
 <body>
-  <div class="calculator">
-    <div class="header">
+<main class="calculator">
+    <header class="header">
         <div class="title">Calculator</div>
-        <button class="theme" id="themeBtn" onclick="toggleTheme()">🌙</button>
-    </div>
-    <div class="mode">
-        Basic
-    </div>
-    <div class="display">
+        <button class="theme" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+    </header>
+
+    <section class="mode" aria-label="Calculator Mode">Basic</section>
+
+    <section class="display" aria-label="Calculator Display">
         <div class="expression" id="expression"></div>
         <div class="result" id="result">0</div>
-    </div>
-    <div class="buttons">
+    </section>
+
+    <section class="buttons" aria-label="Calculator Buttons">
         <button class="clear" onclick="clearAll()">AC</button>
         <button class="clear" onclick="clearEntry()">C</button>
         <button class="function" onclick="backspace()">⌫</button>
         <button class="operator" onclick="inputOperator('/')">÷</button>
+
         <button class="number" onclick="inputNumber('7')">7</button>
         <button class="number" onclick="inputNumber('8')">8</button>
         <button class="number" onclick="inputNumber('9')">9</button>
         <button class="operator" onclick="inputOperator('*')">×</button>
+
         <button class="number" onclick="inputNumber('4')">4</button>
         <button class="number" onclick="inputNumber('5')">5</button>
         <button class="number" onclick="inputNumber('6')">6</button>
         <button class="operator" onclick="inputOperator('-')">−</button>
+
         <button class="number" onclick="inputNumber('1')">1</button>
         <button class="number" onclick="inputNumber('2')">2</button>
         <button class="number" onclick="inputNumber('3')">3</button>
         <button class="operator add" onclick="inputOperator('+')">+</button>
+
         <button class="number zero" onclick="inputNumber('0')">0</button>
         <button class="number" onclick="inputDecimal()">.</button>
         <button class="equals" onclick="calculate()">=</button>
-    </div>
-</div>
-    <script src="calculator.js"></script>
+    </section>
+</main>
+
+<script src="calculator.js"></script>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Online Calculator",
+  "url": "https://pandeyramu.com.np/calculator/calculator.html",
+  "author": {
+    "@type": "Person",
+    "name": "Pandey Ramu"
+  },
+  "applicationCategory": "WebApplication",
+  "description": "Interactive online calculator to perform basic and advanced calculations developed by Pandey Ramu."
+}
+</script>
 </body>
 </html>

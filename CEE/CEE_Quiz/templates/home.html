@@ -4,225 +4,273 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="google-site-verification" content="UNpQRqXhbK41aS0c7qMpKu5zwnJ-GTT7sYdzb77BGGQ" />
-    <title>CEE Quiz Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>CEE Quiz Home | Chapter-wise Questions & Full Test</title>
+    <meta name="description" content="Practice chapter-wise questions for Biology, Chemistry, Physics, and MAT. Start your full CEE test online to prepare effectively for the Common Entrance Examination.">
+    <meta name="keywords" content="CEE Quiz, Full Test, Chapter-wise Questions, Biology, Chemistry, Physics, MAT, Pandey Ramu">
+    <meta name="author" content="Pandey Ramu">
+
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="UNpQRqXhbK41aS0c7qMpKu5zwnJ-GTT7sYdzb77BGGQ">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="CEE Quiz Home">
+    <meta property="og:description" content="Practice chapter-wise questions for Biology, Chemistry, Physics, and MAT. Start your full CEE test online to prepare effectively.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandeyramu.com.np/">
+    <meta property="og:image" content="{% static 'images/favicon.png' %}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CEE Quiz Home">
+    <meta name="twitter:description" content="Practice chapter-wise questions for Biology, Chemistry, Physics, and MAT. Start your full CEE test online to prepare effectively.">
+    <meta name="twitter:image" content="{% static 'images/favicon.png' %}">
+
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.png'}" type="image/png">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
 </head>
 
 <body>
-  <div class="welcome-text" id="welcome">
-    <script>
-        const text =`Welcome to the Site!
-        A site to practice chapter-wise questions, strengthen concepts, and boost your confidence for the
-        Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry,
-        Physics to enhance your preparation effectively.`;
-        const welcome = document.getElementById('welcome');
-        welcome.innerHTML = '';
-        let index = 0;
-        function typewriter(){
-            if(index < text.length){
-                welcome.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(typewriter, 30);
-            }
-        }
-       window.onload = () => {
-    typewriter();
-       }
-    </script>
-</div>
-    <div class="table-wrapper">
-        <h2>CEE Examination Weightage</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>S.N.</th>
-                    <th>Content/Domain</th>
-                    <th>No. of Questions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="domain-row">
-                    <td>a.</td>
-                    <td><strong>Zoology</strong></td>
-                    <td>40</td>
-                </tr>
-                <tr>
-                    <td>1.</td>
-                    <td>Biology, origin and evolution of life</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>2.</td>
-                    <td>General characteristics and classification of protozoa to chordates</td>
-                    <td>8</td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>Plasmodium, earthworm and frog</td>
-                    <td>8</td>
-                </tr>
-                <tr style="background:rgb(88, 97, 192)  ;color: white;">
-                    <td>4.</td>
-                    <td>Human biology and human diseases</td>
-                    <td>14</td>
-                </tr>
-                <tr>
-                    <td>5.</td>
-                    <td>Animal tissues</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>6.</td>
-                    <td>Environmental pollution, adaptation and animal behavior, application of zoology</td>
-                    <td>2</td>
-                </tr>
-                <tr class="domain-row">
-                    <td>b.</td>
-                    <td><strong>Botany</strong></td>
-                    <td>40</td>
-                </tr>
-                <tr style="background:rgb(88, 97, 192)  ;color: white;">
-                    <td>7.</td>
-                    <td>Basic component of life and biodiversity</td>
-                    <td>11</td>
-                </tr>
-                <tr>
-                    <td>8.</td>
-                    <td>Ecology and environment</td>
-                    <td>5</td>
-                </tr>
-                <tr style="background:rgb(88, 97, 192)  ;color: white;">
-                    <td>9.</td>
-                    <td>Cell biology and genetics</td>
-                    <td>12</td>
-                </tr>
-                <tr>
-                    <td>10.</td>
-                    <td>Anatomy and physiology</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>11.</td>
-                    <td>Developmental and applied botany</td>
-                    <td>5</td>
-                </tr>
-                <tr class="domain-row">
-                    <td>c.</td>
-                    <td><strong>Chemistry</strong></td>
-                    <td>50</td>
-                </tr>
-                <tr>
-                    <td>12.</td>
-                    <td>General and physical chemistry</td>
-                    <td>18</td>
-                </tr>
-                <tr>
-                    <td>13.</td>
-                    <td>Inorganic chemistry</td>
-                    <td>14</td>
-                </tr>
-                <tr>
-                    <td>14.</td>
-                    <td>Organic chemistry</td>
-                    <td>18</td>
-                </tr>
-                <tr class="domain-row">
-                    <td>d.</td>
-                    <td><strong>Physics</strong></td>
-                    <td>50</td>
-                </tr>
-                <tr style="background:rgb(88, 97, 192)  ;color: white;">
-                    <td>15.</td>
-                    <td>Mechanics</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>16.</td>
-                    <td>Heat and thermodynamics</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>17.</td>
-                    <td>Geometrical optics and physical optics</td>
-                    <td>6</td>
-                </tr>
-                <tr style="background:rgb(88, 97, 192)  ;color: white;">
-                    <td>18.</td>
-                    <td>Current electricity and magnetism</td>
-                    <td>9</td>
-                </tr>
-                <tr>
-                    <td>19.</td>
-                    <td>Sound waves, electrostatics and capacitors</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>20.</td>
-                    <td>Modern physics and nuclear physics</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>21.</td>
-                    <td>Solid and semiconductor devices (electronics)</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>22.</td>
-                    <td>Particle physics, source of energy and universe</td>
-                    <td>3</td>
-                </tr>
-                <tr class="domain-row">
-                    <td>e.</td>
-                    <td><strong>Mental Agility Test (MAT)</strong></td>
-                    <td>20</td>
-                </tr>
-                <tr>
-                    <td>23.</td>
-                    <td>Verbal reasoning</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>24.</td>
-                    <td>Numerical reasoning</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>25.</td>
-                    <td>Logical sequencing</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>26.</td>
-                    <td>Spatial relation / Abstract reasoning</td>
-                    <td>5</td>
-                </tr>
-                <tr class="total-row">
-                    <td colspan="2">Total</td>
-                    <td>200</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <header>
+        <div class="welcome-text" id="welcome">
+            <script>
+                const text = `Welcome to the Site!
+                A site to practice chapter-wise questions, strengthen concepts, and boost your confidence for the
+                Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry,
+                Physics to enhance your preparation effectively.`;
+                const welcome = document.getElementById('welcome');
+                welcome.innerHTML = '';
+                let index = 0;
+                function typewriter(){
+                    if(index < text.length){
+                        welcome.innerHTML += text.charAt(index);
+                        index++;
+                        setTimeout(typewriter, 30);
+                    }
+                }
+                window.onload = () => typewriter();
+            </script>
+        </div>
+    </header>
 
-    <div class="container">
-        <h1>Welcome to CEE Chapter-wise Quiz</h1>
-        <p>Select a subject and start practicing!</p>
+    <main>
+        <section class="table-wrapper">
+            <h2>CEE Examination Weightage</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.N.</th>
+                        <th>Content/Domain</th>
+                        <th>No. of Questions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Zoology -->
+                    <tr class="domain-row">
+                        <td>a.</td>
+                        <td><strong>Zoology</strong></td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>1.</td>
+                        <td>Biology, origin and evolution of life</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>General characteristics and classification of protozoa to chordates</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td>Plasmodium, earthworm and frog</td>
+                        <td>8</td>
+                    </tr>
+                    <tr style="background:rgb(88, 97, 192);color:white;">
+                        <td>4.</td>
+                        <td>Human biology and human diseases</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>5.</td>
+                        <td>Animal tissues</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>6.</td>
+                        <td>Environmental pollution, adaptation and animal behavior, application of zoology</td>
+                        <td>2</td>
+                    </tr>
+                    <!-- Botany -->
+                    <tr class="domain-row">
+                        <td>b.</td>
+                        <td><strong>Botany</strong></td>
+                        <td>40</td>
+                    </tr>
+                    <tr style="background:rgb(88, 97, 192);color:white;">
+                        <td>7.</td>
+                        <td>Basic component of life and biodiversity</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td>8.</td>
+                        <td>Ecology and environment</td>
+                        <td>5</td>
+                    </tr>
+                    <tr style="background:rgb(88, 97, 192);color:white;">
+                        <td>9.</td>
+                        <td>Cell biology and genetics</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>10.</td>
+                        <td>Anatomy and physiology</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>11.</td>
+                        <td>Developmental and applied botany</td>
+                        <td>5</td>
+                    </tr>
+                    <!-- Chemistry -->
+                    <tr class="domain-row">
+                        <td>c.</td>
+                        <td><strong>Chemistry</strong></td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>12.</td>
+                        <td>General and physical chemistry</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>13.</td>
+                        <td>Inorganic chemistry</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>14.</td>
+                        <td>Organic chemistry</td>
+                        <td>18</td>
+                    </tr>
+                    <!-- Physics -->
+                    <tr class="domain-row">
+                        <td>d.</td>
+                        <td><strong>Physics</strong></td>
+                        <td>50</td>
+                    </tr>
+                    <tr style="background:rgb(88, 97, 192);color:white;">
+                        <td>15.</td>
+                        <td>Mechanics</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>16.</td>
+                        <td>Heat and thermodynamics</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>17.</td>
+                        <td>Geometrical optics and physical optics</td>
+                        <td>6</td>
+                    </tr>
+                    <tr style="background:rgb(88, 97, 192);color:white;">
+                        <td>18.</td>
+                        <td>Current electricity and magnetism</td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>19.</td>
+                        <td>Sound waves, electrostatics and capacitors</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>20.</td>
+                        <td>Modern physics and nuclear physics</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>21.</td>
+                        <td>Solid and semiconductor devices (electronics)</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>22.</td>
+                        <td>Particle physics, source of energy and universe</td>
+                        <td>3</td>
+                    </tr>
+                    <!-- MAT -->
+                    <tr class="domain-row">
+                        <td>e.</td>
+                        <td><strong>Mental Agility Test (MAT)</strong></td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>23.</td>
+                        <td>Verbal reasoning</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>24.</td>
+                        <td>Numerical reasoning</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>25.</td>
+                        <td>Logical sequencing</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>26.</td>
+                        <td>Spatial relation / Abstract reasoning</td>
+                        <td>5</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>Total</strong></td>
+                        <td>200</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-        <h2>Subjects:</h2>
-        <ul>
-            {% for sub in subjects %}
-            <li><a class="subject-link" href="{% url 'chapters' sub.id %}">{{ sub.name }}</a></li>
-            {% empty %}
-            <li>No subjects available</li>
-            {% endfor %}
-               <div class="full-test-btn">
-    <a href="{% url 'full_test' %}" class="start_test">Start Full Test</a>
-</div>
-        </ul>
-     
+        <section class="subjects">
+            <h2>Welcome to CEE Chapter-wise Quiz</h2>
+            <p>Select a subject and start practicing!</p>
+            <h3>Subjects:</h3>
+            <ul>
+                {% for sub in subjects %}
+                    <li><a class="subject-link" href="{% url 'chapters' sub.id %}">{{ sub.name }}</a></li>
+                {% empty %}
+                    <li>No subjects available</li>
+                {% endfor %}
+            </ul>
+            <div class="full-test-btn">
+                <a href="{% url 'full_test' %}" class="start_test">Start Full Test</a>
+            </div>
+        </section>
+    </main>
+
+ <footer id="site-footer" class="fade-in">
+    <div class="footer-container">
+        <h2>Get In Touch</h2>
+        <p>Have questions or want to connect? Reach out via email or follow me on social platforms.</p>
+
+        <div class="footer-links">
+            <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">📧 Email</a>
+            <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">🐱 GitHub</a>
+            <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">ⓕ Facebook</a>
+        </div>
+
+        <div class="footer-nav">
+            <a href="website/index.html">Portfolio</a> | 
+            <a href="website/privacy.html">Privacy / Terms</a> | 
+            <a href="website/blog.html">Blog</a>
+        </div>
+
+        <p class="copyright">© 2026 Pandey Ramu. All Rights Reserved.</p>
     </div>
+</footer>
 
 </body>
 

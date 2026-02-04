@@ -6,99 +6,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Test | CEE Practice Questions</title>
+
+    <!-- SEO Meta -->
+    <meta name="description" content="Take the full CEE practice test online with 180 questions, 2.5 hours duration, and detailed results including negative marking.">
+    <meta name="keywords" content="CEE Test, Full Test, Online Quiz, Practice Questions, Pandey Ramu">
+    <meta name="author" content="Pandey Ramu">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Full CEE Practice Test">
+    <meta property="og:description" content="Take the full CEE practice test online with 180 questions and detailed scoring.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandeyramu.com.np/full-test/">
+    <meta property="og:image" content="{% static 'images/favicon.png' %}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Full CEE Practice Test">
+    <meta name="twitter:description" content="Take the full CEE practice test online with 180 questions and detailed scoring.">
+    <meta name="twitter:image" content="{% static 'images/favicon.png' %}">
+
     <link rel="stylesheet" href="{% static 'css/full_test.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.png'}" type="image/png">
-    <title>Full Test</title>
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
 </head>
 
 <body>
     <div class="container">
-        <h1>Full Test </h1>
+        <h1>Full Test</h1>
         <p>Total Questions: 180 | Time: 2.5 hours | Negative Marking: 0.25 per wrong answer</p>
 
         {% if questions %}
             {% if score is None and not quiz_started %}
-              <form method="get">
-            <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
-            <button type="submit" name="start" value="1" id="start_full_test" class="start_test"> Start Test</button>
+                <form method="get">
+                    <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
+                    <button type="submit" name="start" value="1" id="start_full_test" class="start_test">Start Test</button>
                 </form>
             {% endif %}
-            
+
             {% if not quiz_started and score is None %}
                 <div id="full_test_timer" style="display: none;"></div>
             {% endif %}
-            {% endif %}
-            {% if questions %}
+
             <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% url 'full_test' %}" id="full-test-form"
                 {% if not quiz_started and score is None %}style="display: none;"{% else %}style="display: block;"{% endif %}>
                 {% csrf_token %}
-                 <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
+                <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
+                
                 {% for q in questions %}
-                <div class="question-block">
-                    <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
-                    {% for opt in "ABCD" %}
-                    {% with option_text=q|get_option_text:opt %}
-                    {% with user_choice=user_answers|dict_get:q.id %}
-                    <label class="option
-                        {% if score is not None %}
-                            {% if opt == q.correct_option %} correct {% endif %}
-                            {% if user_choice|default:'' == opt and opt != q.correct_option %} wrong {% endif %}
-                        {% endif %}
-                         {% if user_choice|default:'' == opt %} selected {% endif %}">
-                        <input type="radio" name="q{{ q.id }}" value="{{ opt }}" 
-                               {% if score is not None %} disabled {% endif %} 
-                               {% if user_choice|default:'' == opt %} checked {% endif %}>
-                        <span class="option-text">{{ opt }}. {{ option_text }}</span>
-                    </label>
-                    {% endwith %}
-                    {% endwith %}
-                    {% endfor %}
-                </div>
+                    <div class="question-block">
+                        <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
+                        {% for opt in "ABCD" %}
+                            {% with option_text=q|get_option_text:opt %}
+                            {% with user_choice=user_answers|dict_get:q.id %}
+                                <label class="option
+                                    {% if score is not None %}
+                                        {% if opt == q.correct_option %} correct {% endif %}
+                                        {% if user_choice|default:'' == opt and opt != q.correct_option %} wrong {% endif %}
+                                    {% endif %}
+                                    {% if user_choice|default:'' == opt %} selected {% endif %}">
+                                    <input type="radio" name="q{{ q.id }}" value="{{ opt }}" 
+                                        {% if score is not None %} disabled {% endif %} 
+                                        {% if user_choice|default:'' == opt %} checked {% endif %}>
+                                    <span class="option-text">{{ opt }}. {{ option_text }}</span>
+                                </label>
+                            {% endwith %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
                 {% endfor %}
+
                 {% if score is None %}
                     <button type="submit" class="submit-btn">Submit Full Test</button>
                 {% else %}
-                   {% if score is not None %}
-    <div class="score-card">
-        <h2 class="score-title">Test Results</h2>
-        <div class="score-stats">
-            <div class="stat-item">
-                <span class="stat-label">Total Questions:</span>
-                <span class="stat-value">{{ total_questions }}</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Attempted:</span>
-                <span class="stat-value">{{ total_attempted }}</span>
-            </div>
-            <div class="stat-item correct">
-                <span class="stat-label">Correct:</span>
-                <span class="stat-value">{{ total_correct }}</span>
-            </div>
-            <div class="stat-item wrong">
-                <span class="stat-label">Wrong:</span>
-                <span class="stat-value">{{ total_wrong }}</span>
-            </div>
-            <div class="stat-item skipped">
-                <span class="stat-label">Skipped:</span>
-                <span class="stat-value">{{ total_skipped }}</span>
-            </div>
-            <div class="stat-item final-score">
-                <span class="stat-label">Final Score:</span>
-                <span class="stat-value">{{ score }} / {{ total_questions }}</span>
-            </div>
-        </div>
-        <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
-    </div>
-            {% endif %}
-            {% endif %}
+                    <div class="score-card">
+                        <h2 class="score-title">Test Results</h2>
+                        <div class="score-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Questions:</span>
+                                <span class="stat-value">{{ total_questions }}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Attempted:</span>
+                                <span class="stat-value">{{ total_attempted }}</span>
+                            </div>
+                            <div class="stat-item correct">
+                                <span class="stat-label">Correct:</span>
+                                <span class="stat-value">{{ total_correct }}</span>
+                            </div>
+                            <div class="stat-item wrong">
+                                <span class="stat-label">Wrong:</span>
+                                <span class="stat-value">{{ total_wrong }}</span>
+                            </div>
+                            <div class="stat-item skipped">
+                                <span class="stat-label">Skipped:</span>
+                                <span class="stat-value">{{ total_skipped }}</span>
+                            </div>
+                            <div class="stat-item final-score">
+                                <span class="stat-label">Final Score:</span>
+                                <span class="stat-value">{{ score }} / {{ total_questions }}</span>
+                            </div>
+                        </div>
+                        <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
+                    </div>
+                {% endif %}
             </form>
-            {% else %}
+        {% else %}
             <p class="no-questions">No questions available for this test.</p>
         {% endif %}
+
         <div class="links">
             <a href="{% url 'home' %}" class="back-home">Back to Home</a>
         </div>
     </div>
-    <script src="{% static 'js/full_test.js'%}"></script>
+
+    <script src="{% static 'js/full_test.js' %}"></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOccupationalProgram",
+        "name": "Full CEE Practice Test",
+        "description": "Take the full CEE practice test online with 180 questions, 2.5 hours duration, and detailed results.",
+        "provider": {
+            "@type": "Person",
+            "name": "Pandey Ramu"
+        }
+    }
+    </script>
 </body>
+
 </html>

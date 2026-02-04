@@ -4,32 +4,59 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="tic.css">
+  <title>Tic Tac Toe Online Game | Pandey Ramu Projects</title>
+  <meta name="description" content="Play Tic Tac Toe online. Classic X and O game developed by Pandey Ramu as part of web development projects.">
+  <meta name="keywords" content="Tic Tac Toe, online game, X and O game, web projects, Pandey Ramu">
+  <meta name="author" content="Pandey Ramu">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:title" content="Tic Tac Toe Online Game | Pandey Ramu">
+  <meta property="og:description" content="Play Tic Tac Toe online. Classic X and O game developed by Pandey Ramu.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pandeyramu.com.np/tictactoe/tic.html">
+  <meta property="og:image" content="favicon.png">
+
   <link rel="icon" href="favicon.png" type="image/png">
-  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="tic.css">
 </head>
 <body>
-  <h2 id="header">TIC TAC TOE</h2>
+  <main>
+    <h1 id="header">Tic Tac Toe Online Game</h1>
 
-  <div class="msgB hide">
-    <p id="message">Winner is</p>
-  </div>
+    <section class="msgB hide">
+      <p id="message">Winner is</p>
+    </section>
 
-  <div class="box">
-    <button class="content inactive"></button>
-    <button class="content inactive"></button>
-    <button class="content inactive"></button>
-    <button class="content inactive"></button>
-    <button class="content inactive"></button>
-    <button class="content inactive"></button>
-    <button class="content inactive"></button>
-    <button class="content inactive"></button>
-    <button class="content inactive"></button>
-  </div>
+    <section class="box" aria-label="Tic Tac Toe Board">
+      <button class="content inactive" aria-label="Cell 1"></button>
+      <button class="content inactive" aria-label="Cell 2"></button>
+      <button class="content inactive" aria-label="Cell 3"></button>
+      <button class="content inactive" aria-label="Cell 4"></button>
+      <button class="content inactive" aria-label="Cell 5"></button>
+      <button class="content inactive" aria-label="Cell 6"></button>
+      <button class="content inactive" aria-label="Cell 7"></button>
+      <button class="content inactive" aria-label="Cell 8"></button>
+      <button class="content inactive" aria-label="Cell 9"></button>
+    </section>
 
-  <button id="reset">RESET GAME</button>
+    <button id="reset">Reset Game</button>
+  </main>
 
   <script src="tic.js?v=2"></script>
 
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    "name": "Tic Tac Toe Online",
+    "url": "https://pandeyramu.com.np/tictactoe/tic.html",
+    "author": {
+      "@type": "Person",
+      "name": "Pandey Ramu"
+    },
+    "description": "Classic Tic Tac Toe game developed as a web project by Pandey Ramu."
+  }
+  </script>
 </body>
 </html>

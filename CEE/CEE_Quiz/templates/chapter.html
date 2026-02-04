@@ -1,31 +1,80 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapters - {{ subject.name }} | Pandey Ramu CEE Quiz</title>
+    <meta name="description" content="Explore all chapters for {{ subject.name }} in Pandey Ramu's CEE Quiz. Practice quizzes, multiple-choice questions, and exercises.">
+    <meta name="keywords" content="CEE Quiz, {{ subject.name }}, Chapters, Online Quiz, Practice Questions">
+    <meta name="author" content="Pandey Ramu">
+
+    <!-- Open Graph / Social Meta -->
+    <meta property="og:title" content="Chapters - {{ subject.name }} | Pandey Ramu CEE Quiz">
+    <meta property="og:description" content="Practice quizzes and exercises for {{ subject.name }} chapters in Pandey Ramu's CEE Quiz.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% static 'images/logo.jpg' %}">
+
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.png'}" type="image/png">
-    <title>Chapters - {{ subject.name }}</title>
-
 </head>
+
 <body>
-    <div class="container">
+    <header class="header-container">
+        <div class="logo">
+            <img src="{% static 'images/logo.jpg' %}" alt="Pandey Ramu CEE Quiz Logo">
+        </div>
         <h1>Chapters for {{ subject.name }}</h1>
+        <p>Practice multiple-choice questions and exercises for better preparation!</p>
+    </header>
 
-        <div class="chapter-container">
-            {% for chap in chapters %}
-                <div class="chapter-card">
-                    <a href="{% url 'quiz' chap.id %}" class="chapter-link">{{ chap.name }}</a>
-                </div>
-            {% empty %}
-                <p>No chapters available</p>
-            {% endfor %}
-        </div>
+    <main class="container">
+        <section class="chapter-list">
+            {% if chapters %}
+                {% for chap in chapters %}
+                    <article class="chapter-card">
+                        <a href="{% url 'quiz' chap.id %}" class="chapter-link">{{ chap.name }}</a>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>No chapters available for this subject.</p>
+            {% endif %}
+        </section>
 
-        <div class="back-button">
-            <a href="{% url 'home' %}">Back to Subjects</a>
-        </div>
-    </div>
+        <nav class="back-button">
+            <a href="{% url 'home' %}">← Back to Subjects</a>
+        </nav>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Pandey Ramu. All Rights Reserved.</p>
+        <p>Follow me on 
+            <a href="https://github.com/pandeyramu" target="_blank">GitHub</a> | 
+            <a href="https://www.facebook.com/ramu.pandey38" target="_blank">Facebook</a>
+        </p>
+    </footer>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "{{ subject.name }} Chapters",
+      "itemListElement": [
+        {% for chap in chapters %}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.counter }},
+          "name": "{{ chap.name }}",
+          "url": "{{ request.build_absolute_uri|slice:":-1" }}{{ chap.id }}/"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ]
+    }
+    </script>
 </body>
 </html>
