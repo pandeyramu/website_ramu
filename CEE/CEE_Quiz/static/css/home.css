@@ -186,69 +186,66 @@ li {
     gap: 10px;
     margin-bottom: 25px;
 }
-/* --- Footer fixes --- */
-#site-footer {
+.site-footer {
     text-align: center;
-    padding: 30px 15px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a237e;
     color: #fff;
-    background: linear-gradient(135deg, #6dd5fa, #2980b9); /* sky-blue gradient */
+    padding: 30px 15px;
+    font-family: Arial, sans-serif;
     margin-top: 50px;
 }
 
-#site-footer h2 {
+.site-footer h2 {
     margin-bottom: 10px;
     font-size: 24px;
-    color: #ffd700; /* golden heading for contrast */
+    color: #ffd700;
 }
 
-#site-footer p {
-    margin-bottom: 20px;
+.site-footer p {
+    margin: 5px 0 15px 0;
     font-size: 16px;
-    color: #e0f7ff; /* light text */
+    color: #fff;
 }
 
 /* Flex container for footer links */
-#site-footer .footer-links,
-#site-footer .footer-nav {
+.site-footer .footer-links {
     display: flex;
-    flex-wrap: wrap;           /* allows links to wrap */
+    flex-wrap: wrap;       
     justify-content: center;
-    gap: 30px;                 /* space between links */
+    gap: 15px;            
 }
 
-/* Footer links style */
-#site-footer .footer-links a,
-#site-footer .footer-nav a {
-    flex: 0 0 calc(33.333% - 10px); 
-    display: inline-block;
-    padding: 10px 15px;
+/* Footer link style */
+.site-footer .footer-links a {
+    flex: 1 1 30%;      
+    max-width: 200px;     
+    padding: 8px 12px;
     background: #6c757d;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
-    transition: all 0.3s ease;
+    transition: 0.3s;
     text-align: center;
+    box-sizing: border-box;
 }
 
-#site-footer .footer-links a:hover,
-#site-footer .footer-nav a:hover {
+.site-footer .footer-links a:hover {
     background: #ffd700;
     color: #1a237e;
     transform: scale(1.05);
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-#site-footer .copyright {
+.footer-nav {
     margin-top: 15px;
     font-size: 0.9em;
-    color: #e0f7ff;
+    color: #ccc;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-    #site-footer .footer-links a,
-    #site-footer .footer-nav a {
-        flex: 0 0 80%; /* stack links on mobile */
+    .site-footer .footer-links a {
+        flex: 1 1 80%; 
+        max-width: none; 
     }
 }

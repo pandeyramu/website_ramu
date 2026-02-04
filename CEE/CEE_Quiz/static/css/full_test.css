@@ -160,7 +160,26 @@ p {
     transform: scale(1.05) translateY(-4px);
     box-shadow: 0 2px 8px rgba(208, 132, 0, 0.8);
 }
+.home-button {
+    margin: 30px 0;
+}
 
+.home-button a {
+    display: inline-block;
+    background-color: #344a84;
+    color: #fff;
+    padding: 14px 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.home-button a:hover {
+    background-color: #46c467;
+    transform: translateY(-3px);
+}
 .quiz-form.submitted .option,
 .quiz-form.submitted .option input,
 .quiz-form.submitted .option span {
