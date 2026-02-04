@@ -236,27 +236,6 @@ p {
     margin-top: 15px;
 }
 
-.links {
-    margin-top: 25px;
-    text-align: center;
-}
-
-.links a {
-    display: inline-block;
-    margin: 0 10px;
-    padding: 8px 15px;
-    background: #6c757d;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-.links a:hover {
-    background: #78840f;
-    transform: scale(1.02) translateY(-3px);
-    box-shadow: 5px 2px 8px rgba(122, 10, 202, 0.8);
-}
 .full-test-footer {
     text-align: center;
     background: #1a237e;
@@ -278,15 +257,26 @@ p {
     color: #fff;
 }
 
+/* Flex container for footer links */
+.full-test-footer .footer-links {
+    display: flex;
+    flex-wrap: wrap;       /* allows wrapping to next line */
+    justify-content: center;
+    gap: 15px;             /* space between links */
+}
+
+/* Footer link style */
 .full-test-footer .footer-links a {
+    flex: 0 0 calc(33.333% - 10px); /* 3 per row with gap accounted */
+    max-width: 200px;               /* optional, limit link width */
     display: inline-block;
-    margin: 5px 10px;
     padding: 8px 12px;
     background: #6c757d;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
     transition: 0.3s;
+    text-align: center;
 }
 
 .full-test-footer .footer-links a:hover {
@@ -302,3 +292,9 @@ p {
     color: #ccc;
 }
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .full-test-footer .footer-links a {
+        flex: 0 0 80%; /* stack links on mobile */
+    }
+}

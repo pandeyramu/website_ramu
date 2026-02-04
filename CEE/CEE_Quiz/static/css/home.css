@@ -193,58 +193,63 @@ li {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #fff;
     background: linear-gradient(135deg, #6dd5fa, #2980b9); /* sky-blue gradient */
+    margin-top: 50px;
 }
 
-.footer-container h2 {
+#site-footer h2 {
     margin-bottom: 10px;
     font-size: 24px;
-    color: #fff;
+    color: #ffd700; /* golden heading for contrast */
 }
 
-.footer-container p {
-    color: #e0f7ff; /* lighter text for contrast */
-    font-size: 16px;
+#site-footer p {
     margin-bottom: 20px;
+    font-size: 16px;
+    color: #e0f7ff; /* light text */
 }
 
-.footer-links a, .footer-nav a {
+/* Flex container for footer links */
+#site-footer .footer-links,
+#site-footer .footer-nav {
+    display: flex;
+    flex-wrap: wrap;           /* allows links to wrap */
+    justify-content: center;
+    gap: 15px;                 /* space between links */
+}
+
+/* Footer links style */
+#site-footer .footer-links a,
+#site-footer .footer-nav a {
+    flex: 0 0 calc(33.333% - 10px); /* 3 links per row */
+    max-width: 200px;               /* optional max width */
+    display: inline-block;
+    padding: 8px 12px;
+    background: #6c757d;
     color: #fff;
     text-decoration: none;
-    margin: 0 8px;
+    border-radius: 5px;
     transition: all 0.3s ease;
+    text-align: center;
 }
 
-.footer-links a:hover, .footer-nav a:hover {
-    color: #ffd700;
+#site-footer .footer-links a:hover,
+#site-footer .footer-nav a:hover {
+    background: #ffd700;
+    color: #1a237e;
     transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 #site-footer .copyright {
     margin-top: 15px;
-    font-size: 14px;
+    font-size: 0.9em;
     color: #e0f7ff;
 }
 
-
-/* Mobile Fixes */
+/* Mobile responsiveness */
 @media (max-width: 768px) {
-    .subjects ul {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .full-test-btn a, .subject-link {
-        width: 80%;
-        font-size: 16px;
-    }
-
-    #site-footer {
-        padding: 30px 15px;
-    }
-
-    .footer-links a, .footer-nav a {
-        width: 80%;
-        text-align: center;
-        margin: 5px 0;
+    #site-footer .footer-links a,
+    #site-footer .footer-nav a {
+        flex: 0 0 80%; /* stack links on mobile */
     }
 }
