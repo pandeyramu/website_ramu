@@ -171,6 +171,7 @@ p {
     font-size: 16px;
     border: none;
     border-radius: 8px;
+    text-decoration: none;
     cursor: pointer;
     transition: 0.3s;
     text-align: center;
