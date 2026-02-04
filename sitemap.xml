@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- ramup.com.np -->
+
+  <!-- Main site -->
   <url>
     <loc>https://ramup.com.np/</loc>
     <priority>1.0</priority>
@@ -25,56 +26,5 @@
     <loc>https://ramup.com.np/typingspeedtest/typing.html</loc>
     <priority>0.8</priority>
   </url>
-
-  <!-- cee-quiz.onrender.com -->
-  <url>
-    <loc>https://cee-quiz.onrender.com/</loc>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://cee-quiz.onrender.com/full-test/</loc>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Subjects -->
-  <url>
-    <loc>https://cee-quiz.onrender.com/subject/1/</loc>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://cee-quiz.onrender.com/subject/2/</loc>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://cee-quiz.onrender.com/subject/3/</loc>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Chapters 1–22 -->
-  <url><loc>https://cee-quiz.onrender.com/chapter/1/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/2/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/3/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/4/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/5/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/6/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/7/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/8/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/9/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/10/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/11/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/12/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/13/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/14/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/15/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/16/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/17/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/18/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/19/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/20/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/21/</loc></url>
-  <url><loc>https://cee-quiz.onrender.com/chapter/22/</loc></url>
 
 </urlset>
