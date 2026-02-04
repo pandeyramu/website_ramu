@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.views.generic import TemplateView
 from django.urls import path
 from CEE_Quiz import views
 
@@ -24,4 +25,14 @@ urlpatterns = [
     path('subject/<int:subject_id>/' , views.chapters,name='chapters' ),
     path('chapter/<int:chapter_id>/' , views.quiz , name= 'quiz'),
     path('full-test/', views.full_test, name='full_test'),
+     path("robots.txt", TemplateView.as_view(
+        template_name="robots.txt",
+        content_type="text/plain"
+    )),
+
+    # Serve sitemap.xml
+    path("sitemap.xml", TemplateView.as_view(
+        template_name="sitemap.xml",
+        content_type="application/xml"
+    )),
 ]
