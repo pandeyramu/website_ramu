@@ -116,7 +116,7 @@ h2 {
 }
 
 p {
-    color: rgb(0, 255, 13);
+    color: rgb(9, 84, 70);
     font-size: 26px;
     margin-bottom: 30px;
 }
@@ -135,51 +135,133 @@ li {
     margin: 0;
 }
 
-a.subject-link , .full-test-btn a {
-    display: inline-block;
-    padding: 20px 30px;
-    background: #3498db;
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-    min-width: 150px;
+/* --- Subjects Section --- */
+.subjects {
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto 60px auto;
+    padding: 30px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     text-align: center;
-    font-size: 18px;
 }
 
-a.subject-link:hover, .full-test-btn a:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+.subjects h2, .subjects h3 {
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+.subjects p {
+    color: #2c3e50;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Common button style for all buttons */
+.btn {
+    display: inline-block;
+    padding: 18px 28px;
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    text-decoration: none;
+    min-width: 140px;
+    transition: all 0.3s ease;
+    text-align: center;
+    margin: 5px; 
+}
+
+.btn:hover {
     background: #2980b9;
+    transform: translateY(-4px) scale(1.03);
+}
+
+/* Flex container for buttons */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 10px;
+    margin-bottom: 25px;
+}
+#site-footer {
+    text-align: center;
+    background: #1a237e;
+    color: #fff;
+    padding: 30px 15px;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+}
+
+#site-footer h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #ffd700;
+}
+
+#site-footer p {
+    margin: 5px 0 15px 0;
+    font-size: 16px;
+    color: #fff;
+}
+
+#site-footer .footer-links {
+    display: flex;
+    flex-wrap: wrap;       
+    justify-content: center;
+    gap: 15px;            
+}
+
+#site-footer .footer-links a {
+    flex: 1 1 30%;      
+    max-width: 200px;     
+    padding: 8px 12px;
+    background: #6c757d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+#site-footer .footer-links a:hover {
+    background: #ffd700;
+    color: #1a237e;
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#site-footer {
+    margin-top: 15px;
+}
+.footer-nav{
+    margin-top: 10px;
+}
+
+#site-footer .footer-nav a {
+    color: #ffd700;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: 0.3s;
+}
+
+#site-footer .footer-nav a:hover {
+    color: #fff;
+    text-decoration: dotted underline;
+}
+
+#site-footer .copyright {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #ccc;
 }
 
 @media (max-width: 768px) {
-    .table-wrapper {
-        padding: 20px;
-        overflow-x: auto;
-    }
-
-    table {
-        font-size: 13px;
-    }
-
-    table th,
-    table td {
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 28px;
-    }
-
-    p {
-        font-size: 20px;
-    }
-
-    .container {
-        padding: 20px;
+    #site-footer .footer-links a {
+        flex: 1 1 80%; 
+        max-width: none; 
     }
 }

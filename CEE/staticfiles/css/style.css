@@ -165,6 +165,12 @@ h1 {
     padding: 20px;
     margin: 20px 0;
 }
+.negative-marking-note {
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 15px;
+}
 
 .score-title {
     text-align: center;

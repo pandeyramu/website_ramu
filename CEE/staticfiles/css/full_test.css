@@ -160,7 +160,30 @@ p {
     transform: scale(1.05) translateY(-4px);
     box-shadow: 0 2px 8px rgba(208, 132, 0, 0.8);
 }
+.home-btn {
+      display: flex;
+    justify-self: center;
+    width: fit-content;
+    padding: 12px;
+    margin-top: 20px;
+    background: #007bff;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    overflow: hidden;
+    margin: 20px 0;
+}
 
+.home-btn:hover {
+    background: #15b300;
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 2px 8px rgba(208, 132, 0, 0.8);
+}
 .quiz-form.submitted .option,
 .quiz-form.submitted .option input,
 .quiz-form.submitted .option span {
@@ -236,24 +259,65 @@ p {
     margin-top: 15px;
 }
 
-.links {
-    margin-top: 25px;
+.full-test-footer {
     text-align: center;
+    background: #4854d2;
+    color: #fff;
+    padding: 30px 15px;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
 }
 
-.links a {
+.full-test-footer h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #ffd700;
+}
+
+.full-test-footer p {
+    margin: 5px 0 15px 0;
+    font-size: 16px;
+    color: #fff;
+}
+
+/* Flex container for footer links */
+.full-test-footer .footer-links {
+    display: flex;
+    flex-wrap: wrap;       /* allows wrapping to next line */
+    justify-content: center;
+    gap: 15px;             /* space between links */
+}
+
+/* Footer link style */
+.full-test-footer .footer-links a {
+    flex: 0 0 calc(33.333% - 10px); /* 3 per row with gap accounted */
+    max-width: 200px;               /* optional, limit link width */
     display: inline-block;
-    margin: 0 10px;
-    padding: 8px 15px;
+    padding: 8px 12px;
     background: #6c757d;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
     transition: 0.3s;
+    text-align: center;
 }
 
-.links a:hover {
-    background: #78840f;
-    transform: scale(1.02) translateY(-3px);
-    box-shadow: 5px 2px 8px rgba(122, 10, 202, 0.8);
+.full-test-footer .footer-links a:hover {
+    background: #ffd700;
+    color: #d1d3e7;
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.footer-copy {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .full-test-footer .footer-links a {
+        flex: 0 0 80%; /* stack links on mobile */
+    }
 }

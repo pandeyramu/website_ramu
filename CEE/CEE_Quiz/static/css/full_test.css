@@ -261,7 +261,7 @@ p {
 
 .full-test-footer {
     text-align: center;
-    background: #1a237e;
+    background: #4854d2;
     color: #fff;
     padding: 30px 15px;
     font-family: Arial, sans-serif;
@@ -304,7 +304,7 @@ p {
 
 .full-test-footer .footer-links a:hover {
     background: #ffd700;
-    color: #1a237e;
+    color: #d1d3e7;
     transform: scale(1.05);
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }

@@ -234,8 +234,11 @@ li {
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-#site-footer .footer-nav {
+#site-footer {
     margin-top: 15px;
+}
+.footer-nav{
+    margin-top: 10px;
 }
 
 #site-footer .footer-nav a {
@@ -247,7 +250,7 @@ li {
 
 #site-footer .footer-nav a:hover {
     color: #fff;
-    text-decoration: underline;
+    text-decoration: dotted underline;
 }
 
 #site-footer .copyright {

@@ -1,3 +1,4 @@
+/* Basic Page Setup */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f5f5f6;
@@ -5,58 +6,109 @@ body {
     padding: 0;
     color: #333;
 }
+
+/* Container */
 .container {
-    width: 85%;
-    max-width: 900px;
+    width: 90%;
+    max-width: 1000px;
+    margin: 50px auto;
     display: flex;
     flex-direction: column;
-    margin: 40px auto;
-    text-align: center;
-    border: 2px solid transparent;
-    padding: 20px;
     align-items: center;
     justify-content: flex-start;
-}
-h1 {
-    font-size: 34px;
-    color: #1a237e;
-    margin-bottom: 20px;
+    text-align: center;
 }
 
-a.chapter-link {
-    display: block;
-    margin: 12px auto;
-    padding: 18px 25px;
+/* Header */
+.header-container h1 {
+    font-size: 36px;
+    color: #1a237e;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.header-container p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Chapter Cards */
+.chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adds spacing between cards */
+    width: 100%;
+    align-items: center;
+}
+
+.chapter-card {
+    width: 85%;
+    max-width: 600px;
     background: #fff;
     border-left: 6px solid #1a237e;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    text-decoration: none;
-    color: #1a237e;
-    font-weight: bold;
-    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
 }
-a.chapter-link:hover {
+
+.chapter-card a.chapter-link {
+    display: block;
+    padding: 20px 30px;
+    color: #1a237e;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.chapter-card:hover {
     transform: translateX(5px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     background: #e3eaff;
 }
+
+/* Back Button */
 .back-button {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 30px 0;
 }
+
 .back-button a {
     display: inline-block;
     background-color: #344a84;
     color: #fff;
-    padding: 12px 25px;
-    border-radius: 8px;
+    padding: 14px 30px;
+    border-radius: 10px;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.2s, transform 0.2s;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
 }
+
 .back-button a:hover {
     background-color: #46c467;
     transform: translateY(-3px);
+}
+
+/* Footer */
+.footer {
+    margin-top: 50px;
+    padding: 30px 20px;
+    background: #1a237e;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.footer a {
+    color: #fdd835;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 0 8px;
+    transition: color 0.2s;
+}
+
+.footer a:hover {
+    color: #fff;
 }
