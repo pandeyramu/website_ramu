@@ -30,11 +30,11 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "ramup.com.np",
-    "www.ramup.com.np",
-    "cee.ramup.com.np", 
+    "pandeyramu.com.np", 
+    "ceequiz.pandeyramu.com.np",
     ".onrender.com",
 ]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://ramup.com.np",
     "https://www.ramup.com.np",
