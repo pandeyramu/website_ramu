@@ -20,9 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-temp-key")
-
-SECRET_KEY = 'django-insecure-x8r-%)q(4&p422u108&w&k#rsc(nc9=!)$4e7^l+b^qee^rdfp'
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-x8r-%)q(4&p422u108&w&k#rsc(nc9=!)$4e7^l+b^qee^rdfp")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -30,7 +28,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "pandeyramu.com.np", 
+    "pandeyramu.com.np",
     "ceequiz.pandeyramu.com.np",
     ".onrender.com",
 ]
@@ -38,10 +36,9 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://ramup.com.np",
     "https://www.ramup.com.np",
+    "https://pandeyramu.com.np",
+    "https://ceequiz.pandeyramu.com.np",
 ]
-
-
-
 
 # Application definition
 
@@ -85,14 +82,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'CEE.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'),
-            conn_max_age=600,
+            conn_max_age=0,  # Changed from 600 to prevent stale connections
             conn_health_checks=True,
             ssl_require=True
         )
@@ -108,14 +104,20 @@ else:
             'PORT': os.environ.get('DB_PORT', '5432'),
         }
     }
-# DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
 
+# Session Configuration - Extended for long tests
+SESSION_COOKIE_AGE = 14400  # 4 hours in seconds
+SESSION_SAVE_EVERY_REQUEST = True  # Keep session alive
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_SECURE = not DEBUG  # Use secure cookies in production
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
 
+# CSRF Configuration - Extended timeout
+CSRF_COOKIE_AGE = 14400  # 4 hours
+CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = 'Lax'
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -135,7 +137,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -147,7 +148,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
@@ -156,3 +156,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -21,16 +21,21 @@ from CEE_Quiz import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home , name='home' ),
-    path('subject/<int:subject_id>/' , views.chapters,name='chapters' ),
-    path('chapter/<int:chapter_id>/' , views.quiz , name= 'quiz'),
+    
+    # Keepalive endpoint for Render free tier
+    path('keepalive/', views.keepalive, name='keepalive'),
+    
+    # Main app URLs
+    path('', views.home, name='home'),
+    path('subject/<int:subject_id>/', views.chapters, name='chapters'),
+    path('chapter/<int:chapter_id>/', views.quiz, name='quiz'),
     path('full-test/', views.full_test, name='full_test'),
-     path("robots.txt", TemplateView.as_view(
+    
+    # SEO files
+    path("robots.txt", TemplateView.as_view(
         template_name="robots.txt",
         content_type="text/plain"
     )),
-
-    # Serve sitemap.xml
     path("sitemap.xml", TemplateView.as_view(
         template_name="sitemap.xml",
         content_type="application/xml"
