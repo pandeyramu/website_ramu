@@ -1,6 +1,8 @@
+
 // ==================== ACCURATE TIMER CODE ====================
 let endTime;
 let timerInterval;
+let currentUserName; // NEW: Store current user's name
 
 const timerDisplay = document.getElementById('timer');
 const quizForm = document.getElementById('quiz-form');
@@ -15,10 +17,12 @@ function afterSubmit() {
     quizForm.classList.add("submitted");
     
     // Clear saved answers after successful submission
-    localStorage.removeItem(`quiz_${chapterId}_answers`);
-    localStorage.removeItem(`quiz_${chapterId}_save_time`);
-    localStorage.removeItem(`quiz_${chapterId}_end_time`);
-    console.log('Quiz submitted - cleared all saved data');
+    if (currentUserName) {
+        localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_answers`);
+        localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_save_time`);
+        localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
+        console.log('Quiz submitted - cleared all saved data for', currentUserName);
+    }
 }
 
 function updateTimer() {
@@ -49,8 +53,10 @@ function updateTimer() {
         }, 100);
     }
     
-    // Save end time to localStorage
-    localStorage.setItem(`quiz_${chapterId}_end_time`, endTime);
+    // Save end time to localStorage with user-specific key
+    if (currentUserName) {
+        localStorage.setItem(`quiz_${chapterId}_${currentUserName}_end_time`, endTime);
+    }
 }
 
 function startQuiz(event) {
@@ -60,6 +66,9 @@ function startQuiz(event) {
         nameInput.focus();
         return;
     }
+    
+    // Set current user name (sanitize to avoid key conflicts)
+    currentUserName = nameInput.value.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
     
     const hiddenNameInput = document.getElementById('hidden-name');
     if (hiddenNameInput) {
@@ -75,8 +84,8 @@ function startQuiz(event) {
     quizForm.style.display = "block";
     timerDisplay.style.display = "block";
 
-    // Check if there's a saved end time
-    const savedEndTime = localStorage.getItem(`quiz_${chapterId}_end_time`);
+    // Check if there's a saved end time FOR THIS USER
+    const savedEndTime = localStorage.getItem(`quiz_${chapterId}_${currentUserName}_end_time`);
     if (savedEndTime) {
         const savedEnd = parseInt(savedEndTime);
         const now = Date.now();
@@ -89,14 +98,14 @@ function startQuiz(event) {
             } else {
                 // Start fresh - 45 minutes = 2700 seconds
                 endTime = Date.now() + (2700 * 1000);
-                localStorage.removeItem(`quiz_${chapterId}_answers`);
-                localStorage.removeItem(`quiz_${chapterId}_end_time`);
+                localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_answers`);
+                localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
             }
         } else {
             // Old test expired, start fresh
             endTime = Date.now() + (2700 * 1000);
-            localStorage.removeItem(`quiz_${chapterId}_answers`);
-            localStorage.removeItem(`quiz_${chapterId}_end_time`);
+            localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_answers`);
+            localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
         }
     } else {
         // No saved test, start fresh
@@ -117,11 +126,13 @@ quizForm.addEventListener("submit", function() {
 
 // Load saved answers on page load
 function loadSavedAnswers() {
-    const savedAnswers = localStorage.getItem(`quiz_${chapterId}_answers`);
+    if (!currentUserName) return;
+    
+    const savedAnswers = localStorage.getItem(`quiz_${chapterId}_${currentUserName}_answers`);
     if (savedAnswers) {
         try {
             const answers = JSON.parse(savedAnswers);
-            console.log('Loading saved answers:', Object.keys(answers).length);
+            console.log('Loading saved answers for', currentUserName, ':', Object.keys(answers).length);
             
             let restoredCount = 0;
             // Restore radio button selections
@@ -150,6 +161,8 @@ function loadSavedAnswers() {
 
 // Save answers to localStorage
 function saveAnswers() {
+    if (!currentUserName) return 0;
+    
     const form = document.querySelector('form#quiz-form');
     if (!form) return 0;
     
@@ -162,24 +175,24 @@ function saveAnswers() {
         answers[questionId] = radio.value;
     });
     
-    localStorage.setItem(`quiz_${chapterId}_answers`, JSON.stringify(answers));
-    localStorage.setItem(`quiz_${chapterId}_save_time`, new Date().toISOString());
+    localStorage.setItem(`quiz_${chapterId}_${currentUserName}_answers`, JSON.stringify(answers));
+    localStorage.setItem(`quiz_${chapterId}_${currentUserName}_save_time`, new Date().toISOString());
     
-    console.log('Auto-saved:', Object.keys(answers).length, 'answers');
+    console.log('Auto-saved for', currentUserName, ':', Object.keys(answers).length, 'answers');
     return Object.keys(answers).length;
 }
 
 // Auto-save every 30 seconds
 let autoSaveInterval = setInterval(function() {
-    if (quizForm && quizForm.style.display !== 'none') {
+    if (quizForm && quizForm.style.display !== 'none' && currentUserName) {
         const count = saveAnswers();
         updateSaveIndicator(count);
     }
-}, 30000);
+}, 30000); // 30 seconds
 
 // Save on every answer selection
 document.addEventListener('change', function(e) {
-    if (e.target.type === 'radio' && e.target.name.startsWith('q')) {
+    if (e.target.type === 'radio' && e.target.name.startsWith('q') && currentUserName) {
         saveAnswers();
         updateSaveIndicator();
         
@@ -193,7 +206,7 @@ document.addEventListener('change', function(e) {
 
 // Save before page unload
 window.addEventListener('beforeunload', function(e) {
-    if (quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted')) {
+    if (quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted') && currentUserName) {
         saveAnswers();
         // Optional: warn user about leaving
         e.preventDefault();
