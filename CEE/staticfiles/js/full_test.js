@@ -2,6 +2,7 @@
 // ==================== ACCURATE TIMER CODE ====================
 let endTime;
 let timerInterval;
+let currentUserName; // NEW: Store current user's name
 
 const timerDisplay = document.getElementById('full_test_timer');
 const quizForm = document.getElementById('full-test-form');
@@ -13,10 +14,12 @@ function afterSubmit() {
     quizForm.classList.add("submitted");
     
     // Clear saved answers after successful submission
-    localStorage.removeItem('full_test_answers');
-    localStorage.removeItem('full_test_save_time');
-    localStorage.removeItem('full_test_end_time');
-    console.log('Test submitted - cleared all saved data');
+    if (currentUserName) {
+        localStorage.removeItem(`full_test_${currentUserName}_answers`);
+        localStorage.removeItem(`full_test_${currentUserName}_save_time`);
+        localStorage.removeItem(`full_test_${currentUserName}_end_time`);
+        console.log('Test submitted - cleared all saved data for', currentUserName);
+    }
 }
 
 function updateTimer() {
@@ -49,8 +52,10 @@ function updateTimer() {
         }, 100);
     }
     
-    // Save end time to localStorage
-    localStorage.setItem('full_test_end_time', endTime);
+    // Save end time to localStorage with user-specific key
+    if (currentUserName) {
+        localStorage.setItem(`full_test_${currentUserName}_end_time`, endTime);
+    }
 }
 
 function startQuiz(event) {
@@ -60,6 +65,9 @@ function startQuiz(event) {
         nameInput.focus();
         return;
     }
+    
+    // Set current user name (sanitize to avoid key conflicts)
+    currentUserName = nameInput.value.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
     
     const hiddenNameInput = document.getElementById('hidden-name');
     if (hiddenNameInput) {
@@ -75,8 +83,8 @@ function startQuiz(event) {
     quizForm.style.display = "block";
     timerDisplay.style.display = "block";
 
-    // Check if there's a saved end time
-    const savedEndTime = localStorage.getItem('full_test_end_time');
+    // Check if there's a saved end time FOR THIS USER
+    const savedEndTime = localStorage.getItem(`full_test_${currentUserName}_end_time`);
     if (savedEndTime) {
         const savedEnd = parseInt(savedEndTime);
         const now = Date.now();
@@ -89,14 +97,14 @@ function startQuiz(event) {
             } else {
                 // Start fresh - 2.5 hours = 9000 seconds
                 endTime = Date.now() + (9000 * 1000);
-                localStorage.removeItem('full_test_answers');
-                localStorage.removeItem('full_test_end_time');
+                localStorage.removeItem(`full_test_${currentUserName}_answers`);
+                localStorage.removeItem(`full_test_${currentUserName}_end_time`);
             }
         } else {
             // Old test expired, start fresh
             endTime = Date.now() + (9000 * 1000);
-            localStorage.removeItem('full_test_answers');
-            localStorage.removeItem('full_test_end_time');
+            localStorage.removeItem(`full_test_${currentUserName}_answers`);
+            localStorage.removeItem(`full_test_${currentUserName}_end_time`);
         }
     } else {
         // No saved test, start fresh
@@ -113,15 +121,16 @@ quizForm.addEventListener("submit", function(){
     afterSubmit();
 });
 
-// ==================== AUTO-SAVE ANSWERS ====================
-
+// ==================== AUTO-SAVE ANSWERS ===================
 // Load saved answers on page load
 function loadSavedAnswers() {
-    const savedAnswers = localStorage.getItem('full_test_answers');
+    if (!currentUserName) return;
+    
+    const savedAnswers = localStorage.getItem(`full_test_${currentUserName}_answers`);
     if (savedAnswers) {
         try {
             const answers = JSON.parse(savedAnswers);
-            console.log('Loading saved answers:', Object.keys(answers).length);
+            console.log('Loading saved answers for', currentUserName, ':', Object.keys(answers).length);
             
             let restoredCount = 0;
             // Restore radio button selections
@@ -150,6 +159,8 @@ function loadSavedAnswers() {
 
 // Save answers to localStorage
 function saveAnswers() {
+    if (!currentUserName) return 0;
+    
     const form = document.querySelector('form#full-test-form');
     if (!form) return 0;
     
@@ -162,16 +173,16 @@ function saveAnswers() {
         answers[questionId] = radio.value;
     });
     
-    localStorage.setItem('full_test_answers', JSON.stringify(answers));
-    localStorage.setItem('full_test_save_time', new Date().toISOString());
+    localStorage.setItem(`full_test_${currentUserName}_answers`, JSON.stringify(answers));
+    localStorage.setItem(`full_test_${currentUserName}_save_time`, new Date().toISOString());
     
-    console.log('Auto-saved:', Object.keys(answers).length, 'answers');
+    console.log('Auto-saved for', currentUserName, ':', Object.keys(answers).length, 'answers');
     return Object.keys(answers).length;
 }
 
 // Auto-save every 30 seconds
 let autoSaveInterval = setInterval(function() {
-    if (quizForm && quizForm.style.display !== 'none') {
+    if (quizForm && quizForm.style.display !== 'none' && currentUserName) {
         const count = saveAnswers();
         updateSaveIndicator(count);
     }
@@ -179,7 +190,7 @@ let autoSaveInterval = setInterval(function() {
 
 // Save on every answer selection
 document.addEventListener('change', function(e) {
-    if (e.target.type === 'radio' && e.target.name.startsWith('q')) {
+    if (e.target.type === 'radio' && e.target.name.startsWith('q') && currentUserName) {
         saveAnswers();
         updateSaveIndicator();
         
@@ -193,7 +204,7 @@ document.addEventListener('change', function(e) {
 
 // Save before page unload
 window.addEventListener('beforeunload', function(e) {
-    if (quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted')) {
+    if (quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted') && currentUserName) {
         saveAnswers();
         // Optional: warn user about leaving
         e.preventDefault();
@@ -302,8 +313,9 @@ setInterval(function() {
     .catch(err => {
         console.error('Keepalive error:', err);
     });
-}, 300000);
+}, 300000); 
 
+// Ping on user activity
 let lastActivity = Date.now();
 document.addEventListener('click', function() {
     const now = Date.now();
@@ -312,4 +324,3 @@ document.addEventListener('click', function() {
         lastActivity = now;
     }
 });
-

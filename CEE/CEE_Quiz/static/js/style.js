@@ -1,7 +1,8 @@
 
-// ==================== TIMER CODE ====================
-let totalTime = 2700;
+// ==================== ACCURATE TIMER CODE ====================
+let endTime;
 let timerInterval;
+let currentUserName; // NEW: Store current user's name
 
 const timerDisplay = document.getElementById('timer');
 const quizForm = document.getElementById('quiz-form');
@@ -16,27 +17,34 @@ function afterSubmit() {
     quizForm.classList.add("submitted");
     
     // Clear saved answers after successful submission
-    localStorage.removeItem(`quiz_${chapterId}_answers`);
-    localStorage.removeItem(`quiz_${chapterId}_save_time`);
-    localStorage.removeItem(`quiz_${chapterId}_timer`);
-    console.log('Quiz submitted - cleared all saved data');
+    if (currentUserName) {
+        localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_answers`);
+        localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_save_time`);
+        localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
+        console.log('Quiz submitted - cleared all saved data for', currentUserName);
+    }
 }
 
 function updateTimer() {
-    let minutes = Math.floor(totalTime/60);
-    let seconds = totalTime % 60;
+    const now = Date.now();
+    const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+    
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
+    
     timerDisplay.textContent = `Time Left : ${minutes}: ${seconds}`;
     
-    if (totalTime <= 60) {
-        timerDisplay.style.color = totalTime % 2 === 0 ? "#fd2109ff" : "#fff";
-        timerDisplay.style.backgroundColor = totalTime % 2 === 0 ? "#000" : "#e74c3c";
+    if (timeLeft <= 60) {
+        timerDisplay.style.color = timeLeft % 2 === 0 ? "#fd2109ff" : "#fff";
+        timerDisplay.style.backgroundColor = timeLeft % 2 === 0 ? "#000" : "#e74c3c";
         timerDisplay.style.padding = "5px 10px";
         timerDisplay.style.borderRadius = "5px";
     }
 
-    if (totalTime <= 0) {
+    if (timeLeft <= 0) {
         clearInterval(timerInterval);
         alert("Time is up! Submitting your Answers......");
         afterSubmit();
@@ -44,11 +52,11 @@ function updateTimer() {
             quizForm.requestSubmit();  
         }, 100);
     }
-
-    totalTime--;
     
-    // Save timer state to localStorage
-    localStorage.setItem(`quiz_${chapterId}_timer`, totalTime);
+    // Save end time to localStorage with user-specific key
+    if (currentUserName) {
+        localStorage.setItem(`quiz_${chapterId}_${currentUserName}_end_time`, endTime);
+    }
 }
 
 function startQuiz(event) {
@@ -58,6 +66,9 @@ function startQuiz(event) {
         nameInput.focus();
         return;
     }
+    
+    // Set current user name (sanitize to avoid key conflicts)
+    currentUserName = nameInput.value.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
     
     const hiddenNameInput = document.getElementById('hidden-name');
     if (hiddenNameInput) {
@@ -73,18 +84,32 @@ function startQuiz(event) {
     quizForm.style.display = "block";
     timerDisplay.style.display = "block";
 
-    // Check if there's a saved timer state
-    const savedTimer = localStorage.getItem(`quiz_${chapterId}_timer`);
-    if (savedTimer && parseInt(savedTimer) > 0) {
-        const resume = confirm(`You have a saved quiz in progress with ${Math.floor(savedTimer/60)} minutes remaining. Resume?`);
-        if (resume) {
-            totalTime = parseInt(savedTimer);
+    // Check if there's a saved end time FOR THIS USER
+    const savedEndTime = localStorage.getItem(`quiz_${chapterId}_${currentUserName}_end_time`);
+    if (savedEndTime) {
+        const savedEnd = parseInt(savedEndTime);
+        const now = Date.now();
+        const timeLeft = Math.floor((savedEnd - now) / 1000);
+        
+        if (timeLeft > 0) {
+            const resume = confirm(`You have a saved quiz in progress with ${Math.floor(timeLeft/60)} minutes remaining. Resume?`);
+            if (resume) {
+                endTime = savedEnd;
+            } else {
+                // Start fresh - 45 minutes = 2700 seconds
+                endTime = Date.now() + (2700 * 1000);
+                localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_answers`);
+                localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
+            }
         } else {
-            // Start fresh
-            totalTime = 2700;
-            localStorage.removeItem(`quiz_${chapterId}_answers`);
-            localStorage.removeItem(`quiz_${chapterId}_timer`);
+            // Old test expired, start fresh
+            endTime = Date.now() + (2700 * 1000);
+            localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_answers`);
+            localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
         }
+    } else {
+        // No saved test, start fresh
+        endTime = Date.now() + (2700 * 1000);
     }
 
     updateTimer();
@@ -99,14 +124,15 @@ quizForm.addEventListener("submit", function() {
 
 // ==================== AUTO-SAVE ANSWERS ====================
 
-
 // Load saved answers on page load
 function loadSavedAnswers() {
-    const savedAnswers = localStorage.getItem(`quiz_${chapterId}_answers`);
+    if (!currentUserName) return;
+    
+    const savedAnswers = localStorage.getItem(`quiz_${chapterId}_${currentUserName}_answers`);
     if (savedAnswers) {
         try {
             const answers = JSON.parse(savedAnswers);
-            console.log('Loading saved answers:', Object.keys(answers).length);
+            console.log('Loading saved answers for', currentUserName, ':', Object.keys(answers).length);
             
             let restoredCount = 0;
             // Restore radio button selections
@@ -135,6 +161,8 @@ function loadSavedAnswers() {
 
 // Save answers to localStorage
 function saveAnswers() {
+    if (!currentUserName) return 0;
+    
     const form = document.querySelector('form#quiz-form');
     if (!form) return 0;
     
@@ -147,16 +175,16 @@ function saveAnswers() {
         answers[questionId] = radio.value;
     });
     
-    localStorage.setItem(`quiz_${chapterId}_answers`, JSON.stringify(answers));
-    localStorage.setItem(`quiz_${chapterId}_save_time`, new Date().toISOString());
+    localStorage.setItem(`quiz_${chapterId}_${currentUserName}_answers`, JSON.stringify(answers));
+    localStorage.setItem(`quiz_${chapterId}_${currentUserName}_save_time`, new Date().toISOString());
     
-    console.log('Auto-saved:', Object.keys(answers).length, 'answers');
+    console.log('Auto-saved for', currentUserName, ':', Object.keys(answers).length, 'answers');
     return Object.keys(answers).length;
 }
 
 // Auto-save every 30 seconds
 let autoSaveInterval = setInterval(function() {
-    if (quizForm && quizForm.style.display !== 'none') {
+    if (quizForm && quizForm.style.display !== 'none' && currentUserName) {
         const count = saveAnswers();
         updateSaveIndicator(count);
     }
@@ -164,7 +192,7 @@ let autoSaveInterval = setInterval(function() {
 
 // Save on every answer selection
 document.addEventListener('change', function(e) {
-    if (e.target.type === 'radio' && e.target.name.startsWith('q')) {
+    if (e.target.type === 'radio' && e.target.name.startsWith('q') && currentUserName) {
         saveAnswers();
         updateSaveIndicator();
         
@@ -178,7 +206,7 @@ document.addEventListener('change', function(e) {
 
 // Save before page unload
 window.addEventListener('beforeunload', function(e) {
-    if (quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted')) {
+    if (quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted') && currentUserName) {
         saveAnswers();
         // Optional: warn user about leaving
         e.preventDefault();
