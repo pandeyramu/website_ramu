@@ -1,6 +1,6 @@
 
-// ==================== TIMER CODE ====================
-let totalTime = 9000;
+// ==================== ACCURATE TIMER CODE ====================
+let endTime;
 let timerInterval;
 
 const timerDisplay = document.getElementById('full_test_timer');
@@ -15,14 +15,17 @@ function afterSubmit() {
     // Clear saved answers after successful submission
     localStorage.removeItem('full_test_answers');
     localStorage.removeItem('full_test_save_time');
-    localStorage.removeItem('full_test_timer');
+    localStorage.removeItem('full_test_end_time');
     console.log('Test submitted - cleared all saved data');
 }
 
 function updateTimer() {
-    let hours = Math.floor(totalTime / 3600);
-    let minutes = Math.floor((totalTime % 3600) / 60);
-    let seconds = totalTime % 60;
+    const now = Date.now();
+    const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+    
+    let hours = Math.floor(timeLeft / 3600);
+    let minutes = Math.floor((timeLeft % 3600) / 60);
+    let seconds = timeLeft % 60;
 
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -30,14 +33,14 @@ function updateTimer() {
 
     timerDisplay.textContent = `Time Left: ${hours}:${minutes}:${seconds}`;
     
-    if (totalTime <= 60) {
-        timerDisplay.style.color = totalTime % 2 === 0 ? "#fd2109ff" : "#fff";
-        timerDisplay.style.backgroundColor = totalTime % 2 === 0 ? "#000" : "#e74c3c";
+    if (timeLeft <= 60) {
+        timerDisplay.style.color = timeLeft % 2 === 0 ? "#fd2109ff" : "#fff";
+        timerDisplay.style.backgroundColor = timeLeft % 2 === 0 ? "#000" : "#e74c3c";
         timerDisplay.style.padding = "5px 10px";
         timerDisplay.style.borderRadius = "5px";
     }
 
-    if (totalTime <= 0) {
+    if (timeLeft <= 0) {
         clearInterval(timerInterval);
         alert("Time is up! Submitting your Answers...");
         afterSubmit();
@@ -45,11 +48,9 @@ function updateTimer() {
             quizForm.requestSubmit();  
         }, 100);
     }
-
-    totalTime--;
     
-    // Save timer state to localStorage
-    localStorage.setItem('full_test_timer', totalTime);
+    // Save end time to localStorage
+    localStorage.setItem('full_test_end_time', endTime);
 }
 
 function startQuiz(event) {
@@ -74,18 +75,32 @@ function startQuiz(event) {
     quizForm.style.display = "block";
     timerDisplay.style.display = "block";
 
-    // Check if there's a saved timer state
-    const savedTimer = localStorage.getItem('full_test_timer');
-    if (savedTimer && parseInt(savedTimer) > 0) {
-        const resume = confirm(`You have a saved test in progress with ${Math.floor(savedTimer/60)} minutes remaining. Resume?`);
-        if (resume) {
-            totalTime = parseInt(savedTimer);
+    // Check if there's a saved end time
+    const savedEndTime = localStorage.getItem('full_test_end_time');
+    if (savedEndTime) {
+        const savedEnd = parseInt(savedEndTime);
+        const now = Date.now();
+        const timeLeft = Math.floor((savedEnd - now) / 1000);
+        
+        if (timeLeft > 0) {
+            const resume = confirm(`You have a saved test in progress with ${Math.floor(timeLeft/60)} minutes remaining. Resume?`);
+            if (resume) {
+                endTime = savedEnd;
+            } else {
+                // Start fresh - 2.5 hours = 9000 seconds
+                endTime = Date.now() + (9000 * 1000);
+                localStorage.removeItem('full_test_answers');
+                localStorage.removeItem('full_test_end_time');
+            }
         } else {
-            // Start fresh
-            totalTime = 9000;
+            // Old test expired, start fresh
+            endTime = Date.now() + (9000 * 1000);
             localStorage.removeItem('full_test_answers');
-            localStorage.removeItem('full_test_timer');
+            localStorage.removeItem('full_test_end_time');
         }
+    } else {
+        // No saved test, start fresh
+        endTime = Date.now() + (9000 * 1000);
     }
 
     updateTimer();
@@ -287,9 +302,8 @@ setInterval(function() {
     .catch(err => {
         console.error('Keepalive error:', err);
     });
-}, 300000); // 5 minutes
+}, 300000);
 
-// Ping on user activity
 let lastActivity = Date.now();
 document.addEventListener('click', function() {
     const now = Date.now();
@@ -298,3 +312,4 @@ document.addEventListener('click', function() {
         lastActivity = now;
     }
 });
+

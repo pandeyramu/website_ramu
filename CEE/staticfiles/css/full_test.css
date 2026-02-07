@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .name_place {
     display: flex;
     justify-self: center;
@@ -26,10 +27,12 @@ body {
     box-shadow: 0 0 10px rgba(21, 179, 0, 0.3);
     background-color: #f0fff0;
 }
+
 .name_place::placeholder {
     color: #999;
     font-style: italic;
 }
+
 #start_full_test {
     display: flex;
     justify-self: center;
@@ -101,11 +104,28 @@ p {
     border: 1px solid #1dc0dd;
     border-radius: 8px;
     background: #f7f7f7;
+    transition: all 0.3s ease;
 }
 
 .question-block:hover {
     box-shadow: 0 8px 20px rgba(72, 9, 9, 0.7);
     z-index: 2;
+}
+
+/* NEW: Visual feedback for answered questions */
+.question-block.answered {
+    background-color: #f0f8ff;
+    border-left: 4px solid #4CAF50;
+    padding-left: 15px;
+}
+
+.question-container.answered,
+.question.answered,
+div[class*="question"].answered {
+    background-color: #f0f8ff;
+    border-left: 4px solid #4CAF50;
+    padding-left: 10px;
+    transition: all 0.3s ease;
 }
 
 .option {
@@ -160,8 +180,9 @@ p {
     transform: scale(1.05) translateY(-4px);
     box-shadow: 0 2px 8px rgba(208, 132, 0, 0.8);
 }
+
 .home-btn {
-      display: flex;
+    display: flex;
     justify-self: center;
     width: fit-content;
     padding: 12px;
@@ -184,6 +205,7 @@ p {
     transform: scale(1.02) translateY(-2px);
     box-shadow: 0 2px 8px rgba(208, 132, 0, 0.8);
 }
+
 .quiz-form.submitted .option,
 .quiz-form.submitted .option input,
 .quiz-form.submitted .option span {
@@ -280,18 +302,16 @@ p {
     color: #fff;
 }
 
-/* Flex container for footer links */
 .full-test-footer .footer-links {
     display: flex;
-    flex-wrap: wrap;       /* allows wrapping to next line */
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;             /* space between links */
+    gap: 15px;
 }
 
-/* Footer link style */
 .full-test-footer .footer-links a {
-    flex: 0 0 calc(33.333% - 10px); /* 3 per row with gap accounted */
-    max-width: 200px;               /* optional, limit link width */
+    flex: 0 0 calc(33.333% - 10px);
+    max-width: 200px;
     display: inline-block;
     padding: 8px 12px;
     background: #6c757d;
@@ -315,9 +335,41 @@ p {
     color: #ccc;
 }
 
+/* ==================== AUTO-SAVE INDICATOR STYLES ==================== */
+
+#save-indicator {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#save-indicator:hover {
+    opacity: 1 !important;
+    transform: scale(1.05);
+}
+
+/* Hide save indicator after submission */
+.submitted #save-indicator {
+    display: none;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     .full-test-footer .footer-links a {
-        flex: 0 0 80%; /* stack links on mobile */
+        flex: 0 0 80%;
+    }
+    
+    /* Adjust save indicator on mobile */
+    #save-indicator {
+        bottom: 10px !important;
+        right: 10px !important;
+        font-size: 12px !important;
+        padding: 8px 15px !important;
+    }
+    
+    /* Adjust timer on mobile */
+    #full_test_timer {
+        font-size: 20px;
+        top: 10px;
+        left: 10px;
     }
 }

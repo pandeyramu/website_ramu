@@ -1,6 +1,5 @@
-
-// ==================== TIMER CODE ====================
-let totalTime = 2700;
+// ==================== ACCURATE TIMER CODE ====================
+let endTime;
 let timerInterval;
 
 const timerDisplay = document.getElementById('timer');
@@ -18,25 +17,30 @@ function afterSubmit() {
     // Clear saved answers after successful submission
     localStorage.removeItem(`quiz_${chapterId}_answers`);
     localStorage.removeItem(`quiz_${chapterId}_save_time`);
-    localStorage.removeItem(`quiz_${chapterId}_timer`);
+    localStorage.removeItem(`quiz_${chapterId}_end_time`);
     console.log('Quiz submitted - cleared all saved data');
 }
 
 function updateTimer() {
-    let minutes = Math.floor(totalTime/60);
-    let seconds = totalTime % 60;
+    const now = Date.now();
+    const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+    
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
+    
     timerDisplay.textContent = `Time Left : ${minutes}: ${seconds}`;
     
-    if (totalTime <= 60) {
-        timerDisplay.style.color = totalTime % 2 === 0 ? "#fd2109ff" : "#fff";
-        timerDisplay.style.backgroundColor = totalTime % 2 === 0 ? "#000" : "#e74c3c";
+    if (timeLeft <= 60) {
+        timerDisplay.style.color = timeLeft % 2 === 0 ? "#fd2109ff" : "#fff";
+        timerDisplay.style.backgroundColor = timeLeft % 2 === 0 ? "#000" : "#e74c3c";
         timerDisplay.style.padding = "5px 10px";
         timerDisplay.style.borderRadius = "5px";
     }
 
-    if (totalTime <= 0) {
+    if (timeLeft <= 0) {
         clearInterval(timerInterval);
         alert("Time is up! Submitting your Answers......");
         afterSubmit();
@@ -44,11 +48,9 @@ function updateTimer() {
             quizForm.requestSubmit();  
         }, 100);
     }
-
-    totalTime--;
     
-    // Save timer state to localStorage
-    localStorage.setItem(`quiz_${chapterId}_timer`, totalTime);
+    // Save end time to localStorage
+    localStorage.setItem(`quiz_${chapterId}_end_time`, endTime);
 }
 
 function startQuiz(event) {
@@ -73,18 +75,32 @@ function startQuiz(event) {
     quizForm.style.display = "block";
     timerDisplay.style.display = "block";
 
-    // Check if there's a saved timer state
-    const savedTimer = localStorage.getItem(`quiz_${chapterId}_timer`);
-    if (savedTimer && parseInt(savedTimer) > 0) {
-        const resume = confirm(`You have a saved quiz in progress with ${Math.floor(savedTimer/60)} minutes remaining. Resume?`);
-        if (resume) {
-            totalTime = parseInt(savedTimer);
+    // Check if there's a saved end time
+    const savedEndTime = localStorage.getItem(`quiz_${chapterId}_end_time`);
+    if (savedEndTime) {
+        const savedEnd = parseInt(savedEndTime);
+        const now = Date.now();
+        const timeLeft = Math.floor((savedEnd - now) / 1000);
+        
+        if (timeLeft > 0) {
+            const resume = confirm(`You have a saved quiz in progress with ${Math.floor(timeLeft/60)} minutes remaining. Resume?`);
+            if (resume) {
+                endTime = savedEnd;
+            } else {
+                // Start fresh - 45 minutes = 2700 seconds
+                endTime = Date.now() + (2700 * 1000);
+                localStorage.removeItem(`quiz_${chapterId}_answers`);
+                localStorage.removeItem(`quiz_${chapterId}_end_time`);
+            }
         } else {
-            // Start fresh
-            totalTime = 2700;
+            // Old test expired, start fresh
+            endTime = Date.now() + (2700 * 1000);
             localStorage.removeItem(`quiz_${chapterId}_answers`);
-            localStorage.removeItem(`quiz_${chapterId}_timer`);
+            localStorage.removeItem(`quiz_${chapterId}_end_time`);
         }
+    } else {
+        // No saved test, start fresh
+        endTime = Date.now() + (2700 * 1000);
     }
 
     updateTimer();
@@ -98,7 +114,6 @@ quizForm.addEventListener("submit", function() {
 });
 
 // ==================== AUTO-SAVE ANSWERS ====================
-
 
 // Load saved answers on page load
 function loadSavedAnswers() {
@@ -160,7 +175,7 @@ let autoSaveInterval = setInterval(function() {
         const count = saveAnswers();
         updateSaveIndicator(count);
     }
-}, 30000); // 30 seconds
+}, 30000);
 
 // Save on every answer selection
 document.addEventListener('change', function(e) {
