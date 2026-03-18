@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /__debug__/
-Sitemap: https://cee-quiz.onrender.com/sitemap.xml
+Sitemap: https://ceequiz.pandeyramu.com.np/sitemap.xml

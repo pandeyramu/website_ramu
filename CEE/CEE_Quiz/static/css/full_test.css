@@ -1,3 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: #f9f9f9;
@@ -80,6 +88,24 @@ body {
     padding: 25px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 10px;
+}
+
+.container,
+.review-hint {
+    margin-top: 10px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: #555;
+    background: #f0f7ff;
+    border-left: 3px solid #007bff;
+    border-radius: 4px;
+}
+
+.question-block,
+.score-card,
+.option-text {
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 h1 {
@@ -260,64 +286,143 @@ p {
 }
 
 .full-test-footer {
-    text-align: center;
-    background: #4854d2;
+    background: #1a237e;
     color: #fff;
-    padding: 30px 15px;
-    font-family: Arial, sans-serif;
+    padding: 40px 15px;
     margin-top: 50px;
 }
 
+.full-test-footer .footer-container {
+    width: 90%;
+    max-width: 980px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .full-test-footer h2 {
-    margin-bottom: 10px;
-    font-size: 24px;
+    margin-bottom: 8px;
+    font-size: 28px;
     color: #ffd700;
 }
 
+.full-test-footer h3 {
+    margin: 0 0 14px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
 .full-test-footer p {
-    margin: 5px 0 15px 0;
+    margin: 0 0 16px;
     font-size: 16px;
-    color: #fff;
+    color: #d7dbff;
+    line-height: 1.5;
+}
+
+.full-test-footer .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    gap: 18px;
+    margin-top: 22px;
+}
+
+.full-test-footer .footer-section {
+    margin: 0;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.full-test-footer .footer-links-section {
+    background-color: #2b378f;
+}
+
+.full-test-footer .footer-nav-section {
+    background-color: #1f2b7a;
 }
 
 /* Flex container for footer links */
 .full-test-footer .footer-links {
-    display: flex;
-    flex-wrap: wrap;       /* allows wrapping to next line */
-    justify-content: center;
-    gap: 15px;             /* space between links */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 6px;
 }
 
 /* Footer link style */
 .full-test-footer .footer-links a {
-    flex: 0 0 calc(33.333% - 10px); /* 3 per row with gap accounted */
-    max-width: 200px;               /* optional, limit link width */
-    display: inline-block;
-    padding: 8px 12px;
-    background: #6c757d;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.12);
     color: #fff;
     text-decoration: none;
-    border-radius: 5px;
-    transition: 0.3s;
-    text-align: center;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+    font-weight: 600;
 }
 
 .full-test-footer .footer-links a:hover {
     background: #ffd700;
-    color: #d1d3e7;
-    transform: scale(1.05);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    color: #1a237e;
+    transform: translateY(-2px);
+}
+
+.full-test-footer .footer-nav {
+    display: grid;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.full-test-footer .footer-nav a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #e9ecff;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    font-weight: 600;
+}
+
+.full-test-footer .footer-nav a:hover {
+    background: #ffd700;
+    color: #1a237e;
+    transform: translateY(-2px);
 }
 
 .footer-copy {
-    margin-top: 15px;
-    font-size: 0.9em;
-    color: #ccc;
+    margin-top: 22px;
+    font-size: 14px;
+    color: #b7c0ff;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-    .full-test-footer .footer-links a {
-        flex: 0 0 80%; /* stack links on mobile */
+    .container {
+        width: calc(100% - 20px);
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .question-block {
+        padding: 12px;
+    }
+
+    #full_test_timer {
+        top: 10px;
+        left: 10px;
+        font-size: 20px;
+        padding: 6px 8px;
+    }
+
+    .score-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .full-test-footer .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-test-footer .footer-section {
+        text-align: center;
     }
 }

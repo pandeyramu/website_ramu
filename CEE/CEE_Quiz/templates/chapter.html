@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Chapters - {{ subject.name }} | Ramu Pandey CEE Quiz</title>
-    <meta name="description" content="Explore all chapters for {{ subject.name }} in = Ramu Pandey's  CEE Quiz. Practice quizzes, multiple-choice questions, and exercises.">
+    <meta name="description" content="Explore all chapters for {{ subject.name }} in Ramu Pandey's CEE Quiz. Practice quizzes, multiple-choice questions, and exercises.">
     <meta name="keywords" content="CEE Quiz, {{ subject.name }}, Chapters, Online Quiz, Practice Questions">
-    <meta name="author" content=" Ramu Pandey">
+    <meta name="author" content="Ramu Pandey">
 
     <!-- Open Graph / Social -->
     <meta property="og:title" content="Chapters - {{ subject.name }} | Pandey Ramu CEE Quiz">
@@ -28,8 +28,8 @@
 
     <!-- Favicon (all browsers) -->
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
 </head>
-
 
 <body>
     <header class="header-container">
@@ -38,17 +38,63 @@
     </header>
 
     <main class="container">
-        <section class="chapter-list">
-            {% if chapters %}
-                {% for chap in chapters %}
-                    <article class="chapter-card">
-                        <a href="{% url 'quiz' chap.id %}" class="chapter-link">{{ chap.name }}</a>
-                    </article>
-                {% endfor %}
+        {% if chapters %}
+            {% if subject.name|lower == 'biology' %}
+                <section class="chapter-group botany-group">
+                    <div class="group-header">
+                        <h2>Botany</h2>
+                        <span class="group-marks">50 Marks</span>
+                    </div>
+                    <div class="chapter-list">
+                        {% for chap in chapters %}
+                            {% if forloop.counter <= 5 %}
+                                <article class="chapter-card botany-card">
+                                    {% if chap.has_subchapters %}
+                                        <a href="{% url 'subchapters' chap.id %}" class="chapter-link">{{ chap.name }}</a>
+                                    {% else %}
+                                        <a href="{% url 'quiz' chap.id %}" class="chapter-link">{{ chap.name }}</a>
+                                    {% endif %}
+                                </article>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="chapter-group zoology-group">
+                    <div class="group-header">
+                        <h2>Zoology</h2>
+                        <span class="group-marks">50 Marks</span>
+                    </div>
+                    <div class="chapter-list">
+                        {% for chap in chapters %}
+                            {% if forloop.counter > 5 %}
+                                <article class="chapter-card zoology-card">
+                                    {% if chap.has_subchapters %}
+                                        <a href="{% url 'subchapters' chap.id %}" class="chapter-link">{{ chap.name }}</a>
+                                    {% else %}
+                                        <a href="{% url 'quiz' chap.id %}" class="chapter-link">{{ chap.name }}</a>
+                                    {% endif %}
+                                </article>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
             {% else %}
-                <p>No chapters available for this subject.</p>
+                <section class="chapter-list">
+                    {% for chap in chapters %}
+                        <article class="chapter-card">
+                            {% if chap.has_subchapters %}
+                                <a href="{% url 'subchapters' chap.id %}" class="chapter-link">{{ chap.name }}</a>
+                            {% else %}
+                                <a href="{% url 'quiz' chap.id %}" class="chapter-link">{{ chap.name }}</a>
+                            {% endif %}
+                        </article>
+                    {% endfor %}
+                </section>
             {% endif %}
-        </section>
+        {% else %}
+            <p>No chapters available for this subject.</p>
+        {% endif %}
 
         <nav class="back-button">
             <a href="{% url 'home' %}">← Back to Subjects</a>
@@ -56,7 +102,7 @@
     </main>
 
     <footer class="footer">
-        <p>© 2026  Ramu Pandey. All Rights Reserved.</p>
+        <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
         <p>Follow me on 
             <a href="https://github.com/pandeyramu" target="_blank">GitHub</a> | 
             <a href="https://www.facebook.com/ramu.pandey38" target="_blank">Facebook</a>
@@ -75,7 +121,7 @@
           "@type": "ListItem",
           "position": {{ forloop.counter }},
           "name": "{{ chap.name }}",
-          "url": "{{ request.build_absolute_uri|slice:":-1" }}{{ chap.id }}/"
+                    "url": "{{ request.build_absolute_uri|slice:":-1" }}{{ chap.id }}/"
         }{% if not forloop.last %},{% endif %}
         {% endfor %}
       ]

@@ -1,1 +1,1 @@
-web: gunicorn CEE_Quiz.wsgi:application
+web: gunicorn CEE.wsgi:application

@@ -1,3 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
 /* Basic Page Setup */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -5,6 +13,20 @@ body {
     margin: 0;
     padding: 0;
     color: #333;
+}
+
+.container,
+.chapter-list,
+.chapter-card,
+.chapter-link,
+.group-header,
+.group-marks,
+h1,
+h2,
+p,
+a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 /* Container */
@@ -68,6 +90,86 @@ body {
     background: #e3eaff;
 }
 
+/* Biology grouped sections */
+.chapter-group {
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 28px;
+    padding: 18px 0 6px;
+    border-radius: 14px;
+}
+
+.group-header {
+    width: 85%;
+    max-width: 600px;
+    margin: 0 auto 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.group-header h2 {
+    margin: 0;
+    font-size: 26px;
+}
+
+.group-marks {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+}
+
+.botany-group {
+    background: #e8f5e9;
+}
+
+.botany-group .group-header h2 {
+    color: #1b5e20;
+}
+
+.botany-group .group-marks {
+    background: #2e7d32;
+    color: #fff;
+}
+
+.botany-card {
+    border-left-color: #2e7d32;
+}
+
+.botany-card a.chapter-link {
+    color: #1b5e20;
+}
+
+.botany-card:hover {
+    background: #dff0e2;
+}
+
+.zoology-group {
+    background: #fff3e0;
+}
+
+.zoology-group .group-header h2 {
+    color: #e65100;
+}
+
+.zoology-group .group-marks {
+    background: #ef6c00;
+    color: #fff;
+}
+
+.zoology-card {
+    border-left-color: #ef6c00;
+}
+
+.zoology-card a.chapter-link {
+    color: #bf360c;
+}
+
+.zoology-card:hover {
+    background: #ffe8d4;
+}
+
 /* Back Button */
 .back-button {
     margin: 30px 0;
@@ -112,3 +214,5 @@ body {
 .footer a:hover {
     color: #fff;
 }
+
+

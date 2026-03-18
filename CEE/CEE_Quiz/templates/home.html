@@ -29,24 +29,22 @@
 
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
 </head>
 
 <body>
     <header>
         <div class="welcome-text" id="welcome">
             <script>
-                const text = `Welcome to the Site!
-                A site to practice chapter-wise questions, strengthen concepts, and boost your confidence for the
-                Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry,
-                Physics to enhance your preparation effectively.`;
+                const text = `Welcome to the Site!\nA site to practice chapter-wise questions, strengthen concepts, and boost your confidence for the Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry, Physics to enhance your preparation effectively.`;
                 const welcome = document.getElementById('welcome');
                 welcome.innerHTML = '';
                 let index = 0;
-                function typewriter(){
-                    if(index < text.length){
+                function typewriter() {
+                    if (index < text.length) {
                         welcome.innerHTML += text.charAt(index);
                         index++;
-                        setTimeout(typewriter, 30);
+                        setTimeout(typewriter, 22);
                     }
                 }
                 window.onload = () => typewriter();
@@ -237,6 +235,7 @@
         <section class="subjects">
     <h2>Welcome to CEE Chapter-wise Quiz</h2>
     <p>Select a subject and start practicing!</p>
+            <p class="total-question-count">Total questions available: {{ total_questions }}</p>
 
     <div class="button-group">
         {% for sub in subjects %}
@@ -256,23 +255,23 @@
         <h2>Get In Touch</h2>
         <p>Have questions or want to connect? Reach out via email or follow me on social platforms.</p>
 
-        <!-- Contact Links Section -->
-        <div class="footer-section footer-links-section">
-            <h3>Contact Me</h3>
-            <div class="footer-links">
-                <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">📧 Email</a>
-                <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">🐱 GitHub</a>
-                <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">ⓕ Facebook</a>
+        <div class="footer-grid">
+            <div class="footer-section footer-links-section">
+                <h3>Contact Me</h3>
+                <div class="footer-links">
+                    <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
+                    <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">Facebook</a>
+                </div>
             </div>
-        </div>
 
-        <!-- Navigation Section -->
-        <div class="footer-section footer-nav-section">
-            <h3>Navigate</h3>
-            <div class="footer-nav">
-                <a href="https://pandeyramu.com.np/" target="_blank" rel="noopener noreferrer">Portfolio</a>
-                <a href="https://pandeyramu.com.np/blog.html" target="_blank" rel="noopener noreferrer">Blog</a>
-                <a href="https://pandeyramu.com.np/privacy.html" target="_blank" rel="noopener noreferrer">Privacy / Terms</a>
+            <div class="footer-section footer-nav-section">
+                <h3>Navigate</h3>
+                <div class="footer-nav">
+                    <a href="https://pandeyramu.com.np/" target="_blank" rel="noopener noreferrer">Portfolio</a>
+                    <a href="https://pandeyramu.com.np/blog.html" target="_blank" rel="noopener noreferrer">Blog</a>
+                    <a href="https://pandeyramu.com.np/privacy.html" target="_blank" rel="noopener noreferrer">Privacy / Terms</a>
+                </div>
             </div>
         </div>
 

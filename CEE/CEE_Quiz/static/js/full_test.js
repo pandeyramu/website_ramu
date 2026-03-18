@@ -8,6 +8,21 @@ const quizForm = document.getElementById('full-test-form');
 const startBtn = document.getElementById('start_full_test');
 const nameInput = document.querySelector('input[name="name"]');
 
+function formatScientificText() {
+    const targets = document.querySelectorAll('.question-block p strong, .option .option-text');
+    targets.forEach((el) => {
+        const raw = el.textContent || '';
+        if (!raw) {
+            return;
+        }
+
+        const formatted = raw.replace(/([A-Za-z])\^\s*(-?\d+)/g, '$1<sup>$2</sup>');
+        if (formatted !== raw) {
+            el.innerHTML = formatted;
+        }
+    });
+}
+
 function afterSubmit() {
     clearInterval(timerInterval);
     quizForm.classList.add("submitted");
@@ -263,6 +278,7 @@ if (quizForm) {
 
 // Also load on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
+    formatScientificText();
     if (quizForm && quizForm.style.display !== 'none') {
         loadSavedAnswers();
     }

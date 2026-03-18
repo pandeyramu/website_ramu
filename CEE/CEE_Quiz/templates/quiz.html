@@ -7,33 +7,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>{{ chapter.name }} Quiz | CEE Chapter-wise Practice</title>
-    <meta name="description" content="Take the {{ chapter.name }} quiz for the Common Entrance Examination. Practice chapter-wise questions and track your performance with detailed results.">
-    <meta name="keywords" content="CEE Quiz, {{ chapter.name }} Quiz, Chapter-wise Questions, Online Practice, Pandey Ramu">
+    <title>{% if sub_chapter %}{{ sub_chapter.name }} Quiz | {{ chapter.name }}{% else %}{{ chapter.name }} Quiz | CEE Chapter-wise Practice{% endif %}</title>
+    <meta name="description" content="{% if sub_chapter %}Take the {{ sub_chapter.name }} quiz from {{ chapter.name }} for the Common Entrance Examination. Practice topic-wise questions and track your performance with detailed results.{% else %}Take the {{ chapter.name }} quiz for the Common Entrance Examination. Practice chapter-wise questions and track your performance with detailed results.{% endif %}">
+    <meta name="keywords" content="CEE Quiz, {% if sub_chapter %}{{ sub_chapter.name }} Quiz, {{ chapter.name }}{% else %}{{ chapter.name }} Quiz, Chapter-wise Questions{% endif %}, Online Practice, Pandey Ramu">
     <meta name="author" content="Pandey Ramu">
 
     <!-- Open Graph / Social Preview -->
-    <meta property="og:title" content="{{ chapter.name }} Quiz | CEE Chapter-wise Practice">
-    <meta property="og:description" content="Take the {{ chapter.name }} quiz for the Common Entrance Examination. Practice chapter-wise questions and track your performance with detailed results.">
+    <meta property="og:title" content="{% if sub_chapter %}{{ sub_chapter.name }} Quiz | {{ chapter.name }}{% else %}{{ chapter.name }} Quiz | CEE Chapter-wise Practice{% endif %}">
+    <meta property="og:description" content="{% if sub_chapter %}Take the {{ sub_chapter.name }} quiz from {{ chapter.name }} for the Common Entrance Examination. Practice topic-wise questions and track your performance with detailed results.{% else %}Take the {{ chapter.name }} quiz for the Common Entrance Examination. Practice chapter-wise questions and track your performance with detailed results.{% endif %}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="{% static 'images/favicon.png' %}">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ chapter.name }} Quiz">
-    <meta name="twitter:description" content="Practice {{ chapter.name }} quiz questions online and improve your CEE preparation.">
+    <meta name="twitter:title" content="{% if sub_chapter %}{{ sub_chapter.name }} Quiz | {{ chapter.name }}{% else %}{{ chapter.name }} Quiz{% endif %}">
+    <meta name="twitter:description" content="{% if sub_chapter %}Practice {{ sub_chapter.name }} questions from {{ chapter.name }} online and improve your CEE preparation.{% else %}Practice {{ chapter.name }} quiz questions online and improve your CEE preparation.{% endif %}">
     <meta name="twitter:image" content="{% static 'images/favicon.png' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)'], ['$', '$']],
+                displayMath: [['\\[', '\\]'], ['$$', '$$']],
+                processEscapes: true,
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            },
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
     <header>
         <div class="container">
-            <h1>{{ chapter.name }} Quiz</h1>
-            <p>Test your knowledge of {{ chapter.name }} with chapter-wise questions and track your score.</p>
+            <h1>{% if sub_chapter %}{{ sub_chapter.name }} Quiz{% else %}{{ chapter.name }} Quiz{% endif %}</h1>
+            <p>{% if sub_chapter %}Test your knowledge of {{ sub_chapter.name }} from {{ chapter.name }} with topic-wise questions and track your score.{% else %}Test your knowledge of {{ chapter.name }} with chapter-wise questions and track your score.{% endif %}</p>
         </div>
     </header>
 
@@ -47,7 +62,7 @@
             <div id="timer" style="display: none;"></div>
             {% endif %}
 
-            <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% url 'quiz' chapter.id %}" id="quiz-form"
+            <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.id %}{% else %}{% url 'quiz' chapter.id %}{% endif %}" id="quiz-form"
                 {% if not quiz_started and score is None %}style="display: none;"{% else %}style="display: block;"{% endif %}>
                 {% csrf_token %}
                 <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
@@ -72,6 +87,9 @@
                         {% endwith %}
                         {% endwith %}
                     {% endfor %}
+                    {% if score is not None %}
+                    <p class="review-hint">Review: {{ q.chapter.name }}{% if q.sub_chapter %} &rsaquo; {{ q.sub_chapter.name }}{% endif %}</p>
+                    {% endif %}
                 </article>
                 {% endfor %}
 
@@ -111,16 +129,20 @@
                 {% endif %}
             </form>
         {% else %}
-            <p class="no-questions">No questions available for this chapter.</p>
+            <p class="no-questions">No questions available for this {% if sub_chapter %}subchapter{% else %}chapter{% endif %}.</p>
         {% endif %}
 
         <nav class="links">
             {% if questions %}
                 {% if score is not None or quiz_started %}
-                    <a href="{% url 'quiz' chapter.id %}" class="go_back">Retry Quiz</a>
+                    <a href="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.id %}{% else %}{% url 'quiz' chapter.id %}{% endif %}" class="go_back">Retry Quiz</a>
                 {% endif %}
             {% endif %}
+            {% if sub_chapter %}
+                <a href="{% url 'subchapters' chapter.id %}" class="back-chapters">Back to Subchapters</a>
+            {% else %}
             <a href="{% url 'chapters' chapter.subject.id %}" class="back-chapters">Back to Chapters</a>
+            {% endif %}
             <a href="{% url 'home' %}" class="back-subjects">Back to Subjects</a>
         </nav>
     </main>

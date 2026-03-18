@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ chapter.name }} - Subchapters | Ramu Pandey CEE Quiz</title>
+    <meta name="description" content="Explore subchapters for {{ chapter.name }} in Ramu Pandey's CEE Quiz. Practice topic-wise questions for better preparation.">
+    <meta name="keywords" content="CEE Quiz, {{ chapter.name }}, Subchapters, Organic Chemistry, Practice Questions">
+    <meta name="author" content="Ramu Pandey">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="{{ chapter.name }} Subchapters | Pandey Ramu CEE Quiz">
+    <meta property="og:description" content="Practice topic-wise quizzes for {{ chapter.name }} subchapters in Pandey Ramu's CEE Quiz.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% static 'images/favicon.png' %}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ chapter.name }} Subchapters | Pandey Ramu CEE Quiz">
+    <meta name="twitter:description" content="Practice topic-wise quizzes for {{ chapter.name }} subchapters.">
+    <meta name="twitter:image" content="{% static 'images/favicon.png' %}">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/subchapter.css' %}">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
+</head>
+
+<body>
+    <header class="header-container">
+        <h1>{{ chapter.name }}</h1>
+        <p class="subtitle">Select a subchapter to start practicing!</p>
+        <p class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a> &raquo;
+            <a href="{% url 'chapters' chapter.subject.id %}">{{ chapter.subject.name }}</a> &raquo;
+            <span>{{ chapter.name }}</span>
+        </p>
+    </header>
+
+    <main class="container">
+        <section class="subchapter-list">
+            {% if subchapters %}
+                {% for sub in subchapters %}
+                    <article class="subchapter-card">
+                        <div class="card-number">{{ forloop.counter }}</div>
+                        <a href="{% url 'subchapter_quiz' sub.id %}" class="subchapter-link">
+                            <span class="subchapter-name">{{ sub.name }}</span>
+                        </a>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <p>🚧 No subchapters available yet. Check back soon!</p>
+                </div>
+            {% endif %}
+        </section>
+
+        <nav class="nav-buttons">
+            <a href="{% url 'chapters' chapter.subject.id %}" class="btn btn-back">← Back to {{ chapter.subject.name }}</a>
+        </nav>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
+        <p>Follow me on 
+            <a href="https://github.com/pandeyramu" target="_blank">GitHub</a> | 
+            <a href="https://www.facebook.com/ramu.pandey38" target="_blank">Facebook</a>
+        </p>
+    </footer>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "{{ chapter.name }} Subchapters",
+      "itemListElement": [
+        {% for sub in subchapters %}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.counter }},
+          "name": "{{ sub.name }}",
+          "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'subchapter_quiz' sub.id %}"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ]
+    }
+    </script>
+</body>
+</html>

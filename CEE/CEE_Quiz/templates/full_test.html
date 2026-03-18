@@ -28,6 +28,7 @@
 
     <link rel="stylesheet" href="{% static 'css/full_test.css' %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
 </head>
 
 <body>
@@ -72,6 +73,9 @@
                             {% endwith %}
                             {% endwith %}
                         {% endfor %}
+                        {% if score is not None %}
+                        <p class="review-hint">Review: {{ q.chapter.name }}{% if q.sub_chapter %} &rsaquo; {{ q.sub_chapter.name }}{% endif %}</p>
+                        {% endif %}
                     </div>
                 {% endfor %}
 
@@ -119,19 +123,32 @@
 </div>
     </div>
    <footer class="full-test-footer">
-    <h2>Get in Touch</h2>
-    <p>I'm always open to discussing projects, quizzes, or coding tips!</p>
-    <div class="footer-links">
-        <!-- Social links -->
-        <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">📧 Email</a>
-        <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">🐱 GitHub</a>
-        <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">ⓕ Facebook</a>
-        <!-- External site links -->
-        <a href="https://pandeyramu.com.np/" target="_blank" rel="noopener noreferrer">Portfolio</a>
-        <a href="https://pandeyramu.com.np/blog.html" target="_blank" rel="noopener noreferrer">Blog</a>
-        <a href="https://pandeyramu.com.np/privacy.html" target="_blank" rel="noopener noreferrer">Privacy / Terms</a>
+    <div class="footer-container">
+        <h2>Get in Touch</h2>
+        <p>I'm always open to discussing projects, quizzes, or coding tips!</p>
+
+        <div class="footer-grid">
+            <div class="footer-section footer-links-section">
+                <h3>Contact Me</h3>
+                <div class="footer-links">
+                    <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
+                    <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">Facebook</a>
+                </div>
+            </div>
+
+            <div class="footer-section footer-nav-section">
+                <h3>Navigate</h3>
+                <div class="footer-nav">
+                    <a href="https://pandeyramu.com.np/" target="_blank" rel="noopener noreferrer">Portfolio</a>
+                    <a href="https://pandeyramu.com.np/blog.html" target="_blank" rel="noopener noreferrer">Blog</a>
+                    <a href="https://pandeyramu.com.np/privacy.html" target="_blank" rel="noopener noreferrer">Privacy / Terms</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="footer-copy">© 2026 Ramu Pandey. All Rights Reserved.</p>
     </div>
-    <p class="footer-copy">© 2026 Ramu Pandey. All Rights Reserved.</p>
 </footer>
 
 

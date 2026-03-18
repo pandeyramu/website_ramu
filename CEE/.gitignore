@@ -17,3 +17,13 @@ Thumbs.db
 backup.json
 staticfiles/
 *.log
+
+# Export / migration artefacts — never commit these
+export_*.csv
+questions.csv
+cee_export.json
+supabase_import.sql
+supabase_remaining.sql
+migrate_to_supabase.py
+db.json
+*.sql

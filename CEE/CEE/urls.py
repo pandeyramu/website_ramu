@@ -29,6 +29,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('subject/<int:subject_id>/', views.chapters, name='chapters'),
     path('chapter/<int:chapter_id>/', views.quiz, name='quiz'),
+    path('chapter/<int:chapter_id>/subchapters/', views.subchapters, name='subchapters'),
+    path('subchapter/<int:subchapter_id>/quiz/', views.subchapter_quiz, name='subchapter_quiz'),
     path('full-test/', views.full_test, name='full_test'),
     
     # SEO files
