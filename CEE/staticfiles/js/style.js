@@ -12,6 +12,21 @@ const nameInput = document.querySelector('input[name="name"]');
 // Get chapter ID for unique storage
 const chapterId = "{{ chapter.id }}";
 
+function formatScientificText() {
+    const targets = document.querySelectorAll('.question-block p strong, .option .option-text');
+    targets.forEach((el) => {
+        const raw = el.textContent || '';
+        if (!raw || raw.includes('\\(') || raw.includes('\\)') || raw.includes('$$')) {
+            return;
+        }
+
+        const formatted = raw.replace(/([A-Za-z])\^\s*(-?\d+)/g, '$1<sup>$2</sup>');
+        if (formatted !== raw) {
+            el.innerHTML = formatted;
+        }
+    });
+}
+
 function afterSubmit() {
     clearInterval(timerInterval);
     quizForm.classList.add("submitted");
@@ -291,6 +306,11 @@ if (quizForm) {
 
 // Also load on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
+    formatScientificText();
+    if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+        window.MathJax.typesetPromise();
+    }
+
     if (quizForm && quizForm.style.display !== 'none') {
         loadSavedAnswers();
     }

@@ -149,14 +149,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+USE_MANIFEST_STATICFILES = os.environ.get('USE_MANIFEST_STATICFILES', 'True').lower() == 'true'
+
 STORAGES = {
     'default': {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',
     },
     'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        'BACKEND': (
+            'whitenoise.storage.CompressedManifestStaticFilesStorage'
+            if USE_MANIFEST_STATICFILES
+            else 'whitenoise.storage.CompressedStaticFilesStorage'
+        ),
     },
 }
+
+# Avoid 500 errors if a static manifest entry is missing after deployment.
+WHITENOISE_MANIFEST_STRICT = False
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
