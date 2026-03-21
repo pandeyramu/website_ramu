@@ -35,20 +35,8 @@
 <body>
     <header>
         <div class="welcome-text" id="welcome">
-            <script>
-                const text = `Welcome to the Site!\nA site to practice chapter-wise questions, strengthen concepts, and boost your confidence for the Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry, Physics to enhance your preparation effectively.`;
-                const welcome = document.getElementById('welcome');
-                welcome.innerHTML = '';
-                let index = 0;
-                function typewriter() {
-                    if (index < text.length) {
-                        welcome.innerHTML += text.charAt(index);
-                        index++;
-                        setTimeout(typewriter, 22);
-                    }
-                }
-                window.onload = () => typewriter();
-            </script>
+            <p class="welcome-title">Welcome to the Site!</p>
+            <p class="welcome-copy">A site to practice chapter-wise questions, strengthen concepts, and boost your confidence for the Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry, and Physics to enhance your preparation effectively.</p>
         </div>
     </header>
 

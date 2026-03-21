@@ -35,8 +35,8 @@ h3 {
 }
 .welcome-text{
     max-width: 760px;
-    width: fit-content;
-    height: fit-content;
+    width: min(760px, 95%);
+    min-height: 140px;
     margin: 10px auto 10px auto;
     padding-top: 0;
     padding: 14px 18px;
@@ -52,6 +52,60 @@ h3 {
     white-space: pre-wrap;
     border-right: 2px solid #2980b9;
     position: relative;
+    animation: welcomeCardIn 520ms ease-out both;
+}
+
+.welcome-title {
+    margin: 0 0 8px;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #12344d;
+    opacity: 0;
+    transform: translateY(4px);
+    animation: welcomeLineIn 520ms ease-out 120ms both;
+}
+
+.welcome-copy {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #2c3e50;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: welcomeLineIn 620ms ease-out 240ms both;
+}
+
+@keyframes welcomeCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes welcomeLineIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .welcome-text,
+    .welcome-title,
+    .welcome-copy {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .table-wrapper {
@@ -342,5 +396,14 @@ li {
         max-width: 95%;
         font-size: 15px;
         padding: 12px 14px;
+        min-height: 160px;
+    }
+
+    .welcome-title {
+        font-size: 20px;
+    }
+
+    .welcome-copy {
+        font-size: 15px;
     }
 }

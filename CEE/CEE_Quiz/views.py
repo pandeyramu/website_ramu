@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.cache import cache_page
 from django.db import connection
 from .models import Subject, Chapter, SubChapter, Question, TestResult
 
@@ -34,8 +35,9 @@ def keepalive(request):
         return HttpResponse(f"Error: {str(e)}", status=500)
 
 
+@cache_page(60 * 5)
 def home(request):
-    subject_list = Subject.objects.all()
+    subject_list = Subject.objects.only('id', 'name').order_by('id')
     total_questions = Question.objects.count()
     return render(request, 'home.html', {
         'subjects': subject_list,
