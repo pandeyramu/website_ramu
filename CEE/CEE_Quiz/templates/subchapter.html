@@ -5,23 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ chapter.name }} - Subchapters | Ramu Pandey CEE Quiz</title>
-    <meta name="description" content="Explore subchapters for {{ chapter.name }} in Ramu Pandey's CEE Quiz. Practice topic-wise questions for better preparation.">
-    <meta name="keywords" content="CEE Quiz, {{ chapter.name }}, Subchapters, Organic Chemistry, Practice Questions">
+    <title>{{ chapter.name }} Subchapters | CEE Quiz by Ramu Pandey</title>
+    <meta name="description" content="Explore subchapters for {{ chapter.name }} in Ramu Pandey's CEE Quiz. Practice topic-wise MCQs for Nepal's Common Entrance Examination.">
+    <meta name="keywords" content="CEE Quiz, {{ chapter.name }}, Subchapters, CEE Nepal, Practice Questions, Ramu Pandey">
     <meta name="author" content="Ramu Pandey">
 
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="{{ chapter.name }} Subchapters | Pandey Ramu CEE Quiz">
-    <meta property="og:description" content="Practice topic-wise quizzes for {{ chapter.name }} subchapters in Pandey Ramu's CEE Quiz.">
+    <meta property="og:title" content="{{ chapter.name }} Subchapters | CEE Quiz by Ramu Pandey">
+    <meta property="og:description" content="Practice topic-wise MCQs for {{ chapter.name }} subchapters in Ramu Pandey's CEE Quiz. Prepare for Nepal's Common Entrance Examination.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{% static 'images/favicon.png' %}">
+    <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ chapter.name }} Subchapters | Pandey Ramu CEE Quiz">
-    <meta name="twitter:description" content="Practice topic-wise quizzes for {{ chapter.name }} subchapters.">
-    <meta name="twitter:image" content="{% static 'images/favicon.png' %}">
+    <meta name="twitter:title" content="{{ chapter.name }} Subchapters | CEE Quiz by Ramu Pandey">
+    <meta name="twitter:description" content="Practice topic-wise MCQs for {{ chapter.name }} subchapters. Prepare for Nepal's Common Entrance Examination.">
+    <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/subchapter.css' %}">
@@ -55,7 +57,7 @@
                 {% endfor %}
             {% else %}
                 <div class="empty-state">
-                    <p>🚧 No subchapters available yet. Check back soon!</p>
+                    <p>No subchapters available yet. Check back soon!</p>
                 </div>
             {% endif %}
         </section>

@@ -9,21 +9,23 @@
     
     <title>{% if sub_chapter %}{{ sub_chapter.name }} Quiz | {{ chapter.name }}{% else %}{{ chapter.name }} Quiz | CEE Chapter-wise Practice{% endif %}</title>
     <meta name="description" content="{% if sub_chapter %}Take the {{ sub_chapter.name }} quiz from {{ chapter.name }} for the Common Entrance Examination. Practice topic-wise questions and track your performance with detailed results.{% else %}Take the {{ chapter.name }} quiz for the Common Entrance Examination. Practice chapter-wise questions and track your performance with detailed results.{% endif %}">
-    <meta name="keywords" content="CEE Quiz, {% if sub_chapter %}{{ sub_chapter.name }} Quiz, {{ chapter.name }}{% else %}{{ chapter.name }} Quiz, Chapter-wise Questions{% endif %}, Online Practice, Pandey Ramu">
-    <meta name="author" content="Pandey Ramu">
+    <meta name="keywords" content="CEE Quiz, {% if sub_chapter %}{{ sub_chapter.name }} Quiz, {{ chapter.name }}{% else %}{{ chapter.name }} Quiz, Chapter-wise Questions{% endif %}, Online Practice, Ramu Pandey">
+    <meta name="author" content="Ramu Pandey">
+
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph / Social Preview -->
     <meta property="og:title" content="{% if sub_chapter %}{{ sub_chapter.name }} Quiz | {{ chapter.name }}{% else %}{{ chapter.name }} Quiz | CEE Chapter-wise Practice{% endif %}">
     <meta property="og:description" content="{% if sub_chapter %}Take the {{ sub_chapter.name }} quiz from {{ chapter.name }} for the Common Entrance Examination. Practice topic-wise questions and track your performance with detailed results.{% else %}Take the {{ chapter.name }} quiz for the Common Entrance Examination. Practice chapter-wise questions and track your performance with detailed results.{% endif %}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{% static 'images/favicon.png' %}">
+    <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% if sub_chapter %}{{ sub_chapter.name }} Quiz | {{ chapter.name }}{% else %}{{ chapter.name }} Quiz{% endif %}">
     <meta name="twitter:description" content="{% if sub_chapter %}Practice {{ sub_chapter.name }} questions from {{ chapter.name }} online and improve your CEE preparation.{% else %}Practice {{ chapter.name }} quiz questions online and improve your CEE preparation.{% endif %}">
-    <meta name="twitter:image" content="{% static 'images/favicon.png' %}">
+    <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">

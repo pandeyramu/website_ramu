@@ -5,28 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Chapters - {{ subject.name }} | Ramu Pandey CEE Quiz</title>
-    <meta name="description" content="Explore all chapters for {{ subject.name }} in Ramu Pandey's CEE Quiz. Practice quizzes, multiple-choice questions, and exercises.">
-    <meta name="keywords" content="CEE Quiz, {{ subject.name }}, Chapters, Online Quiz, Practice Questions">
+    <title>{{ subject.name }} Chapters | CEE Quiz by Ramu Pandey</title>
+    <meta name="description" content="Explore all {{ subject.name }} chapters in Ramu Pandey's CEE Quiz. Practice chapter-wise MCQs and exercises to prepare for Nepal's Common Entrance Examination.">
+    <meta name="keywords" content="CEE Quiz, {{ subject.name }}, CEE Nepal, Chapters, Online Quiz, Ramu Pandey">
     <meta name="author" content="Ramu Pandey">
 
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="Chapters - {{ subject.name }} | Pandey Ramu CEE Quiz">
-    <meta property="og:description" content="Practice quizzes and exercises for {{ subject.name }} chapters in Pandey Ramu's CEE Quiz.">
+    <meta property="og:title" content="{{ subject.name }} Chapters | CEE Quiz by Ramu Pandey">
+    <meta property="og:description" content="Practice chapter-wise MCQs for {{ subject.name }} in Ramu Pandey's CEE Quiz. Prepare for Nepal's Common Entrance Examination.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{% static 'images/favicon.png' %}">
+    <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Chapters - {{ subject.name }} | Pandey Ramu CEE Quiz">
-    <meta name="twitter:description" content="Practice quizzes and exercises for {{ subject.name }} chapters in Pandey Ramu's CEE Quiz.">
-    <meta name="twitter:image" content="{% static 'images/favicon.png' %}">
+    <meta name="twitter:title" content="{{ subject.name }} Chapters | CEE Quiz by Ramu Pandey">
+    <meta name="twitter:description" content="Practice chapter-wise MCQs for {{ subject.name }} in Ramu Pandey's CEE Quiz. Prepare for Nepal's Common Entrance Examination.">
+    <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
 
-    <!-- Favicon (all browsers) -->
+    <!-- Favicon -->
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
 </head>
@@ -121,7 +123,7 @@
           "@type": "ListItem",
           "position": {{ forloop.counter }},
           "name": "{{ chap.name }}",
-                    "url": "{{ request.build_absolute_uri|slice:":-1" }}{{ chap.id }}/"
+          "url": "{{ request.build_absolute_uri|slice:":-1" }}{{ chap.id }}/"
         }{% if not forloop.last %},{% endif %}
         {% endfor %}
       ]
