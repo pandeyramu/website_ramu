@@ -6,26 +6,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>CEE Quiz Home | Chapter-wise Questions & Full Test</title>
-    <meta name="description" content="Practice chapter-wise questions for Biology, Chemistry, Physics, and MAT. Start your full CEE test online to prepare effectively for the Common Entrance Examination.">
-    <meta name="keywords" content="CEE Quiz, Full Test, Chapter-wise Questions, Biology, Chemistry, Physics, MAT, Pandey Ramu">
-    <meta name="author" content="Pandey Ramu">
+    <title>CEE Quiz Nepal | Free Chapter wise MCQs by Ramu Pandey</title>
+    <meta name="description" content="Free CEE entrance exam practice by Ramu Pandey. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
+    <meta name="keywords" content="CEE Quiz, CEE Nepal, Chapter-wise Questions, Biology, Chemistry, Physics, MAT, Ramu Pandey">
+    <meta name="author" content="Ramu Pandey">
+
+    <link rel="canonical" href="https://ceequiz.pandeyramu.com.np/">
 
     <!-- Google Site Verification -->
     <meta name="google-site-verification" content="UNpQRqXhbK41aS0c7qMpKu5zwnJ-GTT7sYdzb77BGGQ">
 
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="CEE Quiz Home">
-    <meta property="og:description" content="Practice chapter-wise questions for Biology, Chemistry, Physics, and MAT. Start your full CEE test online to prepare effectively.">
+    <meta property="og:title" content="CEE Quiz Nepal | Free MCQs by Ramu Pandey">
+    <meta property="og:description" content="Free CEE entrance exam practice. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://pandeyramu.com.np/">
+    <meta property="og:url" content="https://ceequiz.pandeyramu.com.np/">
     <meta property="og:image" content="{% static 'images/favicon.png' %}">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CEE Quiz Home">
-    <meta name="twitter:description" content="Practice chapter-wise questions for Biology, Chemistry, Physics, and MAT. Start your full CEE test online to prepare effectively.">
+    <meta name="twitter:title" content="CEE Quiz Nepal | Free MCQs by Ramu Pandey">
+    <meta name="twitter:description" content="Free CEE entrance exam practice. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
     <meta name="twitter:image" content="{% static 'images/favicon.png' %}">
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "CEE Quiz by Ramu Pandey",
+      "url": "https://ceequiz.pandeyramu.com.np/",
+      "description": "Free CEE entrance exam practice by Ramu Pandey. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.",
+      "author": {
+        "@type": "Person",
+        "name": "Ramu Pandey",
+        "url": "https://pandeyramu.com.np"
+      }
+    }
+    </script>
 
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
@@ -35,8 +53,10 @@
 <body>
     <header>
         <div class="welcome-text" id="welcome">
-            <p class="welcome-title">Welcome to the Site!</p>
-            <p class="welcome-copy">A site to practice chapter-wise questions, strengthen concepts, and boost your confidence for the Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry, and Physics to enhance your preparation effectively.</p>
+            <h1 class="welcome-title" data-text="CEE Quiz by Ramu Pandey">
+                <span class="welcome-title-reserve">CEE Quiz by Ramu Pandey</span>
+            </h1>
+            <p class="welcome-copy">Practice chapter-wise questions, strengthen concepts, and boost your confidence for Nepal's Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry, and Physics to enhance your preparation effectively.</p>
         </div>
     </header>
 
@@ -221,53 +241,51 @@
         </section>
 
         <section class="subjects">
-    <h2>Welcome to CEE Chapter-wise Quiz</h2>
-    <p>Select a subject and start practicing!</p>
+            <h2>Welcome to CEE Chapter-wise Quiz</h2>
+            <p>Select a subject and start practicing!</p>
             <p class="total-question-count">Total questions available: {{ total_questions }}</p>
 
-    <div class="button-group">
-        {% for sub in subjects %}
-            <a href="{% url 'chapters' sub.id %}" class="btn">{{ sub.name }}</a>
-        {% empty %}
-            <p>No subjects available</p>
-        {% endfor %}
+            <div class="button-group">
+                {% for sub in subjects %}
+                    <a href="{% url 'chapters' sub.id %}" class="btn">{{ sub.name }}</a>
+                {% empty %}
+                    <p>No subjects available</p>
+                {% endfor %}
 
-        <!-- Full Test Button -->
-        <a href="{% url 'full_test' %}" class="btn">Start Full Test</a>
-    </div>
-</section>
+                <!-- Full Test Button -->
+                <a href="{% url 'full_test' %}" class="btn">Start Full Test</a>
+            </div>
+        </section>
     </main>
 
- <footer id="site-footer" class="fade-in">
-    <div class="footer-container">
-        <h2>Get In Touch</h2>
-        <p>Have questions or want to connect? Reach out via email or follow me on social platforms.</p>
+    <footer id="site-footer" class="fade-in">
+        <div class="footer-container">
+            <h2>Get In Touch</h2>
+            <p>Have questions or want to connect? Reach out via email or follow me on social platforms.</p>
 
-        <div class="footer-grid">
-            <div class="footer-section footer-links-section">
-                <h3>Contact Me</h3>
-                <div class="footer-links">
-                    <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
-                    <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <div class="footer-grid">
+                <div class="footer-section footer-links-section">
+                    <h3>Contact Me</h3>
+                    <div class="footer-links">
+                        <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
+                        <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    </div>
+                </div>
+
+                <div class="footer-section footer-nav-section">
+                    <h3>Navigate</h3>
+                    <div class="footer-nav">
+                        <a href="https://pandeyramu.com.np/" target="_blank" rel="noopener noreferrer">Portfolio</a>
+                        <a href="https://pandeyramu.com.np/blog.html" target="_blank" rel="noopener noreferrer">Blog</a>
+                        <a href="https://pandeyramu.com.np/privacy.html" target="_blank" rel="noopener noreferrer">Privacy / Terms</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="footer-section footer-nav-section">
-                <h3>Navigate</h3>
-                <div class="footer-nav">
-                    <a href="https://pandeyramu.com.np/" target="_blank" rel="noopener noreferrer">Portfolio</a>
-                    <a href="https://pandeyramu.com.np/blog.html" target="_blank" rel="noopener noreferrer">Blog</a>
-                    <a href="https://pandeyramu.com.np/privacy.html" target="_blank" rel="noopener noreferrer">Privacy / Terms</a>
-                </div>
-            </div>
+            <p class="copyright">© 2026 Ramu Pandey. All Rights Reserved.</p>
         </div>
-
-        <p class="copyright">© 2026 Ramu Pandey. All Rights Reserved.</p>
-    </div>
-</footer>
-
+    </footer>
 
 </body>
-
 </html>

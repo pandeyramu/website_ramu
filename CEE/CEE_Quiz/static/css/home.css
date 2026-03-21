@@ -57,13 +57,30 @@ h3 {
 
 .welcome-title {
     margin: 0 0 8px;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 1.2;
     font-weight: 700;
     color: #12344d;
-    opacity: 0;
-    transform: translateY(4px);
+    position: relative;
+    display: inline-block;
     animation: welcomeLineIn 520ms ease-out 120ms both;
+}
+
+.welcome-title-reserve {
+    visibility: hidden;
+}
+
+.welcome-title::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #12344d;
+    width: 0;
+    animation: welcomeTyping 1.4s steps(24, end) 220ms forwards, caretBlink 700ms step-end 220ms 4;
 }
 
 .welcome-copy {
@@ -98,6 +115,25 @@ h3 {
     }
 }
 
+@keyframes welcomeTyping {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes caretBlink {
+    0%,
+    100% {
+        border-right-color: transparent;
+    }
+    50% {
+        border-right-color: #12344d;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .welcome-text,
     .welcome-title,
@@ -105,6 +141,12 @@ h3 {
         animation: none;
         opacity: 1;
         transform: none;
+    }
+
+    .welcome-title::after {
+        animation: none;
+        width: 100%;
+        border-right: 0;
     }
 }
 
@@ -400,7 +442,7 @@ li {
     }
 
     .welcome-title {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .welcome-copy {
