@@ -12,6 +12,22 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://ceequiz.pandeyramu.com.np/privacy/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ceequiz.pandeyramu.com.np/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url><loc>https://ceequiz.pandeyramu.com.np/blog/how-to-prepare-for-cee/</loc><priority>0.8</priority></url>
+  <url><loc>https://ceequiz.pandeyramu.com.np/blog/physics-high-weightage-topics/</loc><priority>0.8</priority></url>
+  <url><loc>https://ceequiz.pandeyramu.com.np/blog/human-biology-cee-questions/</loc><priority>0.8</priority></url>
+  <url><loc>https://ceequiz.pandeyramu.com.np/blog/organic-chemistry-cee-tips/</loc><priority>0.8</priority></url>
+  <url><loc>https://ceequiz.pandeyramu.com.np/blog/mat-section-tips/</loc><priority>0.8</priority></url>
+  <url><loc>https://ceequiz.pandeyramu.com.np/blog/cee-exam-day-strategy/</loc><priority>0.8</priority></url>
 
   <!-- Subjects -->
   <url><loc>https://ceequiz.pandeyramu.com.np/subject/1/</loc><priority>0.9</priority></url>

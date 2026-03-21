@@ -32,6 +32,15 @@ urlpatterns = [
     path('chapter/<int:chapter_id>/subchapters/', views.subchapters, name='subchapters'),
     path('subchapter/<int:subchapter_id>/quiz/', views.subchapter_quiz, name='subchapter_quiz'),
     path('full-test/', views.full_test, name='full_test'),
+    path('privacy/', views.privacy_policy, name='privacy'),
+    path('blog/', views.blog_index, name='blog_index'),
+    path('blog/how-to-prepare-for-cee/', views.blog_post, {'slug': 'how-to-prepare-for-cee'}, name='blog_how_to_prepare_for_cee'),
+    path('blog/human-biology-cee-questions/', views.blog_post, {'slug': 'human-biology-cee-questions'}, name='blog_human_biology_cee_questions'),
+    path('blog/organic-chemistry-cee-tips/', views.blog_post, {'slug': 'organic-chemistry-cee-tips'}, name='blog_organic_chemistry_cee_tips'),
+    path('blog/physics-high-weightage-topics/', views.blog_post, {'slug': 'physics-high-weightage-topics'}, name='blog_physics_high_weightage_topics'),
+    path('blog/mat-section-tips/', views.blog_post, {'slug': 'mat-section-tips'}, name='blog_mat_section_tips'),
+    path('blog/cee-exam-day-strategy/', views.blog_post, {'slug': 'cee-exam-day-strategy'}, name='blog_cee_exam_day_strategy'),
+    path('blog/<slug:slug>/', views.blog_post, name='blog_post'),
     
     # SEO files
     path("robots.txt", TemplateView.as_view(

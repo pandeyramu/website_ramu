@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEE Preparation Blog | Tips & Strategies by Ramu Pandey</title>
+    <meta name="description" content="Read CEE preparation tips, subject guides, and study strategies by Ramu Pandey for Biology, Chemistry, Physics, and MAT.">
+    <meta name="keywords" content="CEE preparation tips, CEE Nepal blog, CEE study guide, Biology Chemistry Physics MAT">
+    <meta name="author" content="Ramu Pandey">
+    <link rel="canonical" href="https://ceequiz.pandeyramu.com.np/blog/">
+    <meta property="og:title" content="CEE Preparation Blog | Ramu Pandey">
+    <meta property="og:description" content="CEE preparation tips, subject guides, and exam strategy articles.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ceequiz.pandeyramu.com.np/blog/">
+    <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CEE Preparation Blog | Ramu Pandey">
+    <meta name="twitter:description" content="CEE preparation tips and study strategies for Nepal's Common Entrance Examination.">
+    <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            color: #1f2937;
+            background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 60%);
+            line-height: 1.7;
+        }
+        header {
+            background: linear-gradient(130deg, #0f3a5b, #1f5f8f);
+            color: #fff;
+            padding: 2.8rem 1.2rem;
+            text-align: center;
+        }
+        header h1 { margin: 0 0 0.6rem; font-size: 2rem; }
+        header p { margin: 0; opacity: 0.95; }
+        .container {
+            max-width: 980px;
+            margin: 2rem auto 3rem;
+            padding: 0 1rem;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1rem;
+        }
+        .blog-card {
+            background: #fff;
+            border: 1px solid #dbe4ee;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 6px 14px rgba(15, 58, 91, 0.08);
+        }
+        .tag {
+            display: inline-block;
+            background: #e3f0ff;
+            color: #134b7c;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            margin-bottom: 0.6rem;
+        }
+        .blog-card h2 {
+            margin: 0 0 0.55rem;
+            font-size: 1.1rem;
+            line-height: 1.35;
+            color: #12344d;
+        }
+        .blog-card p {
+            margin: 0 0 0.9rem;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+        .blog-card a {
+            color: #1458a6;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .blog-card a:hover { text-decoration: underline; }
+        .nav-links {
+            margin-top: 1.7rem;
+            text-align: center;
+        }
+        .nav-links a {
+            color: #1458a6;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            font-weight: 600;
+        }
+        footer {
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+            padding: 1.5rem 1rem 2rem;
+            color: #6b7280;
+            font-size: 0.92rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CEE Preparation Blog</h1>
+        <p>Tips, strategies, and topic guides to improve your CEE score</p>
+    </header>
+
+    <main class="container">
+        <section class="blog-grid">
+            {% for post in posts %}
+            <article class="blog-card">
+                <span class="tag">{{ post.tag }}</span>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.excerpt }}</p>
+                <a href="{% url 'blog_post' post.slug %}">Read more</a>
+            </article>
+            {% endfor %}
+        </section>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/privacy/">Privacy / Terms</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
