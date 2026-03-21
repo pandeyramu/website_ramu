@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -97,7 +98,7 @@ DATABASES = {
 
 # Session Configuration - Extended for long tests
 SESSION_COOKIE_AGE = 14400  # 4 hours in seconds
-SESSION_SAVE_EVERY_REQUEST = True  # Keep session alive
+SESSION_SAVE_EVERY_REQUEST = False  # Avoid DB write on every request for better response times
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_SECURE = not DEBUG  # Use secure cookies in production
 SESSION_COOKIE_HTTPONLY = True

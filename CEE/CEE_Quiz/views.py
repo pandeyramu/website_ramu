@@ -8,14 +8,27 @@ from django.db import connection
 from .models import Subject, Chapter, SubChapter, Question, TestResult
 
 
+def _pick_random_questions(base_queryset, limit=50):
+    """Sample random questions efficiently by sampling IDs first."""
+    question_ids = list(base_queryset.values_list('id', flat=True))
+    if not question_ids:
+        return []
+
+    selected_ids = random.sample(question_ids, min(limit, len(question_ids)))
+    selected_qs = Question.objects.filter(id__in=selected_ids).select_related('chapter', 'sub_chapter')
+    id_to_question = {q.id: q for q in selected_qs}
+    return [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
+
+
 @csrf_exempt
 def keepalive(request):
     """Keep database connection alive - for Uptime Robot and client pings"""
     try:
         # Ensure database connection is active
         connection.ensure_connection()
-        # Simple query to keep DB active
-        Subject.objects.first()
+        # Use a minimal probe query to keep connection warm.
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
         return HttpResponse("OK", status=200)
     except Exception as e:
         return HttpResponse(f"Error: {str(e)}", status=500)
@@ -68,7 +81,7 @@ def quiz(request, chapter_id):
                 messages.error(request, 'Session expired. Please restart the quiz.')
                 return redirect('quiz', chapter_id=chapter_id)
             
-            questions_qs = Question.objects.filter(id__in=questions_ids)
+            questions_qs = Question.objects.filter(id__in=questions_ids).select_related('chapter', 'sub_chapter')
             id_to_question = {q.id: q for q in questions_qs}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
             
@@ -128,11 +141,15 @@ def quiz(request, chapter_id):
     
     else:
         user_name = request.GET.get('name', '').strip()
-        questions_qs = Question.objects.filter(chapter=chapter)
-        questions_count = min(50, questions_qs.count())
-        questions = random.sample(list(questions_qs), questions_count)
-        request.session[f'quiz_questions_{chapter_id}'] = [q.id for q in questions]
-        quiz_started = request.GET.get('start') == '1'
+        quiz_started = request.GET.get('start') == '1' and bool(user_name)
+        questions = []
+
+        if quiz_started:
+            questions_qs = Question.objects.filter(chapter=chapter)
+            questions = _pick_random_questions(questions_qs, limit=50)
+            request.session[f'quiz_questions_{chapter_id}'] = [q.id for q in questions]
+        else:
+            request.session.pop(f'quiz_questions_{chapter_id}', None)
         
         return render(request, 'quiz.html', {
             'chapter': chapter,
@@ -165,7 +182,7 @@ def subchapter_quiz(request, subchapter_id):
                 messages.error(request, 'Session expired. Please restart the quiz.')
                 return redirect('subchapter_quiz', subchapter_id=subchapter_id)
 
-            questions_qs = Question.objects.filter(id__in=questions_ids)
+            questions_qs = Question.objects.filter(id__in=questions_ids).select_related('chapter', 'sub_chapter')
             id_to_question = {q.id: q for q in questions_qs}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
 
@@ -225,14 +242,15 @@ def subchapter_quiz(request, subchapter_id):
 
     else:
         user_name = request.GET.get('name', '').strip()
-        questions_qs = Question.objects.filter(sub_chapter=sub_chapter)
-        questions_count = min(50, questions_qs.count())
-        if questions_count > 0:
-            questions = random.sample(list(questions_qs), questions_count)
+        quiz_started = request.GET.get('start') == '1' and bool(user_name)
+        questions = []
+
+        if quiz_started:
+            questions_qs = Question.objects.filter(sub_chapter=sub_chapter)
+            questions = _pick_random_questions(questions_qs, limit=50)
+            request.session[session_key] = [q.id for q in questions]
         else:
-            questions = []
-        request.session[session_key] = [q.id for q in questions]
-        quiz_started = request.GET.get('start') == '1'
+            request.session.pop(session_key, None)
 
         return render(request, 'quiz.html', {
             'chapter': chapter,

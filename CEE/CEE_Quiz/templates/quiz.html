@@ -53,17 +53,15 @@
     </header>
 
     <main class="container">
-        {% if questions %}
-            {% if not quiz_started and score is None %}
+        {% if not quiz_started and score is None %}
             <form method="get" class="start-form">
                 <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
                 <button type="submit" name="start" value="1" id="start_btn" class="start_test">Start Quiz</button>
             </form>
             <div id="timer" style="display: none;"></div>
-            {% endif %}
-
-            <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.id %}{% else %}{% url 'quiz' chapter.id %}{% endif %}" id="quiz-form"
-                {% if not quiz_started and score is None %}style="display: none;"{% else %}style="display: block;"{% endif %}>
+        {% elif questions %}
+            <div id="timer" style="display: block;"></div>
+            <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.id %}{% else %}{% url 'quiz' chapter.id %}{% endif %}" id="quiz-form" style="display: block;">
                 {% csrf_token %}
                 <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
 
