@@ -34,12 +34,12 @@ h3 {
     word-break: break-word;
 }
 .welcome-text{
-    max-width: 760px;
-    width: min(760px, 95%);
-    min-height: 140px;
+    max-width: 640px;
+    width: min(640px, 92%);
+    min-height: 112px;
     margin: 10px auto 10px auto;
     padding-top: 0;
-    padding: 14px 18px;
+    padding: 10px 14px;
         background:rgba(52, 152, 219, 0.1) ;
     border-left: 4px solid #2980b9;
     border-radius: 12px;
@@ -57,7 +57,7 @@ h3 {
 
 .welcome-title {
     margin: 0 0 8px;
-    font-size: 20px;
+    font-size: 17px;
     line-height: 1.2;
     font-weight: 700;
     color: #12344d;
@@ -85,8 +85,8 @@ h3 {
 
 .welcome-copy {
     margin: 0;
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 1.35;
     color: #2c3e50;
     opacity: 0;
     transform: translateY(6px);
@@ -436,16 +436,16 @@ li {
 
     .welcome-text {
         max-width: 95%;
-        font-size: 15px;
-        padding: 12px 14px;
-        min-height: 160px;
+        font-size: 14px;
+        padding: 10px 12px;
+        min-height: 104px;
     }
 
     .welcome-title {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .welcome-copy {
-        font-size: 15px;
+        font-size: 13px;
     }
 }
