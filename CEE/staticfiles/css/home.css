@@ -34,12 +34,12 @@ h3 {
     word-break: break-word;
 }
 .welcome-text{
-    max-width: 760px;
-    width: fit-content;
-    height: fit-content;
+    max-width: 640px;
+    width: min(640px, 92%);
+    min-height: 112px;
     margin: 10px auto 10px auto;
     padding-top: 0;
-    padding: 14px 18px;
+    padding: 10px 14px;
         background:rgba(52, 152, 219, 0.1) ;
     border-left: 4px solid #2980b9;
     border-radius: 12px;
@@ -52,6 +52,102 @@ h3 {
     white-space: pre-wrap;
     border-right: 2px solid #2980b9;
     position: relative;
+    animation: welcomeCardIn 520ms ease-out both;
+}
+
+.welcome-title {
+    margin: 0 0 8px;
+    font-size: 17px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #12344d;
+    position: relative;
+    display: inline-block;
+    animation: welcomeLineIn 520ms ease-out 120ms both;
+}
+
+.welcome-title-reserve {
+    visibility: hidden;
+}
+
+.welcome-title::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #12344d;
+    width: 0;
+    animation: welcomeTyping 1.4s steps(24, end) 220ms forwards, caretBlink 700ms step-end 220ms 4;
+}
+
+.welcome-copy {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.35;
+    color: #2c3e50;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: welcomeLineIn 620ms ease-out 240ms both;
+}
+
+@keyframes welcomeCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes welcomeLineIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes welcomeTyping {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes caretBlink {
+    0%,
+    100% {
+        border-right-color: transparent;
+    }
+    50% {
+        border-right-color: #12344d;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .welcome-text,
+    .welcome-title,
+    .welcome-copy {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .welcome-title::after {
+        animation: none;
+        width: 100%;
+        border-right: 0;
+    }
 }
 
 .table-wrapper {
@@ -340,7 +436,16 @@ li {
 
     .welcome-text {
         max-width: 95%;
-        font-size: 15px;
-        padding: 12px 14px;
+        font-size: 14px;
+        padding: 10px 12px;
+        min-height: 104px;
+    }
+
+    .welcome-title {
+        font-size: 16px;
+    }
+
+    .welcome-copy {
+        font-size: 13px;
     }
 }

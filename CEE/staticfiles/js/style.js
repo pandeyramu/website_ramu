@@ -12,6 +12,10 @@ const nameInput = document.querySelector('input[name="name"]');
 // Get chapter ID for unique storage
 const chapterId = "{{ chapter.id }}";
 
+function buildUserStorageKey(rawName) {
+    return rawName.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
+}
+
 function formatScientificText() {
     const targets = document.querySelectorAll('.question-block p strong, .option .option-text');
     targets.forEach((el) => {
@@ -83,7 +87,7 @@ function startQuiz(event) {
     }
     
     // Set current user name (sanitize to avoid key conflicts)
-    currentUserName = nameInput.value.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
+    currentUserName = buildUserStorageKey(nameInput.value);
     
     const hiddenNameInput = document.getElementById('hidden-name');
     if (hiddenNameInput) {
@@ -131,11 +135,45 @@ function startQuiz(event) {
     timerInterval = setInterval(updateTimer, 1000);
 }
 
-if (startBtn) startBtn.addEventListener("click", startQuiz);
+if (quizForm) {
+    quizForm.addEventListener("submit", function() {
+        afterSubmit();
+    });
+}
 
-quizForm.addEventListener("submit", function() {
-    afterSubmit();
-});
+function initializeTimerForActiveQuiz() {
+    if (!quizForm || quizForm.style.display === 'none' || quizForm.classList.contains('submitted')) {
+        return;
+    }
+
+    const hiddenNameInput = document.getElementById('hidden-name');
+    const rawName = hiddenNameInput ? hiddenNameInput.value : '';
+    if (!rawName || !rawName.trim()) {
+        return;
+    }
+
+    currentUserName = buildUserStorageKey(rawName);
+
+    const savedEndTime = localStorage.getItem(`quiz_${chapterId}_${currentUserName}_end_time`);
+    if (savedEndTime) {
+        const savedEnd = parseInt(savedEndTime);
+        const now = Date.now();
+        const timeLeft = Math.floor((savedEnd - now) / 1000);
+
+        if (timeLeft > 0) {
+            endTime = savedEnd;
+        } else {
+            endTime = Date.now() + (2700 * 1000);
+            localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_answers`);
+            localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
+        }
+    } else {
+        endTime = Date.now() + (2700 * 1000);
+    }
+
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000);
+}
 
 // ==================== AUTO-SAVE ANSWERS ====================
 
@@ -312,37 +350,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (quizForm && quizForm.style.display !== 'none') {
+        initializeTimerForActiveQuiz();
         loadSavedAnswers();
     }
 });
 
 // ==================== KEEPALIVE FOR DATABASE ====================
 
-console.log('Starting keepalive pings...');
-
-setInterval(function() {
+// Keepalive should run only while an active quiz is visible.
+function pingKeepalive() {
     fetch('/keepalive/', {
         method: 'GET',
         credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Keepalive successful:', new Date().toLocaleTimeString());
-        } else {
-            console.warn('Keepalive failed:', response.status);
-        }
-    })
-    .catch(err => {
-        console.error('Keepalive error:', err);
+    }).catch(() => {
+        // Keepalive failures are non-critical; ignore noisy console errors.
     });
-}, 300000); // 5 minutes
+}
 
-// Ping on user activity
-let lastActivity = Date.now();
-document.addEventListener('click', function() {
-    const now = Date.now();
-    if (now - lastActivity > 240000) { // 4 minutes
-        fetch('/keepalive/', { method: 'GET', credentials: 'same-origin' });
-        lastActivity = now;
-    }
-});
+const hasActiveQuiz = quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted');
+if (hasActiveQuiz) {
+    pingKeepalive();
+    setInterval(pingKeepalive, 900000); // 15 minutes
+}
