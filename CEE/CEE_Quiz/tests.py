@@ -114,3 +114,40 @@ class ImportQuestionsCsvCommandTests(TestCase):
         call_command("import_questions_csv", csv_path, stdout=StringIO())
 
         self.assertEqual(Question.objects.count(), 1)
+
+    def test_updates_existing_question_when_flag_enabled(self):
+        existing = Question.objects.create(
+            chapter=self.chapter,
+            sub_chapter=self.subchapter,
+            question_text="Which is aromatic?",
+            option_a="Cyclohexane",
+            option_b="Benzene",
+            option_c="Ethanol",
+            option_d="Acetone",
+            correct_option="B",
+        )
+
+        csv_path = self._write_csv([
+            [
+                str(self.chapter.id),
+                str(self.subchapter.id),
+                "Which is aromatic?",
+                "Cyclohexene",
+                "Cyclohexane",
+                "Benzene",
+                "Methanol",
+                "C",
+            ]
+        ])
+
+        output = StringIO()
+        call_command("import_questions_csv", csv_path, "--update-duplicates", stdout=output)
+
+        self.assertEqual(Question.objects.count(), 1)
+        existing.refresh_from_db()
+        self.assertEqual(existing.option_a, "Cyclohexene")
+        self.assertEqual(existing.option_b, "Cyclohexane")
+        self.assertEqual(existing.option_c, "Benzene")
+        self.assertEqual(existing.option_d, "Methanol")
+        self.assertEqual(existing.correct_option, "C")
+        self.assertIn("Updated 1 existing question(s)", output.getvalue())

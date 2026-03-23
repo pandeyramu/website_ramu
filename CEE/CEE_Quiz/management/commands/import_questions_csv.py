@@ -45,6 +45,15 @@ class Command(BaseCommand):
             default=None,
             help="Only import rows for this chapter ID (ignores chapter_id column).",
         )
+        parser.add_argument(
+            "--update-duplicates",
+            action="store_true",
+            default=False,
+            help=(
+                "When a question already exists (same chapter, subchapter, and normalized question text), "
+                "update its options/correct_option instead of skipping it."
+            ),
+        )
 
     @staticmethod
     def _norm(text):
@@ -63,6 +72,7 @@ class Command(BaseCommand):
         dry_run = options["dry_run"]
         skip_errors = options["skip_errors"]
         force_chapter_id = options["chapter_id"]
+        update_duplicates = options["update_duplicates"]
 
         if not os.path.isfile(csv_path):
             raise CommandError(f"File not found: {csv_path}")
@@ -76,19 +86,21 @@ class Command(BaseCommand):
 
         # Pre-load existing question stems from DB for duplicate detection across repeated imports.
         self.stdout.write("Loading existing questions from database for duplicate check...")
-        existing_signatures = {
-            self._question_signature(
+        existing_by_signature = {}
+        for question in Question.objects.only(
+            "id",
+            "chapter_id",
+            "sub_chapter_id",
+            "question_text",
+        ):
+            signature = self._question_signature(
                 chapter_id=question.chapter_id,
                 sub_chapter_id=question.sub_chapter_id,
                 question_text=question.question_text,
             )
-            for question in Question.objects.only(
-                "chapter_id",
-                "sub_chapter_id",
-                "question_text",
-            )
-        }
-        self.stdout.write(f"  {len(existing_signatures)} questions already in database.")
+            if signature not in existing_by_signature:
+                existing_by_signature[signature] = question
+        self.stdout.write(f"  {len(existing_by_signature)} questions already in database.")
 
         valid_options = {"A", "B", "C", "D"}
         required_columns = {
@@ -97,6 +109,7 @@ class Command(BaseCommand):
         }
 
         rows_ok = []
+        rows_update = []
         rows_error = []
         rows_duplicate = []
         seen_in_csv = set()
@@ -191,18 +204,36 @@ class Command(BaseCommand):
                         sub_chapter_id=sub_chapter.id if sub_chapter else None,
                         question_text=q_text,
                     )
-                    if signature in existing_signatures:
-                        rows_duplicate.append((line_num, "already in database", q_text))
-                        self.stdout.write(self.style.WARNING(
-                            f"  Line {line_num}: DUPLICATE (DB) — {q_text[:80]}"
-                        ))
-                        continue
                     if signature in seen_in_csv:
                         rows_duplicate.append((line_num, "duplicate within CSV", q_text))
                         self.stdout.write(self.style.WARNING(
                             f"  Line {line_num}: DUPLICATE (CSV) — {q_text[:80]}"
                         ))
                         continue
+
+                    if signature in existing_by_signature:
+                        existing_q = existing_by_signature[signature]
+                        if update_duplicates:
+                            rows_update.append({
+                                "question": existing_q,
+                                "question_text": q_text,
+                                "option_a": opt_a,
+                                "option_b": opt_b,
+                                "option_c": opt_c,
+                                "option_d": opt_d,
+                                "correct_option": correct,
+                            })
+                            self.stdout.write(self.style.WARNING(
+                                f"  Line {line_num}: MATCH (DB) — will update existing question id={existing_q.id}"
+                            ))
+                            continue
+
+                        rows_duplicate.append((line_num, "already in database", q_text))
+                        self.stdout.write(self.style.WARNING(
+                            f"  Line {line_num}: DUPLICATE (DB) — {q_text[:80]}"
+                        ))
+                        continue
+
                     seen_in_csv.add(signature)
 
                 if errors:
@@ -233,6 +264,7 @@ class Command(BaseCommand):
             sys.exit(1)
 
         self.stdout.write(f"\n  Valid rows   : {len(rows_ok)}")
+        self.stdout.write(f"  Update rows  : {len(rows_update)}")
         self.stdout.write(f"  Duplicate rows: {len(rows_duplicate)} (skipped)")
         self.stdout.write(f"  Error rows   : {len(rows_error)}")
 
@@ -249,10 +281,19 @@ class Command(BaseCommand):
                     )
                 if len(rows_ok) > 5:
                     self.stdout.write(f"  ... and {len(rows_ok) - 5} more")
+            if rows_update:
+                self.stdout.write("\nSample of rows that WOULD update existing questions:")
+                for r in rows_update[:5]:
+                    self.stdout.write(
+                        f"  id={r['question'].id} | chapter={r['question'].chapter_id} | "
+                        f"sub_chapter={r['question'].sub_chapter_id} | correct={r['correct_option']}"
+                    )
+                if len(rows_update) > 5:
+                    self.stdout.write(f"  ... and {len(rows_update) - 5} more")
             return
 
         # --- Bulk insert ---
-        if not rows_ok:
+        if not rows_ok and not rows_update:
             self.stdout.write(self.style.WARNING("\nNo valid rows to import."))
             return
 
@@ -279,9 +320,33 @@ class Command(BaseCommand):
             created += len(objs)
             self.stdout.write(f"  ... {created}/{len(rows_ok)} inserted")
 
+        updated = 0
+        if rows_update:
+            self.stdout.write(f"\nUpdating {len(rows_update)} existing question(s)...")
+            for i in range(0, len(rows_update), batch_size):
+                batch = rows_update[i: i + batch_size]
+                objs = []
+                for row in batch:
+                    q = row["question"]
+                    q.question_text = row["question_text"]
+                    q.option_a = row["option_a"]
+                    q.option_b = row["option_b"]
+                    q.option_c = row["option_c"]
+                    q.option_d = row["option_d"]
+                    q.correct_option = row["correct_option"]
+                    objs.append(q)
+
+                Question.objects.bulk_update(
+                    objs,
+                    ["question_text", "option_a", "option_b", "option_c", "option_d", "correct_option"],
+                )
+                updated += len(objs)
+                self.stdout.write(f"  ... {updated}/{len(rows_update)} updated")
+
         total_in_db = Question.objects.count()
         self.stdout.write(self.style.SUCCESS(
             f"\nDone! Imported {created} question(s). "
+            f"Updated {updated} existing question(s). "
             f"Duplicates skipped: {len(rows_duplicate)}. "
             f"Total questions in database: {total_in_db}"
         ))
