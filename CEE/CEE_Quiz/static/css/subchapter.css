@@ -4,6 +4,7 @@
 
 html, body {
     overflow-x: hidden;
+    width: 100%;
 }
 
 /* Basic Page Setup */
@@ -72,6 +73,7 @@ a {
 .container {
     width: 90%;
     max-width: 900px;
+    min-width: 0;
     margin: 40px auto;
     display: flex;
     flex-direction: column;
@@ -224,14 +226,26 @@ a {
     color: #fff;
 }
 
+img,
+video,
+iframe,
+table {
+    max-width: 100%;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
+    .container {
+        width: calc(100% - 16px);
+        margin: 20px auto;
+    }
+
     .header-container h1 {
         font-size: 26px;
     }
 
     .subchapter-card {
-        width: 95%;
+        width: 100%;
     }
 
     .subchapter-link {
@@ -243,5 +257,16 @@ a {
 
     .subchapter-name {
         font-size: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .subchapter-card:hover,
+    .btn-back:hover {
+        transform: none;
+        box-shadow: none;
     }
 }

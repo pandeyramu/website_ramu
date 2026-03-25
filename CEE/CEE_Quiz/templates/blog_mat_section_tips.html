@@ -49,7 +49,7 @@
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: sans-serif; color: #222; line-height: 1.8; background: #f9f9f9; }
+        body { font-family: sans-serif; color: #222; line-height: 1.8; background: #f9f9f9; overflow-x: hidden; width: 100%; }
         header { background: #5a1a7a; color: white; padding: 2.5rem 1.5rem; text-align: center; }
         header .tag { font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; display: inline-block; margin-bottom: 1rem; }
         header h1 { font-size: 1.7rem; max-width: 700px; margin: 0 auto 0.8rem; line-height: 1.4; }
@@ -69,14 +69,20 @@
         .example-box { background: #f8f8f8; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1rem 0; border: 1px solid #e8e8e8; }
         .example-box .question { font-weight: 600; color: #5a1a7a; margin-bottom: 0.6rem; }
         .practice-cta { background: #5a1a7a; color: white; border-radius: 10px; padding: 1.5rem; text-align: center; margin: 2rem 0; }
-        .practice-cta a { background: white; color: #5a1a7a; padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; }
+        .practice-cta a { background: white; color: #5a1a7a; padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block; max-width: 100%; }
         .nav-links { display: flex; justify-content: space-between; margin-top: 2rem; flex-wrap: wrap; gap: 1rem; }
         .nav-links a { color: #5a1a7a; text-decoration: none; }
         footer { text-align: center; padding: 2rem 1rem; font-size: 0.9rem; color: #666; border-top: 1px solid #ddd; margin-top: 3rem; }
         footer a { color: #5a1a7a; margin: 0 0.5rem; }
+        img, video, iframe, table { max-width: 100%; }
+        .topic-table { display: block; overflow-x: auto; }
+
         @media (max-width: 600px) {
             header h1 { font-size: 1.3rem; }
             .article-body { padding: 1.5rem; }
+            .container { padding: 0 0.7rem; }
+            .nav-links { flex-direction: column; align-items: flex-start; }
+            .practice-cta a { width: 100%; text-align: center; }
         }
     </style>
 </head>

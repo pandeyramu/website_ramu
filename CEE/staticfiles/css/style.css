@@ -14,6 +14,7 @@
 
 html, body {
     overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -102,10 +103,13 @@ h3 {
     box-shadow: 0 2px 8px rgba(7, 233, 18, 0.871);
     border-radius: 8px;
     background-color: #fff;
+    max-width: calc(100vw - 20px);
+    word-break: break-word;
 }
 
 .container {
     max-width: 800px;
+    width: calc(100% - 24px);
     margin: 50px auto;
     background: #fff;
     padding: 25px;
@@ -132,7 +136,9 @@ h1 {
 }
 
 .option {
-    display: block;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
     margin: 8px 0;
     padding: 10px;
     border-radius: 5px;
@@ -142,7 +148,12 @@ h1 {
 }
 
 .option input {
-    margin-right: 10px;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.option-text {
+    min-width: 0;
 }
 
 .option.correct {
@@ -178,6 +189,127 @@ h1 {
     background: #15b300;
     transform:scale(1.05) translateY(-4px);
      box-shadow: 0 2px 8px rgba(208, 132, 0, 0.8);
+}
+
+.submit-review-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.submit-review-modal[hidden] {
+    display: none !important;
+}
+
+.submit-review-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(9, 20, 38, 0.55);
+    z-index: 0;
+}
+
+.submit-review-panel {
+    position: relative;
+    z-index: 1;
+    border: 1px solid #bfdcff;
+    background: #f2f8ff;
+    border-radius: 10px;
+    padding: 14px;
+    margin: 0;
+    width: min(980px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+}
+
+.submit-review-panel h2 {
+    margin: 0 0 10px;
+    text-align: left;
+    color: #1f3a6d;
+    font-size: 20px;
+}
+
+.submit-review-meta,
+.submit-review-time,
+.submit-review-subtitle {
+    text-align: left;
+    margin: 0 0 10px;
+}
+
+.submit-review-subtitle {
+    color: #1f3a6d;
+    font-size: 18px;
+}
+
+.submit-review-summary {
+    text-align: left;
+    margin: 0 0 10px;
+}
+
+.question-number-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.q-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+.q-link.attempted {
+    background: #dbf7e4;
+    border-color: #39a867;
+    color: #1f6b3e;
+}
+
+.q-link.unattempted {
+    background: #ffe8e8;
+    border-color: #db4d4d;
+    color: #8e1e1e;
+}
+
+.submit-review-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.submit-now-btn,
+.close-review-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.submit-now-btn {
+    background: #0a7b2c;
+    color: #fff;
+}
+
+.close-review-btn {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.submit-now-btn:hover,
+.close-review-btn:hover {
+    transform: translateY(-1px);
 }
 .quiz-form.submitted .option,
 .quiz-form.submitted .option input,
@@ -256,9 +388,16 @@ h1 {
     text-align: center;
 }
 
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
 .links a,.go_back {
     display: inline-block;
-    margin: 0 10px;
+    margin: 0;
     padding: 8px 15px;
     background: #6c757d;
     color: #fff;
@@ -273,9 +412,16 @@ h1 {
      box-shadow: 5px 2px 8px rgba(122, 10, 202, 0.8);
 }
 
+img,
+video,
+iframe,
+table {
+    max-width: 100%;
+}
+
 @media (max-width: 768px) {
     .container {
-        width: calc(100% - 20px);
+        width: calc(100% - 16px);
         margin: 20px auto;
         padding: 15px;
     }
@@ -287,11 +433,48 @@ h1 {
     #timer {
         top: 10px;
         left: 10px;
-        font-size: 20px;
+        right: 10px;
+        font-size: clamp(14px, 4vw, 18px);
         padding: 6px 8px;
     }
 
     .score-stats {
         grid-template-columns: 1fr;
+    }
+
+    .submit-review-panel {
+        width: calc(100vw - 20px);
+        max-height: calc(100vh - 20px);
+        padding: 12px;
+    }
+
+    .option:hover,
+    .question-block:hover,
+    .submit-btn:hover,
+    .links a:hover,
+    .go_back:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 480px) {
+    #start_btn,
+    .submit-btn,
+    .submit-now-btn,
+    .close-review-btn,
+    .links a,
+    .go_back {
+        width: 100%;
+    }
+
+    .links {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .submit-review-actions {
+        flex-direction: column;
+        align-items: stretch;
     }
 }

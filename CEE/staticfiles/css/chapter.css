@@ -4,6 +4,7 @@
 
 html, body {
     overflow-x: hidden;
+    width: 100%;
 }
 
 /* Basic Page Setup */
@@ -33,12 +34,60 @@ a {
 .container {
     width: 90%;
     max-width: 1000px;
+    min-width: 0;
     margin: 50px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     text-align: center;
+}
+
+img,
+video,
+iframe,
+table {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: calc(100% - 16px);
+        margin: 20px auto;
+    }
+
+    .chapter-card,
+    .group-header {
+        width: 100%;
+    }
+
+    .chapter-card a.chapter-link,
+    .back-button a {
+        width: 100%;
+    }
+
+    .chapter-card:hover,
+    .back-button a:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-container h1 {
+        font-size: 28px;
+    }
+
+    .group-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .chapter-card a.chapter-link {
+        padding: 16px;
+        font-size: 17px;
+    }
 }
 
 /* Header */

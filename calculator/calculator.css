@@ -12,6 +12,8 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 20px;
     transition: background 0.3s ease;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body.dark-theme {
@@ -27,6 +29,7 @@ body.dark-theme {
     width: 100%;
     max-width: 400px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    min-width: 0;
 }
 
 .header {
@@ -107,6 +110,14 @@ body.dark-theme {
     letter-spacing: 1px;
     word-wrap: break-word;
     overflow: hidden;
+    overflow-wrap: anywhere;
+}
+
+img,
+video,
+iframe,
+table {
+    max-width: 100%;
 }
 .scientific-functions {
     display: none;
@@ -252,5 +263,11 @@ button:active {
         padding: 8px;
         font-size: 0.7rem;
         min-height: 35px;
+    }
+
+    button:hover,
+    .theme:hover {
+        transform: none;
+        box-shadow: none;
     }
 }

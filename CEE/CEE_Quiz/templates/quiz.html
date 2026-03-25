@@ -68,37 +68,30 @@
                 {% csrf_token %}
                 <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
 
-                {% for q in questions %}
-                <article class="question-block">
-                    <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
-                    {% for opt in "ABCD" %}
-                        {% with option_text=q|get_option_text:opt %}
-                        {% with user_choice=user_answers|dict_get:q.id %}
-                        <label class="option
-                            {% if score is not None %}
-                                {% if opt == q.correct_option %} correct {% endif %}
-                                {% if user_choice|default:'' == opt and opt != q.correct_option %} wrong {% endif %}
-                            {% endif %}
-                            {% if user_choice|default:'' == opt %} selected {% endif %}">
-                            <input type="radio" name="q{{ q.id }}" value="{{ opt }}" 
-                                   {% if score is not None %} disabled {% endif %} 
-                                   {% if user_choice|default:'' == opt %} checked {% endif %}>
-                            <span class="option-text">{{ opt }}. {{ option_text }}</span>
-                        </label>
-                        {% endwith %}
-                        {% endwith %}
-                    {% endfor %}
-                    {% if score is not None %}
-                    <p class="review-hint">Review: {{ q.chapter.name }}{% if q.sub_chapter %} &rsaquo; {{ q.sub_chapter.name }}{% endif %}</p>
-                    {% endif %}
-                </article>
-                {% endfor %}
-
                 {% if score is None %}
-                    <button type="submit" class="submit-btn">Submit Quiz</button>
-                {% else %}
+                    <section id="submit-review-panel" class="submit-review-modal" hidden aria-hidden="true">
+                        <div class="submit-review-backdrop" id="submit-review-backdrop"></div>
+                        <div class="submit-review-panel" role="dialog" aria-modal="true" aria-labelledby="review-modal-title">
+                            <h2 id="review-modal-title">Test</h2>
+                            <p class="submit-review-meta">Total Questions: <strong id="review-total-questions">0</strong> | Time: 45 minutes | Negative Marking: 0.25 per wrong answer</p>
+                            <p class="submit-review-time" id="review-time-left">Time Left: --:--</p>
+                            <h3 class="submit-review-subtitle">Before Final Submit</h3>
+                            <p class="submit-review-summary">
+                                Attempted: <strong id="attempted-count">0</strong> |
+                                Unattempted: <strong id="unattempted-count">0</strong>
+                            </p>
+                            <div id="question-number-links" class="question-number-links"></div>
+                            <div class="submit-review-actions">
+                                <button type="button" id="submit-now-btn" class="submit-now-btn">Submit Now</button>
+                                <button type="button" id="close-review-btn" class="close-review-btn">Continue Solving</button>
+                            </div>
+                        </div>
+                    </section>
+                {% endif %}
+
+                {% if score is not None %}
                     <section class="score-card">
-                        <h2 class="score-title">Quiz Results</h2>
+                        <h2 class="score-title">Test Results for {{ user_name|default:'User' }}</h2>
                         <div class="score-stats">
                             <div class="stat-item">
                                 <span class="stat-label">Total Questions:</span>
@@ -127,6 +120,36 @@
                         </div>
                         <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
                     </section>
+                {% endif %}
+
+                {% for q in questions %}
+                <article class="question-block" id="question-{{ forloop.counter }}" data-question-number="{{ forloop.counter }}">
+                    <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
+                    {% for opt in "ABCD" %}
+                        {% with option_text=q|get_option_text:opt %}
+                        {% with user_choice=user_answers|dict_get:q.id %}
+                        <label class="option
+                            {% if score is not None %}
+                                {% if opt == q.correct_option %} correct {% endif %}
+                                {% if user_choice|default:'' == opt and opt != q.correct_option %} wrong {% endif %}
+                            {% endif %}
+                            {% if user_choice|default:'' == opt %} selected {% endif %}">
+                            <input type="radio" name="q{{ q.id }}" value="{{ opt }}" 
+                                   {% if score is not None %} disabled {% endif %} 
+                                   {% if user_choice|default:'' == opt %} checked {% endif %}>
+                            <span class="option-text">{{ opt }}. {{ option_text }}</span>
+                        </label>
+                        {% endwith %}
+                        {% endwith %}
+                    {% endfor %}
+                    {% if score is not None %}
+                    <p class="review-hint">Review: {{ q.chapter.name }}{% if q.sub_chapter %} &rsaquo; {{ q.sub_chapter.name }}{% endif %}</p>
+                    {% endif %}
+                </article>
+                {% endfor %}
+
+                {% if score is None %}
+                    <button type="submit" class="submit-btn">Submit Quiz</button>
                 {% endif %}
             </form>
         {% else %}

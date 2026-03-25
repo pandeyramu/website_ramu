@@ -1,10 +1,10 @@
-
 * {
     box-sizing: border-box;
 }
 
 html, body {
     overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -33,14 +33,15 @@ h3 {
     overflow-wrap: anywhere;
     word-break: break-word;
 }
-.welcome-text{
+
+.welcome-text {
     max-width: 640px;
     width: min(640px, 92%);
     min-height: 112px;
     margin: 10px auto 10px auto;
     padding-top: 0;
     padding: 10px 14px;
-        background:rgba(52, 152, 219, 0.1) ;
+    background: rgba(52, 152, 219, 0.1);
     border-left: 4px solid #2980b9;
     border-radius: 12px;
     font-size: 16px;
@@ -57,36 +58,21 @@ h3 {
 
 .welcome-title {
     margin: 0 0 8px;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.2;
     font-weight: 700;
     color: #12344d;
     position: relative;
     display: inline-block;
-    animation: welcomeLineIn 520ms ease-out 120ms both;
-}
-
-.welcome-title-reserve {
-    visibility: hidden;
-}
-
-.welcome-title::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    max-width: 100%;
     overflow: hidden;
     white-space: nowrap;
-    border-right: 2px solid #12344d;
-    width: 0;
-    animation: welcomeTyping 1.4s steps(24, end) 220ms forwards, caretBlink 700ms step-end 220ms 4;
+    animation: welcomeLineIn 520ms ease-out 120ms both;
 }
 
 .welcome-copy {
     margin: 0;
-    font-size: 14px;
-    line-height: 1.35;
+    font-size: 13px;
+    line-height: 1.3;
     color: #2c3e50;
     opacity: 0;
     transform: translateY(6px);
@@ -115,25 +101,6 @@ h3 {
     }
 }
 
-@keyframes welcomeTyping {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes caretBlink {
-    0%,
-    100% {
-        border-right-color: transparent;
-    }
-    50% {
-        border-right-color: #12344d;
-    }
-}
-
 @media (prefers-reduced-motion: reduce) {
     .welcome-text,
     .welcome-title,
@@ -141,12 +108,6 @@ h3 {
         animation: none;
         opacity: 1;
         transform: none;
-    }
-
-    .welcome-title::after {
-        animation: none;
-        width: 100%;
-        border-right: 0;
     }
 }
 
@@ -175,7 +136,7 @@ table {
 }
 
 table thead {
-    background: linear-gradient(105deg, #b31919 20%,#06ad49 80%);
+    background: linear-gradient(105deg, #b31919 20%, #06ad49 80%);
     color: white;
 }
 
@@ -189,6 +150,7 @@ table tbody tr {
     border-bottom: 1px solid #ecf0f1;
     transition: background 0.2s ease;
 }
+
 table td {
     padding: 12px 15px;
 }
@@ -196,18 +158,18 @@ table td {
 table td:last-child {
     text-align: center;
     font-weight: bold;
-    color: #27ae60;
+    color: #1a6e3c;
 }
 
 .domain-row {
-    background: #ecf0f1;
+    background: #2c3e50;
     font-weight: bold;
-    color: #2c3e50;
+    color: #ffffff;
 }
 
 .total-row {
-    background: #34495e;
-    color: white;
+    background: #1a252f;
+    color: #ffffff;
     font-weight: bold;
     font-size: 16px;
 }
@@ -255,19 +217,19 @@ li {
     margin: 0;
 }
 
-/* --- Subjects Section --- */
 .subjects {
     width: 90%;
     max-width: 900px;
     margin: 40px auto 60px auto;
     padding: 30px;
-    background: rgba(255,255,255,0.95);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-.subjects h2, .subjects h3 {
+.subjects h2,
+.subjects h3 {
     color: #34495e;
     margin-bottom: 15px;
 }
@@ -283,40 +245,41 @@ li {
     margin: 0 0 24px;
     padding: 10px 18px;
     border-radius: 999px;
-    background: #e8f4fd;
-    color: #1d5f8c;
+    background: #1d5f8c;
+    color: #ffffff;
     font-size: 16px;
     font-weight: 700;
 }
 
-/* Common button style for all buttons */
 .btn {
     display: inline-block;
     padding: 18px 28px;
-    background: #3498db;
-    color: white;
+    background: #1a5276;
+    color: #ffffff;
     font-weight: bold;
     border-radius: 10px;
     text-decoration: none;
     min-width: 140px;
     transition: all 0.3s ease;
     text-align: center;
-    margin: 5px; 
+    margin: 5px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
 .btn:hover {
-    background: #2980b9;
+    background: #154360;
     transform: translateY(-4px) scale(1.03);
 }
 
-/* Flex container for buttons */
 .button-group {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center;
     gap: 10px;
     margin-bottom: 25px;
 }
+
 #site-footer {
     background: #1a237e;
     color: #fff;
@@ -419,6 +382,13 @@ li {
     transform: translateY(-2px);
 }
 
+img,
+video,
+iframe,
+table {
+    max-width: 100%;
+}
+
 #site-footer .copyright {
     margin-top: 22px;
     font-size: 14px;
@@ -442,10 +412,31 @@ li {
     }
 
     .welcome-title {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .welcome-copy {
-        font-size: 13px;
+        font-size: 12px;
+    }
+
+    .container,
+    .subjects,
+    .table-wrapper {
+        width: calc(100% - 16px);
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .btn,
+    .footer-links a,
+    .footer-nav a {
+        width: 100%;
+    }
+
+    .btn:hover,
+    .footer-links a:hover,
+    .footer-nav a:hover {
+        transform: none;
+        box-shadow: none;
     }
 }

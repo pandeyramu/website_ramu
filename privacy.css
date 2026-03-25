@@ -10,13 +10,16 @@ body {
     background-color: #f9f9f9;
     color: #333;
     line-height: 1.8;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 /* ===== Container ===== */
 .container {
     max-width: 900px;
     margin: 40px auto;
-    padding: 0 20px;
+    width: calc(100% - 20px);
+    padding: 0 10px;
 }
 
 /* ===== Header ===== */
@@ -82,8 +85,20 @@ body {
     text-decoration: underline;
 }
 
+img,
+video,
+iframe,
+table {
+    max-width: 100%;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
+    .container {
+        width: calc(100% - 12px);
+        padding: 0 6px;
+    }
+
     #privacy-header h1 {
         font-size: 2rem;
     }
@@ -94,6 +109,13 @@ body {
 
     .privacy-section p {
         font-size: 0.95rem;
+    }
+
+    #privacy-footer nav {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
     }
 }
 

@@ -10,12 +10,15 @@ body {
     background-color: #f8f9fa;
     color: #333;
     line-height: 1.6;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
+    width: calc(100% - 20px);
+    padding: 20px 10px;
 }
 
 /* Header */
@@ -74,6 +77,8 @@ body {
 .blog-article p {
     font-size: 1rem;
     color: #555;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 /* Footer */
@@ -96,13 +101,31 @@ body {
     color: #1c5980;
 }
 
+img,
+video,
+iframe,
+table {
+    max-width: 100%;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
+    .container {
+        width: calc(100% - 12px);
+        padding: 16px 6px;
+    }
+
     .blog-article h2 {
         font-size: 1.5rem;
     }
 
     .blog-header h1 {
         font-size: 2rem;
+    }
+
+    .blog-footer nav {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 }

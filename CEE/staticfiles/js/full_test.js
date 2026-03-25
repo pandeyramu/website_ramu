@@ -1,12 +1,20 @@
-
-// ==================== TIMER CODE ====================
-let totalTime = 9000;
+let endTime;
 let timerInterval;
+let currentUserName;
+let allowDirectSubmit = false;
 
+const FULL_TEST_DURATION_SECONDS = 9000;
 const timerDisplay = document.getElementById('full_test_timer');
 const quizForm = document.getElementById('full-test-form');
-const startBtn = document.getElementById('start_full_test');
-const nameInput = document.querySelector('input[name="name"]');
+const submitReviewPanel = document.getElementById('submit-review-panel');
+const submitReviewBackdrop = document.getElementById('submit-review-backdrop');
+const submitNowBtn = document.getElementById('submit-now-btn');
+const closeReviewBtn = document.getElementById('close-review-btn');
+const reviewTimeLeft = document.getElementById('review-time-left');
+
+function buildUserStorageKey(rawName) {
+    return rawName.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
+}
 
 function formatScientificText() {
     const targets = document.querySelectorAll('.question-block p strong, .option .option-text');
@@ -23,185 +31,74 @@ function formatScientificText() {
     });
 }
 
+function timerStorageKey() {
+    return `full_test_${currentUserName}_end_time`;
+}
+
+function answerStorageKey() {
+    return `full_test_${currentUserName}_answers`;
+}
+
 function afterSubmit() {
     clearInterval(timerInterval);
-    quizForm.classList.add("submitted");
-    
-    // Clear saved answers after successful submission
-    localStorage.removeItem('full_test_answers');
-    localStorage.removeItem('full_test_save_time');
-    localStorage.removeItem('full_test_timer');
-    console.log('Test submitted - cleared all saved data');
-}
-
-function updateTimer() {
-    let hours = Math.floor(totalTime / 3600);
-    let minutes = Math.floor((totalTime % 3600) / 60);
-    let seconds = totalTime % 60;
-
-    hours = hours < 10 ? "0" + hours : hours;
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-    timerDisplay.textContent = `Time Left: ${hours}:${minutes}:${seconds}`;
-    
-    if (totalTime <= 60) {
-        timerDisplay.style.color = totalTime % 2 === 0 ? "#fd2109ff" : "#fff";
-        timerDisplay.style.backgroundColor = totalTime % 2 === 0 ? "#000" : "#e74c3c";
-        timerDisplay.style.padding = "5px 10px";
-        timerDisplay.style.borderRadius = "5px";
+    if (quizForm) {
+        quizForm.classList.add('submitted');
     }
 
-    if (totalTime <= 0) {
-        clearInterval(timerInterval);
-        alert("Time is up! Submitting your Answers...");
-        afterSubmit();
-        setTimeout(() => {
-            quizForm.requestSubmit();  
-        }, 100);
+    if (submitReviewPanel) {
+        submitReviewPanel.hidden = true;
+        submitReviewPanel.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
     }
 
-    totalTime--;
-    
-    // Save timer state to localStorage
-    localStorage.setItem('full_test_timer', totalTime);
+    if (timerDisplay) {
+        timerDisplay.style.display = 'block';
+        timerDisplay.textContent = 'Calculating......';
+        timerDisplay.style.color = '#ffffff';
+        timerDisplay.style.backgroundColor = '#2c3e50';
+        timerDisplay.style.padding = '8px 12px';
+        timerDisplay.style.borderRadius = '8px';
+    }
+
+    if (currentUserName) {
+        localStorage.removeItem(answerStorageKey());
+        localStorage.removeItem(timerStorageKey());
+    }
 }
 
-function startQuiz(event) {
-    event.preventDefault();
-    if (!nameInput || nameInput.value.trim() === '') {
-        alert('Please enter your name before starting the test!');
-        nameInput.focus();
+function openReviewModal() {
+    if (!submitReviewPanel) {
         return;
     }
-    
-    const hiddenNameInput = document.getElementById('hidden-name');
-    if (hiddenNameInput) {
-        hiddenNameInput.value = nameInput.value.trim();
-    }
-    
-    const nameForm = document.getElementById('name-form');
-    if (nameForm) {
-        nameForm.style.display = "none";
-    }
-    
-    startBtn.style.display = "none";
-    quizForm.style.display = "block";
-    timerDisplay.style.display = "block";
-
-    // Check if there's a saved timer state
-    const savedTimer = localStorage.getItem('full_test_timer');
-    if (savedTimer && parseInt(savedTimer) > 0) {
-        const resume = confirm(`You have a saved test in progress with ${Math.floor(savedTimer/60)} minutes remaining. Resume?`);
-        if (resume) {
-            totalTime = parseInt(savedTimer);
-        } else {
-            // Start fresh
-            totalTime = 9000;
-            localStorage.removeItem('full_test_answers');
-            localStorage.removeItem('full_test_timer');
-        }
-    }
-
-    updateTimer();
-    timerInterval = setInterval(updateTimer, 1000);
+    submitReviewPanel.hidden = false;
+    submitReviewPanel.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
 }
 
-if (startBtn) startBtn.addEventListener("click", startQuiz);
-
-quizForm.addEventListener("submit", function(){
-    afterSubmit();
-});
-
-// ==================== AUTO-SAVE ANSWERS ====================
-
-// Load saved answers on page load
-function loadSavedAnswers() {
-    const savedAnswers = localStorage.getItem('full_test_answers');
-    if (savedAnswers) {
-        try {
-            const answers = JSON.parse(savedAnswers);
-            console.log('Loading saved answers:', Object.keys(answers).length);
-            
-            let restoredCount = 0;
-            // Restore radio button selections
-            for (const [questionId, answer] of Object.entries(answers)) {
-                const radio = document.querySelector(`input[name="q${questionId}"][value="${answer}"]`);
-                if (radio) {
-                    radio.checked = true;
-                    restoredCount++;
-                    // Visual feedback
-                    const questionDiv = radio.closest('.question-container, .question, div[class*="question"]');
-                    if (questionDiv) {
-                        questionDiv.classList.add('answered');
-                    }
-                }
-            }
-            
-            // Show recovery message
-            if (restoredCount > 0) {
-                showMessage(`✓ Recovered ${restoredCount} saved answers`, 'success');
-            }
-        } catch (e) {
-            console.error('Error loading saved answers:', e);
-        }
+function closeReviewModal() {
+    if (!submitReviewPanel) {
+        return;
     }
+    submitReviewPanel.hidden = true;
+    submitReviewPanel.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
 }
 
-// Save answers to localStorage
 function saveAnswers() {
-    const form = document.querySelector('form#full-test-form');
-    if (!form) return 0;
-    
+    if (!quizForm || !currentUserName || quizForm.classList.contains('submitted')) {
+        return 0;
+    }
+
     const answers = {};
-    const radioInputs = form.querySelectorAll('input[type="radio"]:checked');
-    
-    radioInputs.forEach(radio => {
-        const name = radio.name; // e.g., "q123"
-        const questionId = name.replace('q', '');
+    const checkedInputs = quizForm.querySelectorAll('input[type="radio"]:checked');
+    checkedInputs.forEach((radio) => {
+        const questionId = radio.name.replace('q', '');
         answers[questionId] = radio.value;
     });
-    
-    localStorage.setItem('full_test_answers', JSON.stringify(answers));
-    localStorage.setItem('full_test_save_time', new Date().toISOString());
-    
-    console.log('Auto-saved:', Object.keys(answers).length, 'answers');
+
+    localStorage.setItem(answerStorageKey(), JSON.stringify(answers));
     return Object.keys(answers).length;
 }
-
-// Auto-save every 30 seconds
-let autoSaveInterval = setInterval(function() {
-    if (quizForm && quizForm.style.display !== 'none') {
-        const count = saveAnswers();
-        updateSaveIndicator(count);
-    }
-}, 30000); // 30 seconds
-
-// Save on every answer selection
-document.addEventListener('change', function(e) {
-    if (e.target.type === 'radio' && e.target.name.startsWith('q')) {
-        saveAnswers();
-        updateSaveIndicator();
-        
-        // Visual feedback
-        const questionDiv = e.target.closest('.question-container, .question, div[class*="question"]');
-        if (questionDiv) {
-            questionDiv.classList.add('answered');
-        }
-    }
-});
-
-// Save before page unload
-window.addEventListener('beforeunload', function(e) {
-    if (quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted')) {
-        saveAnswers();
-        // Optional: warn user about leaving
-        e.preventDefault();
-        e.returnValue = 'You have unsaved progress. Are you sure you want to leave?';
-    }
-});
-
-// ==================== SAVE INDICATOR ====================
 
 function updateSaveIndicator(count) {
     let indicator = document.getElementById('save-indicator');
@@ -224,93 +121,258 @@ function updateSaveIndicator(count) {
         `;
         document.body.appendChild(indicator);
     }
-    
+
     const savedTime = new Date().toLocaleTimeString();
-    const answerCount = count !== undefined ? count : document.querySelectorAll('input[type="radio"]:checked').length;
-    indicator.innerHTML = `💾 Auto-saved ${answerCount} answers at ${savedTime}`;
+    const answerCount = count !== undefined ? count : quizForm.querySelectorAll('input[type="radio"]:checked').length;
+    indicator.innerHTML = `Auto-saved ${answerCount} answers at ${savedTime}`;
     indicator.style.opacity = '1';
-    
-    // Fade out after 3 seconds
+
     setTimeout(() => {
         indicator.style.opacity = '0.4';
     }, 3000);
 }
 
-function showMessage(msg, type) {
-    const messageDiv = document.createElement('div');
-    messageDiv.style.cssText = `
-        position: fixed;
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: ${type === 'success' ? '#4CAF50' : '#ff9800'};
-        color: white;
-        padding: 15px 30px;
-        border-radius: 5px;
-        font-size: 16px;
-        z-index: 10000;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-        font-family: Arial, sans-serif;
-        font-weight: bold;
-    `;
-    messageDiv.textContent = msg;
-    document.body.appendChild(messageDiv);
-    
-    setTimeout(() => {
-        messageDiv.style.transition = 'opacity 0.5s';
-        messageDiv.style.opacity = '0';
-        setTimeout(() => messageDiv.remove(), 500);
-    }, 5000);
+function updateTimer() {
+    if (!timerDisplay) {
+        return;
+    }
+
+    const now = Date.now();
+    const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+    const hours = String(Math.floor(timeLeft / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((timeLeft % 3600) / 60)).padStart(2, '0');
+    const seconds = String(timeLeft % 60).padStart(2, '0');
+
+    timerDisplay.textContent = `Time Left: ${hours}:${minutes}:${seconds}`;
+
+    if (timeLeft <= 60) {
+        timerDisplay.style.color = timeLeft % 2 === 0 ? '#fd2109ff' : '#fff';
+        timerDisplay.style.backgroundColor = timeLeft % 2 === 0 ? '#000' : '#e74c3c';
+        timerDisplay.style.padding = '5px 10px';
+        timerDisplay.style.borderRadius = '5px';
+    }
+
+    if (currentUserName) {
+        localStorage.setItem(timerStorageKey(), String(endTime));
+    }
+
+    if (timeLeft <= 0 && quizForm) {
+        clearInterval(timerInterval);
+        allowDirectSubmit = true;
+        afterSubmit();
+        setTimeout(() => {
+            quizForm.requestSubmit();
+        }, 100);
+    }
 }
 
-// Load saved answers when form becomes visible
-const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-        if (mutation.target === quizForm && quizForm.style.display === 'block') {
-            setTimeout(loadSavedAnswers, 100);
+function getAnsweredQuestionNumbers() {
+    const answered = new Set();
+    if (!quizForm) {
+        return answered;
+    }
+
+    quizForm.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
+        const block = radio.closest('.question-block');
+        if (block) {
+            const qNum = parseInt(block.dataset.questionNumber, 10);
+            if (!Number.isNaN(qNum)) {
+                answered.add(qNum);
+            }
         }
     });
-});
-
-if (quizForm) {
-    observer.observe(quizForm, { attributes: true, attributeFilter: ['style'] });
+    return answered;
 }
 
-// Also load on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', function() {
-    formatScientificText();
-    if (quizForm && quizForm.style.display !== 'none') {
-        loadSavedAnswers();
+function renderSubmitReview() {
+    if (!submitReviewPanel || !quizForm) {
+        return;
     }
-});
 
-// ==================== KEEPALIVE FOR DATABASE ====================
+    const blocks = Array.from(quizForm.querySelectorAll('.question-block[data-question-number]'));
+    const answeredSet = getAnsweredQuestionNumbers();
+    const attempted = answeredSet.size;
+    const total = blocks.length;
+    const unattempted = Math.max(0, total - attempted);
 
-console.log('Starting keepalive pings...');
+    const attemptedCount = document.getElementById('attempted-count');
+    const unattemptedCount = document.getElementById('unattempted-count');
+    const linksContainer = document.getElementById('question-number-links');
 
-setInterval(function() {
+    if (attemptedCount) {
+        attemptedCount.textContent = String(attempted);
+    }
+    if (unattemptedCount) {
+        unattemptedCount.textContent = String(unattempted);
+    }
+    if (!linksContainer) {
+        return;
+    }
+
+    if (reviewTimeLeft && timerDisplay) {
+        reviewTimeLeft.textContent = timerDisplay.textContent || 'Time Left: --:--:--';
+    }
+
+    const fragments = blocks.map((block) => {
+        const qNum = parseInt(block.dataset.questionNumber, 10);
+        const isAttempted = answeredSet.has(qNum);
+        const cssClass = isAttempted ? 'q-link attempted' : 'q-link unattempted';
+        return `<a href="#question-${qNum}" class="${cssClass}">Q${qNum}</a>`;
+    });
+
+    linksContainer.innerHTML = fragments.join('');
+    openReviewModal();
+}
+
+function setupSubmitReviewActions() {
+    if (!quizForm || !submitReviewPanel) {
+        return;
+    }
+
+    quizForm.addEventListener('submit', function (event) {
+        if (quizForm.classList.contains('submitted')) {
+            return;
+        }
+
+        if (!allowDirectSubmit) {
+            event.preventDefault();
+            renderSubmitReview();
+            return;
+        }
+
+        afterSubmit();
+    });
+
+    if (submitNowBtn) {
+        submitNowBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            allowDirectSubmit = true;
+            closeReviewModal();
+            quizForm.requestSubmit();
+        });
+    }
+
+    if (closeReviewBtn) {
+        closeReviewBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            closeReviewModal();
+        });
+    }
+
+    if (submitReviewBackdrop) {
+        submitReviewBackdrop.addEventListener('click', closeReviewModal);
+    }
+
+    const linksContainer = document.getElementById('question-number-links');
+    if (linksContainer) {
+        linksContainer.addEventListener('click', function (event) {
+            if (event.target.closest('a.q-link')) {
+                closeReviewModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && submitReviewPanel && !submitReviewPanel.hidden) {
+            closeReviewModal();
+        }
+    });
+}
+
+function initializeTimerForActiveTest() {
+    if (!quizForm || quizForm.classList.contains('submitted')) {
+        return;
+    }
+
+    const hiddenNameInput = document.getElementById('hidden-name');
+    const rawName = hiddenNameInput ? hiddenNameInput.value : '';
+    if (!rawName || !rawName.trim()) {
+        return;
+    }
+
+    currentUserName = buildUserStorageKey(rawName);
+    const savedEndTime = localStorage.getItem(timerStorageKey());
+    const now = Date.now();
+
+    if (savedEndTime) {
+        const parsed = parseInt(savedEndTime, 10);
+        if (!Number.isNaN(parsed) && parsed > now) {
+            endTime = parsed;
+        } else {
+            endTime = now + FULL_TEST_DURATION_SECONDS * 1000;
+            localStorage.removeItem(answerStorageKey());
+            localStorage.removeItem(timerStorageKey());
+        }
+    } else {
+        endTime = now + FULL_TEST_DURATION_SECONDS * 1000;
+    }
+
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+function pingKeepalive() {
     fetch('/keepalive/', {
         method: 'GET',
         credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Keepalive successful:', new Date().toLocaleTimeString());
-        } else {
-            console.warn('Keepalive failed:', response.status);
-        }
-    })
-    .catch(err => {
-        console.error('Keepalive error:', err);
+    }).catch(() => {
+        // Keepalive failures are non-critical.
     });
-}, 300000); // 5 minutes
+}
 
-// Ping on user activity
-let lastActivity = Date.now();
-document.addEventListener('click', function() {
-    const now = Date.now();
-    if (now - lastActivity > 240000) { // 4 minutes
-        fetch('/keepalive/', { method: 'GET', credentials: 'same-origin' });
-        lastActivity = now;
+document.addEventListener('change', function (event) {
+    if (!quizForm) {
+        return;
+    }
+
+    if (event.target.matches('input[type="radio"][name^="q"]')) {
+        const questionBlock = event.target.closest('.question-block');
+        if (questionBlock) {
+            questionBlock.querySelectorAll('.option').forEach((label) => label.classList.remove('selected'));
+            event.target.closest('.option')?.classList.add('selected');
+        }
+        const count = saveAnswers();
+        updateSaveIndicator(count);
+    }
+});
+
+window.addEventListener('beforeunload', function (event) {
+    if (!quizForm || quizForm.classList.contains('submitted')) {
+        return;
+    }
+
+    const count = saveAnswers();
+    if (count > 0) {
+        event.preventDefault();
+        event.returnValue = 'You have in-progress answers. Are you sure you want to leave?';
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    formatScientificText();
+
+    if (!quizForm) {
+        return;
+    }
+
+    closeReviewModal();
+
+    if (quizForm.classList.contains('submitted') && timerDisplay) {
+        timerDisplay.remove();
+    }
+
+    initializeTimerForActiveTest();
+    setupSubmitReviewActions();
+
+    setInterval(function () {
+        const count = saveAnswers();
+        if (count > 0) {
+            updateSaveIndicator(count);
+        }
+    }, 30000);
+
+    if (!quizForm.classList.contains('submitted')) {
+        pingKeepalive();
+        setInterval(pingKeepalive, 900000);
     }
 });

@@ -4,6 +4,7 @@
 
 html, body {
     overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -262,6 +263,8 @@ li {
     transition: all 0.3s ease;
     text-align: center;
     margin: 5px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
 .btn:hover {
@@ -379,6 +382,13 @@ li {
     transform: translateY(-2px);
 }
 
+img,
+video,
+iframe,
+table {
+    max-width: 100%;
+}
+
 #site-footer .copyright {
     margin-top: 22px;
     font-size: 14px;
@@ -407,5 +417,26 @@ li {
 
     .welcome-copy {
         font-size: 12px;
+    }
+
+    .container,
+    .subjects,
+    .table-wrapper {
+        width: calc(100% - 16px);
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .btn,
+    .footer-links a,
+    .footer-nav a {
+        width: 100%;
+    }
+
+    .btn:hover,
+    .footer-links a:hover,
+    .footer-nav a:hover {
+        transform: none;
+        box-shadow: none;
     }
 }

@@ -28,6 +28,8 @@
             background: #f8fafc;
             color: #1f2937;
             line-height: 1.75;
+            overflow-x: hidden;
+            width: 100%;
         }
         .wrap {
             max-width: 920px;
@@ -110,6 +112,34 @@
             color: #6b7280;
             margin: 1.6rem 0 1.1rem;
             font-size: 0.92rem;
+        }
+
+        img,
+        video,
+        iframe,
+        table {
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .wrap {
+                padding: 0.6rem;
+            }
+
+            .article-card {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.55rem;
+            }
+
+            .nav-links a {
+                display: inline-block;
+                width: 100%;
+            }
         }
     </style>
 </head>

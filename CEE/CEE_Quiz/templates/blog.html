@@ -29,6 +29,8 @@
             color: #1f2937;
             background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 60%);
             line-height: 1.7;
+            overflow-x: hidden;
+            width: 100%;
         }
         header {
             background: linear-gradient(130deg, #0f3a5b, #1f5f8f);
@@ -98,6 +100,40 @@
             padding: 1.5rem 1rem 2rem;
             color: #6b7280;
             font-size: 0.92rem;
+        }
+
+        img,
+        video,
+        iframe,
+        table {
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 0.6rem;
+                margin: 1.3rem auto 2rem;
+            }
+
+            .blog-card {
+                padding: 0.9rem;
+            }
+
+            .blog-card:hover {
+                transform: none;
+                box-shadow: 0 6px 14px rgba(15, 58, 91, 0.08);
+            }
+
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .nav-links a {
+                margin: 0;
+            }
         }
     </style>
 </head>

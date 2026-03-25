@@ -11,12 +11,14 @@
             line-height: 1.6;
             color: #333;
             overflow-x: hidden;
+            width: 100%;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            width: calc(100% - 20px);
+            padding: 20px 10px;
         }
 
         .introduction {
@@ -265,6 +267,8 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
             display: inline-block;
             font-weight: bold;
+            max-width: 100%;
+            overflow-wrap: anywhere;
         }
 
         .linkbtn:hover {
@@ -361,8 +365,86 @@
 
             .btn {
                 width: 200px;
+                max-width: 100%;
                 text-align: center;
             }
+
+        img,
+        video,
+        iframe,
+        table {
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .projects {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card,
+            .introduction,
+            #aboutme {
+                padding: 20px 14px;
+            }
+
+            .project-card:hover,
+            .linkbtn:hover,
+            .introduction:hover,
+            #aboutme:hover,
+            .contact-links .btn:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            header h1 {
+                font-size: clamp(1.6rem, 7vw, 2.2rem);
+            }
+
+            header p,
+            #intro {
+                font-size: 1rem;
+            }
+
+            .contact-links,
+            .footer-links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .contact-links .btn {
+                width: 100%;
+                max-width: 280px;
+                margin: 0;
+            }
+
+            .footer-links a {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #logo {
+                width: 130px;
+                height: 130px;
+            }
+
+            #logo img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .project-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+
+            .linkbtn {
+                width: 100%;
+            }
+        }
         
 
         .fade-in {

@@ -24,6 +24,8 @@
             color: #1f2937;
             line-height: 1.75;
             background: #f7f9fc;
+            overflow-x: hidden;
+            width: 100%;
         }
         main {
             background: #fff;
@@ -50,6 +52,39 @@
             padding-top: 1rem;
             font-size: 0.92rem;
             color: #4b5563;
+        }
+
+        img,
+        video,
+        iframe,
+        table {
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.6rem 2rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .top-links {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .top-links a {
+                margin-right: 0;
+            }
+
+            footer p:last-child {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
         }
     </style>
 </head>

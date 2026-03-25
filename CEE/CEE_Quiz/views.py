@@ -455,6 +455,14 @@ def _pick_random_questions(base_queryset, limit=50):
     return [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
 
 
+def _sample_question_ids(base_queryset, limit):
+    """Return a random sample of question IDs without loading full model rows."""
+    question_ids = list(base_queryset.values_list('id', flat=True))
+    if not question_ids or limit <= 0:
+        return []
+    return random.sample(question_ids, min(limit, len(question_ids)))
+
+
 @csrf_exempt
 def keepalive(request):
     """Keep database connection alive - for Uptime Robot and client pings"""
@@ -561,6 +569,7 @@ def quiz(request, chapter_id):
                 'chapter': chapter,
                 'questions': questions,
                 'score': final_score,
+                'user_name': user_name,
                 'total_attempted': total_attempted,
                 'total_correct': total_correct,
                 'total_wrong': total_wrong,
@@ -662,6 +671,7 @@ def subchapter_quiz(request, subchapter_id):
                 'sub_chapter': sub_chapter,
                 'questions': questions,
                 'score': final_score,
+                'user_name': user_name,
                 'total_attempted': total_attempted,
                 'total_correct': total_correct,
                 'total_wrong': total_wrong,
@@ -700,8 +710,6 @@ def subchapter_quiz(request, subchapter_id):
 
 
 def full_test(request):
-    user_name = request.GET.get('name') or request.POST.get('name')
-    
     if request.method == "POST":
         user_name = request.POST.get('name', '').strip()
         if not user_name:
@@ -718,8 +726,9 @@ def full_test(request):
             if not questions_ids:
                 messages.error(request, 'Session expired. Please restart the test.')
                 return redirect('full_test')
-            
-            questions = list(Question.objects.filter(id__in=questions_ids))
+
+            questions_qs = Question.objects.filter(id__in=questions_ids).select_related('chapter', 'sub_chapter')
+            questions = list(questions_qs)
             id_to_question = {q.id: q for q in questions}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
             
@@ -762,6 +771,7 @@ def full_test(request):
             return render(request, 'full_test.html', {
                 'questions': questions,
                 'score': final_score,
+                'user_name': user_name,
                 'total_attempted': total_attempted,
                 'total_correct': total_correct,
                 'total_wrong': total_wrong,
@@ -775,14 +785,26 @@ def full_test(request):
         except Exception as e:
             messages.error(request, f'Error processing submission: {str(e)}. Please try again.')
             return redirect('full_test')
-    
+
     else:
         user_name = request.GET.get('name', '').strip()
+        quiz_started = request.GET.get('start') == '1' and bool(user_name)
+
+        if not quiz_started:
+            request.session.pop('full_test_questions', None)
+            return render(request, 'full_test.html', {
+                'questions': [],
+                'score': None,
+                'quiz_started': False,
+                'user_answers': {},
+                'finished': False
+            })
+
         chapters = Chapter.objects.filter(
             subject__name__in=['Biology', 'Physics', 'Chemistry']
-        ).order_by('id')
+        ).only('id', 'name', 'has_subchapters').order_by('id')
 
-        questions = []
+        selected_ids = []
 
         for chapter in chapters:
             weight_match = re.search(r'\((\d+)\)\s*$', chapter.name)
@@ -793,31 +815,29 @@ def full_test(request):
             if target_count <= 0:
                 continue
 
-            chapter_questions = Question.objects.filter(chapter=chapter)
+            chapter_questions = Question.objects.filter(chapter_id=chapter.id)
 
-            if chapter.has_subchapters and chapter_questions.filter(sub_chapter__isnull=False).exists():
-                primary_pool = list(chapter_questions.filter(sub_chapter__isnull=False))
-                fallback_pool = list(chapter_questions.filter(sub_chapter__isnull=True))
+            if chapter.has_subchapters:
+                primary_ids = _sample_question_ids(chapter_questions.filter(sub_chapter__isnull=False), target_count)
+                remaining = target_count - len(primary_ids)
+                fallback_ids = _sample_question_ids(chapter_questions.filter(sub_chapter__isnull=True), remaining)
+                selected_ids.extend(primary_ids)
+                selected_ids.extend(fallback_ids)
             else:
-                primary_pool = list(chapter_questions)
-                fallback_pool = []
+                selected_ids.extend(_sample_question_ids(chapter_questions, target_count))
 
-            selected = random.sample(primary_pool, min(target_count, len(primary_pool)))
+        random.shuffle(selected_ids)
 
-            remaining = target_count - len(selected)
-            if remaining > 0 and fallback_pool:
-                selected.extend(random.sample(fallback_pool, min(remaining, len(fallback_pool))))
+        questions_qs = Question.objects.filter(id__in=selected_ids).select_related('chapter', 'sub_chapter')
+        id_to_question = {q.id: q for q in questions_qs}
+        questions = [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
 
-            questions.extend(selected)
-
-        random.shuffle(questions)
-        
         request.session['full_test_questions'] = [q.id for q in questions]
-        
+
         return render(request, 'full_test.html', {
             'questions': questions,
             'score': None,
-            'quiz_started': False,
+            'quiz_started': True,
             'user_answers': {},
             'finished': False
         })

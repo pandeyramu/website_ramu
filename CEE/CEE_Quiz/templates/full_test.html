@@ -55,54 +55,25 @@
         <h1>Full Test</h1>
         <p>Total Questions: 180 | Time: 2.5 hours | Negative Marking: 0.25 per wrong answer</p>
 
+        {% if score is None and not quiz_started %}
+            <form method="get" id="name-form" class="start-form">
+                <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
+                <button type="submit" name="start" value="1" id="start_full_test" class="start_test">Start Test</button>
+            </form>
+        {% endif %}
+
         {% if questions %}
-            {% if score is None and not quiz_started %}
-                <form method="get">
-                    <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
-                    <button type="submit" name="start" value="1" id="start_full_test" class="start_test">Start Test</button>
-                </form>
+            {% if score is None %}
+                <div id="full_test_timer" style="display: block;"></div>
             {% endif %}
 
-            {% if not quiz_started and score is None %}
-                <div id="full_test_timer" style="display: none;"></div>
-            {% endif %}
-
-            <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% url 'full_test' %}" id="full-test-form"
-                {% if not quiz_started and score is None %}style="display: none;"{% else %}style="display: block;"{% endif %}>
+            <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% url 'full_test' %}" id="full-test-form" style="display: block;">
                 {% csrf_token %}
                 <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
-                
-                {% for q in questions %}
-                    <div class="question-block">
-                        <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
-                        {% for opt in "ABCD" %}
-                            {% with option_text=q|get_option_text:opt %}
-                            {% with user_choice=user_answers|dict_get:q.id %}
-                                <label class="option
-                                    {% if score is not None %}
-                                        {% if opt == q.correct_option %} correct {% endif %}
-                                        {% if user_choice|default:'' == opt and opt != q.correct_option %} wrong {% endif %}
-                                    {% endif %}
-                                    {% if user_choice|default:'' == opt %} selected {% endif %}">
-                                    <input type="radio" name="q{{ q.id }}" value="{{ opt }}" 
-                                        {% if score is not None %} disabled {% endif %} 
-                                        {% if user_choice|default:'' == opt %} checked {% endif %}>
-                                    <span class="option-text">{{ opt }}. {{ option_text }}</span>
-                                </label>
-                            {% endwith %}
-                            {% endwith %}
-                        {% endfor %}
-                        {% if score is not None %}
-                        <p class="review-hint">Review: {{ q.chapter.name }}{% if q.sub_chapter %} &rsaquo; {{ q.sub_chapter.name }}{% endif %}</p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
 
-                {% if score is None %}
-                    <button type="submit" class="submit-btn">Submit Full Test</button>
-                {% else %}
+                {% if score is not None %}
                     <div class="score-card">
-                        <h2 class="score-title">Test Results</h2>
+                        <h2 class="score-title">Test Results for {{ user_name|default:'User' }}</h2>
                         <div class="score-stats">
                             <div class="stat-item">
                                 <span class="stat-label">Total Questions:</span>
@@ -132,8 +103,59 @@
                         <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
                     </div>
                 {% endif %}
+
+                {% if score is None %}
+                    <section id="submit-review-panel" class="submit-review-modal" hidden aria-hidden="true">
+                        <div class="submit-review-backdrop" id="submit-review-backdrop"></div>
+                        <div class="submit-review-panel" role="dialog" aria-modal="true" aria-labelledby="review-modal-title">
+                            <h2 id="review-modal-title">Full Test</h2>
+                            <p class="submit-review-meta">Total Questions: 180 | Time: 2.5 hours | Negative Marking: 0.25 per wrong answer</p>
+                            <p class="submit-review-time" id="review-time-left">Time Left: --:--:--</p>
+                            <h3 class="submit-review-subtitle">Before Final Submit</h3>
+                            <p class="submit-review-summary">
+                                Attempted: <strong id="attempted-count">0</strong> |
+                                Unattempted: <strong id="unattempted-count">0</strong>
+                            </p>
+                            <div id="question-number-links" class="question-number-links"></div>
+                            <div class="submit-review-actions">
+                                <button type="button" id="submit-now-btn" class="submit-now-btn">Submit Now</button>
+                                <button type="button" id="close-review-btn" class="close-review-btn">Continue Solving</button>
+                            </div>
+                        </div>
+                    </section>
+                {% endif %}
+                
+                {% for q in questions %}
+                    <div class="question-block" id="question-{{ forloop.counter }}" data-question-number="{{ forloop.counter }}">
+                        <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
+                        {% for opt in "ABCD" %}
+                            {% with option_text=q|get_option_text:opt %}
+                            {% with user_choice=user_answers|dict_get:q.id %}
+                                <label class="option
+                                    {% if score is not None %}
+                                        {% if opt == q.correct_option %} correct {% endif %}
+                                        {% if user_choice|default:'' == opt and opt != q.correct_option %} wrong {% endif %}
+                                    {% endif %}
+                                    {% if user_choice|default:'' == opt %} selected {% endif %}">
+                                    <input type="radio" name="q{{ q.id }}" value="{{ opt }}" 
+                                        {% if score is not None %} disabled {% endif %} 
+                                        {% if user_choice|default:'' == opt %} checked {% endif %}>
+                                    <span class="option-text">{{ opt }}. {{ option_text }}</span>
+                                </label>
+                            {% endwith %}
+                            {% endwith %}
+                        {% endfor %}
+                        {% if score is not None %}
+                        <p class="review-hint">Review: {{ q.chapter.name }}{% if q.sub_chapter %} &rsaquo; {{ q.sub_chapter.name }}{% endif %}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                {% if score is None %}
+                    <button type="submit" class="submit-btn" id="submit-full-test-btn">Submit Full Test</button>
+                {% endif %}
             </form>
-        {% else %}
+        {% elif quiz_started %}
             <p class="no-questions">No questions available for this test.</p>
         {% endif %}
 
