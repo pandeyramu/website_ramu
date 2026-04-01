@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="register.css">
+</head>
+
+<body>
+  <div id="nav">
+    <marquee behaviour="scroll" direction="left" scrollamount="12">
+      <h1>You can Register Here!</h1>
+    </marquee>
+  </div>
+  <div class="Register">
+    <form id="registrationForm">
+        FullName: <input type="text" id="name" placeholder="Name" required ><br>
+        Phone Number: <input type="tel" id="num" placeholder="e.g. 9748432000" required><br>
+        Voter Id: <input type="text" id="vtid" placeholder="e.g. 648236" required><br>
+        Voter Id: <input type="file" id="photo" accept="image/*;capture=camera" required><br>
+        E-mail: <input type="email" id="email" placeholder="e.g. abc123@gmail.com" required><br>
+        Date Of Birth: <input type="date" id="date" required><br>
+        Password: <input type="password" id="pass" class="pass" placeholder="Enter your password" required><br>
+        Confirm Password: <input type="password" id="conpass" class="pass" placeholder="Confirm your password" required><br>
+        <button id="btn" type="submit">Submit</button>
+    </form>
+</div>
+
+  </div>
+  <script src="register.js"> </script> 
+</body>
+</html>

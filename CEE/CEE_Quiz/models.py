@@ -33,6 +33,7 @@ class Question(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     sub_chapter = models.ForeignKey(SubChapter, on_delete=models.CASCADE, null=True, blank=True, related_name='questions')
     question_text = models.TextField()
+    solution = models.TextField(blank=True, default='')
     option_a = models.CharField(max_length=255)
     option_b = models.CharField(max_length=255)
     option_c = models.CharField(max_length=255)

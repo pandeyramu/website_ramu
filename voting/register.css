@@ -1,0 +1,55 @@
+body{
+    display: flex;
+    flex-direction: column;
+ background-color: #FF9F66; 
+align-items: center;
+justify-content: center;
+
+}
+#nav{
+    color: mediumspringgreen;
+    background-color: yellowgreen;
+    width: 100%;
+    height: fit-content;
+    margin-top: 5px;
+}
+#nav h1{
+    margin: 0;
+}
+.Register {
+    display: flex;
+    flex-direction: column;
+    width: 60vh;
+    margin-top: 20px; 
+    padding: 20px;
+    border: 3px solid red;
+    color: rgb(4 0 255);
+}
+.Register:hover{
+    background-color: rgba(167, 104, 22, 0.548);
+}
+
+#num, #vtid,#date,#email,.pass,#name,#btn{
+    width: 100%; 
+    margin-bottom: 15px; 
+    box-sizing: border-box; 
+    margin: 10px;
+    border: 3px solid rgba(0, 0, 0, 0.133);
+}
+#photo{
+    width: 100%; 
+    margin-bottom: 15px; 
+    box-sizing: border-box; 
+    margin: 10px;
+}
+#btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+#btn:hover {
+    background-color: #7766ce;
+}

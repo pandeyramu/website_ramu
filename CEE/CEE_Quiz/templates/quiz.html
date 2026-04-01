@@ -143,7 +143,16 @@
                         {% endwith %}
                     {% endfor %}
                     {% if score is not None %}
-                    <p class="review-hint">Review: {{ q.chapter.name }}{% if q.sub_chapter %} &rsaquo; {{ q.sub_chapter.name }}{% endif %}</p>
+                    <div class="solution-box">
+                        <p class="solution-title">Solution:</p>
+                        <p class="solution-text">
+                            {% if q.solution %}
+                                {{ q.solution|linebreaksbr }}
+                            {% else %}
+                                No solution for this question
+                            {% endif %}
+                        </p>
+                    </div>
                     {% endif %}
                 </article>
                 {% endfor %}

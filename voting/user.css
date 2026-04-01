@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+#nav{
+    background-color: darkkhaki;
+    height: 10%;
+}
+
+#candidates-list, #voting-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+}
+
+#voting-form {
+    display: none; /* Hide voting form initially */
+}
+
+fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+label {
+    margin-right: 10px;
+}
+#subm{
+    background-color: aqua;
+    width: 50%;
+    font-size: 33px;
+    align-self: center;
+}
+a{
+    font-size: 33px;
+}

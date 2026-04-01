@@ -25,9 +25,16 @@ class SubChapterAdmin(admin.ModelAdmin):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'chapter', 'sub_chapter', 'question_text', 'correct_option')
+    list_display = ('id', 'chapter', 'sub_chapter', 'question_text', 'correct_option', 'solution_preview')
     list_filter = ('chapter__subject', 'chapter', 'sub_chapter')
-    search_fields = ('question_text',)
+    search_fields = ('question_text', 'solution')
+
+    @admin.display(description='Solution')
+    def solution_preview(self, obj):
+        text = (obj.solution or '').strip()
+        if not text:
+            return '-'
+        return text[:120] + ('...' if len(text) > 120 else '')
 
 
 class UserAdmin(admin.ModelAdmin):

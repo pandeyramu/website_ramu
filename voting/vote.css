@@ -1,0 +1,14 @@
+ul{
+    display: flex;
+    background-color: rgb(86, 181, 216);
+    justify-content: space-between;   
+    list-style-type: none;
+}
+a{
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+#nav{
+    background-color: springgreen;
+}

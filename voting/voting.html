@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="voting.css">
+</head>
+<body>
+    <div id="candi">
+    <div id="img1">
+        <h2>Candidate 1</h2>
+        Image: <input type="file" id="cad1" onchange="previewImage(event, 'imgPreview1')" placeholder="Upload Image">
+        <img id="imgPreview1" class="cad" src="#" alt="Candidate 1 Image"><br> 
+        Name: <input type="text" class ="name"  name="name1" placeholder="Name">
+        Age: <input type="text" class ="age" name="age1" placeholder="Age">
+        Party: <input type="text" class ="party" name="party1" placeholder="Party">
+     
+    </div>
+
+    <div id="img2">
+        <h2>Candidate 2</h2>
+       Image: <input type="file" id="cad2" onchange="previewImage(event, 'imgPreview2')" placeholder="Upload Image">
+       <img id="imgPreview2" class="cad" src="#" alt="Candidate 2 Image"><br> 
+        Name: <input type="text" class ="name"  name="name2" placeholder="Name">
+        Age: <input type="text" class ="age" name="age2" placeholder="Age">
+        Party: <input type="text" class ="party" name="party2" placeholder="Party">
+    </div>
+</div>
+    <input type="button" id="btn" value="Confirm">
+
+    <script src="voting.js"></script>
+</html>

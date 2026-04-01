@@ -450,7 +450,24 @@ def _pick_random_questions(base_queryset, limit=50):
         return []
 
     selected_ids = random.sample(question_ids, min(limit, len(question_ids)))
-    selected_qs = Question.objects.filter(id__in=selected_ids).select_related('chapter', 'sub_chapter')
+    selected_qs = (
+        Question.objects
+        .filter(id__in=selected_ids)
+        .select_related('chapter', 'sub_chapter')
+        .only(
+            'id',
+            'chapter_id',
+            'sub_chapter_id',
+            'question_text',
+            'option_a',
+            'option_b',
+            'option_c',
+            'option_d',
+            'correct_option',
+            'chapter__name',
+            'sub_chapter__name',
+        )
+    )
     id_to_question = {q.id: q for q in selected_qs}
     return [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
 
