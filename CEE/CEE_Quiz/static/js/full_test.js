@@ -225,7 +225,12 @@ function renderSubmitReview() {
 }
 
 function setupSubmitReviewActions() {
-    if (!quizForm || !submitReviewPanel) {
+    if (!quizForm) {
+        return;
+    }
+
+    if (!submitReviewPanel) {
+        allowDirectSubmit = true;
         return;
     }
 

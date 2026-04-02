@@ -104,6 +104,33 @@ body {
     border-radius: 4px;
 }
 
+.solution-box {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: #f8fff4;
+    border-left: 3px solid #2d8a34;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.solution-title {
+    margin: 0 0 6px;
+    font-weight: 700;
+    color: #1f6024;
+}
+
+.solution-text {
+    margin: 0;
+    color: #2f2f2f;
+    line-height: 1.55;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+}
+
 .question-block,
 .score-card,
 .option-text {

@@ -124,7 +124,7 @@
                         </div>
                     </section>
                 {% endif %}
-                
+
                 {% for q in questions %}
                     <div class="question-block" id="question-{{ forloop.counter }}" data-question-number="{{ forloop.counter }}">
                         <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
@@ -146,7 +146,16 @@
                             {% endwith %}
                         {% endfor %}
                         {% if score is not None %}
-                        <p class="review-hint">Review: {{ q.chapter.name }}{% if q.sub_chapter %} &rsaquo; {{ q.sub_chapter.name }}{% endif %}</p>
+                        <div class="solution-box">
+                            <p class="solution-title">Solution:</p>
+                            <p class="solution-text">
+                                {% if q.solution %}
+                                    {{ q.solution|linebreaksbr }}
+                                {% else %}
+                                    No solution for this question
+                                {% endif %}
+                            </p>
+                        </div>
                         {% endif %}
                     </div>
                 {% endfor %}
