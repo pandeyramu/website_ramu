@@ -171,12 +171,12 @@ WHITENOISE_MANIFEST_STRICT = False
 
 # Email configuration for question review reports
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'no-reply@ceequiz.local')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', '').strip() or 'smtp.gmail.com'
+EMAIL_PORT = int((os.environ.get('EMAIL_PORT', '') or '587').strip())
+EMAIL_USE_TLS = (os.environ.get('EMAIL_USE_TLS', 'True') or 'True').strip().lower() == 'true'
+EMAIL_HOST_USER = (os.environ.get('EMAIL_HOST_USER', '') or '').strip()
+EMAIL_HOST_PASSWORD = (os.environ.get('EMAIL_HOST_PASSWORD', '') or '').strip()
+DEFAULT_FROM_EMAIL = (os.environ.get('DEFAULT_FROM_EMAIL', '') or EMAIL_HOST_USER or 'no-reply@ceequiz.local').strip()
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
