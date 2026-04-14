@@ -549,36 +549,33 @@ def report_question(request):
             return JsonResponse({'ok': False, 'message': 'POST required.'}, status=405)
 
         payload = json.loads(request.body.decode('utf-8'))
-    except (json.JSONDecodeError, UnicodeDecodeError):
-        return JsonResponse({'ok': False, 'message': 'Invalid JSON payload.'}, status=400)
 
-    user_name = (payload.get('name') or '').strip()
-    attempt_reference = (payload.get('attempt_reference') or '').strip()
-    topic = (payload.get('topic') or '').strip()
-    reason = (payload.get('reason') or '').strip()
-    question_id = _parse_non_negative_int(payload.get('question_id'), default=-1)
-    question_text = (payload.get('question_text') or '').strip()
+        user_name = (payload.get('name') or '').strip()
+        attempt_reference = (payload.get('attempt_reference') or '').strip()
+        topic = (payload.get('topic') or '').strip()
+        reason = (payload.get('reason') or '').strip()
+        question_id = _parse_non_negative_int(payload.get('question_id'), default=-1)
+        question_text = (payload.get('question_text') or '').strip()
 
-    if question_id <= 0 or not question_text or not reason:
-        return JsonResponse({'ok': False, 'message': 'Missing question details.'}, status=400)
+        if question_id <= 0 or not question_text or not reason:
+            return JsonResponse({'ok': False, 'message': 'Missing question details.'}, status=400)
 
-    if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
-        return JsonResponse(
-            {'ok': False, 'message': 'Email is not configured on the server. Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD in Render.'},
-            status=503,
+        if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
+            return JsonResponse(
+                {'ok': False, 'message': 'Email is not configured on the server. Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD in Render.'},
+                status=503,
+            )
+
+        subject = f"CEE Quiz Review Report | QID {question_id}"
+        message = (
+            f"User: {user_name or 'Unknown'}\n"
+            f"Attempt: {attempt_reference or 'N/A'}\n"
+            f"Topic: {topic or 'N/A'}\n"
+            f"Reason: {reason}\n"
+            f"Question ID: {question_id}\n\n"
+            f"Question Text:\n{question_text}\n"
         )
 
-    subject = f"CEE Quiz Review Report | QID {question_id}"
-    message = (
-        f"User: {user_name or 'Unknown'}\n"
-        f"Attempt: {attempt_reference or 'N/A'}\n"
-        f"Topic: {topic or 'N/A'}\n"
-        f"Reason: {reason}\n"
-        f"Question ID: {question_id}\n\n"
-        f"Question Text:\n{question_text}\n"
-    )
-
-    try:
         send_mail(
             subject=subject,
             message=message,
@@ -586,10 +583,10 @@ def report_question(request):
             recipient_list=['ceequiz9830@gmail.com'],
             fail_silently=False,
         )
-    except Exception as exc:
-        return JsonResponse({'ok': False, 'message': f'Failed to send report email: {exc}'}, status=502)
+        return JsonResponse({'ok': True, 'message': 'Review report sent.'})
 
-    return JsonResponse({'ok': True, 'message': 'Review report sent.'})
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return JsonResponse({'ok': False, 'message': 'Invalid JSON payload.'}, status=400)
     except Exception as exc:
         return JsonResponse({'ok': False, 'message': f'Unexpected report error: {exc}'}, status=500)
 
