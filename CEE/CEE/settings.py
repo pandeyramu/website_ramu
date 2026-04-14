@@ -180,7 +180,7 @@ EMAIL_HOST_USER = (os.environ.get('EMAIL_HOST_USER', '') or '').strip()
 EMAIL_HOST_PASSWORD = (os.environ.get('EMAIL_HOST_PASSWORD', '') or '').strip()
 DEFAULT_FROM_EMAIL = (os.environ.get('DEFAULT_FROM_EMAIL', '') or EMAIL_HOST_USER or 'no-reply@ceequiz.local').strip()
 REPORT_TO_EMAIL = (os.environ.get('REPORT_TO_EMAIL', '') or 'ceequiz9830@gmail.com').strip()
-REPORT_EMAIL_PROVIDER = (os.environ.get('REPORT_EMAIL_PROVIDER', '') or 'smtp').strip().lower()
+REPORT_EMAIL_PROVIDER = (os.environ.get('REPORT_EMAIL_PROVIDER', '') or 'resend').strip().lower()
 RESEND_API_KEY = (os.environ.get('RESEND_API_KEY', '') or '').strip()
 RESEND_API_URL = (os.environ.get('RESEND_API_URL', '') or 'https://api.resend.com/emails').strip()
 

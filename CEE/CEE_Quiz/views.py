@@ -566,12 +566,6 @@ def report_question(request):
         if question_id <= 0 or not question_text or not reason:
             return JsonResponse({'ok': False, 'message': 'Missing question details.'}, status=400)
 
-        if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
-            return JsonResponse(
-                {'ok': False, 'message': 'Email is not configured on the server. Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD in Render.'},
-                status=200,
-            )
-
         subject = f"CEE Quiz Review Report | QID {question_id}"
         message = (
             f"User: {user_name or 'Unknown'}\n"
