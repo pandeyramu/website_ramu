@@ -343,6 +343,14 @@ p {
     display: none !important;
 }
 
+body.review-modal-open .full-test-footer {
+    display: none;
+}
+
+body.review-modal-open {
+    overflow: hidden;
+}
+
 .submit-review-backdrop {
     position: absolute;
     inset: 0;

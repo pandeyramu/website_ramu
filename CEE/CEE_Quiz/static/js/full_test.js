@@ -138,6 +138,7 @@ function openReviewModal() {
     submitReviewPanel.hidden = false;
     submitReviewPanel.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('review-modal-open');
 }
 
 function closeReviewModal() {
@@ -147,6 +148,7 @@ function closeReviewModal() {
     submitReviewPanel.hidden = true;
     submitReviewPanel.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    document.body.classList.remove('review-modal-open');
 }
 
 function openFlagModal(payload) {

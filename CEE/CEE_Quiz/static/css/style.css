@@ -344,6 +344,14 @@ h1 {
     display: none !important;
 }
 
+body.review-modal-open footer {
+    display: none;
+}
+
+body.review-modal-open {
+    overflow: hidden;
+}
+
 .submit-review-backdrop {
     position: absolute;
     inset: 0;
