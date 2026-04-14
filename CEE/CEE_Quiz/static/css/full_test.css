@@ -12,6 +12,9 @@ body {
     background: #f9f9f9;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .quiz-form:not(.submitted) .question-block,
@@ -693,6 +696,11 @@ table {
     color: #fff;
     padding: 40px 15px;
     margin-top: 50px;
+    position: static;
+    inset: auto;
+    width: 100%;
+    clear: both;
+    z-index: 1;
 }
 
 .full-test-footer .footer-container {
