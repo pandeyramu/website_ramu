@@ -539,6 +539,19 @@ p {
     color: #8e1e1e;
 }
 
+/* Keep reported questions visibly flagged even when unattempted/attempted classes are present. */
+.q-link.flagged.unattempted {
+    background: #f4e8ff;
+    border-color: #8e44ad;
+    color: #632b98;
+}
+
+.q-link.flagged.attempted {
+    background: linear-gradient(135deg, #dbf7e4 0%, #f4e8ff 100%);
+    border-color: #7a3fb1;
+    color: #4e2179;
+}
+
 .submit-review-actions {
     display: flex;
     gap: 10px;
