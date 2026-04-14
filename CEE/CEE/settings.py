@@ -41,6 +41,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.ramup.com.np",
     "https://pandeyramu.com.np",
     "https://ceequiz.pandeyramu.com.np",
+    "https://*.onrender.com",
 ]
 
 # Application definition
