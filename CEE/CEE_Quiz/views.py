@@ -3,6 +3,8 @@ import re
 import uuid
 import json
 import socket
+import logging
+import requests
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import Http404, HttpResponse, JsonResponse
@@ -12,6 +14,9 @@ from django.db import connection
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Subject, Chapter, SubChapter, Question, TestResult
+
+
+logger = logging.getLogger(__name__)
 
 
 BLOG_POSTS = {
@@ -577,17 +582,71 @@ def report_question(request):
             f"Question Text:\n{question_text}\n"
         )
 
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=['ceequiz9830@gmail.com'],
-            fail_silently=False,
-        )
+        use_resend = bool(getattr(settings, 'RESEND_API_KEY', '')) or getattr(settings, 'REPORT_EMAIL_PROVIDER', 'smtp') == 'resend'
+
+        if use_resend:
+            resend_key = getattr(settings, 'RESEND_API_KEY', '')
+            if not resend_key:
+                return JsonResponse(
+                    {'ok': False, 'message': 'Resend is selected but RESEND_API_KEY is missing.'},
+                    status=200,
+                )
+
+            response = requests.post(
+                getattr(settings, 'RESEND_API_URL', 'https://api.resend.com/emails'),
+                headers={
+                    'Authorization': f'Bearer {resend_key}',
+                    'Content-Type': 'application/json',
+                },
+                json={
+                    'from': settings.DEFAULT_FROM_EMAIL,
+                    'to': [getattr(settings, 'REPORT_TO_EMAIL', 'ceequiz9830@gmail.com')],
+                    'subject': subject,
+                    'text': message,
+                },
+                timeout=getattr(settings, 'EMAIL_HTTP_TIMEOUT', 10),
+            )
+
+            if response.status_code >= 300:
+                return JsonResponse(
+                    {
+                        'ok': False,
+                        'message': f'Resend API error ({response.status_code}): {response.text[:300]}',
+                    },
+                    status=200,
+                )
+        else:
+            if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
+                return JsonResponse(
+                    {'ok': False, 'message': 'Email is not configured on the server. Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD in Render.'},
+                    status=200,
+                )
+
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[getattr(settings, 'REPORT_TO_EMAIL', 'ceequiz9830@gmail.com')],
+                fail_silently=False,
+            )
+
         return JsonResponse({'ok': True, 'message': 'Review report sent.'})
 
     except (json.JSONDecodeError, UnicodeDecodeError):
         return JsonResponse({'ok': False, 'message': 'Invalid JSON payload.'}, status=400)
+    except OSError as exc:
+        if getattr(exc, 'errno', None) == 101:
+            logger.error('SMTP network unreachable while sending report: %s', message if 'message' in locals() else 'no-message')
+            return JsonResponse(
+                {
+                    'ok': False,
+                    'message': 'Mail server network is unreachable from hosting. SMTP is blocked/unavailable; use an email API provider (SendGrid/Resend/Mailgun).',
+                },
+                status=200,
+            )
+        return JsonResponse({'ok': False, 'message': f'OS error while sending report: {exc}'}, status=200)
+    except requests.RequestException as exc:
+        return JsonResponse({'ok': False, 'message': f'Email API request failed: {exc}'}, status=200)
     except (socket.timeout, TimeoutError) as exc:
         return JsonResponse({'ok': False, 'message': f'Mail server timed out: {exc}'}, status=200)
     except Exception as exc:
