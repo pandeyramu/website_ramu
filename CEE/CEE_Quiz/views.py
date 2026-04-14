@@ -2,6 +2,7 @@ import random
 import re
 import uuid
 import json
+import socket
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import Http404, HttpResponse, JsonResponse
@@ -563,7 +564,7 @@ def report_question(request):
         if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
             return JsonResponse(
                 {'ok': False, 'message': 'Email is not configured on the server. Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD in Render.'},
-                status=503,
+                status=200,
             )
 
         subject = f"CEE Quiz Review Report | QID {question_id}"
@@ -587,8 +588,10 @@ def report_question(request):
 
     except (json.JSONDecodeError, UnicodeDecodeError):
         return JsonResponse({'ok': False, 'message': 'Invalid JSON payload.'}, status=400)
+    except (socket.timeout, TimeoutError) as exc:
+        return JsonResponse({'ok': False, 'message': f'Mail server timed out: {exc}'}, status=200)
     except Exception as exc:
-        return JsonResponse({'ok': False, 'message': f'Unexpected report error: {exc}'}, status=500)
+        return JsonResponse({'ok': False, 'message': f'Unexpected report error: {exc}'}, status=200)
 
 
 @cache_page(60 * 5)
