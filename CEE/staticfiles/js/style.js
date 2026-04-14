@@ -1,62 +1,135 @@
-
-// ==================== ACCURATE TIMER CODE ====================
 let endTime;
 let timerInterval;
-let currentUserName; // NEW: Store current user's name
+let currentUserName;
 let allowDirectSubmit = false;
+let currentTimeLeft = 2700;
+let activeFlagPayload = null;
 
+const QUIZ_DURATION_SECONDS = 2700;
 const timerDisplay = document.getElementById('timer');
 const quizForm = document.getElementById('quiz-form');
-const startBtn = document.getElementById('start_btn');
-const nameInput = document.querySelector('input[name="name"]');
 const submitReviewPanel = document.getElementById('submit-review-panel');
 const submitReviewBackdrop = document.getElementById('submit-review-backdrop');
 const submitNowBtn = document.getElementById('submit-now-btn');
 const closeReviewBtn = document.getElementById('close-review-btn');
 const reviewTimeLeft = document.getElementById('review-time-left');
 const reviewTotalQuestions = document.getElementById('review-total-questions');
+const timeTakenInput = document.getElementById('time-taken-seconds');
 
-// Get chapter ID for unique storage
-const chapterId = "{{ chapter.id }}";
+const flagReviewPanel = document.getElementById('flag-review-panel');
+const flagReviewBackdrop = document.getElementById('flag-review-backdrop');
+const flagQuestionId = document.getElementById('flag-question-id');
+const flagQuestionPreview = document.getElementById('flag-question-preview');
+const flagReason = document.getElementById('flag-reason');
+const sendFlagBtn = document.getElementById('send-flag-btn');
+const closeFlagBtn = document.getElementById('close-flag-btn');
+
+const quizContextKey = document.body.dataset.quizKey || 'quiz';
+const watermarkText = document.body.dataset.watermark || '';
+const attemptReference = document.body.dataset.attemptReference || '';
+const topicName = document.body.dataset.topic || '';
 
 function buildUserStorageKey(rawName) {
     return rawName.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
 }
 
-function formatScientificText() {
-    const targets = document.querySelectorAll('.question-block p strong, .option .option-text');
-    targets.forEach((el) => {
-        const raw = el.textContent || '';
-        if (!raw || raw.includes('\\(') || raw.includes('\\)') || raw.includes('$$')) {
-            return;
-        }
-
-        const formatted = raw.replace(/([A-Za-z])\^\s*(-?\d+)/g, '$1<sup>$2</sup>');
-        if (formatted !== raw) {
-            el.innerHTML = formatted;
-        }
-    });
+function storagePrefix() {
+    return quizContextKey;
 }
 
-function afterSubmit() {
-    clearInterval(timerInterval);
-    quizForm.classList.add("submitted");
+function answerStorageKey() {
+    return `${storagePrefix()}_${currentUserName}_answers`;
+}
 
-    if (timerDisplay) {
-        timerDisplay.style.display = 'block';
-        timerDisplay.textContent = 'Calculating......';
-        timerDisplay.style.color = '#ffffff';
-        timerDisplay.style.backgroundColor = '#2c3e50';
-        timerDisplay.style.padding = '8px 12px';
-        timerDisplay.style.borderRadius = '8px';
+function timerStorageKey() {
+    return `${storagePrefix()}_${currentUserName}_end_time`;
+}
+
+function reportStorageKey() {
+    return `${storagePrefix()}_${currentUserName}_reported_questions`;
+}
+
+function safeParseJSON(rawValue, fallback) {
+    try {
+        return JSON.parse(rawValue);
+    } catch (_error) {
+        return fallback;
     }
-    
-    // Clear timer state after successful submission
-    if (currentUserName) {
-        localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
+}
+
+function getReportedQuestions() {
+    if (!currentUserName) {
+        return new Set();
     }
 
-    closeReviewModal();
+    const stored = safeParseJSON(localStorage.getItem(reportStorageKey()), []);
+    return new Set(Array.isArray(stored) ? stored.map((value) => Number(value)).filter((value) => !Number.isNaN(value)) : []);
+}
+
+function persistReportedQuestions(reportedSet) {
+    if (!currentUserName) {
+        return;
+    }
+    localStorage.setItem(reportStorageKey(), JSON.stringify(Array.from(reportedSet)));
+}
+
+function updateReportedCount() {
+    const flaggedCount = document.getElementById('flagged-count');
+    if (!flaggedCount) {
+        return;
+    }
+    flaggedCount.textContent = String(getReportedQuestions().size);
+}
+
+function getCsrfToken() {
+    const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    if (csrfInput && csrfInput.value) {
+        return csrfInput.value;
+    }
+
+    const match = document.cookie.match(/(^|;)\s*csrftoken=([^;]+)/);
+    return match ? decodeURIComponent(match[2]) : '';
+}
+
+function renderWatermark() {
+    const layer = document.getElementById('quiz-watermark');
+    if (!layer) {
+        return;
+    }
+
+    layer.innerHTML = '';
+    if (!watermarkText.trim()) {
+        return;
+    }
+
+    for (let index = 0; index < 18; index += 1) {
+        const span = document.createElement('span');
+        span.textContent = watermarkText;
+        layer.appendChild(span);
+    }
+}
+
+function applyTimerMood(timeLeft) {
+    if (!timerDisplay) {
+        return;
+    }
+
+    timerDisplay.classList.remove('timer-safe', 'timer-warning', 'timer-critical');
+    if (timeLeft <= 60) {
+        timerDisplay.classList.add('timer-critical');
+    } else if (timeLeft <= 300) {
+        timerDisplay.classList.add('timer-warning');
+    } else {
+        timerDisplay.classList.add('timer-safe');
+    }
+}
+
+function updateTimeTakenField() {
+    if (!timeTakenInput) {
+        return;
+    }
+    const elapsed = Math.max(0, QUIZ_DURATION_SECONDS - currentTimeLeft);
+    timeTakenInput.value = String(elapsed);
 }
 
 function openReviewModal() {
@@ -77,94 +150,85 @@ function closeReviewModal() {
     document.body.style.overflow = '';
 }
 
-function updateTimer() {
-    const now = Date.now();
-    const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
-    
-    let minutes = Math.floor(timeLeft / 60);
-    let seconds = timeLeft % 60;
-    
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    
-    timerDisplay.textContent = `Time Left : ${minutes}: ${seconds}`;
-    
-    if (timeLeft <= 60) {
-        timerDisplay.style.color = timeLeft % 2 === 0 ? "#fd2109ff" : "#fff";
-        timerDisplay.style.backgroundColor = timeLeft % 2 === 0 ? "#000" : "#e74c3c";
-        timerDisplay.style.padding = "5px 10px";
-        timerDisplay.style.borderRadius = "5px";
-    }
-
-    if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        alert("Time is up! Submitting your Answers......");
-        allowDirectSubmit = true;
-        afterSubmit();
-        setTimeout(() => {
-            quizForm.requestSubmit();  
-        }, 100);
-    }
-    
-    // Save end time to localStorage with user-specific key
-    if (currentUserName) {
-        localStorage.setItem(`quiz_${chapterId}_${currentUserName}_end_time`, endTime);
-    }
-}
-
-function startQuiz(event) {
-    event.preventDefault();
-    if (!nameInput || nameInput.value.trim() === '') {
-        alert('Please enter your name before starting the test!');
-        nameInput.focus();
+function openFlagModal(payload) {
+    if (!flagReviewPanel) {
         return;
     }
-    
-    // Set current user name (sanitize to avoid key conflicts)
-    currentUserName = buildUserStorageKey(nameInput.value);
-    
-    const hiddenNameInput = document.getElementById('hidden-name');
-    if (hiddenNameInput) {
-        hiddenNameInput.value = nameInput.value.trim();
-    }
-    
-    const nameForm = document.getElementById('name-form');
-    if (nameForm) {
-        nameForm.style.display = "none";
-    }
-    
-    startBtn.style.display = "none";
-    quizForm.style.display = "block";
-    timerDisplay.style.display = "block";
 
-    // Check if there's a saved end time FOR THIS USER
-    const savedEndTime = localStorage.getItem(`quiz_${chapterId}_${currentUserName}_end_time`);
-    if (savedEndTime) {
-        const savedEnd = parseInt(savedEndTime);
-        const now = Date.now();
-        const timeLeft = Math.floor((savedEnd - now) / 1000);
-        
-        if (timeLeft > 0) {
-            const resume = confirm(`You have a saved quiz in progress with ${Math.floor(timeLeft/60)} minutes remaining. Resume?`);
-            if (resume) {
-                endTime = savedEnd;
-            } else {
-                // Start fresh - 45 minutes = 2700 seconds
-                endTime = Date.now() + (2700 * 1000);
-                localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
-            }
-        } else {
-            // Old test expired, start fresh
-            endTime = Date.now() + (2700 * 1000);
-            localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
-        }
-    } else {
-        // No saved test, start fresh
-        endTime = Date.now() + (2700 * 1000);
+    activeFlagPayload = payload;
+    if (flagQuestionId) {
+        flagQuestionId.textContent = String(payload.questionId);
+    }
+    if (flagQuestionPreview) {
+        const shortText = payload.questionText.length > 180 ? `${payload.questionText.slice(0, 180)}...` : payload.questionText;
+        flagQuestionPreview.textContent = shortText;
     }
 
-    updateTimer();
-    timerInterval = setInterval(updateTimer, 1000);
+    flagReviewPanel.hidden = false;
+    flagReviewPanel.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFlagModal() {
+    if (!flagReviewPanel) {
+        return;
+    }
+
+    flagReviewPanel.hidden = true;
+    flagReviewPanel.setAttribute('aria-hidden', 'true');
+    activeFlagPayload = null;
+    document.body.style.overflow = '';
+}
+
+function afterSubmit() {
+    if (!quizForm) {
+        return;
+    }
+
+    clearInterval(timerInterval);
+    quizForm.classList.add('submitted');
+    updateTimeTakenField();
+
+    if (timerDisplay) {
+        timerDisplay.style.display = 'block';
+        timerDisplay.textContent = 'Calculating......';
+        timerDisplay.classList.remove('timer-safe', 'timer-warning', 'timer-critical');
+        timerDisplay.classList.add('timer-done');
+    }
+
+    if (currentUserName) {
+        localStorage.removeItem(answerStorageKey());
+        localStorage.removeItem(timerStorageKey());
+    }
+
+    closeReviewModal();
+}
+
+function updateTimer() {
+    if (!timerDisplay) {
+        return;
+    }
+
+    const now = Date.now();
+    const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+    currentTimeLeft = timeLeft;
+
+    const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+    const seconds = String(timeLeft % 60).padStart(2, '0');
+
+    timerDisplay.textContent = `Time Left : ${minutes}:${seconds}`;
+    applyTimerMood(timeLeft);
+
+    if (currentUserName) {
+        localStorage.setItem(timerStorageKey(), String(endTime));
+    }
+
+    if (timeLeft <= 0 && quizForm) {
+        clearInterval(timerInterval);
+        allowDirectSubmit = true;
+        afterSubmit();
+        setTimeout(() => quizForm.requestSubmit(), 100);
+    }
 }
 
 function getAnsweredQuestionNumbers() {
@@ -175,11 +239,12 @@ function getAnsweredQuestionNumbers() {
 
     quizForm.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
         const block = radio.closest('.question-block');
-        if (block) {
-            const qNum = parseInt(block.dataset.questionNumber, 10);
-            if (!Number.isNaN(qNum)) {
-                answered.add(qNum);
-            }
+        if (!block) {
+            return;
+        }
+        const qNum = Number(block.dataset.questionNumber);
+        if (!Number.isNaN(qNum)) {
+            answered.add(qNum);
         }
     });
     return answered;
@@ -192,6 +257,7 @@ function renderSubmitReview() {
 
     const blocks = Array.from(quizForm.querySelectorAll('.question-block[data-question-number]'));
     const answeredSet = getAnsweredQuestionNumbers();
+    const reportedSet = getReportedQuestions();
     const attempted = answeredSet.size;
     const total = blocks.length;
     const unattempted = Math.max(0, total - attempted);
@@ -206,6 +272,8 @@ function renderSubmitReview() {
     if (unattemptedCount) {
         unattemptedCount.textContent = String(unattempted);
     }
+    updateReportedCount();
+
     if (reviewTotalQuestions) {
         reviewTotalQuestions.textContent = String(total);
     }
@@ -216,15 +284,112 @@ function renderSubmitReview() {
         return;
     }
 
-    const fragments = blocks.map((block) => {
-        const qNum = parseInt(block.dataset.questionNumber, 10);
+    linksContainer.innerHTML = blocks.map((block) => {
+        const qNum = Number(block.dataset.questionNumber);
         const isAttempted = answeredSet.has(qNum);
-        const cssClass = isAttempted ? 'q-link attempted' : 'q-link unattempted';
+        const isReported = reportedSet.has(qNum);
+        const cssClass = isReported ? `q-link flagged ${isAttempted ? 'attempted' : 'unattempted'}` : (isAttempted ? 'q-link attempted' : 'q-link unattempted');
         return `<a href="#question-${qNum}" class="${cssClass}">Q${qNum}</a>`;
+    }).join('');
+
+    openReviewModal();
+}
+
+function saveAnswers() {
+    if (!quizForm || !currentUserName || quizForm.classList.contains('submitted')) {
+        return 0;
+    }
+
+    const answers = {};
+    quizForm.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
+        answers[radio.name.replace('q', '')] = radio.value;
     });
 
-    linksContainer.innerHTML = fragments.join('');
-    openReviewModal();
+    localStorage.setItem(answerStorageKey(), JSON.stringify(answers));
+    localStorage.setItem(`${storagePrefix()}_${currentUserName}_save_time`, new Date().toISOString());
+    return Object.keys(answers).length;
+}
+
+function updateSaveIndicator(count) {
+    let indicator = document.getElementById('save-indicator');
+    if (!indicator) {
+        indicator = document.createElement('div');
+        indicator.id = 'save-indicator';
+        indicator.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; font-size: 14px; z-index: 9999; box-shadow: 0 2px 5px rgba(0,0,0,0.3); transition: opacity 0.3s; font-family: Arial, sans-serif;';
+        document.body.appendChild(indicator);
+    }
+
+    const savedTime = new Date().toLocaleTimeString();
+    indicator.innerHTML = `Auto-saved ${count} answers at ${savedTime}`;
+    indicator.style.opacity = '1';
+    setTimeout(() => {
+        indicator.style.opacity = '0.4';
+    }, 3000);
+}
+
+async function sendQuestionReport() {
+    if (!activeFlagPayload || !flagReason) {
+        return;
+    }
+
+    const payload = {
+        name: document.getElementById('hidden-name')?.value || '',
+        attempt_reference: attemptReference,
+        topic: topicName,
+        reason: flagReason.value,
+        question_id: activeFlagPayload.questionId,
+        question_text: activeFlagPayload.questionText,
+    };
+
+    sendFlagBtn.disabled = true;
+    try {
+        const response = await fetch('/report-question/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken(),
+            },
+            body: JSON.stringify(payload),
+            credentials: 'same-origin',
+        });
+
+        const contentType = response.headers.get('content-type') || '';
+        const bodyText = await response.text();
+        let result = null;
+        if (contentType.includes('application/json')) {
+            result = safeParseJSON(bodyText, null);
+        }
+
+        if (!result) {
+            const fallbackMessage = bodyText.includes('<!DOCTYPE')
+                ? 'Server returned HTML instead of JSON (likely CSRF or server error).'
+                : 'Unexpected server response while sending review report.';
+            throw new Error(fallbackMessage);
+        }
+
+        if (!response.ok || !result.ok) {
+            throw new Error(result.message || 'Unable to send review report.');
+        }
+
+        const reported = getReportedQuestions();
+        reported.add(activeFlagPayload.questionNumber);
+        persistReportedQuestions(reported);
+        updateReportedCount();
+
+        const targetButton = quizForm?.querySelector(`.flag-question-btn[data-question-number="${activeFlagPayload.questionNumber}"]`);
+        targetButton?.setAttribute('aria-pressed', 'true');
+        if (targetButton) {
+            targetButton.textContent = 'Reported';
+        }
+        quizForm?.querySelector(`.question-block[data-question-number="${activeFlagPayload.questionNumber}"]`)?.classList.add('flagged');
+
+        alert('Review report sent. Thank you.');
+        closeFlagModal();
+    } catch (error) {
+        alert(error.message || 'Could not send review report.');
+    } finally {
+        sendFlagBtn.disabled = false;
+    }
 }
 
 function setupSubmitReviewActions() {
@@ -232,7 +397,7 @@ function setupSubmitReviewActions() {
         return;
     }
 
-    quizForm.addEventListener('submit', function(event) {
+    quizForm.addEventListener('submit', (event) => {
         if (quizForm.classList.contains('submitted')) {
             return;
         }
@@ -246,40 +411,81 @@ function setupSubmitReviewActions() {
         afterSubmit();
     });
 
-    if (submitNowBtn) {
-        submitNowBtn.addEventListener('click', function(event) {
-            event.preventDefault();
-            allowDirectSubmit = true;
-            closeReviewModal();
-            quizForm.requestSubmit();
-        });
-    }
+    submitNowBtn?.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (!window.confirm('Submit this quiz now? You will not be able to change your answers after submission.')) {
+            return;
+        }
+        allowDirectSubmit = true;
+        closeReviewModal();
+        quizForm.requestSubmit();
+    });
 
-    if (closeReviewBtn) {
-        closeReviewBtn.addEventListener('click', function(event) {
-            event.preventDefault();
-            closeReviewModal();
-        });
-    }
+    closeReviewBtn?.addEventListener('click', (event) => {
+        event.preventDefault();
+        closeReviewModal();
+    });
 
-    if (submitReviewBackdrop) {
-        submitReviewBackdrop.addEventListener('click', closeReviewModal);
-    }
+    submitReviewBackdrop?.addEventListener('click', closeReviewModal);
+    flagReviewBackdrop?.addEventListener('click', closeFlagModal);
+    closeFlagBtn?.addEventListener('click', closeFlagModal);
+    sendFlagBtn?.addEventListener('click', sendQuestionReport);
 
     const linksContainer = document.getElementById('question-number-links');
-    if (linksContainer) {
-        linksContainer.addEventListener('click', function(event) {
-            if (event.target.closest('a.q-link')) {
-                closeReviewModal();
-            }
-        });
-    }
-
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && submitReviewPanel && !submitReviewPanel.hidden) {
+    linksContainer?.addEventListener('click', (event) => {
+        if (event.target.closest('a.q-link')) {
             closeReviewModal();
         }
     });
+
+    document.addEventListener('click', (event) => {
+        const flagButton = event.target.closest('.flag-question-btn');
+        if (!flagButton || !quizForm || quizForm.classList.contains('submitted')) {
+            return;
+        }
+
+        const questionBlock = flagButton.closest('.question-block');
+        if (!questionBlock) {
+            return;
+        }
+
+        const questionNumber = Number(questionBlock.dataset.questionNumber);
+        const questionId = Number(questionBlock.dataset.questionId);
+        const questionText = questionBlock.dataset.questionText || '';
+        if (Number.isNaN(questionNumber) || Number.isNaN(questionId) || !questionText) {
+            alert('Question details missing. Please refresh and try again.');
+            return;
+        }
+
+        openFlagModal({ questionNumber, questionId, questionText });
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (submitReviewPanel && !submitReviewPanel.hidden) {
+                closeReviewModal();
+            }
+            if (flagReviewPanel && !flagReviewPanel.hidden) {
+                closeFlagModal();
+            }
+        }
+    });
+}
+
+function setupNonCopyProtection() {
+    if (!quizForm || quizForm.classList.contains('submitted')) {
+        return;
+    }
+
+    const blockCopy = (event) => {
+        if (event.target.closest('.question-block')) {
+            event.preventDefault();
+        }
+    };
+
+    document.addEventListener('copy', blockCopy);
+    document.addEventListener('cut', blockCopy);
+    document.addEventListener('contextmenu', blockCopy);
 }
 
 function initializeTimerForActiveQuiz() {
@@ -287,124 +493,79 @@ function initializeTimerForActiveQuiz() {
         return;
     }
 
-    const hiddenNameInput = document.getElementById('hidden-name');
-    const rawName = hiddenNameInput ? hiddenNameInput.value : '';
-    if (!rawName || !rawName.trim()) {
+    const rawName = document.getElementById('hidden-name')?.value || '';
+    if (!rawName.trim()) {
         return;
     }
 
     currentUserName = buildUserStorageKey(rawName);
+    const savedEndTime = localStorage.getItem(timerStorageKey());
 
-    const savedEndTime = localStorage.getItem(`quiz_${chapterId}_${currentUserName}_end_time`);
     if (savedEndTime) {
-        const savedEnd = parseInt(savedEndTime);
-        const now = Date.now();
-        const timeLeft = Math.floor((savedEnd - now) / 1000);
-
-        if (timeLeft > 0) {
-            endTime = savedEnd;
+        const parsed = Number(savedEndTime);
+        if (!Number.isNaN(parsed) && parsed > Date.now()) {
+            endTime = parsed;
         } else {
-            endTime = Date.now() + (2700 * 1000);
-            localStorage.removeItem(`quiz_${chapterId}_${currentUserName}_end_time`);
+            endTime = Date.now() + (QUIZ_DURATION_SECONDS * 1000);
+            localStorage.removeItem(timerStorageKey());
         }
     } else {
-        endTime = Date.now() + (2700 * 1000);
+        endTime = Date.now() + (QUIZ_DURATION_SECONDS * 1000);
     }
 
     updateTimer();
     timerInterval = setInterval(updateTimer, 1000);
 }
 
-document.addEventListener('change', function(e) {
-    if (e.target.type === 'radio' && e.target.name.startsWith('q') && currentUserName) {
-        const count = saveAnswers();
-        updateSaveIndicator(count);
-
-        // Visual feedback
-        const questionDiv = e.target.closest('.question-container, .question, div[class*="question"]');
-        if (questionDiv) {
-            questionDiv.classList.add('answered');
-        }
-    }
-});
-
-// Save answers to localStorage
-function saveAnswers() {
-    if (!currentUserName) return 0;
-
-    const form = document.querySelector('form#quiz-form');
-    if (!form) return 0;
-
-    const answers = {};
-    const radioInputs = form.querySelectorAll('input[type="radio"]:checked');
-
-    radioInputs.forEach(radio => {
-        const questionId = radio.name.replace('q', '');
-        answers[questionId] = radio.value;
+function pingKeepalive() {
+    fetch('/keepalive/', {
+        method: 'GET',
+        credentials: 'same-origin',
+    }).catch(() => {
+        // Keepalive failures are non-critical.
     });
-
-    localStorage.setItem(`quiz_${chapterId}_${currentUserName}_answers`, JSON.stringify(answers));
-    localStorage.setItem(`quiz_${chapterId}_${currentUserName}_save_time`, new Date().toISOString());
-    return Object.keys(answers).length;
 }
 
-// Auto-save every 30 seconds
-setInterval(function() {
-    if (quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted') && currentUserName) {
+document.addEventListener('change', (event) => {
+    if (!quizForm) {
+        return;
+    }
+
+    if (event.target.matches('input[type="radio"][name^="q"]')) {
         const count = saveAnswers();
         if (count > 0) {
             updateSaveIndicator(count);
         }
-    }
-}, 30000);
 
-// Save before page unload
-window.addEventListener('beforeunload', function(e) {
-    if (quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted') && currentUserName) {
-        const count = saveAnswers();
-        if (count > 0) {
-            e.preventDefault();
-            e.returnValue = 'You have unsaved progress. Are you sure you want to leave?';
+        const questionBlock = event.target.closest('.question-block');
+        if (questionBlock) {
+            questionBlock.querySelectorAll('.option').forEach((label) => label.classList.remove('selected'));
+            event.target.closest('.option')?.classList.add('selected');
         }
     }
 });
 
-// Save indicator
-function updateSaveIndicator(count) {
-    let indicator = document.getElementById('save-indicator');
-    if (!indicator) {
-        indicator = document.createElement('div');
-        indicator.id = 'save-indicator';
-        indicator.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 14px;
-            z-index: 9999;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            transition: opacity 0.3s;
-            font-family: Arial, sans-serif;
-        `;
-        document.body.appendChild(indicator);
+window.addEventListener('beforeunload', (event) => {
+    if (!quizForm || quizForm.classList.contains('submitted')) {
+        return;
     }
 
-    const savedTime = new Date().toLocaleTimeString();
-    const answerCount = count !== undefined ? count : document.querySelectorAll('input[type="radio"]:checked').length;
-    indicator.innerHTML = `Auto-saved ${answerCount} answers at ${savedTime}`;
-    indicator.style.opacity = '1';
+    const count = saveAnswers();
+    if (count > 0) {
+        event.preventDefault();
+        event.returnValue = 'You have in-progress answers. Are you sure you want to leave?';
+    }
+});
 
-    setTimeout(() => {
-        indicator.style.opacity = '0.4';
-    }, 3000);
-}
+document.addEventListener('DOMContentLoaded', () => {
+    renderWatermark();
+    setupNonCopyProtection();
 
-// Also load on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', function() {
-    formatScientificText();
+    const rawName = document.getElementById('hidden-name')?.value || '';
+    if (rawName.trim()) {
+        currentUserName = buildUserStorageKey(rawName);
+    }
+
     if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
         window.MathJax.typesetPromise();
     }
@@ -414,28 +575,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     closeReviewModal();
+    closeFlagModal();
+    initializeTimerForActiveQuiz();
+    setupSubmitReviewActions();
 
-    if (quizForm && quizForm.style.display !== 'none') {
-        initializeTimerForActiveQuiz();
+    if (quizForm) {
+        quizForm.querySelectorAll('.flag-question-btn').forEach((button) => {
+            const questionNumber = Number(button.dataset.questionNumber);
+            if (getReportedQuestions().has(questionNumber)) {
+                button.textContent = 'Reported';
+                button.setAttribute('aria-pressed', 'true');
+                button.closest('.question-block')?.classList.add('flagged');
+            }
+        });
     }
 
-    setupSubmitReviewActions();
+    updateReportedCount();
+
+    setInterval(() => {
+        const count = saveAnswers();
+        if (count > 0) {
+            updateSaveIndicator(count);
+        }
+    }, 30000);
+
+    const hasActiveQuiz = quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted');
+    if (hasActiveQuiz) {
+        pingKeepalive();
+        setInterval(pingKeepalive, 900000);
+    }
 });
-
-// ==================== KEEPALIVE FOR DATABASE ====================
-
-// Keepalive should run only while an active quiz is visible.
-function pingKeepalive() {
-    fetch('/keepalive/', {
-        method: 'GET',
-        credentials: 'same-origin'
-    }).catch(() => {
-        // Keepalive failures are non-critical; ignore noisy console errors.
-    });
-}
-
-const hasActiveQuiz = quizForm && quizForm.style.display !== 'none' && !quizForm.classList.contains('submitted');
-if (hasActiveQuiz) {
-    pingKeepalive();
-    setInterval(pingKeepalive, 900000); // 15 minutes
-}

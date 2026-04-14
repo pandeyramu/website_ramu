@@ -24,6 +24,7 @@ urlpatterns = [
     
     # Keepalive endpoint for Render free tier
     path('keepalive/', views.keepalive, name='keepalive'),
+    path('report-question/', views.report_question, name='report_question'),
     
     # Main app URLs
     path('', views.home, name='home'),

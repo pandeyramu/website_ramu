@@ -19,6 +19,7 @@ staticfiles/
 *.log
 
 # Export / migration artefacts — never commit these
+sqlite_csv_exports/
 export_*.csv
 questions.csv
 cee_export.json

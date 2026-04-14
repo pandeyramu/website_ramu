@@ -50,7 +50,8 @@
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
 </head>
 
-<body>
+<body data-quiz-key="full-test" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="Full Test">
+    <div class="quiz-watermark" id="quiz-watermark" aria-hidden="true"></div>
     <div class="container">
         <h1>Full Test</h1>
         <p>Total Questions: 180 | Time: 2.5 hours | Negative Marking: 0.25 per wrong answer</p>
@@ -70,6 +71,7 @@
             <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% url 'full_test' %}" id="full-test-form" style="display: block;">
                 {% csrf_token %}
                 <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
+                <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
 
                 {% if score is not None %}
                     <div class="score-card">
@@ -99,6 +101,22 @@
                                 <span class="stat-label">Final Score:</span>
                                 <span class="stat-value">{{ score }} / {{ total_questions }}</span>
                             </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Time Taken:</span>
+                                <span class="stat-value">{{ time_taken_display }}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Per Question:</span>
+                                <span class="stat-value">{{ per_question_time_display }}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Accuracy:</span>
+                                <span class="stat-value">{{ accuracy_percent }}%</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Completion:</span>
+                                <span class="stat-value">{{ completion_percent }}%</span>
+                            </div>
                         </div>
                         <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
                     </div>
@@ -114,7 +132,13 @@
                             <h3 class="submit-review-subtitle">Before Final Submit</h3>
                             <p class="submit-review-summary">
                                 Attempted: <strong id="attempted-count">0</strong> |
+                                Flagged: <strong id="flagged-count">0</strong> |
                                 Unattempted: <strong id="unattempted-count">0</strong>
+                            </p>
+                            <p class="question-status-legend">
+                                <span class="legend-item legend-attempted">Answered</span>
+                                <span class="legend-item legend-flagged">Flagged</span>
+                                <span class="legend-item legend-unattempted">Blank</span>
                             </p>
                             <div id="question-number-links" class="question-number-links"></div>
                             <div class="submit-review-actions">
@@ -123,10 +147,35 @@
                             </div>
                         </div>
                     </section>
+
+                    <section id="flag-review-panel" class="submit-review-modal" hidden aria-hidden="true">
+                        <div class="submit-review-backdrop" id="flag-review-backdrop"></div>
+                        <div class="submit-review-panel" role="dialog" aria-modal="true" aria-labelledby="flag-review-title">
+                            <h2 id="flag-review-title">Flag Question for Review</h2>
+                            <p class="submit-review-meta">Question ID: <strong id="flag-question-id">--</strong></p>
+                            <p class="submit-review-summary" id="flag-question-preview">Choose why this question should be reviewed.</p>
+                            <label for="flag-reason" class="submit-review-subtitle">Reason</label>
+                            <select id="flag-reason" class="name_place">
+                                <option value="wrong">Wrong</option>
+                                <option value="question out of syllabus">Question out of syllabus</option>
+                                <option value="solution wrong">Solution wrong</option>
+                                <option value="all of the above">All of the above</option>
+                            </select>
+                            <div class="submit-review-actions">
+                                <button type="button" id="send-flag-btn" class="submit-now-btn">Send Review</button>
+                                <button type="button" id="close-flag-btn" class="close-review-btn">Cancel</button>
+                            </div>
+                        </div>
+                    </section>
                 {% endif %}
 
                 {% for q in questions %}
-                    <div class="question-block" id="question-{{ forloop.counter }}" data-question-number="{{ forloop.counter }}">
+                    <div class="question-block" id="question-{{ forloop.counter }}" data-question-number="{{ forloop.counter }}" data-question-id="{{ q.id }}" data-question-text="{{ q.question_text|escape }}">
+                        {% if score is None %}
+                        <div class="question-tools">
+                            <button type="button" class="flag-question-btn" data-question-number="{{ forloop.counter }}" aria-pressed="false">Flag for review</button>
+                        </div>
+                        {% endif %}
                         <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
                         {% for opt in "ABCD" %}
                             {% with option_text=q|get_option_text:opt %}
@@ -161,7 +210,7 @@
                 {% endfor %}
 
                 {% if score is None %}
-                    <button type="submit" class="submit-btn" id="submit-full-test-btn">Submit Full Test</button>
+                    <button type="submit" class="submit-btn" id="submit-full-test-btn">Submit</button>
                 {% endif %}
             </form>
         {% elif quiz_started %}

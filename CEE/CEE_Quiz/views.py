@@ -1,11 +1,15 @@
 import random
 import re
+import uuid
+import json
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_page
 from django.db import connection
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import Subject, Chapter, SubChapter, Question, TestResult
 
 
@@ -480,6 +484,51 @@ def _sample_question_ids(base_queryset, limit):
     return random.sample(question_ids, min(limit, len(question_ids)))
 
 
+def _attempt_reference(session, key_prefix):
+    """Return a short stable attempt reference for the current quiz session."""
+    session_key = f"{key_prefix}_attempt_reference"
+    attempt_reference = session.get(session_key)
+    if not attempt_reference:
+        attempt_reference = uuid.uuid4().hex[:8].upper()
+        session[session_key] = attempt_reference
+        session.modified = True
+    return attempt_reference
+
+
+def _parse_non_negative_int(raw_value, default=0):
+    try:
+        parsed = int(raw_value)
+        return parsed if parsed >= 0 else default
+    except (TypeError, ValueError):
+        return default
+
+
+def _format_duration(total_seconds):
+    total_seconds = max(0, int(total_seconds))
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+    if hours:
+        return f"{hours}h {minutes}m {seconds}s"
+    if minutes:
+        return f"{minutes}m {seconds}s"
+    return f"{seconds}s"
+
+
+def _build_result_metrics(*, total_questions, total_attempted, total_correct, time_taken_seconds):
+    accuracy = round((total_correct / total_attempted) * 100, 1) if total_attempted else 0.0
+    completion = round((total_attempted / total_questions) * 100, 1) if total_questions else 0.0
+    per_question_seconds = round((time_taken_seconds / total_attempted), 1) if total_attempted else 0.0
+
+    return {
+        'accuracy_percent': accuracy,
+        'completion_percent': completion,
+        'time_taken_seconds': time_taken_seconds,
+        'time_taken_display': _format_duration(time_taken_seconds),
+        'per_question_time_display': f"{per_question_seconds}s" if total_attempted else '0s',
+    }
+
+
 @csrf_exempt
 def keepalive(request):
     """Keep database connection alive - for Uptime Robot and client pings"""
@@ -492,6 +541,52 @@ def keepalive(request):
         return HttpResponse("OK", status=200)
     except Exception as e:
         return HttpResponse(f"Error: {str(e)}", status=500)
+
+
+def report_question(request):
+    if request.method != 'POST':
+        return JsonResponse({'ok': False, 'message': 'POST required.'}, status=405)
+
+    try:
+        payload = json.loads(request.body.decode('utf-8'))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return JsonResponse({'ok': False, 'message': 'Invalid JSON payload.'}, status=400)
+
+    user_name = (payload.get('name') or '').strip()
+    attempt_reference = (payload.get('attempt_reference') or '').strip()
+    topic = (payload.get('topic') or '').strip()
+    reason = (payload.get('reason') or '').strip()
+    question_id = _parse_non_negative_int(payload.get('question_id'), default=-1)
+    question_text = (payload.get('question_text') or '').strip()
+
+    if question_id <= 0 or not question_text or not reason:
+        return JsonResponse({'ok': False, 'message': 'Missing question details.'}, status=400)
+
+    if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
+        return JsonResponse({'ok': False, 'message': 'Email is not configured on the server.'}, status=500)
+
+    subject = f"CEE Quiz Review Report | QID {question_id}"
+    message = (
+        f"User: {user_name or 'Unknown'}\n"
+        f"Attempt: {attempt_reference or 'N/A'}\n"
+        f"Topic: {topic or 'N/A'}\n"
+        f"Reason: {reason}\n"
+        f"Question ID: {question_id}\n\n"
+        f"Question Text:\n{question_text}\n"
+    )
+
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['ceequiz9830@gmail.com'],
+            fail_silently=False,
+        )
+    except Exception as exc:
+        return JsonResponse({'ok': False, 'message': f'Failed to send report email: {exc}'}, status=500)
+
+    return JsonResponse({'ok': True, 'message': 'Review report sent.'})
 
 
 @cache_page(60 * 5)
@@ -524,6 +619,7 @@ def quiz(request, chapter_id):
     chapter = get_object_or_404(Chapter, id=chapter_id)
     user_name = request.GET.get('name') or request.POST.get('name')
     quiz_started = (request.GET.get('start') == '1' and user_name)
+    attempt_reference = _attempt_reference(request.session, f'quiz_{chapter_id}')
     
     if request.method == 'POST':
         user_name = request.POST.get('name', '').strip()
@@ -567,6 +663,13 @@ def quiz(request, chapter_id):
             total_wrong = total_attempted - total_correct
             total_skipped = total_questions - total_attempted
             final_score = max(total_score, 0)
+            time_taken_seconds = _parse_non_negative_int(request.POST.get('time_taken_seconds'), default=0)
+            result_metrics = _build_result_metrics(
+                total_questions=total_questions,
+                total_attempted=total_attempted,
+                total_correct=total_correct,
+                time_taken_seconds=time_taken_seconds,
+            )
             
             # Save result with error handling
             try:
@@ -594,7 +697,10 @@ def quiz(request, chapter_id):
                 'total_questions': total_questions,
                 'user_answers': user_answers,
                 'quiz_started': True,
-                'finished': True
+                'finished': True,
+                'attempt_reference': attempt_reference,
+                'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
+                **result_metrics,
             })
             
         except Exception as e:
@@ -607,6 +713,7 @@ def quiz(request, chapter_id):
         questions = []
 
         if quiz_started:
+            attempt_reference = _attempt_reference(request.session, f'quiz_{chapter_id}')
             questions_qs = Question.objects.filter(chapter=chapter)
             questions = _pick_random_questions(questions_qs, limit=50)
             request.session[f'quiz_questions_{chapter_id}'] = [q.id for q in questions]
@@ -619,7 +726,9 @@ def quiz(request, chapter_id):
             'score': None,
             'user_answers': {},
             'quiz_started': quiz_started,
-            'finished': False
+            'finished': False,
+            'attempt_reference': attempt_reference,
+            'watermark_text': f'{user_name} | Attempt #{attempt_reference}' if quiz_started else '',
         })
 
 
@@ -628,6 +737,7 @@ def subchapter_quiz(request, subchapter_id):
     sub_chapter = get_object_or_404(SubChapter, id=subchapter_id)
     chapter = sub_chapter.chapter
     session_key = f'quiz_questions_sub_{subchapter_id}'
+    attempt_reference = _attempt_reference(request.session, f'subchapter_{subchapter_id}')
 
     if request.method == 'POST':
         user_name = request.POST.get('name', '').strip()
@@ -669,6 +779,13 @@ def subchapter_quiz(request, subchapter_id):
             total_wrong = total_attempted - total_correct
             total_skipped = total_questions - total_attempted
             final_score = max(total_score, 0)
+            time_taken_seconds = _parse_non_negative_int(request.POST.get('time_taken_seconds'), default=0)
+            result_metrics = _build_result_metrics(
+                total_questions=total_questions,
+                total_attempted=total_attempted,
+                total_correct=total_correct,
+                time_taken_seconds=time_taken_seconds,
+            )
 
             try:
                 TestResult.objects.create(
@@ -696,7 +813,10 @@ def subchapter_quiz(request, subchapter_id):
                 'total_questions': total_questions,
                 'user_answers': user_answers,
                 'quiz_started': True,
-                'finished': True
+                'finished': True,
+                'attempt_reference': attempt_reference,
+                'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
+                **result_metrics,
             })
 
         except Exception as e:
@@ -709,6 +829,7 @@ def subchapter_quiz(request, subchapter_id):
         questions = []
 
         if quiz_started:
+            attempt_reference = _attempt_reference(request.session, f'subchapter_{subchapter_id}')
             questions_qs = Question.objects.filter(sub_chapter=sub_chapter)
             questions = _pick_random_questions(questions_qs, limit=50)
             request.session[session_key] = [q.id for q in questions]
@@ -722,11 +843,14 @@ def subchapter_quiz(request, subchapter_id):
             'score': None,
             'user_answers': {},
             'quiz_started': quiz_started,
-            'finished': False
+            'finished': False,
+            'attempt_reference': attempt_reference,
+            'watermark_text': f'{user_name} | Attempt #{attempt_reference}' if quiz_started else '',
         })
 
 
 def full_test(request):
+    attempt_reference = _attempt_reference(request.session, 'full_test')
     if request.method == "POST":
         user_name = request.POST.get('name', '').strip()
         if not user_name:
@@ -770,6 +894,13 @@ def full_test(request):
             total_wrong = total_attempted - total_correct
             total_skipped = total_questions - total_attempted
             final_score = max(total_score, 0)
+            time_taken_seconds = _parse_non_negative_int(request.POST.get('time_taken_seconds'), default=0)
+            result_metrics = _build_result_metrics(
+                total_questions=total_questions,
+                total_attempted=total_attempted,
+                total_correct=total_correct,
+                time_taken_seconds=time_taken_seconds,
+            )
             
             # Save result with retry logic
             try:
@@ -796,7 +927,10 @@ def full_test(request):
                 'total_questions': total_questions,
                 'user_answers': user_answers,
                 'quiz_started': True,
-                'finished': True
+                'finished': True,
+                'attempt_reference': attempt_reference,
+                'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
+                **result_metrics,
             })
             
         except Exception as e:
@@ -814,7 +948,9 @@ def full_test(request):
                 'score': None,
                 'quiz_started': False,
                 'user_answers': {},
-                'finished': False
+                'finished': False,
+                'attempt_reference': attempt_reference,
+                'watermark_text': '',
             })
 
         chapters = Chapter.objects.filter(
@@ -856,7 +992,9 @@ def full_test(request):
             'score': None,
             'quiz_started': True,
             'user_answers': {},
-            'finished': False
+            'finished': False,
+            'attempt_reference': attempt_reference,
+            'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
         })
 
 

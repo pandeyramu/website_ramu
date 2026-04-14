@@ -1,1 +1,0 @@
-SELECT * FROM "CEE_Quiz_testresult";
