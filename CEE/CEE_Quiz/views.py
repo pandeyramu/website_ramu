@@ -544,10 +544,10 @@ def keepalive(request):
 
 
 def report_question(request):
-    if request.method != 'POST':
-        return JsonResponse({'ok': False, 'message': 'POST required.'}, status=405)
-
     try:
+        if request.method != 'POST':
+            return JsonResponse({'ok': False, 'message': 'POST required.'}, status=405)
+
         payload = json.loads(request.body.decode('utf-8'))
     except (json.JSONDecodeError, UnicodeDecodeError):
         return JsonResponse({'ok': False, 'message': 'Invalid JSON payload.'}, status=400)
@@ -590,6 +590,8 @@ def report_question(request):
         return JsonResponse({'ok': False, 'message': f'Failed to send report email: {exc}'}, status=502)
 
     return JsonResponse({'ok': True, 'message': 'Review report sent.'})
+    except Exception as exc:
+        return JsonResponse({'ok': False, 'message': f'Unexpected report error: {exc}'}, status=500)
 
 
 @cache_page(60 * 5)
