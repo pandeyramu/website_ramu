@@ -3,6 +3,7 @@
 Set these in Render or your production host:
 
 - SECRET_KEY=change-this-to-a-long-random-secret
+- DJANGO_SECRET_KEY=change-this-to-a-long-random-secret (optional alias if SECRET_KEY is not used)
 - DEBUG=False
 - DATABASE_URL=postgresql://postgres:password@host:5432/postgres
 - EMAIL_HOST=smtp.gmail.com

@@ -24,13 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (os.environ.get("SECRET_KEY") or "").strip()
+# Support both common env var names used in Django deployments.
+SECRET_KEY = (os.environ.get("SECRET_KEY") or os.environ.get("DJANGO_SECRET_KEY") or "").strip()
 if not SECRET_KEY:
     if DEBUG:
         # Dev fallback only; production must provide SECRET_KEY via environment.
         SECRET_KEY = secrets.token_urlsafe(64)
     else:
-        raise RuntimeError("SECRET_KEY environment variable must be set when DEBUG is False")
+        raise RuntimeError(
+            "SECRET_KEY (or DJANGO_SECRET_KEY) environment variable must be set when DEBUG is False"
+        )
 
 ALLOWED_HOSTS = [
     "localhost",
