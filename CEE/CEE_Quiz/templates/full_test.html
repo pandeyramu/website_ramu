@@ -52,7 +52,7 @@
 
 <body data-quiz-key="full-test" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="Full Test">
     <div class="quiz-watermark" id="quiz-watermark" aria-hidden="true"></div>
-    <div class="container">
+    <div class="container {% if score is not None %}result-page{% endif %}">
         <h1>Full Test</h1>
         <p>Total Questions: 180 | Time: 2.5 hours | Negative Marking: 0.25 per wrong answer</p>
 
@@ -74,52 +74,98 @@
                 <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
 
                 {% if score is not None %}
-                    <div class="score-card">
-                        <h2 class="score-title">Test Results for {{ user_name|default:'User' }}</h2>
-                        <div class="score-stats">
-                            <div class="stat-item">
-                                <span class="stat-label">Total Questions:</span>
-                                <span class="stat-value">{{ total_questions }}</span>
+                    <div class="result-layout">
+                        <aside class="history-sidebar">
+                            <div class="history-sidebar-header">
+                                <p class="history-eyebrow">Your last 5 test attempts</p>
+                                <h2 class="history-title">Exact name: {{ history_user_name|default:user_name|default:'User' }}</h2>
+                                <p class="history-note">Matches only the exact submitted name across all tests.</p>
                             </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Attempted:</span>
-                                <span class="stat-value">{{ total_attempted }}</span>
+
+                            {% if history_entries %}
+                                <div class="history-table-wrap">
+                                    <table class="history-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Test</th>
+                                                <th>Attempted</th>
+                                                <th>Marks</th>
+                                                <th>Accuracy</th>
+                                                <th>Speed</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for entry in history_entries %}
+                                                <tr class="{% if forloop.first %}latest-attempt{% endif %}">
+                                                    <td>
+                                                        <span class="history-topic">{{ entry.topic }}</span>
+                                                        <span class="history-meta">{{ entry.created_at|date:"d M, H:i" }}</span>
+                                                        {% if forloop.first %}<span class="history-badge">Recent</span>{% endif %}
+                                                    </td>
+                                                    <td>{{ entry.total_attempted }}</td>
+                                                    <td>{{ entry.score }}</td>
+                                                    <td>{{ entry.accuracy_display }}</td>
+                                                    <td>
+                                                        <span class="history-speed">{{ entry.time_taken_display }}</span>
+                                                        <span class="history-meta">{{ entry.per_question_time_display }}/q</span>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <div class="history-empty">No previous tests found for this exact name yet.</div>
+                            {% endif %}
+                        </aside>
+
+                        <div class="result-main">
+                            <div class="score-card">
+                                <h2 class="score-title">Test Results for {{ user_name|default:'User' }}</h2>
+                                <div class="score-stats">
+                                    <div class="stat-item">
+                                        <span class="stat-label">Total Questions:</span>
+                                        <span class="stat-value">{{ total_questions }}</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Attempted:</span>
+                                        <span class="stat-value">{{ total_attempted }}</span>
+                                    </div>
+                                    <div class="stat-item correct">
+                                        <span class="stat-label">Correct:</span>
+                                        <span class="stat-value">{{ total_correct }}</span>
+                                    </div>
+                                    <div class="stat-item wrong">
+                                        <span class="stat-label">Wrong:</span>
+                                        <span class="stat-value">{{ total_wrong }}</span>
+                                    </div>
+                                    <div class="stat-item skipped">
+                                        <span class="stat-label">Skipped:</span>
+                                        <span class="stat-value">{{ total_skipped }}</span>
+                                    </div>
+                                    <div class="stat-item final-score">
+                                        <span class="stat-label">Final Score:</span>
+                                        <span class="stat-value">{{ score }} / {{ total_questions }}</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Time Taken:</span>
+                                        <span class="stat-value">{{ time_taken_display }}</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Per Question:</span>
+                                        <span class="stat-value">{{ per_question_time_display }}</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Accuracy:</span>
+                                        <span class="stat-value">{{ accuracy_percent }}%</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Completion:</span>
+                                        <span class="stat-value">{{ completion_percent }}%</span>
+                                    </div>
+                                </div>
+                                <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
                             </div>
-                            <div class="stat-item correct">
-                                <span class="stat-label">Correct:</span>
-                                <span class="stat-value">{{ total_correct }}</span>
-                            </div>
-                            <div class="stat-item wrong">
-                                <span class="stat-label">Wrong:</span>
-                                <span class="stat-value">{{ total_wrong }}</span>
-                            </div>
-                            <div class="stat-item skipped">
-                                <span class="stat-label">Skipped:</span>
-                                <span class="stat-value">{{ total_skipped }}</span>
-                            </div>
-                            <div class="stat-item final-score">
-                                <span class="stat-label">Final Score:</span>
-                                <span class="stat-value">{{ score }} / {{ total_questions }}</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Time Taken:</span>
-                                <span class="stat-value">{{ time_taken_display }}</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Per Question:</span>
-                                <span class="stat-value">{{ per_question_time_display }}</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Accuracy:</span>
-                                <span class="stat-value">{{ accuracy_percent }}%</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Completion:</span>
-                                <span class="stat-value">{{ completion_percent }}%</span>
-                            </div>
-                        </div>
-                        <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
-                    </div>
                 {% endif %}
 
                 {% if score is None %}
@@ -211,6 +257,11 @@
 
                 {% if score is None %}
                     <button type="submit" class="submit-btn" id="submit-full-test-btn">Submit</button>
+                {% endif %}
+
+                {% if score is not None %}
+                        </div>
+                    </div>
                 {% endif %}
             </form>
         {% elif quiz_started %}

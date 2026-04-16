@@ -46,7 +46,8 @@ function timerStorageKey() {
 }
 
 function reportStorageKey() {
-    return `${storagePrefix()}_${currentUserName}_reported_questions`;
+    const reportScope = attemptReference || currentUserName || 'anonymous';
+    return `${storagePrefix()}_${reportScope}_reported_questions`;
 }
 
 function safeParseJSON(rawValue, fallback) {
@@ -62,7 +63,7 @@ function getReportedQuestions() {
         return new Set();
     }
 
-    const stored = safeParseJSON(localStorage.getItem(reportStorageKey()), []);
+    const stored = safeParseJSON(sessionStorage.getItem(reportStorageKey()), []);
     return new Set(Array.isArray(stored) ? stored.map((value) => Number(value)).filter((value) => !Number.isNaN(value)) : []);
 }
 
@@ -70,7 +71,7 @@ function persistReportedQuestions(reportedSet) {
     if (!currentUserName) {
         return;
     }
-    localStorage.setItem(reportStorageKey(), JSON.stringify(Array.from(reportedSet)));
+    sessionStorage.setItem(reportStorageKey(), JSON.stringify(Array.from(reportedSet)));
 }
 
 function updateReportedCount() {
@@ -288,8 +289,9 @@ function renderSubmitReview() {
 
     linksContainer.innerHTML = blocks.map((block) => {
         const qNum = Number(block.dataset.questionNumber);
+        const qId = Number(block.dataset.questionId);
         const isAttempted = answeredSet.has(qNum);
-        const isReported = reportedSet.has(qNum);
+        const isReported = reportedSet.has(qId);
         const cssClass = isReported ? `q-link flagged ${isAttempted ? 'attempted' : 'unattempted'}` : (isAttempted ? 'q-link attempted' : 'q-link unattempted');
         return `<a href="#question-${qNum}" class="${cssClass}">Q${qNum}</a>`;
     }).join('');
@@ -374,7 +376,7 @@ async function sendQuestionReport() {
         }
 
         const reported = getReportedQuestions();
-        reported.add(activeFlagPayload.questionNumber);
+        reported.add(activeFlagPayload.questionId);
         persistReportedQuestions(reported);
         updateReportedCount();
 
@@ -583,8 +585,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (quizForm) {
         quizForm.querySelectorAll('.flag-question-btn').forEach((button) => {
-            const questionNumber = Number(button.dataset.questionNumber);
-            if (getReportedQuestions().has(questionNumber)) {
+            const questionBlock = button.closest('.question-block');
+            const questionId = Number(questionBlock?.dataset.questionId);
+            if (getReportedQuestions().has(questionId)) {
                 button.textContent = 'Reported';
                 button.setAttribute('aria-pressed', 'true');
                 button.closest('.question-block')?.classList.add('flagged');

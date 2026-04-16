@@ -1,4 +1,4 @@
-Django==6.0
+Django==6.0.4
 gunicorn==23.0.0
 whitenoise==6.11.0
 dj-database-url==2.1.0
@@ -9,11 +9,11 @@ pandas
 openpyxl==3.1.5
 beautifulsoup4==4.13.4
 lxml==6.0.1
-requests==2.32.3
+requests==2.33.0
 wikipedia==1.4.0
 fpdf==1.7.2
 python-docx==1.2.0
-pillow==11.2.1
+pillow==12.2.0
 python-dotenv==1.2.1
 rich==14.2.0
 colorama==0.4.6

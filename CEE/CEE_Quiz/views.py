@@ -4,19 +4,21 @@ import uuid
 import json
 import socket
 import logging
+from functools import lru_cache
 import requests
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import Http404, HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_page
 from django.db import connection
+from django.db.utils import DatabaseError
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Subject, Chapter, SubChapter, Question, TestResult
 
 
 logger = logging.getLogger(__name__)
+TEST_HISTORY_LIMIT = 5
 
 
 BLOG_POSTS = {
@@ -535,7 +537,119 @@ def _build_result_metrics(*, total_questions, total_attempted, total_correct, ti
     }
 
 
-@csrf_exempt
+def _normalize_exact_name(value):
+    return ' '.join((value or '').split()).strip()
+
+
+@lru_cache(maxsize=1)
+def _testresult_columns():
+    table_name = TestResult._meta.db_table
+    with connection.cursor() as cursor:
+        return {column.name for column in connection.introspection.get_table_description(cursor, table_name)}
+
+
+def _testresult_has_columns(*column_names):
+    available_columns = _testresult_columns()
+    return all(column_name in available_columns for column_name in column_names)
+
+
+def _refresh_testresult_columns_cache():
+    _testresult_columns.cache_clear()
+
+
+def _history_value(result, field_name, default=None):
+    if isinstance(result, dict):
+        return result.get(field_name, default)
+    return getattr(result, field_name, default)
+
+
+def _build_test_history_entries(results):
+    entries = []
+    for result in results:
+        total_attempted = _history_value(result, 'total_attempted', 0) or 0
+        total_correct = _history_value(result, 'total_correct', None)
+        time_taken_seconds = _history_value(result, 'time_taken_seconds', None)
+
+        if total_correct is None:
+            accuracy = None
+        else:
+            accuracy = round((total_correct / total_attempted) * 100, 1) if total_attempted else 0.0
+
+        if time_taken_seconds is None:
+            time_taken_display = '--'
+            per_question_display = '--'
+        else:
+            per_question_seconds = round((time_taken_seconds / total_attempted), 1) if total_attempted else 0.0
+            time_taken_display = _format_duration(time_taken_seconds)
+            per_question_display = f'{per_question_seconds}s' if total_attempted else '0s'
+
+        entries.append({
+            'topic': _history_value(result, 'topic', ''),
+            'score': _history_value(result, 'score', 0),
+            'total_attempted': total_attempted,
+            'total_correct': total_correct,
+            'accuracy_percent': accuracy,
+            'accuracy_display': f'{accuracy}%' if accuracy is not None else '--',
+            'time_taken_display': time_taken_display,
+            'per_question_time_display': per_question_display,
+            'created_at': _history_value(result, 'created_at', None),
+        })
+    return entries
+
+
+def _get_test_history(*, user_name, limit=TEST_HISTORY_LIMIT):
+    exact_name = _normalize_exact_name(user_name)
+    if not exact_name:
+        return []
+
+    try:
+        if _testresult_has_columns('total_correct', 'time_taken_seconds'):
+            history_qs = TestResult.objects.filter(name__iexact=exact_name).order_by('-created_at', '-id')[:limit]
+        else:
+            history_qs = TestResult.objects.filter(name__iexact=exact_name).values(
+                'topic',
+                'score',
+                'total_attempted',
+                'created_at',
+            ).order_by('-created_at', '-id')[:limit]
+        return _build_test_history_entries(history_qs)
+    except DatabaseError:
+        # Handle environments where migration state and runtime schema are temporarily out of sync.
+        _refresh_testresult_columns_cache()
+        fallback_qs = TestResult.objects.filter(name__iexact=exact_name).values(
+            'topic',
+            'score',
+            'total_attempted',
+            'created_at',
+        ).order_by('-created_at', '-id')[:limit]
+        return _build_test_history_entries(fallback_qs)
+
+
+def _save_test_result(*, user_name, topic, total_attempted, total_correct, time_taken_seconds, score):
+    payload = {
+        'name': user_name,
+        'topic': topic,
+        'score': score,
+        'total_attempted': total_attempted,
+    }
+
+    try:
+        if _testresult_has_columns('total_correct', 'time_taken_seconds'):
+            payload['total_correct'] = total_correct
+            payload['time_taken_seconds'] = time_taken_seconds
+
+        return TestResult.objects.create(**payload)
+    except DatabaseError:
+        _refresh_testresult_columns_cache()
+        safe_payload = {
+            'name': user_name,
+            'topic': topic,
+            'score': score,
+            'total_attempted': total_attempted,
+        }
+        return TestResult.objects.create(**safe_payload)
+
+
 def keepalive(request):
     """Keep database connection alive - for Uptime Robot and client pings"""
     try:
@@ -675,12 +789,12 @@ def subchapters(request, chapter_id):
 
 def quiz(request, chapter_id):
     chapter = get_object_or_404(Chapter, id=chapter_id)
-    user_name = request.GET.get('name') or request.POST.get('name')
+    user_name = _normalize_exact_name(request.GET.get('name') or request.POST.get('name'))
     quiz_started = (request.GET.get('start') == '1' and user_name)
     attempt_reference = _attempt_reference(request.session, f'quiz_{chapter_id}')
     
     if request.method == 'POST':
-        user_name = request.POST.get('name', '').strip()
+        user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the quiz.')
             return redirect('quiz', chapter_id=chapter_id)
@@ -731,15 +845,19 @@ def quiz(request, chapter_id):
             
             # Save result with error handling
             try:
-                TestResult.objects.create(
-                    name=user_name,
+                _save_test_result(
+                    user_name=user_name,
                     topic=chapter.name,
                     score=final_score,
-                    total_attempted=total_attempted
+                    total_attempted=total_attempted,
+                    total_correct=total_correct,
+                    time_taken_seconds=time_taken_seconds,
                 )
             except Exception as db_error:
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
                 print(f"DB Error: {db_error}")
+
+            history_entries = _get_test_history(user_name=user_name)
             
             request.session.pop(f'quiz_questions_{chapter_id}', None)
             
@@ -758,6 +876,8 @@ def quiz(request, chapter_id):
                 'finished': True,
                 'attempt_reference': attempt_reference,
                 'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
+                'history_entries': history_entries,
+                'history_user_name': user_name,
                 **result_metrics,
             })
             
@@ -766,7 +886,7 @@ def quiz(request, chapter_id):
             return redirect('quiz', chapter_id=chapter_id)
     
     else:
-        user_name = request.GET.get('name', '').strip()
+        user_name = _normalize_exact_name(request.GET.get('name', ''))
         quiz_started = request.GET.get('start') == '1' and bool(user_name)
         questions = []
 
@@ -787,6 +907,8 @@ def quiz(request, chapter_id):
             'finished': False,
             'attempt_reference': attempt_reference,
             'watermark_text': f'{user_name} | Attempt #{attempt_reference}' if quiz_started else '',
+            'history_entries': [],
+            'history_user_name': user_name,
         })
 
 
@@ -798,7 +920,7 @@ def subchapter_quiz(request, subchapter_id):
     attempt_reference = _attempt_reference(request.session, f'subchapter_{subchapter_id}')
 
     if request.method == 'POST':
-        user_name = request.POST.get('name', '').strip()
+        user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the quiz.')
             return redirect('subchapter_quiz', subchapter_id=subchapter_id)
@@ -846,15 +968,19 @@ def subchapter_quiz(request, subchapter_id):
             )
 
             try:
-                TestResult.objects.create(
-                    name=user_name,
+                _save_test_result(
+                    user_name=user_name,
                     topic=f"{chapter.name} - {sub_chapter.name}",
                     score=final_score,
-                    total_attempted=total_attempted
+                    total_attempted=total_attempted,
+                    total_correct=total_correct,
+                    time_taken_seconds=time_taken_seconds,
                 )
             except Exception as db_error:
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
                 print(f"DB Error: {db_error}")
+
+            history_entries = _get_test_history(user_name=user_name)
 
             request.session.pop(session_key, None)
 
@@ -874,6 +1000,8 @@ def subchapter_quiz(request, subchapter_id):
                 'finished': True,
                 'attempt_reference': attempt_reference,
                 'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
+                'history_entries': history_entries,
+                'history_user_name': user_name,
                 **result_metrics,
             })
 
@@ -882,7 +1010,7 @@ def subchapter_quiz(request, subchapter_id):
             return redirect('subchapter_quiz', subchapter_id=subchapter_id)
 
     else:
-        user_name = request.GET.get('name', '').strip()
+        user_name = _normalize_exact_name(request.GET.get('name', ''))
         quiz_started = request.GET.get('start') == '1' and bool(user_name)
         questions = []
 
@@ -904,13 +1032,15 @@ def subchapter_quiz(request, subchapter_id):
             'finished': False,
             'attempt_reference': attempt_reference,
             'watermark_text': f'{user_name} | Attempt #{attempt_reference}' if quiz_started else '',
+            'history_entries': [],
+            'history_user_name': user_name,
         })
 
 
 def full_test(request):
     attempt_reference = _attempt_reference(request.session, 'full_test')
     if request.method == "POST":
-        user_name = request.POST.get('name', '').strip()
+        user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the test.')
             return redirect('full_test')
@@ -962,15 +1092,19 @@ def full_test(request):
             
             # Save result with retry logic
             try:
-                TestResult.objects.create(
-                    name=user_name,
+                _save_test_result(
+                    user_name=user_name,
                     topic="Full Test",
                     score=final_score,
-                    total_attempted=total_attempted
+                    total_attempted=total_attempted,
+                    total_correct=total_correct,
+                    time_taken_seconds=time_taken_seconds,
                 )
             except Exception as db_error:
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
                 print(f"DB Error: {db_error}")
+
+            history_entries = _get_test_history(user_name=user_name)
             
             request.session.pop('full_test_questions', None)
             
@@ -988,6 +1122,8 @@ def full_test(request):
                 'finished': True,
                 'attempt_reference': attempt_reference,
                 'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
+                'history_entries': history_entries,
+                'history_user_name': user_name,
                 **result_metrics,
             })
             
@@ -996,7 +1132,7 @@ def full_test(request):
             return redirect('full_test')
 
     else:
-        user_name = request.GET.get('name', '').strip()
+        user_name = _normalize_exact_name(request.GET.get('name', ''))
         quiz_started = request.GET.get('start') == '1' and bool(user_name)
 
         if not quiz_started:
@@ -1009,6 +1145,8 @@ def full_test(request):
                 'finished': False,
                 'attempt_reference': attempt_reference,
                 'watermark_text': '',
+                'history_entries': [],
+                'history_user_name': user_name,
             })
 
         chapters = Chapter.objects.filter(
@@ -1053,6 +1191,8 @@ def full_test(request):
             'finished': False,
             'attempt_reference': attempt_reference,
             'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
+            'history_entries': [],
+            'history_user_name': user_name,
         })
 
 

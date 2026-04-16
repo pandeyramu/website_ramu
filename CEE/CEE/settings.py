@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import secrets
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,14 +20,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "change-me-in-production",
-)
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = (os.environ.get("SECRET_KEY") or "").strip()
+if not SECRET_KEY:
+    if DEBUG:
+        # Dev fallback only; production must provide SECRET_KEY via environment.
+        SECRET_KEY = secrets.token_urlsafe(64)
+    else:
+        raise RuntimeError("SECRET_KEY environment variable must be set when DEBUG is False")
 
 ALLOWED_HOSTS = [
     "localhost",

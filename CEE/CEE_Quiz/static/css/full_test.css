@@ -169,6 +169,142 @@ body > *:not(.quiz-watermark) {
     border-radius: 10px;
 }
 
+.result-page {
+    max-width: 1240px;
+}
+
+.result-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+    align-items: start;
+}
+
+.result-main {
+    min-width: 0;
+}
+
+.history-sidebar {
+    position: sticky;
+    top: 20px;
+    align-self: start;
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(23, 85, 167, 0.14);
+    background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+    box-shadow: 0 12px 30px rgba(31, 61, 120, 0.08);
+}
+
+.history-sidebar-header {
+    margin-bottom: 12px;
+}
+
+.history-eyebrow {
+    margin: 0 0 4px;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4d6994;
+}
+
+.history-title {
+    margin: 0 0 6px;
+    text-align: left;
+    font-size: 22px;
+    color: #19345c;
+}
+
+.history-note {
+    margin: 0;
+    text-align: left;
+    font-size: 13px;
+    color: #53657f;
+    font-weight: 600;
+}
+
+.history-table-wrap {
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.history-table th,
+.history-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e7edf7;
+    vertical-align: top;
+    text-align: left;
+}
+
+.history-table th {
+    background: #19345c;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.history-table td:nth-child(2),
+.history-table td:nth-child(3),
+.history-table td:nth-child(4) {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.history-table tr.latest-attempt {
+    background: #fff8e8;
+}
+
+.history-topic {
+    display: block;
+    font-weight: 700;
+    color: #173c67;
+}
+
+.history-meta {
+    display: block;
+    margin-top: 2px;
+    font-size: 11px;
+    color: #6a7688;
+}
+
+.history-badge {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #19345c;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.history-speed {
+    display: block;
+    font-weight: 700;
+    color: #19345c;
+}
+
+.history-empty {
+    padding: 16px;
+    border-radius: 10px;
+    background: #fff;
+    color: #4f5a6a;
+    border: 1px dashed #c8d4e6;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
 .review-hint {
     margin-top: 10px;
     padding: 6px 12px;
@@ -642,6 +778,27 @@ table {
     border-radius: 8px;
     padding: 20px;
     margin: 20px 0;
+}
+
+@media (max-width: 1080px) {
+    .result-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .history-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 720px) {
+    .history-table th,
+    .history-table td {
+        padding: 8px 6px;
+    }
+
+    .history-title {
+        font-size: 18px;
+    }
 }
 
 .score-title {

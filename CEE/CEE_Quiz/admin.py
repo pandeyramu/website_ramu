@@ -54,7 +54,7 @@ class QuestionAdmin(admin.ModelAdmin):
         return text[:160] + ('...' if len(text) > 160 else '')
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'topic', 'score', 'total_attempted', 'created_at')
+    list_display = ('id', 'name', 'topic', 'score', 'total_attempted', 'total_correct', 'time_taken_seconds', 'created_at')
 
 
 admin.site.register(Subject, SubjectAdmin)
