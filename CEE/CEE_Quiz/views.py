@@ -484,6 +484,61 @@ def _pick_random_questions(base_queryset, limit=50):
     return [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
 
 
+FULL_TEST_BLUEPRINT = {
+    'Physics': {
+        'Mechanics': 10,
+        'Heat and Thermodynamics': 7,
+        'Waves and Optics': 8,
+        'Current Electricity and Magnetism': 9,
+        'Electrostatics and Capacitors': 4,
+        'Modern Physics': 12,
+    },
+    'Chemistry': {
+        'Physical Chemistry': 17,
+        'Inorganic Chemistry': 10,
+        'Organic Chemistry': 17,
+        'Applied Chemistry': 3,
+        'Analytical Chemistry': 3,
+    },
+    'Botany': {
+        'Basic Components of Life': 2,
+        'Biodiversity': 9,
+        'Ecology and Vegetation': 4,
+        'Cell Biology': 5,
+        'Genetics': 6,
+        'Plant Anatomy': 3,
+        'Plant Physiology': 6,
+        'Developmental Botany': 2,
+        'Applied Botany': 3,
+    },
+    'Zoology': {
+        'Evolutionary Biology': 3,
+        'Animal Diversity and Classification': 4,
+        'Animal Tissues and Histology': 4,
+        'Study of Selected Animals': 6,
+        'Human Biology and Physiology': 15,
+        'Microbial Diseases and Immunology': 4,
+        'Medical Technology and Applied Biology': 2,
+        'Biota, Environment and Conservation': 2,
+    },
+}
+
+
+def _build_full_test_question_ids():
+    selected_ids = []
+
+    for subject_name, chapters_config in FULL_TEST_BLUEPRINT.items():
+        for chapter_name, question_count in chapters_config.items():
+            chapter_questions = Question.objects.filter(
+                chapter__subject__name=subject_name,
+                chapter__name=chapter_name,
+            )
+            selected_ids.extend(_sample_question_ids(chapter_questions, question_count))
+
+    random.shuffle(selected_ids)
+    return selected_ids
+
+
 def _sample_question_ids(base_queryset, limit):
     """Return a random sample of question IDs without loading full model rows."""
     question_ids = list(base_queryset.values_list('id', flat=True))
@@ -761,7 +816,7 @@ def report_question(request):
         return JsonResponse({'ok': False, 'message': f'Unexpected report error: {exc}'}, status=200)
 
 
-@cache_page(60 * 5)
+@cache_page(0)  # Disable caching for development
 def home(request):
     subject_list = Subject.objects.only('id', 'name').order_by('id')
     total_questions = Question.objects.count()
@@ -1149,33 +1204,7 @@ def full_test(request):
                 'history_user_name': user_name,
             })
 
-        chapters = Chapter.objects.filter(
-            subject__name__in=['Biology', 'Physics', 'Chemistry']
-        ).only('id', 'name', 'has_subchapters').order_by('id')
-
-        selected_ids = []
-
-        for chapter in chapters:
-            weight_match = re.search(r'\((\d+)\)\s*$', chapter.name)
-            if not weight_match:
-                continue
-
-            target_count = int(weight_match.group(1))
-            if target_count <= 0:
-                continue
-
-            chapter_questions = Question.objects.filter(chapter_id=chapter.id)
-
-            if chapter.has_subchapters:
-                primary_ids = _sample_question_ids(chapter_questions.filter(sub_chapter__isnull=False), target_count)
-                remaining = target_count - len(primary_ids)
-                fallback_ids = _sample_question_ids(chapter_questions.filter(sub_chapter__isnull=True), remaining)
-                selected_ids.extend(primary_ids)
-                selected_ids.extend(fallback_ids)
-            else:
-                selected_ids.extend(_sample_question_ids(chapter_questions, target_count))
-
-        random.shuffle(selected_ids)
+        selected_ids = _build_full_test_question_ids()
 
         questions_qs = Question.objects.filter(id__in=selected_ids).select_related('chapter', 'sub_chapter')
         id_to_question = {q.id: q for q in questions_qs}

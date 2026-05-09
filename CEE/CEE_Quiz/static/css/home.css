@@ -1,3 +1,7 @@
+/* ==============================
+   BASE STYLES
+   ============================== */
+
 * {
     box-sizing: border-box;
 }
@@ -5,286 +9,438 @@
 html, body {
     overflow-x: hidden;
     width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(120deg, #fdfbfb, #ebedee);
-    margin: 0;
-    padding: 0;
+    background: #f5f7fa;
     color: #333;
-    height: 100%;
-    width: 100%;
     min-height: 100vh;
 }
 
-.container,
-.subjects,
-.table-wrapper,
-.welcome-text,
-table,
-td,
-th,
-a,
-p,
-h1,
-h2,
-h3 {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-
-.welcome-text {
-    max-width: 640px;
-    width: min(640px, 92%);
-    min-height: 112px;
-    margin: 10px auto 10px auto;
-    padding-top: 0;
-    padding: 10px 14px;
-    background: rgba(52, 152, 219, 0.1);
-    border-left: 4px solid #2980b9;
-    border-radius: 12px;
-    font-size: 16px;
-    line-height: 1.4;
-    color: #2c3e50;
-    text-align: left;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    white-space: pre-wrap;
-    border-right: 2px solid #2980b9;
-    position: relative;
-    animation: welcomeCardIn 520ms ease-out both;
-}
-
-.welcome-title {
-    margin: 0 0 8px;
-    font-size: 16px;
-    line-height: 1.2;
-    font-weight: 700;
-    color: #12344d;
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: welcomeLineIn 520ms ease-out 120ms both;
-}
-
-.welcome-copy {
-    margin: 0;
-    font-size: 13px;
-    line-height: 1.3;
-    color: #2c3e50;
-    opacity: 0;
-    transform: translateY(6px);
-    animation: welcomeLineIn 620ms ease-out 240ms both;
-}
-
-@keyframes welcomeCardIn {
-    from {
+/* Rocket landing animation for page load */
+@keyframes rocketLanding {
+    0% {
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(-30px);
     }
-    to {
+    100% {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-@keyframes welcomeLineIn {
-    from {
-        opacity: 0;
-        transform: translateY(6px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+main, header, #site-footer {
+    animation: rocketLanding 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+header {
+    animation-delay: 0s;
+}
+
+main {
+    animation-delay: 0.1s;
+}
+
+#site-footer {
+    animation-delay: 0.2s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .welcome-text,
-    .welcome-title,
-    .welcome-copy {
+    main, header, #site-footer {
         animation: none;
-        opacity: 1;
-        transform: none;
     }
 }
 
-.table-wrapper {
-    width: 90%;
-    max-width: 900px;
-    margin: 30px auto;
+header {
+    background: #001a4d;
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-text {
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.welcome-text h1 {
+    margin: 0 0 15px 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #FFD700;
+}
+
+.welcome-text p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.95;
+}
+
+/* ==============================
+   CONFIGURATION SECTION
+   ============================== */
+
+.config-section {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.config-section h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #FFD700;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+/* ==============================
+   CEE INTRODUCTION
+   ============================== */
+
+.cee-intro {
+    max-width: 95%;
+    margin: 0 auto 50px;
+    padding: 25px 30px;
     background: white;
-    border-radius: 15px;
+    border-left: 4px solid #0066FF;
+    border-radius: 4px;
+    text-align: justify;
+    line-height: 1.8;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.cee-intro p {
+    color: #2c3e50;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 18px 0;
+    letter-spacing: 0.3px;
+}
+
+.cee-intro p:last-child {
+    margin-bottom: 0;
+}
+
+/* ==============================
+   TABLE WRAPPER & STYLING
+   ============================== */
+
+.table-wrapper {
+    background: white;
+    border-radius: 4px;
     padding: 30px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     overflow-x: auto;
 }
 
-.table-wrapper h2 {
-    text-align: center;
-    font-size: 28px;
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-table {
+.config-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 15px;
 }
 
-table thead {
-    background: linear-gradient(105deg, #b31919 20%, #06ad49 80%);
+.config-table thead {
+    background: #0052CC;
     color: white;
 }
 
-table th {
-    padding: 15px;
+.config-table th {
+    padding: 16px;
     text-align: left;
     font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
 }
 
-table tbody tr {
+.config-table .qty-col,
+.config-table .topic-col {
+    text-align: left;
+}
+
+.config-table .qty-col {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.config-table tbody tr {
     border-bottom: 1px solid #ecf0f1;
     transition: background 0.2s ease;
 }
 
-table td {
-    padding: 12px 15px;
+.config-table tbody tr.topic-row:hover {
+    /* Apply hover only to topic rows so headers/total remain unchanged */
+    background: #f8f9fa;
 }
 
-table td:last-child {
+/* Ensure subject header and total row never change on hover */
+.config-table tr.subject-header,
+.config-table tr.total-row {
+    transition: none;
+}
+.config-table tr.subject-header:hover,
+.config-table tr.total-row:hover {
+    /* Preserve original background and text color on hover */
+    cursor: default;
+}
+
+.config-table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+}
+
+/* ==============================
+   TABLE ROWS - STYLING
+   ============================== */
+
+/* Subject Headers */
+.subject-header {
+    font-weight: 700;
+    font-size: 16px;
+    color: white !important;
+    padding: 20px 16px !important;
     text-align: center;
-    font-weight: bold;
-    color: #1a6e3c;
+    border-top: 3px solid rgba(0, 0, 0, 0.3);
 }
 
-.domain-row {
-    background: #2c3e50;
-    font-weight: bold;
-    color: #ffffff;
+.zoology-header {
+    background: #5b7d9e;
 }
 
+.botany-header {
+    background: #52a885;
+}
+
+.chemistry-header {
+    background: #d97d3c;
+}
+
+.physics-header {
+    background: #4a7ba7;
+}
+
+.mat-header {
+    background: #9b59b6;
+}
+
+/* Force header backgrounds and text color to remain unchanged on hover */
+.zoology-header:hover td,
+.zoology-header td {
+    background: #5b7d9e !important;
+    color: #ffffff !important;
+}
+.botany-header:hover td,
+.botany-header td {
+    background: #52a885 !important;
+    color: #ffffff !important;
+}
+.chemistry-header:hover td,
+.chemistry-header td {
+    background: #d97d3c !important;
+    color: #ffffff !important;
+}
+.physics-header:hover td,
+.physics-header td {
+    background: #4a7ba7 !important;
+    color: #ffffff !important;
+}
+.mat-header:hover td,
+.mat-header td {
+    background: #9b59b6 !important;
+    color: #ffffff !important;
+}
+
+/* Topic Rows */
+.topic-row {
+    background: #ffffff;
+}
+
+.topic-row td {
+    padding: 12px 16px;
+}
+
+.topic-row .row-number {
+    font-weight: 600;
+    color: #7f8c8d;
+    width: 40px;
+}
+
+.topic-row .qty {
+    text-align: center;
+    font-weight: 600;
+    color: #2c3e50;
+    background: #f0f2f5;
+    border-radius: 3px;
+    padding: 6px 12px;
+    display: block;
+    margin: 0 auto;
+    width: 45px;
+}
+
+/* Highlight High Question Count */
+.topic-row.highlight-high {
+    background: #f0f8ff;
+}
+
+.topic-row.highlight-high .qty-high {
+    background: #f5576c;
+    color: white;
+    font-weight: 600;
+}
+
+/* Total Row */
 .total-row {
-    background: #1a252f;
-    color: #ffffff;
-    font-weight: bold;
+    background: #2c3e50;
+    color: white;
+    font-weight: 600;
     font-size: 16px;
 }
 
-.container {
-    width: 90%;
-    max-width: 900px;
-    margin: 40px auto 20px auto;
+.total-row td {
+    padding: 18px 16px;
+}
+
+.total-qty {
+    background: #3d5a80;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 3px;
+    display: block;
+    margin: 0 auto;
+    width: 50px;
     text-align: center;
-    padding: 30px;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    font-weight: 600;
 }
 
-h1 {
-    font-size: 36px;
-    color: #2c3e50;
-    margin-bottom: 15px;
-}
-
-h2 {
-    font-size: 28px;
-    color: #34495e;
-    margin-bottom: 20px;
-}
-
-p {
-    color: rgb(9, 84, 70);
-    font-size: 26px;
-    margin-bottom: 30px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-li {
-    margin: 0;
-}
+/* ==============================
+   SUBJECTS SECTION
+   ============================== */
 
 .subjects {
-    width: 90%;
     max-width: 900px;
-    margin: 40px auto 60px auto;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    margin: 60px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     text-align: center;
 }
 
-.subjects h2,
+.subjects h2 {
+    font-size: 28px;
+    color: #FFD700;
+    margin: 0 0 15px 0;
+}
+
 .subjects h3 {
     color: #34495e;
-    margin-bottom: 15px;
 }
 
 .subjects p {
-    color: #2c3e50;
-    font-size: 18px;
-    margin-bottom: 20px;
+    color: #555;
+    font-size: 16px;
+    margin: 15px 0;
 }
 
 .subjects .total-question-count {
     display: inline-block;
-    margin: 0 0 24px;
-    padding: 10px 18px;
-    border-radius: 999px;
-    background: #1d5f8c;
-    color: #ffffff;
+    margin: 20px 0;
+    padding: 12px 24px;
+    border-radius: 4px;
+    background: #0066FF;
+    color: white;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
+}
+
+/* ==============================
+   BUTTONS
+   ============================== */
+
+.button-group {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 30px 0;
 }
 
 .btn {
     display: inline-block;
-    padding: 18px 28px;
-    background: #1a5276;
-    color: #ffffff;
-    font-weight: bold;
-    border-radius: 10px;
+    padding: 14px 28px;
+    background: #0066FF;
+    color: white;
+    font-weight: 600;
+    border-radius: 4px;
     text-decoration: none;
-    min-width: 140px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     text-align: center;
-    margin: 5px;
-    max-width: 100%;
-    overflow-wrap: anywhere;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
 }
 
 .btn:hover {
-    background: #154360;
-    transform: translateY(-4px) scale(1.03);
+    background: #28a745;
+    transform: translateY(-4px);
 }
 
-.button-group {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 25px;
+.btn-subject {
+    padding: 14px 20px;
+    font-size: 14px;
 }
+
+.full-test-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-full-test {
+    width: 100%;
+    max-width: 400px;
+    padding: 16px 40px;
+    background: #0066FF;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-full-test:hover {
+    background: #28a745;
+    transform: translateY(-4px);
+}
+
+/* Responsive buttons for smaller screens */
+@media (max-width: 768px) {
+    .button-group {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .btn-subject {
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    .btn-full-test {
+        max-width: 100%;
+    }
+}
+
+/* ==============================
+   FOOTER
+   ============================== */
 
 #site-footer {
-    background: #1a237e;
+    background: #001a4d;
     color: #fff;
     padding: 40px 15px;
-    margin-top: 50px;
+    margin-top: 60px;
 }
 
 #site-footer .footer-container {
@@ -297,19 +453,19 @@ li {
 #site-footer h2 {
     margin-bottom: 8px;
     font-size: 28px;
-    color: #ffd700;
+    color: #FFD700;
 }
 
 #site-footer h3 {
     margin: 0 0 14px;
     font-size: 20px;
-    color: #ffffff;
+    color: #FFD700;
 }
 
 #site-footer p {
     margin: 0 0 16px;
     font-size: 16px;
-    color: #d7dbff;
+    color: #b0bec5;
     line-height: 1.5;
 }
 
@@ -323,13 +479,14 @@ li {
 .footer-section {
     margin: 0;
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 4px;
     text-align: left;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .footer-links-section {
-    background-color: #2b378f;
+    background-color: transparent;
 }
 
 .footer-links {
@@ -341,22 +498,26 @@ li {
 
 .footer-links a {
     padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
+    background: transparent;
+    color: #b0bec5;
     text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.25s ease;
-    font-weight: 600;
+    border-radius: 3px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-links a:last-child {
+    border-bottom: none;
 }
 
 .footer-links a:hover {
-    background: #ffd700;
-    color: #1a237e;
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFD700;
 }
 
 .footer-nav-section {
-    background-color: #1f2b7a;
+    background-color: transparent;
 }
 
 .footer-nav {
@@ -368,25 +529,22 @@ li {
 .footer-nav a {
     display: block;
     padding: 10px 12px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.08);
-    color: #e9ecff;
+    border-radius: 3px;
+    background: transparent;
+    color: #b0bec5;
     text-decoration: none;
-    transition: all 0.25s ease;
-    font-weight: 600;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-nav a:last-child {
+    border-bottom: none;
 }
 
 .footer-nav a:hover {
-    background: #ffd700;
-    color: #1a237e;
-    transform: translateY(-2px);
-}
-
-img,
-video,
-iframe,
-table {
-    max-width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFD700;
 }
 
 #site-footer .copyright {
@@ -395,48 +553,172 @@ table {
     color: #b7c0ff;
 }
 
+img, video, iframe, table {
+    max-width: 100%;
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+   ============================== */
+
 @media (max-width: 768px) {
+    .welcome-text h1 {
+        font-size: 24px;
+    }
+
+    .welcome-text p {
+        font-size: 14px;
+    }
+
+    .config-section h2 {
+        font-size: 24px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .stat-card .stat-number {
+        font-size: 28px;
+    }
+
+    .table-wrapper {
+        padding: 20px;
+    }
+
+    .config-table {
+        font-size: 13px;
+    }
+
+    .config-table th {
+        padding: 12px;
+    }
+
+    .config-table td {
+        padding: 10px 12px;
+    }
+
+    .subjects {
+        margin: 40px auto;
+        padding: 25px;
+    }
+
+    .button-group {
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+        min-width: 120px;
+    }
+
     .footer-grid {
         grid-template-columns: 1fr;
     }
+}
 
-    .footer-section {
-        text-align: center;
+@media (max-width: 480px) {
+    header {
+        padding: 25px 15px;
     }
 
     .welcome-text {
-        max-width: 95%;
-        font-size: 14px;
-        padding: 10px 12px;
-        min-height: 104px;
+        padding: 15px;
     }
 
-    .welcome-title {
-        font-size: 15px;
+    .welcome-text h1 {
+        font-size: 20px;
     }
 
-    .welcome-copy {
+    .welcome-text p {
+        font-size: 13px;
+    }
+
+    .config-section {
+        margin: 30px auto;
+    }
+
+    .config-section h2 {
+        font-size: 20px;
+        margin-bottom: 25px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+
+    .stat-card h3 {
         font-size: 12px;
     }
 
-    .container,
-    .subjects,
+    .stat-card .stat-number {
+        font-size: 28px;
+    }
+
     .table-wrapper {
-        width: calc(100% - 16px);
-        padding-left: 12px;
-        padding-right: 12px;
+        padding: 15px;
+        margin: 0;
     }
 
-    .btn,
-    .footer-links a,
-    .footer-nav a {
+    .config-table {
+        font-size: 12px;
+    }
+
+    .config-table th {
+        padding: 10px 8px;
+    }
+
+    .config-table td {
+        padding: 8px;
+    }
+
+    .subject-header {
+        font-size: 14px;
+        padding: 15px 8px !important;
+    }
+
+    .topics-row .row-number {
+        width: 30px;
+    }
+
+    .subjects {
+        margin: 30px 15px;
+        padding: 20px;
+    }
+
+    .subjects h2 {
+        font-size: 22px;
+    }
+
+    .subjects p {
+        font-size: 14px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn {
         width: 100%;
+        padding: 12px 16px;
     }
 
-    .btn:hover,
-    .footer-links a:hover,
-    .footer-nav a:hover {
-        transform: none;
-        box-shadow: none;
+    #site-footer {
+        padding: 30px 15px;
+    }
+
+    .footer-grid {
+        margin-top: 15px;
     }
 }

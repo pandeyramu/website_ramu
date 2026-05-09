@@ -834,6 +834,13 @@ body.review-modal-open {
     gap: 10px;
 }
 
+@media (min-width: 1081px) {
+    .result-page .links {
+        margin-left: 378px;
+        justify-content: flex-start;
+    }
+}
+
 .links a,.go_back {
     display: inline-block;
     margin: 0;

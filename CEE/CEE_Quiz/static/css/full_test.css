@@ -12,9 +12,6 @@ body {
     background: #f9f9f9;
     margin: 0;
     padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
 .quiz-form:not(.submitted) .question-block,
@@ -479,14 +476,6 @@ p {
     display: none !important;
 }
 
-body.review-modal-open .full-test-footer {
-    display: none;
-}
-
-body.review-modal-open {
-    overflow: hidden;
-}
-
 .submit-review-backdrop {
     position: absolute;
     inset: 0;
@@ -686,19 +675,6 @@ body.review-modal-open {
     color: #8e1e1e;
 }
 
-/* Keep reported questions visibly flagged even when unattempted/attempted classes are present. */
-.q-link.flagged.unattempted {
-    background: #f4e8ff;
-    border-color: #8e44ad;
-    color: #632b98;
-}
-
-.q-link.flagged.attempted {
-    background: linear-gradient(135deg, #dbf7e4 0%, #f4e8ff 100%);
-    border-color: #7a3fb1;
-    color: #4e2179;
-}
-
 .submit-review-actions {
     display: flex;
     gap: 10px;
@@ -861,11 +837,6 @@ table {
     color: #fff;
     padding: 40px 15px;
     margin-top: 50px;
-    position: static;
-    inset: auto;
-    width: 100%;
-    clear: both;
-    z-index: 1;
 }
 
 .full-test-footer .footer-container {
@@ -905,8 +876,12 @@ table {
     margin: 0;
     padding: 20px;
     border-radius: 12px;
-    text-align: left;
+    text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.full-test-footer .footer-section h3 {
+    text-align: center;
 }
 
 .full-test-footer .footer-links-section {
@@ -919,56 +894,77 @@ table {
 
 /* Flex container for footer links */
 .full-test-footer .footer-links {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
     margin-top: 6px;
 }
 
 /* Footer link style */
 .full-test-footer .footer-links a {
-    padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
+    padding: 12px 0;
+    background: transparent;
+    color: #e9ecff;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 0;
     transition: all 0.25s ease;
     font-weight: 600;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .full-test-footer .footer-links a:hover {
-    background: #ffd700;
-    color: #1a237e;
+    background: transparent;
+    color: #ffd700;
     transform: translateY(-2px);
 }
 
+.full-test-footer .footer-links a:last-child {
+    border-bottom: none;
+}
+
 .full-test-footer .footer-nav {
-    display: grid;
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
     margin-top: 6px;
 }
 
 .full-test-footer .footer-nav a {
     display: block;
-    padding: 10px 12px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 0;
+    border-radius: 0;
+    background: transparent;
     color: #e9ecff;
     text-decoration: none;
     transition: all 0.25s ease;
     font-weight: 600;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .full-test-footer .footer-nav a:hover {
-    background: #ffd700;
-    color: #1a237e;
+    background: transparent;
+    color: #ffd700;
     transform: translateY(-2px);
+}
+
+.full-test-footer .footer-nav a:last-child {
+    border-bottom: none;
 }
 
 .footer-copy {
     margin-top: 22px;
     font-size: 14px;
     color: #b7c0ff;
+}
+
+body.review-modal-open .full-test-footer {
+    display: none;
 }
 
 /* Mobile responsiveness */

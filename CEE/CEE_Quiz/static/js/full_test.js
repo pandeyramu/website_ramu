@@ -169,6 +169,7 @@ function openFlagModal(payload) {
     flagReviewPanel.hidden = false;
     flagReviewPanel.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('review-modal-open');
 }
 
 function closeFlagModal() {
@@ -180,6 +181,7 @@ function closeFlagModal() {
     flagReviewPanel.setAttribute('aria-hidden', 'true');
     activeFlagPayload = null;
     document.body.style.overflow = '';
+    document.body.classList.remove('review-modal-open');
 }
 
 function afterSubmit() {
