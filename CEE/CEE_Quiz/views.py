@@ -1053,6 +1053,7 @@ def subchapter_quiz(request, subchapter_id):
                 'user_answers': user_answers,
                 'quiz_started': True,
                 'finished': True,
+                'show_review_modal': True,
                 'attempt_reference': attempt_reference,
                 'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
                 'history_entries': history_entries,

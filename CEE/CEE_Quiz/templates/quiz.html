@@ -95,27 +95,27 @@
                             </div>
                         </div>
                     </section>
-
-                    <section id="flag-review-panel" class="submit-review-modal" hidden aria-hidden="true">
-                        <div class="submit-review-backdrop" id="flag-review-backdrop"></div>
-                        <div class="submit-review-panel" role="dialog" aria-modal="true" aria-labelledby="flag-review-title">
-                            <h2 id="flag-review-title">Flag Question for Review</h2>
-                            <p class="submit-review-meta">Question ID: <strong id="flag-question-id">--</strong></p>
-                            <p class="submit-review-summary" id="flag-question-preview">Choose why this question should be reviewed.</p>
-                            <label for="flag-reason" class="submit-review-subtitle">Reason</label>
-                            <select id="flag-reason" class="name_place">
-                                <option value="wrong">Wrong</option>
-                                <option value="question out of syllabus">Question out of syllabus</option>
-                                <option value="solution wrong">Solution wrong</option>
-                                <option value="all of the above">All of the above</option>
-                            </select>
-                            <div class="submit-review-actions">
-                                <button type="button" id="send-flag-btn" class="submit-now-btn">Send Review</button>
-                                <button type="button" id="close-flag-btn" class="close-review-btn">Cancel</button>
-                            </div>
-                        </div>
-                    </section>
                 {% endif %}
+
+                <section id="flag-review-panel" class="submit-review-modal" hidden aria-hidden="true">
+                    <div class="submit-review-backdrop" id="flag-review-backdrop"></div>
+                    <div class="submit-review-panel" role="dialog" aria-modal="true" aria-labelledby="flag-review-title">
+                        <h2 id="flag-review-title">Flag Question for Review</h2>
+                        <p class="submit-review-meta">Question ID: <strong id="flag-question-id">--</strong></p>
+                        <p class="submit-review-summary" id="flag-question-preview">Choose why this question should be reviewed.</p>
+                        <label for="flag-reason" class="submit-review-subtitle">Reason</label>
+                        <select id="flag-reason" class="name_place">
+                            <option value="wrong">Wrong</option>
+                            <option value="question out of syllabus">Question out of syllabus</option>
+                            <option value="solution wrong">Solution wrong</option>
+                            <option value="all of the above">All of the above</option>
+                        </select>
+                        <div class="submit-review-actions">
+                            <button type="button" id="send-flag-btn" class="submit-now-btn">Send Review</button>
+                            <button type="button" id="close-flag-btn" class="close-review-btn">Cancel</button>
+                        </div>
+                    </div>
+                </section>
 
                 {% if score is not None %}
                     <div class="result-layout">
@@ -214,11 +214,9 @@
 
                 {% for q in questions %}
                 <article class="question-block" id="question-{{ forloop.counter }}" data-question-number="{{ forloop.counter }}" data-question-id="{{ q.id }}" data-question-text="{{ q.question_text|escape }}">
-                    {% if score is None %}
                     <div class="question-tools">
                         <button type="button" class="flag-question-btn" data-question-number="{{ forloop.counter }}" aria-pressed="false">Flag for review</button>
                     </div>
-                    {% endif %}
                     <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
                     {% for opt in "ABCD" %}
                         {% with option_text=q|get_option_text:opt %}
