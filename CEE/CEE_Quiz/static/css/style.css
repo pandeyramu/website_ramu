@@ -471,42 +471,32 @@ h1 {
 
 .submit-review-modal {
     position: fixed;
-        background: #dff6e6;
-        border-color: #2d8a34;
-        box-shadow: inset 0 0 0 1px rgba(45, 138, 52, 0.10);
+    inset: 0;
+    z-index: 2000;
     display: flex;
     align-items: center;
     justify-content: center;
-        background: #fde7ea;
-        border-color: #dc3545;
+    padding: 16px;
+}
 
 .submit-review-modal[hidden] {
     display: none !important;
-        transform: translateX(4px);
-        box-shadow: 0 8px 18px rgba(20, 88, 166, 0.12);
-body.review-modal-open footer {
-    display: none;
-}
-        outline: 2px solid #007bff;
-        background: linear-gradient(180deg, #eef6ff 0%, #ffffff 100%);
-body.review-modal-open {
-    overflow: hidden;
 }
 
-        padding: 13px;
+.submit-review-backdrop {
     position: absolute;
-        background: linear-gradient(135deg, #0d6efd, #1458a6);
+    inset: 0;
     background: rgba(9, 20, 38, 0.55);
     z-index: 0;
 }
-        border-radius: 12px;
+
 .submit-review-panel {
-        transition: 0.25s ease;
+    position: relative;
     z-index: 1;
     border: 1px solid #bfdcff;
-        background: linear-gradient(135deg, #15b300, #198754);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(25, 135, 84, 0.22);
+    background: #f2f8ff;
+    border-radius: 14px;
+    padding: 16px;
     margin: 0;
     width: min(980px, calc(100vw - 32px));
     max-height: calc(100vh - 32px);
@@ -573,6 +563,13 @@ body.review-modal-open {
 .q-link.flagged.attempted {
     background: linear-gradient(135deg, #dbf7e4 0%, #f4e8ff 100%);
     border-color: #7a3fb1;
+    color: #4e2179;
+}
+
+.q-link.unattempted {
+    background: #ffe8e8;
+    border-color: #db4d4d;
+    color: #8e1e1e;
 }
 
 .question-status-legend {
@@ -686,25 +683,6 @@ body.review-modal-open {
     color: #17335f;
 }
 
-.q-link.unattempted {
-    background: #ffe8e8;
-    border-color: #db4d4d;
-    color: #8e1e1e;
-}
-
-/* Keep reported questions visibly flagged even when unattempted/attempted classes are present. */
-.q-link.flagged.unattempted {
-    background: #f4e8ff;
-    border-color: #8e44ad;
-    color: #632b98;
-}
-
-.q-link.flagged.attempted {
-    background: linear-gradient(135deg, #dbf7e4 0%, #f4e8ff 100%);
-    border-color: #7a3fb1;
-    color: #4e2179;
-}
-
 .submit-review-actions {
     display: flex;
     gap: 10px;
@@ -733,6 +711,14 @@ body.review-modal-open {
 .submit-now-btn:hover,
 .close-review-btn:hover {
     transform: translateY(-1px);
+}
+
+body.review-modal-open footer {
+    display: none;
+}
+
+body.review-modal-open {
+    overflow: hidden;
 }
 .quiz-form.submitted .option,
 .quiz-form.submitted .option input,
@@ -928,5 +914,4 @@ table {
         flex-direction: column;
         align-items: stretch;
     }
-}
 }

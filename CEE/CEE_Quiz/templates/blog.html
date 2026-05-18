@@ -210,15 +210,27 @@
                 box-shadow: 0 6px 14px rgba(15, 58, 91, 0.08);
             }
 
-            .nav-links {
-                display: flex;
+            .blog-topbar {
                 flex-direction: column;
-                gap: 8px;
                 align-items: center;
+                text-align: center;
             }
 
-            .nav-links a {
-                margin: 0;
+            .brand {
+                text-align: center;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .nav-links a,
+            .nav-links .current-page {
+                padding: 0.42rem 0.72rem;
+                font-size: 0.92rem;
             }
         }
     </style>

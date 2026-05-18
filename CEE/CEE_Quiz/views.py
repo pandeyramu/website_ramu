@@ -1304,6 +1304,13 @@ def full_test(request):
             connection.ensure_connection()
             
             questions_ids = request.session.get('full_test_questions', [])
+            if not questions_ids:
+                raw_question_ids = request.POST.get('question_ids', '')
+                questions_ids = [
+                    int(value)
+                    for value in raw_question_ids.split(',')
+                    if value.strip().isdigit()
+                ]
             
             # Check if session data exists
             if not questions_ids:
@@ -1378,6 +1385,7 @@ def full_test(request):
                 'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
                 'history_entries': history_entries,
                 'history_user_name': user_name,
+                'question_ids_csv': ','.join(str(q.id) for q in questions),
                 **result_metrics,
             })
             
@@ -1421,6 +1429,7 @@ def full_test(request):
             'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
             'history_entries': [],
             'history_user_name': user_name,
+            'question_ids_csv': ','.join(str(q.id) for q in questions),
         })
 
 

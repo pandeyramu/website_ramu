@@ -7,8 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if sub_chapter %}{{ sub_chapter.name }} MCQ – {{ chapter.name }}{% else %}{{ chapter.name }} MCQ | CEE Chapter-wise Practice{% endif %}</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-     crossorigin="anonymous"></script>
     <meta name="description" content="{% if sub_chapter %}Practice the {{ sub_chapter.name }} MCQ from {{ chapter.name }} for the Common Entrance Examination. Track your performance with detailed results.{% else %}Practice the {{ chapter.name }} MCQ for the Common Entrance Examination. Track your performance with detailed results.{% endif %}">
     <meta name="keywords" content="CEE MCQ, {% if sub_chapter %}{{ sub_chapter.name }} MCQ, {{ chapter.name }}{% else %}{{ chapter.name }} MCQ, Chapter-wise Questions{% endif %}, Online Practice">
     <meta name="author" content="Ramu Pandey">
@@ -28,7 +26,7 @@
     <meta name="twitter:description" content="{% if sub_chapter %}Practice {{ sub_chapter.name }} MCQ from {{ chapter.name }} online and improve your CEE preparation.{% else %}Practice {{ chapter.name }} MCQ questions online and improve your CEE preparation.{% endif %}">
     <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260508-1">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260518-1">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
 
@@ -67,7 +65,7 @@
             <div id="timer" style="display: block;"></div>
             <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.slug %}{% else %}{% url 'quiz' chapter.slug %}{% endif %}" id="quiz-form" style="display: block;">
                 {% csrf_token %}
-                <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
+                <input type="hidden" name="name" id="hidden-name" value="{{ user_name|default:history_user_name|default:request.GET.name|default:'' }}">
                 <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
 
                 {% if score is None %}
