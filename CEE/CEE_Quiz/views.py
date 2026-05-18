@@ -768,6 +768,12 @@ def _normalize_exact_name(value):
     return ' '.join((value or '').split()).strip()
 
 
+def _stringify_answer_keys(answer_map):
+    if not isinstance(answer_map, dict):
+        return {}
+    return {str(key): value for key, value in answer_map.items()}
+
+
 @lru_cache(maxsize=1)
 def _testresult_columns():
     table_name = TestResult._meta.db_table
@@ -1058,6 +1064,13 @@ def quiz(request, slug):
             connection.ensure_connection()
 
             questions_ids = request.session.get(f'quiz_questions_{chapter_id}', [])
+            if not questions_ids:
+                raw_question_ids = request.POST.get('question_ids', '')
+                questions_ids = [
+                    int(value)
+                    for value in raw_question_ids.split(',')
+                    if value.strip().isdigit()
+                ]
 
             if not questions_ids:
                 messages.error(request, 'Session expired. Please restart the quiz.')
@@ -1115,6 +1128,7 @@ def quiz(request, slug):
                 print(f"DB Error: {db_error}")
 
             history_entries = _get_test_history(user_name=user_name)
+            user_answers = _stringify_answer_keys(user_answers)
 
             request.session.pop(f'quiz_questions_{chapter_id}', None)
 
@@ -1135,6 +1149,7 @@ def quiz(request, slug):
                 'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
                 'history_entries': history_entries,
                 'history_user_name': user_name,
+                'question_ids_csv': ','.join(str(q.id) for q in questions),
                 **result_metrics,
             })
 
@@ -1166,6 +1181,7 @@ def quiz(request, slug):
             'watermark_text': f'{user_name} | Attempt #{attempt_reference}' if quiz_started else '',
             'history_entries': [],
             'history_user_name': user_name,
+            'question_ids_csv': ','.join(str(q.id) for q in questions),
         })
 
 
@@ -1187,6 +1203,13 @@ def subchapter_quiz(request, slug):
             connection.ensure_connection()
 
             questions_ids = request.session.get(session_key, [])
+            if not questions_ids:
+                raw_question_ids = request.POST.get('question_ids', '')
+                questions_ids = [
+                    int(value)
+                    for value in raw_question_ids.split(',')
+                    if value.strip().isdigit()
+                ]
 
             if not questions_ids:
                 messages.error(request, 'Session expired. Please restart the quiz.')
@@ -1244,6 +1267,7 @@ def subchapter_quiz(request, slug):
                 print(f"DB Error: {db_error}")
 
             history_entries = _get_test_history(user_name=user_name)
+            user_answers = _stringify_answer_keys(user_answers)
 
             request.session.pop(session_key, None)
 
@@ -1266,6 +1290,7 @@ def subchapter_quiz(request, slug):
                 'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
                 'history_entries': history_entries,
                 'history_user_name': user_name,
+                'question_ids_csv': ','.join(str(q.id) for q in questions),
                 **result_metrics,
             })
 
@@ -1298,6 +1323,7 @@ def subchapter_quiz(request, slug):
             'watermark_text': f'{user_name} | Attempt #{attempt_reference}' if quiz_started else '',
             'history_entries': [],
             'history_user_name': user_name,
+            'question_ids_csv': ','.join(str(q.id) for q in questions),
         })
 
 
@@ -1381,8 +1407,7 @@ def full_test(request):
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
                 print(f"DB Error: {db_error}")
 
-            history_entries = _get_test_history(user_name=user_name)
-
+            user_answers = _stringify_answer_keys(user_answers)
             request.session.pop('full_test_questions', None)
 
             request.session[result_session_key] = {
@@ -1396,8 +1421,6 @@ def full_test(request):
                 'total_questions': total_questions,
                 'score': final_score,
                 'attempt_reference': attempt_reference,
-                'history_entries': history_entries,
-                'history_user_name': user_name,
                 'result_metrics': result_metrics,
             }
             request.session.modified = True
@@ -1405,6 +1428,7 @@ def full_test(request):
             return redirect('full_test_results')
             
         except Exception as e:
+            logger.exception('Full test submission failed for user %s', user_name)
             messages.error(request, f'Error processing submission: {str(e)}. Please try again.')
             return redirect('full_test')
 
@@ -1486,6 +1510,7 @@ def full_test_results(request):
     result_metrics = result_payload.get('result_metrics') or {}
     user_name = result_payload.get('user_name', '')
     attempt_reference = result_payload.get('attempt_reference', '')
+    history_entries = _get_test_history(user_name=user_name)
 
     return render(request, 'full_test.html', {
         'questions': questions,
@@ -1501,8 +1526,8 @@ def full_test_results(request):
         'finished': True,
         'attempt_reference': attempt_reference,
         'watermark_text': f'{user_name} | Attempt #{attempt_reference}' if user_name and attempt_reference else '',
-        'history_entries': result_payload.get('history_entries', []),
-        'history_user_name': result_payload.get('history_user_name', user_name),
+        'history_entries': history_entries,
+        'history_user_name': user_name,
         'question_ids_csv': ','.join(str(q.id) for q in questions),
         **result_metrics,
     })

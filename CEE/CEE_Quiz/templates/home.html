@@ -11,7 +11,7 @@
     <meta name="description" content="Free CEE MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
     <meta name="keywords" content="CEE MCQ, CEE Nepal, Chapter-wise MCQ Questions, Biology, Chemistry, Physics, MAT">
 
-    <link rel="canonical" href="https://ceequiz.pandeyramu.com.np/">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Google Site Verification -->
     <meta name="google-site-verification" content="UNpQRqXhbK41aS0c7qMpKu5zwnJ-GTT7sYdzb77BGGQ">
@@ -20,13 +20,13 @@
     <meta property="og:title" content="CEE MCQ – Free CEE MCQ Questions">
     <meta property="og:description" content="Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ceequiz.pandeyramu.com.np/">
-<meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="CEE MCQ – Free CEE MCQ Questions">
     <meta name="twitter:description" content="Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
-    <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
 
     <!-- Schema Markup -->
     <script type="application/ld+json">
@@ -34,7 +34,7 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
     "name": "CEE MCQ",
-      "url": "https://ceequiz.pandeyramu.com.np/",
+    "url": "{{ request.build_absolute_uri }}",
       "description": "Free CEE entrance exam practice by Ramu Pandey. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.",
       "author": {
         "@type": "Person",

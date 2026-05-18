@@ -18,12 +18,12 @@ def get_option_text(question, option_letter):
 @register.filter
 def get_item(dictionary, key):
     return dictionary.get(key)
-@register.filter
-def dict_get(d, key):
-    return d.get(str(key))
+
 @register.filter
 def dict_get(d, key):
     try:
-        return d.get(key)
+        if d is None:
+            return None
+        return d.get(str(key), d.get(key))
     except AttributeError:
         return None

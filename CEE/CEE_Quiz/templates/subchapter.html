@@ -15,13 +15,13 @@
     <meta property="og:description" content="Practice topic-wise MCQ questions for {{ chapter.name }} subchapters. Prepare for Nepal's Common Entrance Examination.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ chapter.name }} Subchapters | CEE MCQ">
     <meta name="twitter:description" content="Practice topic-wise MCQs for {{ chapter.name }} subchapters. Prepare for Nepal's Common Entrance Examination.">
-    <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/subchapter.css' %}">

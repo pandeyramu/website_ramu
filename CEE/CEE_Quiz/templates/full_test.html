@@ -14,20 +14,20 @@
     <meta name="keywords" content="CEE Full MCQ Test, CEE Practice Test, Online MCQ, CEE Nepal">
     <meta name="author" content="Ramu Pandey">
 
-    <link rel="canonical" href="https://ceequiz.pandeyramu.com.np/full-test/">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph / Social -->
     <meta property="og:title" content="Full CEE MCQ Test | 180 Questions | CEE MCQ">
     <meta property="og:description" content="Take the full CEE MCQ test online with 180 questions and detailed scoring.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ceequiz.pandeyramu.com.np/full-test/">
-    <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Full CEE MCQ Test | 180 Questions | CEE MCQ">
     <meta name="twitter:description" content="Take the full CEE MCQ test online with 180 questions and detailed scoring.">
-    <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
 
     <!-- Schema Markup -->
     <script type="application/ld+json">
@@ -36,7 +36,7 @@
         "@type": "Quiz",
         "name": "Full CEE MCQ Test",
         "description": "Take the full CEE practice test online with 180 questions, 2.5 hours duration, and detailed results.",
-        "url": "https://ceequiz.pandeyramu.com.np/full-test/",
+        "url": "{{ request.build_absolute_uri }}",
         "author": {
             "@type": "Person",
             "name": "Ramu Pandey",

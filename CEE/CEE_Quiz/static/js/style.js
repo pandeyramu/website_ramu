@@ -147,6 +147,9 @@ function closeReviewModal() {
     if (!submitReviewPanel) {
         return;
     }
+    if (submitReviewPanel.contains(document.activeElement)) {
+        document.activeElement.blur();
+    }
     submitReviewPanel.hidden = true;
     submitReviewPanel.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
@@ -182,10 +185,15 @@ function closeFlagModal() {
         return;
     }
 
+    if (flagReviewPanel.contains(document.activeElement)) {
+        document.activeElement.blur();
+    }
+
     flagReviewPanel.hidden = true;
     flagReviewPanel.setAttribute('aria-hidden', 'true');
     activeFlagPayload = null;
     document.body.style.overflow = '';
+    document.body.classList.remove('review-modal-open');
 }
 
 function afterSubmit() {

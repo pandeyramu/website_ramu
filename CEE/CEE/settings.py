@@ -41,7 +41,6 @@ ALLOWED_HOSTS = [
     "pandeyramu.com.np",
     "ceequiz.pandeyramu.com.np",
     "ceemcq.pandeyramu.com.np",
-    "ceemcq.pandeyramu.com.np",
     ".onrender.com",
 ]
 
@@ -50,6 +49,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.ramup.com.np",
     "https://pandeyramu.com.np",
     "https://ceequiz.pandeyramu.com.np",
+    "https://ceemcq.pandeyramu.com.np",
     "https://*.onrender.com",
 ]
 

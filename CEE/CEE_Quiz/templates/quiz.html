@@ -18,13 +18,13 @@
     <meta property="og:description" content="{% if sub_chapter %}Practice the {{ sub_chapter.name }} MCQ from {{ chapter.name }} for the Common Entrance Examination. Track your performance with detailed results.{% else %}Practice the {{ chapter.name }} MCQ for the Common Entrance Examination. Track your performance with detailed results.{% endif %}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% if sub_chapter %}{{ sub_chapter.name }} MCQ – {{ chapter.name }}{% else %}{{ chapter.name }} MCQ{% endif %}">
     <meta name="twitter:description" content="{% if sub_chapter %}Practice {{ sub_chapter.name }} MCQ from {{ chapter.name }} online and improve your CEE preparation.{% else %}Practice {{ chapter.name }} MCQ questions online and improve your CEE preparation.{% endif %}">
-    <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260518-1">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
@@ -67,6 +67,9 @@
                 {% csrf_token %}
                 <input type="hidden" name="name" id="hidden-name" value="{{ user_name|default:history_user_name|default:request.GET.name|default:'' }}">
                 <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
+                {% if question_ids_csv %}
+                    <input type="hidden" name="question_ids" value="{{ question_ids_csv }}">
+                {% endif %}
 
                 {% if score is None %}
                     <section id="submit-review-panel" class="submit-review-modal" hidden aria-hidden="true">
