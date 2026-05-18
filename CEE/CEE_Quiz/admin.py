@@ -3,7 +3,8 @@ from .models import Subject, Chapter, SubChapter, Question, TestResult
 
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
 
 
 class SubChapterInline(admin.TabularInline):
@@ -13,15 +14,17 @@ class SubChapterInline(admin.TabularInline):
 
 
 class ChapterAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'subject', 'has_subchapters')
+    list_display = ('id', 'name', 'slug', 'subject', 'has_subchapters')
     list_filter = ('subject', 'has_subchapters')
     inlines = [SubChapterInline]
+    prepopulated_fields = {'slug': ('name',)}
 
 
 class SubChapterAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'chapter', 'order')
+    list_display = ('id', 'name', 'slug', 'chapter', 'order')
     list_filter = ('chapter__subject', 'chapter')
     ordering = ['chapter', 'order']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 class QuestionAdmin(admin.ModelAdmin):

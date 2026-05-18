@@ -7,10 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
      crossorigin="anonymous"></script>
-    <title>CEE Quiz Nepal | Free Chapter wise MCQs by Ramu Pandey</title>
-    <meta name="description" content="Free CEE entrance exam practice by Ramu Pandey. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
-    <meta name="keywords" content="CEE Quiz, CEE Nepal, Chapter-wise Questions, Biology, Chemistry, Physics, MAT, Ramu Pandey">
-    <meta name="author" content="Ramu Pandey">
+    <title>CEE MCQ – Free Practice Questions | CEE MCQ</title>
+    <meta name="description" content="Free CEE MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
+    <meta name="keywords" content="CEE MCQ, CEE Nepal, Chapter-wise MCQ Questions, Biology, Chemistry, Physics, MAT">
 
     <link rel="canonical" href="https://ceequiz.pandeyramu.com.np/">
 
@@ -18,15 +17,15 @@
     <meta name="google-site-verification" content="UNpQRqXhbK41aS0c7qMpKu5zwnJ-GTT7sYdzb77BGGQ">
 
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="CEE Quiz Nepal | Free MCQs by Ramu Pandey">
-    <meta property="og:description" content="Free CEE entrance exam practice. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
+    <meta property="og:title" content="CEE MCQ – Free CEE MCQ Questions">
+    <meta property="og:description" content="Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ceequiz.pandeyramu.com.np/">
 <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CEE Quiz Nepal | Free MCQs by Ramu Pandey">
-    <meta name="twitter:description" content="Free CEE entrance exam practice. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
+    <meta name="twitter:title" content="CEE MCQ – Free CEE MCQ Questions">
+    <meta name="twitter:description" content="Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
     <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Schema Markup -->
@@ -34,13 +33,13 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "CEE Quiz by Ramu Pandey",
+    "name": "CEE MCQ",
       "url": "https://ceequiz.pandeyramu.com.np/",
       "description": "Free CEE entrance exam practice by Ramu Pandey. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.",
       "author": {
         "@type": "Person",
-        "name": "Ramu Pandey",
-        "url": "https://pandeyramu.com.np"
+                "name": "Ramu Pandey",
+                "url": "https://pandeyramu.com.np"
       }
     }
     </script>
@@ -48,15 +47,124 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <style>
+        header {
+            background: linear-gradient(135deg, #0c2f4a, #184f79);
+            color: #fff;
+            padding: 1.2rem 1rem 1.4rem;
+            box-shadow: 0 10px 28px rgba(15, 58, 91, 0.18);
+        }
+        .welcome-text {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+        .home-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .home-brand {
+            margin: 0;
+            font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+            line-height: 1.05;
+            letter-spacing: 0.02em;
+            text-align: left;
+        }
+        .home-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 0.7rem;
+            margin: 0;
+        }
+        .home-nav a,
+        .home-nav .current-page {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.22);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+        .home-nav a:hover {
+            background: #ffd94d;
+            color: #0f2742;
+            border-color: #ffd94d;
+            transform: translateY(-1px);
+        }
+        .home-nav .current-page {
+            background: #ffd94d;
+            color: #0f2742;
+            border-color: #ffd94d;
+        }
+        .home-copy {
+            max-width: 920px;
+            margin: 1rem 0 0;
+            color: rgba(255,255,255,0.96);
+            font-size: 1.02rem;
+            text-align: left;
+            line-height: 1.75;
+        }
+        .home-contact-section {
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .home-contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.9rem;
+            justify-content: center;
+            margin-top: 0.9rem;
+        }
+        .home-contact-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.7rem 1rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+        .home-contact-links a:hover {
+            background: #ffd94d;
+            color: #0f2742;
+            border-color: #ffd94d;
+            transform: translateY(-1px);
+        }
+        .home-contact-copy {
+            margin-top: 1rem;
+            color: rgba(255,255,255,0.82);
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <div class="welcome-text" id="welcome">
-            <h1 class="welcome-title" data-text="CEE Quiz by Ramu Pandey">
-                CEE Quiz by Ramu Pandey
-            </h1>
-            <p class="welcome-copy">Practice chapter-wise questions, strengthen concepts, and boost your confidence for Nepal's Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry, and Physics to enhance your preparation effectively.</p>
+            <div class="home-topbar">
+                <h1 class="home-brand" data-text="CEE MCQ">CEE MCQ</h1>
+                <nav class="home-nav" aria-label="Main navigation">
+                    <span class="current-page" aria-current="page">Home</span>
+                    <a href="/about/">About Us</a>
+                    <a href="/contact/">Contact</a>
+                    <a href="/privacy-policy/">Privacy Policy</a>
+                    <a href="/disclaimer/">Disclaimer</a>
+                    <a href="/blog/">Blog</a>
+                </nav>
+            </div>
+            <p class="home-copy">Practice chapter-wise questions, strengthen concepts, and boost your confidence for Nepal's Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry, and Physics to enhance your preparation effectively.</p>
         </div>
     </header>
 
@@ -278,13 +386,13 @@
         </section>
 
         <section class="subjects">
-            <h2>Welcome to CEE Chapter-wise Quiz</h2>
+            <h2>Free CEE Chapter-wise MCQ Questions</h2>
             <p>Select a subject and start practicing!</p>
             <p class="total-question-count">Total questions available: {{ total_questions }}</p>
 
             <div class="button-group">
                 {% for sub in subjects %}
-                    <a href="{% url 'chapters' sub.id %}" class="btn btn-subject">{{ sub.name }}</a>
+                    <a href="{% url 'chapters' sub.slug %}" class="btn btn-subject">{{ sub.name }}</a>
                 {% empty %}
                     <p>No subjects available</p>
                 {% endfor %}
@@ -292,37 +400,23 @@
 
             <!-- Full Test Button -->
             <div class="full-test-container">
-                <a href="{% url 'full_test' %}" class="btn btn-full-test">Start Full Test</a>
+                <a href="{% url 'full_test' %}" class="btn btn-full-test">Start Full MCQ Test</a>
             </div>
         </section>
     </main>
 
     <footer id="site-footer" class="fade-in">
-        <div class="footer-container">
-            <h2>Get In Touch</h2>
+        <div class="footer-container home-contact-section">
+            <h2>Contact Me</h2>
             <p>Have questions or want to connect? Reach out via email or follow me on social platforms.</p>
 
-            <div class="footer-grid">
-                <div class="footer-section footer-links-section">
-                    <h3>Contact Me</h3>
-                    <div class="footer-links">
-                        <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
-                        <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">GitHub</a>
-                        <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">Facebook</a>
-                    </div>
-                </div>
-
-                <div class="footer-section footer-nav-section">
-                    <h3>Navigate</h3>
-                    <div class="footer-nav">
-                        <a href="https://pandeyramu.com.np/" target="_blank" rel="noopener noreferrer">Portfolio</a>
-                        <a href="{% url 'blog_index' %}">Blog</a>
-                        <a href="{% url 'privacy' %}">Privacy / Terms</a>
-                    </div>
-                </div>
+            <div class="home-contact-links">
+                <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
+                <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">Facebook</a>
             </div>
 
-            <p class="copyright">© 2026 Ramu Pandey. All Rights Reserved.</p>
+            <p class="home-contact-copy">Made with ❤️ by Ramu Pandey</p>
         </div>
     </footer>
 

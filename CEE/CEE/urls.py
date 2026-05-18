@@ -15,9 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
 from django.urls import path
 from CEE_Quiz import views
+from CEE_Quiz.sitemaps import sitemaps
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,12 +30,24 @@ urlpatterns = [
     
     # Main app URLs
     path('', views.home, name='home'),
-    path('subject/<int:subject_id>/', views.chapters, name='chapters'),
-    path('chapter/<int:chapter_id>/', views.quiz, name='quiz'),
-    path('chapter/<int:chapter_id>/subchapters/', views.subchapters, name='subchapters'),
-    path('subchapter/<int:subchapter_id>/quiz/', views.subchapter_quiz, name='subchapter_quiz'),
+    # Slug-based SEO-friendly URLs
+    path('subject/<slug:slug>/', views.chapters, name='chapters'),
+    path('chapter/<slug:slug>/', views.quiz, name='quiz'),
+    path('chapter/<slug:slug>/subchapters/', views.subchapters, name='subchapters'),
+    path('mcq/<slug:slug>/', views.subchapter_quiz, name='subchapter_quiz'),
+    # Backwards-compatible redirects for old numeric URLs (301)
+    path('subject/<int:subject_id>/', views.chapters_redirect),
+    path('chapter/<int:chapter_id>/', views.quiz_redirect),
+    path('chapter/<int:chapter_id>/subchapters/', views.subchapters_redirect),
+    path('subchapter/<int:subchapter_id>/quiz/', views.subchapter_quiz_redirect),
+    path('quiz/<slug:slug>/', views.subchapter_quiz_legacy_redirect),
     path('full-test/', views.full_test, name='full_test'),
-    path('privacy/', views.privacy_policy, name='privacy'),
+    path('privacy/', views.privacy_policy_redirect, name='privacy'),
+    path('privacy-policy/', views.privacy_policy_page, name='privacy_policy'),
+    path('privacy-policy-old/', views.privacy_policy, name='privacy_policy_old'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
+    path('disclaimer/', views.disclaimer, name='disclaimer'),
     path('blog/', views.blog_index, name='blog_index'),
     path('blog/how-to-prepare-for-cee/', views.blog_post, {'slug': 'how-to-prepare-for-cee'}, name='blog_how_to_prepare_for_cee'),
     path('blog/human-biology-cee-questions/', views.blog_post, {'slug': 'human-biology-cee-questions'}, name='blog_human_biology_cee_questions'),
@@ -48,12 +62,6 @@ urlpatterns = [
         template_name="robots.txt",
         content_type="text/plain"
     )),
-    path("sitemap.xml", TemplateView.as_view(
-        template_name="sitemap.xml",
-        content_type="application/xml"
-    )),
-    path("ads.txt", TemplateView.as_view(
-    template_name="ads.txt",
-    content_type="text/plain"
-    )),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
+    path("ads.txt", views.ads_txt, name="ads_txt"),
 ]

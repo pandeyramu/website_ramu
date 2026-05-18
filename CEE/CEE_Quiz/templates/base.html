@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CEE MCQ{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}CEE MCQ Nepal - free practice MCQs, exam tips, and study resources for Nepali students.{% endblock %}">
+    <meta name="author" content="Ramu Pandey">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}CEE MCQ{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Free CEE practice MCQs and preparation resources for Nepali students.{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="https://ceemcq.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}CEE MCQ{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Free CEE practice MCQs and preparation resources for Nepali students.{% endblock %}">
+    <meta name="twitter:image" content="https://ceemcq.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <style>
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            color: #1f2937;
+            background: linear-gradient(180deg, #f4f8fc 0%, #ffffff 60%);
+            line-height: 1.7;
+        }
+        .site-header {
+            background: linear-gradient(135deg, #0c2f4a, #184f79);
+            color: #fff;
+            padding: 1rem 1.2rem;
+            box-shadow: 0 10px 28px rgba(15, 58, 91, 0.18);
+        }
+        .site-header-inner,
+        .site-footer-inner,
+        .page-wrap {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+        .brand-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .brand {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            font-size: 1.2rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 0.9rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .nav-links a,
+        .nav-links .current-page {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.98);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.48rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.22);
+            background: rgba(255,255,255,0.08);
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+        .nav-links a:hover {
+            background: #ffd94d;
+            color: #0f2742;
+            border-color: #ffd94d;
+            transform: translateY(-1px);
+        }
+        .nav-links .current-page {
+            background: #ffd94d;
+            color: #0f2742;
+            border-color: #ffd94d;
+            font-weight: 700;
+        }
+        main.page-wrap {
+            padding: 2rem 1.1rem 2.5rem;
+            flex: 1 0 auto;
+        }
+        .page-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 1.6rem;
+            box-shadow: 0 12px 30px rgba(15, 58, 91, 0.08);
+        }
+        .page-card h1 {
+            margin-top: 0;
+            line-height: 1.25;
+        }
+        .muted {
+            color: #6b7280;
+        }
+        a {
+            color: #1458a6;
+        }
+        .cta-link {
+            display: inline-block;
+            margin-top: 0.4rem;
+            padding: 0.6rem 1rem;
+            border-radius: 999px;
+            background: #1458a6;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .cta-link:hover {
+            background: #0f4a8c;
+        }
+        footer.site-footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, #0c2f4a, #184f79);
+            padding: 1.4rem 1.2rem;
+            color: rgba(255,255,255,0.88);
+            text-align: center;
+        }
+        .copyright {
+            margin: 0;
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.88);
+        }
+        .messages {
+            margin-bottom: 1rem;
+        }
+        .message {
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.6rem;
+        }
+        .message.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+        .message.error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        @media (max-width: 720px) {
+            main.page-wrap { padding: 1.2rem 0.7rem 2rem; }
+            .page-card { padding: 1.2rem; }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header-inner brand-row">
+            <a class="brand" href="/">CEE MCQ</a>
+            <nav class="nav-links" aria-label="Main navigation">
+                {% if request.resolver_match.url_name == 'home' %}<span class="current-page" aria-current="page">Home</span>{% else %}<a href="/">Home</a>{% endif %}
+                {% if request.resolver_match.url_name == 'about' %}<span class="current-page" aria-current="page">About Us</span>{% else %}<a href="/about/">About Us</a>{% endif %}
+                {% if request.resolver_match.url_name == 'contact' %}<span class="current-page" aria-current="page">Contact</span>{% else %}<a href="/contact/">Contact</a>{% endif %}
+                {% if request.resolver_match.url_name == 'privacy_policy' %}<span class="current-page" aria-current="page">Privacy Policy</span>{% else %}<a href="/privacy-policy/">Privacy Policy</a>{% endif %}
+                {% if request.resolver_match.url_name == 'disclaimer' %}<span class="current-page" aria-current="page">Disclaimer</span>{% else %}<a href="/disclaimer/">Disclaimer</a>{% endif %}
+                {% if request.resolver_match.url_name == 'blog_index' %}<span class="current-page" aria-current="page">Blog</span>{% else %}<a href="/blog/">Blog</a>{% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-wrap">
+        <section class="page-card">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <p class="copyright">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

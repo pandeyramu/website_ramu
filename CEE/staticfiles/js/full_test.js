@@ -154,9 +154,11 @@ function closeReviewModal() {
 
 function openFlagModal(payload) {
     if (!flagReviewPanel) {
+        console.error('Flag review panel not found in DOM');
         return;
     }
 
+    // production: debug log removed
     activeFlagPayload = payload;
     if (flagQuestionId) {
         flagQuestionId.textContent = String(payload.questionId);
@@ -167,9 +169,11 @@ function openFlagModal(payload) {
     }
 
     flagReviewPanel.hidden = false;
+    flagReviewPanel.removeAttribute('hidden');
     flagReviewPanel.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     document.body.classList.add('review-modal-open');
+    // production: debug log removed
 }
 
 function closeFlagModal() {
@@ -395,6 +399,22 @@ async function sendQuestionReport() {
     }
 }
 
+function setupFlagModalActions() {
+    if (!flagReviewPanel) {
+        return;
+    }
+
+    flagReviewBackdrop?.addEventListener('click', closeFlagModal);
+    closeFlagBtn?.addEventListener('click', (event) => {
+        event.preventDefault();
+        closeFlagModal();
+    });
+    sendFlagBtn?.addEventListener('click', (event) => {
+        event.preventDefault();
+        sendQuestionReport();
+    });
+}
+
 function setupSubmitReviewActions() {
     if (!quizForm) {
         return;
@@ -435,9 +455,6 @@ function setupSubmitReviewActions() {
     });
 
     submitReviewBackdrop?.addEventListener('click', closeReviewModal);
-    flagReviewBackdrop?.addEventListener('click', closeFlagModal);
-    closeFlagBtn?.addEventListener('click', closeFlagModal);
-    sendFlagBtn?.addEventListener('click', sendQuestionReport);
 
     const linksContainer = document.getElementById('question-number-links');
     linksContainer?.addEventListener('click', (event) => {
@@ -446,27 +463,7 @@ function setupSubmitReviewActions() {
         }
     });
 
-    document.addEventListener('click', (event) => {
-        const flagButton = event.target.closest('.flag-question-btn');
-        if (!flagButton || !quizForm || quizForm.classList.contains('submitted')) {
-            return;
-        }
 
-        const questionBlock = flagButton.closest('.question-block');
-        if (!questionBlock) {
-            return;
-        }
-
-        const questionNumber = Number(questionBlock.dataset.questionNumber);
-        const questionId = Number(questionBlock.dataset.questionId);
-        const questionText = questionBlock.dataset.questionText || '';
-        if (Number.isNaN(questionNumber) || Number.isNaN(questionId) || !questionText) {
-            alert('Question details missing. Please refresh and try again.');
-            return;
-        }
-
-        openFlagModal({ questionNumber, questionId, questionText });
-    });
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
@@ -478,6 +475,44 @@ function setupSubmitReviewActions() {
             }
         }
     });
+}
+
+function setupFlagButtonListeners() {
+    // production: debug log removed
+    document.addEventListener('click', (event) => {
+        const flagButton = event.target.closest('.flag-question-btn');
+        if (!flagButton) {
+            return;
+        }
+
+        // production: debug log removed
+        event.preventDefault();
+        event.stopPropagation();
+
+        const questionBlock = flagButton.closest('.question-block');
+        if (!questionBlock) {
+            console.error('Question block not found');
+            return;
+        }
+
+        const questionNumber = Number(questionBlock.dataset.questionNumber);
+        const questionId = Number(questionBlock.dataset.questionId);
+        const questionText = questionBlock.dataset.questionText || '';
+        // production: debug log removed
+        
+        if (Number.isNaN(questionNumber) || Number.isNaN(questionId) || !questionText) {
+            alert('Question details missing. Please refresh and try again.');
+            return;
+        }
+
+        if (!flagReviewPanel) {
+            console.error('Flag review panel not found');
+            return;
+        }
+
+        openFlagModal({ questionNumber, questionId, questionText });
+    }, true);
+    // production: debug log removed
 }
 
 function setupNonCopyProtection() {
@@ -582,6 +617,8 @@ document.addEventListener('DOMContentLoaded', () => {
     closeFlagModal();
     initializeTimerForActiveTest();
     setupSubmitReviewActions();
+    setupFlagModalActions();
+    setupFlagButtonListeners();
 
     if (quizForm) {
         quizForm.querySelectorAll('.flag-question-btn').forEach((button) => {

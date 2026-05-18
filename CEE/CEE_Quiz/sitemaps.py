@@ -1,0 +1,70 @@
+from django.contrib.sitemaps import Sitemap
+from django.urls import reverse
+
+from CEE_Quiz.models import Subject, Chapter, SubChapter
+
+
+class StaticViewSitemap(Sitemap):
+    priority = 0.8
+    changefreq = "weekly"
+
+    def items(self):
+        return [
+            "home",
+            "full_test",
+            "about",
+            "contact",
+            "privacy_policy",
+            "disclaimer",
+            "blog_index",
+            "blog_how_to_prepare_for_cee",
+            "blog_human_biology_cee_questions",
+            "blog_organic_chemistry_cee_tips",
+            "blog_physics_high_weightage_topics",
+            "blog_mat_section_tips",
+            "blog_cee_exam_day_strategy",
+        ]
+
+    def location(self, item):
+        return reverse(item)
+
+
+class SubjectSitemap(Sitemap):
+    priority = 0.9
+    changefreq = "weekly"
+
+    def items(self):
+        return Subject.objects.all()
+
+    def location(self, item):
+        return reverse("chapters", args=[item.slug])
+
+
+class ChapterSitemap(Sitemap):
+    priority = 0.8
+    changefreq = "weekly"
+
+    def items(self):
+        return Chapter.objects.all()
+
+    def location(self, item):
+        return reverse("quiz", args=[item.slug])
+
+
+class SubChapterSitemap(Sitemap):
+    priority = 0.7
+    changefreq = "weekly"
+
+    def items(self):
+        return SubChapter.objects.all()
+
+    def location(self, item):
+        return reverse("subchapter_quiz", args=[item.slug])
+
+
+sitemaps = {
+    "static": StaticViewSitemap,
+    "subjects": SubjectSitemap,
+    "chapters": ChapterSitemap,
+    "subchapters": SubChapterSitemap,
+}

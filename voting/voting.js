@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Check if all entries have been processed before logging
                     if (alldata.length === cadinfo.length) {
-                        console.log('All form data:', alldata);
+                        // production: removed debug output
                         // Uncomment below if you want to navigate to another page after logging data
                         // window.location.href = 'user.html';
                     }
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }); 
         if (alldata.length === cadinfo.length) {
-                    console.log('All form data:', alldata);
+                    // production: removed debug output
                     // Uncomment below if you want to navigate to another page after logging data
                     // window.location.href = 'user.html'
                 }

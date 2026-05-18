@@ -46,7 +46,7 @@ html, body {
 
 body {
     font-family: Arial, sans-serif;
-    background: #f9f9f9;
+    background: linear-gradient(180deg, #eef5fb 0%, #f9fbff 100%);
     margin: 0;
     padding: 0;
 }
@@ -220,10 +220,147 @@ body > *:not(.quiz-watermark) {
     max-width: 800px;
     width: calc(100% - 24px);
     margin: 50px auto;
-    background: #fff;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
     padding: 25px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 18px 40px rgba(15, 58, 91, 0.10);
+    border-radius: 18px;
+    border: 1px solid rgba(20, 88, 166, 0.10);
+}
+
+.result-page {
+    max-width: 1240px;
+}
+
+.result-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+    align-items: start;
+}
+
+.result-main {
+    min-width: 0;
+}
+
+.history-sidebar {
+    position: sticky;
+    top: 20px;
+    align-self: start;
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(23, 85, 167, 0.14);
+    background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+    box-shadow: 0 12px 30px rgba(31, 61, 120, 0.08);
+}
+
+.history-sidebar-header {
+    margin-bottom: 12px;
+}
+
+.history-eyebrow {
+    margin: 0 0 4px;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4d6994;
+}
+
+.history-title {
+    margin: 0 0 6px;
+    text-align: left;
+    font-size: 22px;
+    color: #19345c;
+}
+
+.history-note {
+    margin: 0;
+    text-align: left;
+    font-size: 13px;
+    color: #53657f;
+    font-weight: 600;
+}
+
+.history-table-wrap {
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
     border-radius: 10px;
+    overflow: hidden;
+}
+
+.history-table th,
+.history-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e7edf7;
+    vertical-align: top;
+    text-align: left;
+}
+
+.history-table th {
+    background: #19345c;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.history-table td:nth-child(2),
+.history-table td:nth-child(3),
+.history-table td:nth-child(4) {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.history-table tr.latest-attempt {
+    background: #fff8e8;
+}
+
+.history-topic {
+    display: block;
+    font-weight: 700;
+    color: #173c67;
+}
+
+.history-meta {
+    display: block;
+    margin-top: 2px;
+    font-size: 11px;
+    color: #6a7688;
+}
+
+.history-badge {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #19345c;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.history-speed {
+    display: block;
+    font-weight: 700;
+    color: #19345c;
+}
+
+.history-empty {
+    padding: 16px;
+    border-radius: 10px;
+    background: #fff;
+    color: #4f5a6a;
+    border: 1px dashed #c8d4e6;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 h1 {
@@ -234,13 +371,14 @@ h1 {
 
 .question-block {
     margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #1dc0dd;
-    border-radius: 8px;
-    background: #f7f7f7;
+    padding: 16px;
+    border: 1px solid rgba(20, 88, 166, 0.16);
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    box-shadow: 0 10px 22px rgba(15, 58, 91, 0.06);
 }
 .question-block:hover{
-    box-shadow: 0 8px 20px rgba(72, 9, 9, 0.7);
+    box-shadow: 0 14px 28px rgba(15, 58, 91, 0.12);
     z-index: 2;
 }
 
@@ -279,11 +417,12 @@ h1 {
     align-items: flex-start;
     gap: 10px;
     margin: 8px 0;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 11px 12px;
+    border-radius: 14px;
     cursor: pointer;
-    transition: 0.3s;
-    border: 1px solid black;
+    transition: 0.25s ease;
+    border: 1px solid rgba(20, 88, 166, 0.22);
+    background: #fff;
 }
 
 .option input {
@@ -332,32 +471,42 @@ h1 {
 
 .submit-review-modal {
     position: fixed;
-    inset: 0;
-    z-index: 2000;
+        background: #dff6e6;
+        border-color: #2d8a34;
+        box-shadow: inset 0 0 0 1px rgba(45, 138, 52, 0.10);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
-}
+        background: #fde7ea;
+        border-color: #dc3545;
 
 .submit-review-modal[hidden] {
     display: none !important;
+        transform: translateX(4px);
+        box-shadow: 0 8px 18px rgba(20, 88, 166, 0.12);
+body.review-modal-open footer {
+    display: none;
+}
+        outline: 2px solid #007bff;
+        background: linear-gradient(180deg, #eef6ff 0%, #ffffff 100%);
+body.review-modal-open {
+    overflow: hidden;
 }
 
-.submit-review-backdrop {
+        padding: 13px;
     position: absolute;
-    inset: 0;
+        background: linear-gradient(135deg, #0d6efd, #1458a6);
     background: rgba(9, 20, 38, 0.55);
     z-index: 0;
 }
-
+        border-radius: 12px;
 .submit-review-panel {
-    position: relative;
+        transition: 0.25s ease;
     z-index: 1;
     border: 1px solid #bfdcff;
-    background: #f2f8ff;
-    border-radius: 10px;
-    padding: 14px;
+        background: linear-gradient(135deg, #15b300, #198754);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(25, 135, 84, 0.22);
     margin: 0;
     width: min(980px, calc(100vw - 32px));
     max-height: calc(100vh - 32px);
@@ -543,6 +692,19 @@ h1 {
     color: #8e1e1e;
 }
 
+/* Keep reported questions visibly flagged even when unattempted/attempted classes are present. */
+.q-link.flagged.unattempted {
+    background: #f4e8ff;
+    border-color: #8e44ad;
+    color: #632b98;
+}
+
+.q-link.flagged.attempted {
+    background: linear-gradient(135deg, #dbf7e4 0%, #f4e8ff 100%);
+    border-color: #7a3fb1;
+    color: #4e2179;
+}
+
 .submit-review-actions {
     display: flex;
     gap: 10px;
@@ -588,6 +750,27 @@ h1 {
     border-radius: 8px;
     padding: 20px;
     margin: 20px 0;
+}
+
+@media (max-width: 1080px) {
+    .result-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .history-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 720px) {
+    .history-table th,
+    .history-table td {
+        padding: 8px 6px;
+    }
+
+    .history-title {
+        font-size: 18px;
+    }
 }
 .negative-marking-note {
     text-align: center;
@@ -745,4 +928,5 @@ table {
         flex-direction: column;
         align-items: stretch;
     }
+}
 }

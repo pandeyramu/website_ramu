@@ -159,7 +159,7 @@ function openFlagModal(payload) {
         return;
     }
 
-    console.log('Opening flag modal for question:', payload.questionId);
+    // production: debug log removed
     activeFlagPayload = payload;
     if (flagQuestionId) {
         flagQuestionId.textContent = String(payload.questionId);
@@ -174,7 +174,7 @@ function openFlagModal(payload) {
     flagReviewPanel.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     document.body.classList.add('review-modal-open');
-    console.log('Flag modal opened successfully');
+    // production: debug log removed
 }
 
 function closeFlagModal() {
@@ -475,14 +475,14 @@ function setupSubmitReviewActions() {
 }
 
 function setupFlagButtonListeners() {
-    console.log('Setting up flag button listeners...');
+    // production: debug log removed
     document.addEventListener('click', (event) => {
         const flagButton = event.target.closest('.flag-question-btn');
         if (!flagButton) {
             return;
         }
 
-        console.log('Flag button clicked!');
+        // production: debug log removed
         event.preventDefault();
         event.stopPropagation();
 
@@ -495,7 +495,7 @@ function setupFlagButtonListeners() {
         const questionNumber = Number(questionBlock.dataset.questionNumber);
         const questionId = Number(questionBlock.dataset.questionId);
         const questionText = questionBlock.dataset.questionText || '';
-        console.log('Question data:', { questionNumber, questionId, questionTextLength: questionText.length });
+        // production: debug log removed
         
         if (Number.isNaN(questionNumber) || Number.isNaN(questionId) || !questionText) {
             alert('Question details missing. Please refresh and try again.');
@@ -509,7 +509,7 @@ function setupFlagButtonListeners() {
 
         openFlagModal({ questionNumber, questionId, questionText });
     }, true);
-    console.log('Flag button listeners setup complete');
+    // production: debug log removed
 }
 
 function setupNonCopyProtection() {

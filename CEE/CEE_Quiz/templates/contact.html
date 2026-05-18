@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact | CEE MCQ{% endblock %}
+{% block meta_description %}Contact CEE MCQ for support, feedback, or website questions. Use the form or email provided on this page.{% endblock %}
+{% block og_title %}Contact | CEE MCQ{% endblock %}
+{% block og_description %}Contact CEE MCQ for support, feedback, or website questions.{% endblock %}
+{% block twitter_title %}Contact | CEE MCQ{% endblock %}
+{% block twitter_description %}Contact CEE MCQ for support, feedback, or website questions.{% endblock %}
+
+{% block content %}
+<h1>Contact</h1>
+<p>If you have questions about the practice MCQs, find an issue on the site, or want to share feedback, you can use the form below or email us directly. We try to keep the site simple and easy to use, so feedback is always welcome.</p>
+
+<form method="post" style="display:grid; gap:0.9rem; max-width:640px;">
+    {% csrf_token %}
+    <label>
+        <span>Name</span><br>
+        <input type="text" name="name" required style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:10px;">
+    </label>
+    <label>
+        <span>Email</span><br>
+        <input type="email" name="email" required style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:10px;">
+    </label>
+    <label>
+        <span>Message</span><br>
+        <textarea name="message" rows="6" required style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:10px;"></textarea>
+    </label>
+    <button type="submit" class="cta-link" style="border:none;">Send Message</button>
+</form>
+
+<p style="margin-top:1.4rem;">You can also email us directly at <a href="mailto:pandeyramu57@gmail.com">pandeyramu57@gmail.com</a>.</p>
+{% endblock %}

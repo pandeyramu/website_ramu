@@ -40,6 +40,8 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "pandeyramu.com.np",
     "ceequiz.pandeyramu.com.np",
+    "ceemcq.pandeyramu.com.np",
+    "ceemcq.pandeyramu.com.np",
     ".onrender.com",
 ]
 
@@ -60,8 +62,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'CEE_Quiz',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

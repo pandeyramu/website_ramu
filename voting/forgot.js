@@ -6,7 +6,7 @@ function generateOTP() {
     return(otp);
 }
 let otp = generateOTP();
-console.log("Generated OTP:", otp);
+// production: removed debug output
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.querySelector('#btn');
     const num = document.querySelectorAll('input[type="text"]');

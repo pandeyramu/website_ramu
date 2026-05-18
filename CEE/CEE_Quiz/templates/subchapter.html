@@ -4,26 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ chapter.name }} Subchapters | CEE Quiz by Ramu Pandey</title>
+    <title>CEE {{ chapter.name }} MCQ – {{ chapter.subject.name }} | CEE MCQ</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
      crossorigin="anonymous"></script>
      
-    <meta name="description" content="Explore subchapters for {{ chapter.name }} in Ramu Pandey's CEE Quiz. Practice topic-wise MCQs for Nepal's Common Entrance Examination.">
-    <meta name="keywords" content="CEE Quiz, {{ chapter.name }}, Subchapters, CEE Nepal, Practice Questions, Ramu Pandey">
-    <meta name="author" content="Ramu Pandey">
+    <meta name="description" content="Explore subchapters for {{ chapter.name }} and practice topic-wise MCQ questions to prepare for Nepal's Common Entrance Examination.">
+    <meta name="keywords" content="CEE MCQ, {{ chapter.name }}, Subchapters, Practice Questions">
 
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="{{ chapter.name }} Subchapters | CEE Quiz by Ramu Pandey">
-    <meta property="og:description" content="Practice topic-wise MCQs for {{ chapter.name }} subchapters in Ramu Pandey's CEE Quiz. Prepare for Nepal's Common Entrance Examination.">
+    <meta property="og:title" content="{{ chapter.name }} Subchapters | CEE MCQ">
+    <meta property="og:description" content="Practice topic-wise MCQ questions for {{ chapter.name }} subchapters. Prepare for Nepal's Common Entrance Examination.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ chapter.name }} Subchapters | CEE Quiz by Ramu Pandey">
+    <meta name="twitter:title" content="{{ chapter.name }} Subchapters | CEE MCQ">
     <meta name="twitter:description" content="Practice topic-wise MCQs for {{ chapter.name }} subchapters. Prepare for Nepal's Common Entrance Examination.">
     <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
@@ -41,7 +40,7 @@
         <p class="subtitle">Select a subchapter to start practicing!</p>
         <p class="breadcrumb">
             <a href="{% url 'home' %}">Home</a> &raquo;
-            <a href="{% url 'chapters' chapter.subject.id %}">{{ chapter.subject.name }}</a> &raquo;
+            <a href="{% url 'chapters' chapter.subject.slug %}">{{ chapter.subject.name }}</a> &raquo;
             <span>{{ chapter.name }}</span>
         </p>
     </header>
@@ -52,7 +51,7 @@
                 {% for sub in subchapters %}
                     <article class="subchapter-card">
                         <div class="card-number">{{ forloop.counter }}</div>
-                        <a href="{% url 'subchapter_quiz' sub.id %}" class="subchapter-link">
+                        <a href="{% url 'subchapter_quiz' sub.slug %}" class="subchapter-link">
                             <span class="subchapter-name">{{ sub.name }}</span>
                         </a>
                     </article>
@@ -65,12 +64,12 @@
         </section>
 
         <nav class="nav-buttons">
-            <a href="{% url 'chapters' chapter.subject.id %}" class="btn btn-back">← Back to {{ chapter.subject.name }}</a>
+            <a href="{% url 'chapters' chapter.subject.slug %}" class="btn btn-back">← Back to {{ chapter.subject.name }}</a>
         </nav>
     </main>
 
-    <footer class="footer">
-        <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
+    <footer class="footer" style="text-align:center; margin-top:2rem;">
+        <p>Made with ❤️ by Ramu Pandey</p>
         <p>Follow me on 
             <a href="https://github.com/pandeyramu" target="_blank">GitHub</a> | 
             <a href="https://www.facebook.com/ramu.pandey38" target="_blank">Facebook</a> |
@@ -91,11 +90,12 @@
           "@type": "ListItem",
           "position": {{ forloop.counter }},
           "name": "{{ sub.name }}",
-          "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'subchapter_quiz' sub.id %}"
+          "url": "{% url 'subchapter_quiz' sub.slug %}"
         }{% if not forloop.last %},{% endif %}
         {% endfor %}
       ]
     }
     </script>
+    <!-- Footer behavior handled by CSS flex layout; no JS needed -->
 </body>
 </html>

@@ -6,27 +6,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full CEE Practice Test | 180 Questions by Ramu Pandey</title>
+    <title>Full CEE MCQ Test | 180 Questions | CEE MCQ</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
      crossorigin="anonymous"></script>
     <!-- SEO Meta -->
-    <meta name="description" content="Take the full CEE practice test online with 180 questions, 2.5 hours duration, and detailed results including negative marking. By Ramu Pandey.">
-    <meta name="keywords" content="CEE Full Test, CEE Practice Test, Online Quiz, CEE Nepal, Ramu Pandey">
+    <meta name="description" content="Take the full CEE MCQ test online with 180 questions, 2.5 hours duration, and detailed results including negative marking.">
+    <meta name="keywords" content="CEE Full MCQ Test, CEE Practice Test, Online MCQ, CEE Nepal">
     <meta name="author" content="Ramu Pandey">
 
     <link rel="canonical" href="https://ceequiz.pandeyramu.com.np/full-test/">
 
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="Full CEE Practice Test | 180 Questions by Ramu Pandey">
-    <meta property="og:description" content="Take the full CEE practice test online with 180 questions and detailed scoring. By Ramu Pandey.">
+    <meta property="og:title" content="Full CEE MCQ Test | 180 Questions | CEE MCQ">
+    <meta property="og:description" content="Take the full CEE MCQ test online with 180 questions and detailed scoring.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ceequiz.pandeyramu.com.np/full-test/">
     <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Full CEE Practice Test | 180 Questions by Ramu Pandey">
-    <meta name="twitter:description" content="Take the full CEE practice test online with 180 questions and detailed scoring. By Ramu Pandey.">
+    <meta name="twitter:title" content="Full CEE MCQ Test | 180 Questions | CEE MCQ">
+    <meta name="twitter:description" content="Take the full CEE MCQ test online with 180 questions and detailed scoring.">
     <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Schema Markup -->
@@ -34,7 +34,7 @@
     {
         "@context": "https://schema.org",
         "@type": "Quiz",
-        "name": "Full CEE Practice Test",
+        "name": "Full CEE MCQ Test",
         "description": "Take the full CEE practice test online with 180 questions, 2.5 hours duration, and detailed results.",
         "url": "https://ceequiz.pandeyramu.com.np/full-test/",
         "author": {
@@ -48,18 +48,69 @@
     <link rel="stylesheet" href="{% static 'css/full_test.css' %}?v=20260508-5">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <style>
+        html, body { height: 100%; }
+        body { display: flex; flex-direction: column; min-height: 100vh; }
+        .container { flex: 1 0 auto; }
+        .full-test-footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, #0c2f4a, #184f79);
+            margin-top: 2rem;
+            padding: 1rem 1rem 1.15rem;
+            color: rgba(255,255,255,0.88);
+        }
+        .full-test-footer .footer-container {
+            max-width: 880px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .full-test-footer .footer-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 0.7rem;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .full-test-footer .footer-nav a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.45rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.22);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+        .full-test-footer .footer-nav a:hover {
+            background: #ffd94d;
+            color: #0f2742;
+            border-color: #ffd94d;
+            transform: translateY(-1px);
+        }
+        .full-test-footer .footer-copy {
+            margin-top: 0.85rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.82);
+        }
+    </style>
 </head>
 
 <body data-quiz-key="full-test" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="Full Test">
     <div class="quiz-watermark" id="quiz-watermark" aria-hidden="true"></div>
     <div class="container {% if score is not None %}result-page{% endif %}">
-        <h1>Full Test</h1>
+        <h1>Full MCQ Test</h1>
         <p>Total Questions: 180 | Time: 2.5 hours | Negative Marking: 0.25 per wrong answer</p>
 
         {% if score is None and not quiz_started %}
             <form method="get" id="name-form" class="start-form">
                 <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
-                <button type="submit" name="start" value="1" id="start_full_test" class="start_test">Start Test</button>
+                <button type="submit" name="start" value="1" id="start_full_test" class="start_test">Start Full MCQ Test</button>
             </form>
         {% endif %}
 
@@ -70,7 +121,7 @@
 
             <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% url 'full_test' %}" id="full-test-form" style="display: block;">
                 {% csrf_token %}
-                <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
+                <input type="hidden" name="name" id="hidden-name" value="{{ user_name|default:history_user_name|default:request.GET.name|default:'' }}">
                 <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
 
                 {% if score is not None %}
@@ -273,34 +324,20 @@
 
     <footer class="full-test-footer">
         <div class="footer-container">
-            <h2>Get in Touch</h2>
-            <p>I'm always open to discussing projects, quizzes, or coding tips!</p>
-
-            <div class="footer-grid">
-                <div class="footer-section footer-links-section">
-                    <h3>Contact Me</h3>
-                    <div class="footer-links">
-                        <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
-                        <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">GitHub</a>
-                        <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">Facebook</a>
-                    </div>
-                </div>
-
-                <div class="footer-section footer-nav-section">
-                    <h3>Navigate</h3>
-                    <div class="footer-nav">
-                        <a href="https://pandeyramu.com.np/" target="_blank" rel="noopener noreferrer">Portfolio</a>
-                        <a href="{% url 'blog_index' %}">Blog</a>
-                        <a href="{% url 'privacy' %}">Privacy / Terms</a>
-                    </div>
-                </div>
+            <div class="footer-nav" style="display:flex; flex-direction:row; flex-wrap:nowrap; justify-content:center; align-items:center; gap:0.7rem; overflow-x:auto; white-space:nowrap;">
+                <a href="/">Home</a>
+                <a href="/about/">About Us</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/disclaimer/">Disclaimer</a>
+                <a href="{% url 'blog_index' %}">Blog</a>
             </div>
 
-            <p class="footer-copy">© 2026 Ramu Pandey. All Rights Reserved.</p>
+            <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <script src="{% static 'js/full_test.js' %}?v=20260508-5"></script>
+    <script src="{% static 'js/full_test.js' %}"></script>
 </body>
 
 </html>

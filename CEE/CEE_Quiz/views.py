@@ -25,6 +25,9 @@ BLOG_POSTS = {
     'how-to-prepare-for-cee': {
         'title': 'How to Prepare for CEE Effectively',
         'tag': 'Study Tips',
+        'accent': '#1458a6',
+        'accent_soft': 'rgba(20, 88, 166, 0.08)',
+        'accent_border': 'rgba(20, 88, 166, 0.22)',
         'description': 'A practical CEE preparation roadmap covering study planning, revision cycles, and mock test strategy for Biology, Chemistry, Physics, and MAT.',
         'excerpt': 'Build a realistic routine, focus on high-weightage chapters, and use timed practice to steadily improve your CEE score.',
         'sections': [
@@ -82,6 +85,9 @@ BLOG_POSTS = {
     'physics-high-weightage-topics': {
         'title': 'High Weightage Physics Topics for CEE',
         'tag': 'Physics',
+        'accent': '#0f7a8a',
+        'accent_soft': 'rgba(15, 122, 138, 0.08)',
+        'accent_border': 'rgba(15, 122, 138, 0.22)',
         'description': 'Focused guide to high-weightage Physics units for CEE with chapter priorities, question patterns, and smart practice methods.',
         'excerpt': 'Prioritize Mechanics, Current Electricity, and Magnetism, then build accuracy through formula recall and timed mixed sets.',
         'sections': [
@@ -126,6 +132,9 @@ BLOG_POSTS = {
     'human-biology-cee-questions': {
         'title': 'Human Biology: Most Important CEE Questions',
         'tag': 'Biology',
+        'accent': '#1f8a4c',
+        'accent_soft': 'rgba(31, 138, 76, 0.08)',
+        'accent_border': 'rgba(31, 138, 76, 0.22)',
         'description': 'High-yield Human Biology revision guide for CEE with commonly tested systems, diagrams, and MCQ preparation tactics.',
         'excerpt': 'Human Biology is a major scoring area in CEE. Focus on repeated concepts, terminology precision, and diagram-based revision.',
         'sections': [
@@ -170,6 +179,9 @@ BLOG_POSTS = {
     'organic-chemistry-cee-tips': {
         'title': 'Organic Chemistry Tips for CEE Nepal',
         'tag': 'Chemistry',
+        'accent': '#b36a00',
+        'accent_soft': 'rgba(179, 106, 0, 0.08)',
+        'accent_border': 'rgba(179, 106, 0, 0.24)',
         'description': 'Organic Chemistry preparation guide for CEE Nepal with high-weightage reactions, functional-group strategy, and exam-focused MCQ methods.',
         'excerpt': 'Organic Chemistry carries major weight in CEE. Use reaction maps, functional-group logic, and repeated MCQ drills to convert it into a scoring section.',
         'sections': [
@@ -242,6 +254,9 @@ BLOG_POSTS = {
     'mat-section-tips': {
         'title': 'How to Score Full Marks in MAT Section',
         'tag': 'MAT',
+        'accent': '#7a4dc7',
+        'accent_soft': 'rgba(122, 77, 199, 0.08)',
+        'accent_border': 'rgba(122, 77, 199, 0.22)',
         'description': 'High-scoring MAT strategy for CEE with daily drill design, speed-control techniques, and trap-avoidance methods.',
         'excerpt': 'MAT is one of the fastest sections to improve. A disciplined daily routine can convert it into reliable marks with low preparation cost.',
         'sections': [
@@ -314,6 +329,9 @@ BLOG_POSTS = {
     'cee-exam-day-strategy': {
         'title': "CEE Exam Day Strategy: Do's and Don'ts",
         'tag': 'Strategy',
+        'accent': '#c04b62',
+        'accent_soft': 'rgba(192, 75, 98, 0.08)',
+        'accent_border': 'rgba(192, 75, 98, 0.22)',
         'description': 'CEE exam-day strategy covering pre-exam checklist, section pacing, negative-marking control, and high-pressure decision making.',
         'excerpt': 'A strong exam-day system can convert months of preparation into marks by protecting accuracy, pace, and confidence under pressure.',
         'sections': [
@@ -403,7 +421,149 @@ BLOG_POSTS = {
                 ]
             }
         ]
-    }
+    },
+    'biology-diagram-revision-cee': {
+        'title': 'Biology Diagram Revision That Actually Sticks',
+        'tag': 'Biology',
+        'accent': '#1f8a4c',
+        'accent_soft': 'rgba(31, 138, 76, 0.08)',
+        'accent_border': 'rgba(31, 138, 76, 0.22)',
+        'description': 'A practical Biology revision note focused on diagrams, labels, and recall tricks for CEE students.',
+        'excerpt': 'I stopped losing easy Biology marks when I began redrawing diagrams from memory and checking the labels against my own mistakes.',
+        'sections': [
+            {
+                'heading': 'Why diagrams matter so much',
+                'paragraphs': [
+                    'Biology becomes easier when you stop treating diagrams as decoration. In CEE, a labelled heart, kidney, neuron, or plant cell can represent marks that are simple to secure if you revise them the right way.',
+                    'I used to read diagrams passively and forget the labels after two days. What helped was drawing the same figure three times: once while studying, once from memory, and once in a quick revision notebook.'
+                ],
+                'bullets': [
+                    'Draw the diagram before reading the label list',
+                    'Use a blank sheet and check your own mistakes',
+                    'Repeat the same diagram after 2 days and 7 days'
+                ]
+            },
+            {
+                'heading': 'My simple recall method',
+                'paragraphs': [
+                    'I keep one page for each system and write only the labels that I commonly forget. That page is not a full note. It is a mistake log for things I always mix up during revision.',
+                    'Short recall practice works better than long reading sessions. Even ten minutes of active drawing can improve memory more than half an hour of scanning the textbook.'
+                ],
+                'bullets': [
+                    'Keep one page per system or organ',
+                    'Write the difficult labels in a different color',
+                    'Test yourself without looking at the reference image'
+                ]
+            },
+            {
+                'heading': 'What I focus on first',
+                'paragraphs': [
+                    'For CEE, I would start with human physiology diagrams, then move to cell structure and plant anatomy. These topics appear often enough that repeated recall gives a real return.',
+                    'The aim is not artistic perfection. The aim is accurate structure and the ability to remember the sequence of parts under exam pressure.'
+                ],
+                'bullets': [
+                    'Heart and blood flow',
+                    'Kidney and nephron',
+                    'Neuron and reflex arc',
+                    'Plant cell and tissue sections'
+                ]
+            }
+        ]
+    },
+    'chemistry-reaction-map-cee': {
+        'title': 'Chemistry Reaction Maps for Faster Recall',
+        'tag': 'Chemistry',
+        'accent': '#b36a00',
+        'accent_soft': 'rgba(179, 106, 0, 0.08)',
+        'accent_border': 'rgba(179, 106, 0, 0.24)',
+        'description': 'A CEE Chemistry study note on reaction maps, conversion chains, and quick recall for organic and inorganic revision.',
+        'excerpt': 'Instead of memorizing reactions in isolation, I built one map that linked every common conversion. That cut my confusion in half.',
+        'sections': [
+            {
+                'heading': 'Why reaction maps help',
+                'paragraphs': [
+                    'Organic Chemistry looks huge until you connect the reactions. Once I started drawing conversion maps, I could see how one functional group led to another and why options in MCQs were either obviously correct or obviously wrong.',
+                    'The map does not need to be pretty. It only needs to show the direction of change, reagent, and the kind of product you expect.'
+                ],
+                'bullets': [
+                    'Draw the starting compound in the center',
+                    'Use arrows for oxidation, reduction, addition, and substitution',
+                    'Add reagents and conditions beside each arrow'
+                ]
+            },
+            {
+                'heading': 'How I keep it practical',
+                'paragraphs': [
+                    'I keep one page for the reaction map and another page for exceptions. The exception sheet is important because CEE often tests the same reaction with one small twist.',
+                    'When I revise, I cover the product and try to recall the reagent, then I cover the reagent and try to recall the product. That double recall is what makes the map stick.'
+                ],
+                'bullets': [
+                    'One page for conversions',
+                    'One page for exceptions',
+                    'Revise both pages in short loops'
+                ]
+            },
+            {
+                'heading': 'What to prioritize first',
+                'paragraphs': [
+                    'I would start with the reactions that repeat most often in entrance questions: alcohols, carbonyl compounds, acids, amines, and hydrocarbon conversions. Once those are clear, the rest becomes easier to remember.',
+                    'This method is faster than trying to read the entire chapter again and again.'
+                ],
+                'bullets': [
+                    'Functional-group conversions',
+                    'Common tests and identification reactions',
+                    'Named reactions and their conditions'
+                ]
+            }
+        ]
+    },
+    'past-papers-smart-practice-cee': {
+        'title': 'How I Use Past Papers to Study Smarter',
+        'tag': 'Study Tips',
+        'accent': '#7a4dc7',
+        'accent_soft': 'rgba(122, 77, 199, 0.08)',
+        'accent_border': 'rgba(122, 77, 199, 0.22)',
+        'description': 'A practical note on using CEE past papers to find patterns, build timing, and improve revision quality.',
+        'excerpt': 'Past papers are not just for checking yourself at the end. I use them as a map for what deserves more time now.',
+        'sections': [
+            {
+                'heading': 'What past papers tell you',
+                'paragraphs': [
+                    'Past papers show you what repeats, how questions are phrased, and where the easy marks usually hide. They also tell you which topics deserve serious time and which ones can be revised more lightly.',
+                    'The real value is pattern recognition. Once you solve enough papers, you begin to notice the same style of question returning with small changes.'
+                ],
+                'bullets': [
+                    'Repeated concepts become obvious quickly',
+                    'Question wording becomes less intimidating',
+                    'Timing improves because patterns feel familiar'
+                ]
+            },
+            {
+                'heading': 'How I actually review a paper',
+                'paragraphs': [
+                    'I solve the paper once under time pressure, then I review every wrong and skipped item. I do not stop at the answer. I write why I missed it and whether the issue was concept, speed, or carelessness.',
+                    'That second step is where the score improvement happens. Without review, a past paper is just another test.'
+                ],
+                'bullets': [
+                    'Solve once under exam timing',
+                    'Mark wrong answers in a separate notebook',
+                    'Re-attempt the same paper after a few days'
+                ]
+            },
+            {
+                'heading': 'The part I would never skip',
+                'paragraphs': [
+                    'I always keep a list of topics that keep returning across papers. That list is better than a huge stack of notes because it tells me exactly where to revise next.',
+                    'If you are short on time, use the papers to guide your next study session instead of reading chapters in order.'
+                ],
+                'bullets': [
+                    'Build a topic frequency list',
+                    'Focus revision on repeated themes first',
+                    'Use papers to plan the next week, not just the final week'
+                ]
+            }
+        ]
+    },
 }
 
 BLOG_POST_ORDER = [
@@ -413,7 +573,19 @@ BLOG_POST_ORDER = [
     'physics-high-weightage-topics',
     'mat-section-tips',
     'cee-exam-day-strategy',
+    'biology-diagram-revision-cee',
+    'chemistry-reaction-map-cee',
+    'past-papers-smart-practice-cee',
 ]
+
+BLOG_THEMES = {
+    slug: {
+        'accent': post['accent'],
+        'accent_soft': post['accent_soft'],
+        'accent_border': post['accent_border'],
+    }
+    for slug, post in BLOG_POSTS.items()
+}
 
 BLOG_INTERNAL_LINKS = {
     'how-to-prepare-for-cee': [
@@ -826,15 +998,37 @@ def home(request):
     })
 
 
-def chapters(request, subject_id):
-    subject = get_object_or_404(Subject, id=subject_id)
+def chapters(request, slug):
+    """Subject page looked up by slug."""
+    subject = get_object_or_404(Subject, slug=slug)
     chapters_list = Chapter.objects.filter(subject=subject).order_by('id')
     return render(request, 'chapter.html', {'subject': subject, 'chapters': chapters_list})
 
 
-def subchapters(request, chapter_id):
-    """View to list subchapters for a chapter that has them (e.g., Organic Chemistry)."""
+def chapters_redirect(request, subject_id):
+    """Redirect old numeric subject URL to slug URL (301)."""
+    subject = get_object_or_404(Subject, id=subject_id)
+    return redirect('chapters', slug=subject.slug, permanent=True)
+
+
+def quiz_redirect(request, chapter_id):
     chapter = get_object_or_404(Chapter, id=chapter_id)
+    return redirect('quiz', slug=chapter.slug, permanent=True)
+
+
+def subchapter_quiz_redirect(request, subchapter_id):
+    sub = get_object_or_404(SubChapter, id=subchapter_id)
+    return redirect('subchapter_quiz', slug=sub.slug, permanent=True)
+
+
+def subchapter_quiz_legacy_redirect(request, slug):
+    sub = get_object_or_404(SubChapter, slug=slug)
+    return redirect('subchapter_quiz', slug=sub.slug, permanent=True)
+
+
+def subchapters(request, slug):
+    """View to list subchapters for a chapter that has them (lookup by slug)."""
+    chapter = get_object_or_404(Chapter, slug=slug)
     subchapter_list = SubChapter.objects.filter(chapter=chapter).order_by('order')
     return render(request, 'subchapter.html', {
         'chapter': chapter,
@@ -842,39 +1036,43 @@ def subchapters(request, chapter_id):
     })
 
 
-def quiz(request, chapter_id):
+def subchapters_redirect(request, chapter_id):
     chapter = get_object_or_404(Chapter, id=chapter_id)
+    return redirect('subchapters', slug=chapter.slug, permanent=True)
+
+
+def quiz(request, slug):
+    chapter = get_object_or_404(Chapter, slug=slug)
+    chapter_id = chapter.id
     user_name = _normalize_exact_name(request.GET.get('name') or request.POST.get('name'))
     quiz_started = (request.GET.get('start') == '1' and user_name)
     attempt_reference = _attempt_reference(request.session, f'quiz_{chapter_id}')
-    
+
     if request.method == 'POST':
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the quiz.')
-            return redirect('quiz', chapter_id=chapter_id)
-        
+            return redirect('quiz', slug=chapter.slug)
+
         try:
-            # Ensure database connection is active
             connection.ensure_connection()
-            
+
             questions_ids = request.session.get(f'quiz_questions_{chapter_id}', [])
-            
-            # Check if session data exists
+
             if not questions_ids:
                 messages.error(request, 'Session expired. Please restart the quiz.')
-                return redirect('quiz', chapter_id=chapter_id)
-            
+                return redirect('quiz', slug=chapter.slug)
+
             questions_qs = Question.objects.filter(id__in=questions_ids).select_related('chapter', 'sub_chapter')
             id_to_question = {q.id: q for q in questions_qs}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
-            
+
             total_score = 0
             total_attempted = 0
             total_correct = 0
             negative_mark = 0.25
             user_answers = {}
-            
+
             for q in questions:
                 answer = request.POST.get(f'q{q.id}')
                 if answer:
@@ -897,8 +1095,7 @@ def quiz(request, chapter_id):
                 total_correct=total_correct,
                 time_taken_seconds=time_taken_seconds,
             )
-            
-            # Save result with error handling
+
             try:
                 _save_test_result(
                     user_name=user_name,
@@ -913,9 +1110,9 @@ def quiz(request, chapter_id):
                 print(f"DB Error: {db_error}")
 
             history_entries = _get_test_history(user_name=user_name)
-            
+
             request.session.pop(f'quiz_questions_{chapter_id}', None)
-            
+
             return render(request, 'quiz.html', {
                 'chapter': chapter,
                 'questions': questions,
@@ -935,11 +1132,11 @@ def quiz(request, chapter_id):
                 'history_user_name': user_name,
                 **result_metrics,
             })
-            
+
         except Exception as e:
             messages.error(request, f'Error processing submission: {str(e)}. Please try again.')
-            return redirect('quiz', chapter_id=chapter_id)
-    
+            return redirect('quiz', slug=chapter.slug)
+
     else:
         user_name = _normalize_exact_name(request.GET.get('name', ''))
         quiz_started = request.GET.get('start') == '1' and bool(user_name)
@@ -967,9 +1164,10 @@ def quiz(request, chapter_id):
         })
 
 
-def subchapter_quiz(request, subchapter_id):
-    """Quiz view for a specific subchapter."""
-    sub_chapter = get_object_or_404(SubChapter, id=subchapter_id)
+def subchapter_quiz(request, slug):
+    """Quiz view for a specific subchapter (lookup by slug)."""
+    sub_chapter = get_object_or_404(SubChapter, slug=slug)
+    subchapter_id = sub_chapter.id
     chapter = sub_chapter.chapter
     session_key = f'quiz_questions_sub_{subchapter_id}'
     attempt_reference = _attempt_reference(request.session, f'subchapter_{subchapter_id}')
@@ -978,7 +1176,7 @@ def subchapter_quiz(request, subchapter_id):
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the quiz.')
-            return redirect('subchapter_quiz', subchapter_id=subchapter_id)
+            return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
         try:
             connection.ensure_connection()
@@ -987,7 +1185,7 @@ def subchapter_quiz(request, subchapter_id):
 
             if not questions_ids:
                 messages.error(request, 'Session expired. Please restart the quiz.')
-                return redirect('subchapter_quiz', subchapter_id=subchapter_id)
+                return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
             questions_qs = Question.objects.filter(id__in=questions_ids).select_related('chapter', 'sub_chapter')
             id_to_question = {q.id: q for q in questions_qs}
@@ -1230,6 +1428,45 @@ def privacy_policy(request):
     return render(request, 'privacy.html')
 
 
+def privacy_policy_redirect(request):
+    return redirect('privacy_policy', permanent=True)
+
+
+def privacy_policy_page(request):
+    return render(request, 'privacy_policy.html')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def disclaimer(request):
+    return render(request, 'disclaimer.html')
+
+
+def contact(request):
+    if request.method == 'POST':
+        name = (request.POST.get('name') or '').strip()
+        email = (request.POST.get('email') or '').strip()
+        message = (request.POST.get('message') or '').strip()
+
+        if not name or not email or not message:
+            messages.error(request, 'Please fill in all contact fields.')
+        else:
+            messages.success(request, 'Thanks for reaching out. Please email us if you need a faster reply.')
+
+    return render(request, 'contact.html')
+
+
+def ads_txt(request):
+    try:
+        with open(settings.BASE_DIR / 'static' / 'ads.txt', 'r', encoding='utf-8') as ads_file:
+            content = ads_file.read()
+    except FileNotFoundError:
+        content = 'google.com, pub-3880021540956659, DIRECT, f08c47fec0942fa0'
+    return HttpResponse(content, content_type='text/plain')
+
+
 def blog_index(request):
     posts = []
     for slug in BLOG_POST_ORDER:
@@ -1239,6 +1476,9 @@ def blog_index(request):
             'title': post['title'],
             'tag': post['tag'],
             'excerpt': post['excerpt'],
+            'accent': post['accent'],
+            'accent_soft': post['accent_soft'],
+            'accent_border': post['accent_border'],
         })
     return render(request, 'blog.html', {'posts': posts})
 
@@ -1250,7 +1490,7 @@ def blog_post(request, slug):
 
     custom_template = BLOG_CUSTOM_TEMPLATES.get(slug)
     if custom_template:
-        return render(request, custom_template)
+        return render(request, custom_template, {'theme': BLOG_THEMES.get(slug, BLOG_THEMES['how-to-prepare-for-cee'])})
 
     expanded_sections = list(post['sections'])
     expanded_sections.append({
@@ -1293,5 +1533,6 @@ def blog_post(request, slug):
     return render(request, 'blog_post.html', {
         'slug': slug,
         'post': post_with_depth,
+        'theme': BLOG_THEMES.get(slug, BLOG_THEMES['how-to-prepare-for-cee']),
         'related_links': BLOG_INTERNAL_LINKS.get(slug, []),
     })

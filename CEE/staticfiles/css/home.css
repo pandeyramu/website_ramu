@@ -15,8 +15,8 @@ html, body {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #001a4d;
-    color: #f0f0f0;
+    background: #f5f7fa;
+    color: #333;
     min-height: 100vh;
 }
 
@@ -108,16 +108,16 @@ header {
     max-width: 95%;
     margin: 0 auto 50px;
     padding: 25px 30px;
-    background: rgba(255, 255, 255, 0.05);
+    background: white;
     border-left: 4px solid #0066FF;
     border-radius: 4px;
     text-align: justify;
     line-height: 1.8;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .cee-intro p {
-    color: #e0e0e0;
+    color: #2c3e50;
     font-size: 16px;
     font-weight: 500;
     margin: 0 0 18px 0;
@@ -133,10 +133,10 @@ header {
    ============================== */
 
 .table-wrapper {
-    background: rgba(255, 255, 255, 0.05);
+    background: white;
     border-radius: 4px;
     padding: 30px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     overflow-x: auto;
 }
 
@@ -327,9 +327,9 @@ header {
     max-width: 900px;
     margin: 60px auto;
     padding: 40px;
-    background: rgba(255, 255, 255, 0.05);
+    background: white;
     border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     text-align: center;
 }
 
@@ -340,11 +340,11 @@ header {
 }
 
 .subjects h3 {
-    color: #e0e0e0;
+    color: #34495e;
 }
 
 .subjects p {
-    color: #b0b0b0;
+    color: #555;
     font-size: 16px;
     margin: 15px 0;
 }
@@ -387,7 +387,7 @@ header {
 }
 
 .btn:hover {
-    background: #0052CC;
+    background: #28a745;
     transform: translateY(-4px);
 }
 
@@ -412,7 +412,7 @@ header {
 }
 
 .btn-full-test:hover {
-    background: #0052CC;
+    background: #28a745;
     transform: translateY(-4px);
 }
 
@@ -513,7 +513,7 @@ header {
 
 .footer-links a:hover {
     background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    color: #FFD700;
 }
 
 .footer-nav-section {
@@ -544,7 +544,7 @@ header {
 
 .footer-nav a:hover {
     background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    color: #FFD700;
 }
 
 #site-footer .copyright {

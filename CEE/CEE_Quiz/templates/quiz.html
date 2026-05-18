@@ -6,26 +6,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if sub_chapter %}{{ sub_chapter.name }} Quiz | {{ chapter.name }}{% else %}{{ chapter.name }} Quiz | CEE Chapter-wise Practice{% endif %}</title>
+    <title>{% if sub_chapter %}{{ sub_chapter.name }} MCQ – {{ chapter.name }}{% else %}{{ chapter.name }} MCQ | CEE Chapter-wise Practice{% endif %}</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
      crossorigin="anonymous"></script>
-    <meta name="description" content="{% if sub_chapter %}Take the {{ sub_chapter.name }} quiz from {{ chapter.name }} for the Common Entrance Examination. Practice topic-wise questions and track your performance with detailed results.{% else %}Take the {{ chapter.name }} quiz for the Common Entrance Examination. Practice chapter-wise questions and track your performance with detailed results.{% endif %}">
-    <meta name="keywords" content="CEE Quiz, {% if sub_chapter %}{{ sub_chapter.name }} Quiz, {{ chapter.name }}{% else %}{{ chapter.name }} Quiz, Chapter-wise Questions{% endif %}, Online Practice, Ramu Pandey">
+    <meta name="description" content="{% if sub_chapter %}Practice the {{ sub_chapter.name }} MCQ from {{ chapter.name }} for the Common Entrance Examination. Track your performance with detailed results.{% else %}Practice the {{ chapter.name }} MCQ for the Common Entrance Examination. Track your performance with detailed results.{% endif %}">
+    <meta name="keywords" content="CEE MCQ, {% if sub_chapter %}{{ sub_chapter.name }} MCQ, {{ chapter.name }}{% else %}{{ chapter.name }} MCQ, Chapter-wise Questions{% endif %}, Online Practice">
     <meta name="author" content="Ramu Pandey">
 
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph / Social Preview -->
-    <meta property="og:title" content="{% if sub_chapter %}{{ sub_chapter.name }} Quiz | {{ chapter.name }}{% else %}{{ chapter.name }} Quiz | CEE Chapter-wise Practice{% endif %}">
-    <meta property="og:description" content="{% if sub_chapter %}Take the {{ sub_chapter.name }} quiz from {{ chapter.name }} for the Common Entrance Examination. Practice topic-wise questions and track your performance with detailed results.{% else %}Take the {{ chapter.name }} quiz for the Common Entrance Examination. Practice chapter-wise questions and track your performance with detailed results.{% endif %}">
+    <meta property="og:title" content="{% if sub_chapter %}{{ sub_chapter.name }} MCQ – {{ chapter.name }}{% else %}{{ chapter.name }} MCQ | CEE Chapter-wise Practice{% endif %}">
+    <meta property="og:description" content="{% if sub_chapter %}Practice the {{ sub_chapter.name }} MCQ from {{ chapter.name }} for the Common Entrance Examination. Track your performance with detailed results.{% else %}Practice the {{ chapter.name }} MCQ for the Common Entrance Examination. Track your performance with detailed results.{% endif %}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% if sub_chapter %}{{ sub_chapter.name }} Quiz | {{ chapter.name }}{% else %}{{ chapter.name }} Quiz{% endif %}">
-    <meta name="twitter:description" content="{% if sub_chapter %}Practice {{ sub_chapter.name }} questions from {{ chapter.name }} online and improve your CEE preparation.{% else %}Practice {{ chapter.name }} quiz questions online and improve your CEE preparation.{% endif %}">
+    <meta name="twitter:title" content="{% if sub_chapter %}{{ sub_chapter.name }} MCQ – {{ chapter.name }}{% else %}{{ chapter.name }} MCQ{% endif %}">
+    <meta name="twitter:description" content="{% if sub_chapter %}Practice {{ sub_chapter.name }} MCQ from {{ chapter.name }} online and improve your CEE preparation.{% else %}Practice {{ chapter.name }} MCQ questions online and improve your CEE preparation.{% endif %}">
     <meta name="twitter:image" content="https://ceequiz.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260508-1">
@@ -51,8 +51,8 @@
     <div class="quiz-watermark" id="quiz-watermark" aria-hidden="true"></div>
     <header>
         <div class="container">
-            <h1>{% if sub_chapter %}{{ sub_chapter.name }} Quiz{% else %}{{ chapter.name }} Quiz{% endif %}</h1>
-            <p>{% if sub_chapter %}Test your knowledge of {{ sub_chapter.name }} from {{ chapter.name }} with topic-wise questions and track your score.{% else %}Test your knowledge of {{ chapter.name }} with chapter-wise questions and track your score.{% endif %}</p>
+            <h1>{% if sub_chapter %}{{ sub_chapter.name }} MCQ{% else %}{{ chapter.name }} MCQ{% endif %}</h1>
+            <p>{% if sub_chapter %}Test your knowledge of {{ sub_chapter.name }} from {{ chapter.name }} with topic-wise MCQ questions and track your score.{% else %}Test your knowledge of {{ chapter.name }} with chapter-wise MCQ questions and track your score.{% endif %}</p>
         </div>
     </header>
 
@@ -60,12 +60,12 @@
         {% if not quiz_started and score is None %}
             <form method="get" class="start-form">
                 <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
-                <button type="submit" name="start" value="1" id="start_btn" class="start_test">Start Quiz</button>
+                <button type="submit" name="start" value="1" id="start_btn" class="start_test">Start MCQ Test</button>
             </form>
             <div id="timer" style="display: none;"></div>
         {% elif questions %}
             <div id="timer" style="display: block;"></div>
-            <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.id %}{% else %}{% url 'quiz' chapter.id %}{% endif %}" id="quiz-form" style="display: block;">
+            <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.slug %}{% else %}{% url 'quiz' chapter.slug %}{% endif %}" id="quiz-form" style="display: block;">
                 {% csrf_token %}
                 <input type="hidden" name="name" id="hidden-name" value="{{ request.GET.name|default:'' }}">
                 <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
@@ -266,20 +266,21 @@
         <nav class="links">
             {% if questions %}
                 {% if score is not None or quiz_started %}
-                    <a href="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.id %}{% else %}{% url 'quiz' chapter.id %}{% endif %}" class="go_back">Retry Quiz</a>
+                    <a href="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.slug %}{% else %}{% url 'quiz' chapter.slug %}{% endif %}" class="go_back">Retry MCQ Test</a>
                 {% endif %}
             {% endif %}
             {% if sub_chapter %}
-                <a href="{% url 'subchapters' chapter.id %}" class="back-chapters">Back to Subchapters</a>
+                <a href="{% url 'subchapters' chapter.slug %}" class="back-chapters">Back to Subchapters</a>
             {% else %}
-            <a href="{% url 'chapters' chapter.subject.id %}" class="back-chapters">Back to Chapters</a>
+            <a href="{% url 'chapters' chapter.subject.slug %}" class="back-chapters">Back to Chapters</a>
             {% endif %}
             <a href="{% url 'home' %}" class="back-subjects">Back to Subjects</a>
         </nav>
     </main>
 
-    <footer class="container">
-        <p>&copy; 2026 Ramu Pandey. All Rights Reserved.</p>
+    <footer class="container" style="text-align:center; margin-top:2rem;">
+        <p>Made with ❤️ by Ramu Pandey</p>
+        <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
     </footer>
 
     <script src="{% static 'js/style.js' %}"></script>
