@@ -42,6 +42,7 @@ urlpatterns = [
     path('subchapter/<int:subchapter_id>/quiz/', views.subchapter_quiz_redirect),
     path('quiz/<slug:slug>/', views.subchapter_quiz_legacy_redirect),
     path('full-test/', views.full_test, name='full_test'),
+    path('full-test/results/', views.full_test_results, name='full_test_results'),
     path('privacy/', views.privacy_policy_redirect, name='privacy'),
     path('privacy-policy/', views.privacy_policy_page, name='privacy_policy'),
     path('privacy-policy-old/', views.privacy_policy, name='privacy_policy_old'),

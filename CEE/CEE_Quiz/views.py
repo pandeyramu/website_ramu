@@ -1067,6 +1067,11 @@ def quiz(request, slug):
             id_to_question = {q.id: q for q in questions_qs}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
 
+            if not questions:
+                messages.error(request, 'Session data is stale. Please restart the quiz.')
+                request.session.pop(f'quiz_questions_{chapter_id}', None)
+                return redirect('quiz', slug=chapter.slug)
+
             total_score = 0
             total_attempted = 0
             total_correct = 0
@@ -1191,6 +1196,11 @@ def subchapter_quiz(request, slug):
             id_to_question = {q.id: q for q in questions_qs}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
 
+            if not questions:
+                messages.error(request, 'Session data is stale. Please restart the quiz.')
+                request.session.pop(session_key, None)
+                return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
             total_score = 0
             total_attempted = 0
             total_correct = 0
@@ -1261,7 +1271,7 @@ def subchapter_quiz(request, slug):
 
         except Exception as e:
             messages.error(request, f'Error processing submission: {str(e)}. Please try again.')
-            return redirect('subchapter_quiz', subchapter_id=subchapter_id)
+            return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
     else:
         user_name = _normalize_exact_name(request.GET.get('name', ''))
@@ -1292,6 +1302,7 @@ def subchapter_quiz(request, slug):
 
 
 def full_test(request):
+    result_session_key = 'full_test_result_data'
     attempt_reference = _attempt_reference(request.session, 'full_test')
     if request.method == "POST":
         user_name = _normalize_exact_name(request.POST.get('name', ''))
@@ -1321,6 +1332,11 @@ def full_test(request):
             questions = list(questions_qs)
             id_to_question = {q.id: q for q in questions}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
+
+            if not questions:
+                messages.error(request, 'Session data is stale. Please restart the test.')
+                request.session.pop('full_test_questions', None)
+                return redirect('full_test')
             
             total_score = 0
             total_attempted = 0
@@ -1366,28 +1382,27 @@ def full_test(request):
                 print(f"DB Error: {db_error}")
 
             history_entries = _get_test_history(user_name=user_name)
-            
+
             request.session.pop('full_test_questions', None)
-            
-            return render(request, 'full_test.html', {
-                'questions': questions,
-                'score': final_score,
+
+            request.session[result_session_key] = {
+                'question_ids': [q.id for q in questions],
+                'user_answers': user_answers,
                 'user_name': user_name,
                 'total_attempted': total_attempted,
                 'total_correct': total_correct,
                 'total_wrong': total_wrong,
                 'total_skipped': total_skipped,
                 'total_questions': total_questions,
-                'user_answers': user_answers,
-                'quiz_started': True,
-                'finished': True,
+                'score': final_score,
                 'attempt_reference': attempt_reference,
-                'watermark_text': f'{user_name} | Attempt #{attempt_reference}',
                 'history_entries': history_entries,
                 'history_user_name': user_name,
-                'question_ids_csv': ','.join(str(q.id) for q in questions),
-                **result_metrics,
-            })
+                'result_metrics': result_metrics,
+            }
+            request.session.modified = True
+
+            return redirect('full_test_results')
             
         except Exception as e:
             messages.error(request, f'Error processing submission: {str(e)}. Please try again.')
@@ -1399,6 +1414,7 @@ def full_test(request):
 
         if not quiz_started:
             request.session.pop('full_test_questions', None)
+            request.session.pop(result_session_key, None)
             return render(request, 'full_test.html', {
                 'questions': [],
                 'score': None,
@@ -1418,6 +1434,7 @@ def full_test(request):
         questions = [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
 
         request.session['full_test_questions'] = [q.id for q in questions]
+        request.session.pop(result_session_key, None)
 
         return render(request, 'full_test.html', {
             'questions': questions,
@@ -1431,6 +1448,64 @@ def full_test(request):
             'history_user_name': user_name,
             'question_ids_csv': ','.join(str(q.id) for q in questions),
         })
+
+
+def full_test_results(request):
+    result_payload = request.session.get('full_test_result_data')
+    if not result_payload:
+        messages.error(request, 'No completed test result found. Please take the test first.')
+        return redirect('full_test')
+
+    question_ids = result_payload.get('question_ids') or []
+    if not question_ids:
+        messages.error(request, 'Result data is incomplete. Please retake the test.')
+        return redirect('full_test')
+
+    try:
+        connection.ensure_connection()
+        questions_qs = Question.objects.filter(id__in=question_ids).select_related('chapter', 'sub_chapter')
+        id_to_question = {q.id: q for q in questions_qs}
+        questions = [id_to_question[qid] for qid in question_ids if qid in id_to_question]
+    except Exception as error:
+        messages.error(request, f'Unable to load test results: {error}')
+        return redirect('full_test')
+
+    if not questions:
+        messages.error(request, 'Result questions are no longer available. Please retake the test.')
+        return redirect('full_test')
+
+    raw_user_answers = result_payload.get('user_answers') or {}
+    user_answers = {}
+    for key, value in raw_user_answers.items():
+        try:
+            normalized_key = int(key)
+        except (TypeError, ValueError):
+            normalized_key = key
+        user_answers[normalized_key] = value
+
+    result_metrics = result_payload.get('result_metrics') or {}
+    user_name = result_payload.get('user_name', '')
+    attempt_reference = result_payload.get('attempt_reference', '')
+
+    return render(request, 'full_test.html', {
+        'questions': questions,
+        'score': result_payload.get('score', 0),
+        'user_name': user_name,
+        'total_attempted': result_payload.get('total_attempted', 0),
+        'total_correct': result_payload.get('total_correct', 0),
+        'total_wrong': result_payload.get('total_wrong', 0),
+        'total_skipped': result_payload.get('total_skipped', 0),
+        'total_questions': result_payload.get('total_questions', len(questions)),
+        'user_answers': user_answers,
+        'quiz_started': True,
+        'finished': True,
+        'attempt_reference': attempt_reference,
+        'watermark_text': f'{user_name} | Attempt #{attempt_reference}' if user_name and attempt_reference else '',
+        'history_entries': result_payload.get('history_entries', []),
+        'history_user_name': result_payload.get('history_user_name', user_name),
+        'question_ids_csv': ','.join(str(q.id) for q in questions),
+        **result_metrics,
+    })
 
 
 def privacy_policy(request):
