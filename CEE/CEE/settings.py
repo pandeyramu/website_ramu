@@ -62,12 +62,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'CEE_Quiz',
     'django.contrib.sites',
     'django.contrib.sitemaps',
-    'CEE_Quiz',
 ]
 
-SITE_ID = 1
+# Let sitemap generation use the incoming request host instead of a hard-coded
+# Site row, which avoids a 500 when the django_site table is missing or stale.
+SITE_ID = None
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

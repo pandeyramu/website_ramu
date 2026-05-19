@@ -6,6 +6,7 @@ import socket
 import logging
 from functools import lru_cache
 import requests
+from django.contrib.sites.requests import RequestSite
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import Http404, HttpResponse, JsonResponse
@@ -15,6 +16,7 @@ from django.db.utils import DatabaseError
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Subject, Chapter, SubChapter, Question, TestResult
+from .sitemaps import sitemaps
 
 
 logger = logging.getLogger(__name__)
@@ -1574,6 +1576,20 @@ def ads_txt(request):
     except FileNotFoundError:
         content = 'google.com, pub-3880021540956659, DIRECT, f08c47fec0942fa0'
     return HttpResponse(content, content_type='text/plain')
+
+
+def sitemap_xml(request):
+    req_site = RequestSite(request)
+    req_protocol = request.scheme
+    urls = []
+
+    for sitemap in sitemaps.values():
+        if callable(sitemap):
+            sitemap = sitemap()
+        for page_number in range(1, sitemap.paginator.num_pages + 1):
+            urls.extend(sitemap.get_urls(page=page_number, site=req_site, protocol=req_protocol))
+
+    return render(request, 'sitemap.xml', {'urls': urls}, content_type='application/xml')
 
 
 def blog_index(request):

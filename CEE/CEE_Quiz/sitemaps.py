@@ -34,7 +34,7 @@ class SubjectSitemap(Sitemap):
     changefreq = "weekly"
 
     def items(self):
-        return Subject.objects.all()
+        return Subject.objects.order_by("id")
 
     def location(self, item):
         return reverse("chapters", args=[item.slug])
@@ -45,7 +45,7 @@ class ChapterSitemap(Sitemap):
     changefreq = "weekly"
 
     def items(self):
-        return Chapter.objects.all()
+        return Chapter.objects.order_by("id")
 
     def location(self, item):
         return reverse("quiz", args=[item.slug])
@@ -56,7 +56,7 @@ class SubChapterSitemap(Sitemap):
     changefreq = "weekly"
 
     def items(self):
-        return SubChapter.objects.all()
+        return SubChapter.objects.order_by("id")
 
     def location(self, item):
         return reverse("subchapter_quiz", args=[item.slug])
