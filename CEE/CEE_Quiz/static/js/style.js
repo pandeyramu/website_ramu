@@ -62,6 +62,39 @@ function redirectIfSubmittedAttempt() {
     return true;
 }
 
+function focusQuestionFromLink(linkElement) {
+    const questionHash = linkElement?.getAttribute('href') || '';
+    if (!questionHash.startsWith('#question-')) {
+        return;
+    }
+
+    const questionElement = document.querySelector(questionHash);
+    if (!questionElement) {
+        return;
+    }
+
+    const existingNotice = questionElement.querySelector('.question-jump-notice');
+    existingNotice?.remove();
+
+    questionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    window.setTimeout(() => {
+        questionElement.classList.add('question-focus-flash');
+
+        const notice = document.createElement('div');
+        notice.className = 'question-jump-notice';
+        notice.setAttribute('role', 'status');
+        notice.setAttribute('aria-live', 'polite');
+        notice.textContent = `${linkElement.textContent || 'Question'} selected. Yes, this is the question.`;
+        questionElement.appendChild(notice);
+
+        window.setTimeout(() => {
+            questionElement.classList.remove('question-focus-flash');
+            notice.remove();
+        }, 2800);
+    }, 1000);
+}
+
 function buildUserStorageKey(rawName) {
     return rawName.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
 }
@@ -540,8 +573,12 @@ function setupSubmitReviewActions() {
 
     const linksContainer = document.getElementById('question-number-links');
     linksContainer?.addEventListener('click', (event) => {
-        if (event.target.closest('a.q-link')) {
+        const linkElement = event.target.closest('a.q-link');
+        if (linkElement) {
+            event.preventDefault();
+            event.stopPropagation();
             closeReviewModal();
+            window.setTimeout(() => focusQuestionFromLink(linkElement), 50);
         }
     });
 

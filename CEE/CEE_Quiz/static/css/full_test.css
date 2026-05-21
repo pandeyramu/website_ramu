@@ -360,6 +360,7 @@ p {
 }
 
 .question-block {
+    position: relative;
     margin-bottom: 20px;
     padding: 15px;
     border: 1px solid #1dc0dd;
@@ -367,9 +368,31 @@ p {
     background: #f7f7f7;
 }
 
+.question-block.question-focus-flash {
+    border-color: #0d9488;
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.16), 0 14px 30px rgba(15, 58, 91, 0.14);
+    animation: question-flash 1.2s ease-in-out;
+}
+
 .question-block:hover {
     box-shadow: 0 8px 20px rgba(72, 9, 9, 0.7);
     z-index: 2;
+}
+
+.question-jump-notice {
+    position: absolute;
+    top: -12px;
+    right: 14px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    box-shadow: 0 12px 24px rgba(15, 118, 110, 0.28);
+    z-index: 3;
+    animation: question-notice 1.2s ease both;
 }
 
 .question-block.flagged {
@@ -718,25 +741,55 @@ table {
     max-width: 100%;
 }
 
+.links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
 .home-btn {
-      display: flex;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     justify-self: center;
     width: fit-content;
     padding: 12px;
     margin-top: 20px;
+    margin: 20px 0;
     background: #007bff;
     color: #fff;
     font-size: 16px;
     border: none;
     border-radius: 8px;
-    text-decoration: none;
+    text-decoration: none !important;
     cursor: pointer;
     transition: 0.3s;
     text-align: center;
     overflow: hidden;
-    margin: 20px 0;
 }
 
+.links .home-btn,
+.links .home-btn:visited,
+.links .home-btn:hover,
+.links .home-btn:active {
+    text-decoration: none !important;
+    color: #fff;
+}
+
+@keyframes question-flash {
+    0% { transform: translateY(0); }
+    25% { transform: translateY(-2px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes question-notice {
+    0% { opacity: 0; transform: translateY(-8px) scale(0.96); }
+    12% { opacity: 1; transform: translateY(0) scale(1); }
+    84% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-4px) scale(0.98); }
+}
 .home-btn:hover {
     background: #15b300;
     transform: scale(1.02) translateY(-2px);
