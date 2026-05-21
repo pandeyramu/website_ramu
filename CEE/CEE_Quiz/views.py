@@ -1020,9 +1020,19 @@ def report_question(request):
 def home(request):
     subject_list = Subject.objects.only('id', 'name').order_by('id')
     total_questions = Question.objects.count()
+    page_default_title = 'CEE MCQ – Free Practice Questions | CEE MCQ'
+    page_default_description = "Free CEE MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination."
+    page_default_keywords = 'CEE MCQ, CEE Nepal, Chapter-wise MCQ Questions, Biology, Chemistry, Physics, MAT'
+    request.page_slug = 'home'
     return render(request, 'home.html', {
         'subjects': subject_list,
         'total_questions': total_questions,
+        'page_slug': 'home',
+        'page_default_title': page_default_title,
+        'page_default_description': page_default_description,
+        'page_default_keywords': page_default_keywords,
+        'page_default_og_title': 'CEE MCQ – Free CEE MCQ Questions',
+        'page_default_og_description': "Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.",
     })
 
 
@@ -1030,7 +1040,20 @@ def chapters(request, slug):
     """Subject page looked up by slug."""
     subject = get_object_or_404(Subject, slug=slug)
     chapters_list = Chapter.objects.filter(subject=subject).order_by('id')
-    return render(request, 'chapter.html', {'subject': subject, 'chapters': chapters_list})
+    page_default_title = f'CEE {subject.name} MCQ Questions – Chapter Wise | CEE MCQ'
+    page_default_description = f"Explore all {subject.name} chapters and practice chapter-wise MCQ questions to prepare for Nepal's Common Entrance Examination."
+    page_default_keywords = f'CEE MCQ, {subject.name}, CEE Nepal, Chapters, Practice Questions'
+    request.page_slug = slug
+    return render(request, 'chapter.html', {
+        'subject': subject,
+        'chapters': chapters_list,
+        'page_slug': slug,
+        'page_default_title': page_default_title,
+        'page_default_description': page_default_description,
+        'page_default_keywords': page_default_keywords,
+        'page_default_og_title': f'{subject.name} Chapters | CEE MCQ',
+        'page_default_og_description': f"Practice chapter-wise MCQ questions for {subject.name}. Prepare for Nepal's Common Entrance Examination.",
+    })
 
 
 def chapters_redirect(request, subject_id):
@@ -1076,6 +1099,10 @@ def quiz(request, slug):
     quiz_started = (request.GET.get('start') == '1' and user_name)
     attempt_key_prefix = f'quiz_{chapter_id}'
     attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
+    request.page_slug = slug
+    page_default_title = f'{chapter.name} MCQ – {chapter.subject.name} | CEE MCQ'
+    page_default_description = f'Practice the {chapter.name} MCQ for the Common Entrance Examination. Track your performance with detailed results.'
+    page_default_keywords = f'CEE MCQ, {chapter.name} MCQ, {chapter.subject.name}, Chapter-wise Questions, Online Practice'
 
     if request.method == 'POST':
         user_name = _normalize_exact_name(request.POST.get('name', ''))
@@ -1184,6 +1211,12 @@ def quiz(request, slug):
                 'history_entries': history_entries,
                 'history_user_name': user_name,
                 'question_ids_csv': ','.join(str(q.id) for q in questions),
+                'page_slug': slug,
+                'page_default_title': page_default_title,
+                'page_default_description': page_default_description,
+                'page_default_keywords': page_default_keywords,
+                'page_default_og_title': page_default_title,
+                'page_default_og_description': page_default_description,
                 **result_metrics,
             })
 
@@ -1216,6 +1249,12 @@ def quiz(request, slug):
             'history_entries': [],
             'history_user_name': user_name,
             'question_ids_csv': ','.join(str(q.id) for q in questions),
+            'page_slug': slug,
+            'page_default_title': page_default_title,
+            'page_default_description': page_default_description,
+            'page_default_keywords': page_default_keywords,
+            'page_default_og_title': page_default_title,
+            'page_default_og_description': page_default_description,
         })
 
 
@@ -1227,6 +1266,10 @@ def subchapter_quiz(request, slug):
     session_key = f'quiz_questions_sub_{subchapter_id}'
     attempt_key_prefix = f'subchapter_{subchapter_id}'
     attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
+    request.page_slug = slug
+    page_default_title = f'{sub_chapter.name} MCQ – {chapter.name} | CEE MCQ'
+    page_default_description = f'Practice the {sub_chapter.name} MCQ from {chapter.name} for the Common Entrance Examination. Track your performance with detailed results.'
+    page_default_keywords = f'CEE MCQ, {sub_chapter.name} MCQ, {chapter.name} MCQ, Chapter-wise Questions, Online Practice'
 
     if request.method == 'POST':
         user_name = _normalize_exact_name(request.POST.get('name', ''))
@@ -1337,6 +1380,13 @@ def subchapter_quiz(request, slug):
                 'history_entries': history_entries,
                 'history_user_name': user_name,
                 'question_ids_csv': ','.join(str(q.id) for q in questions),
+                'subchapter': sub_chapter,
+                'page_slug': slug,
+                'page_default_title': page_default_title,
+                'page_default_description': page_default_description,
+                'page_default_keywords': page_default_keywords,
+                'page_default_og_title': page_default_title,
+                'page_default_og_description': page_default_description,
                 **result_metrics,
             })
 
@@ -1360,6 +1410,7 @@ def subchapter_quiz(request, slug):
         return render(request, 'quiz.html', {
             'chapter': chapter,
             'sub_chapter': sub_chapter,
+            'subchapter': sub_chapter,
             'questions': questions,
             'score': None,
             'user_answers': {},
@@ -1370,6 +1421,12 @@ def subchapter_quiz(request, slug):
             'history_entries': [],
             'history_user_name': user_name,
             'question_ids_csv': ','.join(str(q.id) for q in questions),
+            'page_slug': slug,
+            'page_default_title': page_default_title,
+            'page_default_description': page_default_description,
+            'page_default_keywords': page_default_keywords,
+            'page_default_og_title': page_default_title,
+            'page_default_og_description': page_default_description,
         })
 
 
@@ -1377,6 +1434,10 @@ def full_test(request):
     result_session_key = 'full_test_result_data'
     attempt_key_prefix = 'full_test'
     attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
+    request.page_slug = 'full-test'
+    page_default_title = 'CEE Full Mock Test – 180 Questions Online | CEE MCQ'
+    page_default_description = 'Take a full CEE mock test online with 180 questions, negative marking, and a 2.5-hour timer. Simulate the real MEC entrance exam experience.'
+    page_default_keywords = 'CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 180 questions, CEE practice exam'
     if request.method == "POST":
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
@@ -1507,6 +1568,12 @@ def full_test(request):
                 'watermark_text': '',
                 'history_entries': [],
                 'history_user_name': user_name,
+                'page_slug': 'full-test',
+                'page_default_title': page_default_title,
+                'page_default_description': page_default_description,
+                'page_default_keywords': page_default_keywords,
+                'page_default_og_title': page_default_title,
+                'page_default_og_description': page_default_description,
             })
 
         attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
@@ -1530,10 +1597,17 @@ def full_test(request):
             'history_entries': [],
             'history_user_name': user_name,
             'question_ids_csv': ','.join(str(q.id) for q in questions),
+            'page_slug': 'full-test',
+            'page_default_title': page_default_title,
+            'page_default_description': page_default_description,
+            'page_default_keywords': page_default_keywords,
+            'page_default_og_title': page_default_title,
+            'page_default_og_description': page_default_description,
         })
 
 
 def full_test_results(request):
+    request.page_slug = 'full-test'
     result_payload = request.session.get('full_test_result_data')
     if not result_payload:
         messages.error(request, 'No completed test result found. Please take the test first.')
@@ -1588,6 +1662,12 @@ def full_test_results(request):
         'history_entries': history_entries,
         'history_user_name': user_name,
         'question_ids_csv': ','.join(str(q.id) for q in questions),
+        'page_slug': 'full-test',
+        'page_default_title': page_default_title,
+        'page_default_description': page_default_description,
+        'page_default_keywords': page_default_keywords,
+        'page_default_og_title': page_default_title,
+        'page_default_og_description': page_default_description,
         **result_metrics,
     })
 

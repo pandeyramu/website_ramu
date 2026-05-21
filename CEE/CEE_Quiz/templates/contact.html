@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Contact | CEE MCQ{% endblock %}
-{% block meta_description %}Contact CEE MCQ for support, feedback, or website questions. Use the form or email provided on this page.{% endblock %}
-{% block og_title %}Contact | CEE MCQ{% endblock %}
-{% block og_description %}Contact CEE MCQ for support, feedback, or website questions.{% endblock %}
+{% block title %}{{ page_seo.meta_title|default:"Contact | CEE MCQ" }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:"Contact CEE MCQ for support, feedback, or website questions. Use the form or email provided on this page." }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, Contact, support, feedback" }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"Contact | CEE MCQ" }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Contact CEE MCQ for support, feedback, or website questions." }}{% endblock %}
 {% block twitter_title %}Contact | CEE MCQ{% endblock %}
 {% block twitter_description %}Contact CEE MCQ for support, feedback, or website questions.{% endblock %}
 

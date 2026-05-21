@@ -42,11 +42,24 @@ class Chapter(models.Model):
         super().save(*args, **kwargs)
 
 
+class PageSEO(models.Model):
+    page_slug = models.CharField(max_length=100, unique=True)
+    meta_title = models.CharField(max_length=70)
+    meta_description = models.CharField(max_length=160)
+    meta_keywords = models.TextField()
+    og_title = models.CharField(max_length=70, blank=True)
+    og_description = models.CharField(max_length=160, blank=True)
+
+    def __str__(self):
+        return f"{self.page_slug} - {self.meta_title}"
+
+
 class SubChapter(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='subchapters')
     name = models.CharField(max_length=200)
     order = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
+    seo_description = models.TextField(blank=True)
 
     class Meta:
         ordering = ['order']

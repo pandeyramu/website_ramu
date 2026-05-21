@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Disclaimer | CEE MCQ{% endblock %}
-{% block meta_description %}Read the disclaimer for CEE MCQ. The content is for educational use only and should be used as revision support, not as an official exam source.{% endblock %}
-{% block og_title %}Disclaimer | CEE MCQ{% endblock %}
-{% block og_description %}Educational disclaimer for CEE MCQ and its practice content.{% endblock %}
+{% block title %}{{ page_seo.meta_title|default:"Disclaimer | CEE MCQ" }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:"Read the disclaimer for CEE MCQ. The content is for educational use only and should be used as revision support, not as an official exam source." }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, Disclaimer, educational use, exam practice" }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"Disclaimer | CEE MCQ" }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Educational disclaimer for CEE MCQ and its practice content." }}{% endblock %}
 {% block twitter_title %}Disclaimer | CEE MCQ{% endblock %}
 {% block twitter_description %}Educational disclaimer for CEE MCQ and its practice content.{% endblock %}
 

@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
      crossorigin="anonymous"></script>
-    <title>CEE MCQ – Free Practice Questions | CEE MCQ</title>
-    <meta name="description" content="Free CEE MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
-    <meta name="keywords" content="CEE MCQ, CEE Nepal, Chapter-wise MCQ Questions, Biology, Chemistry, Physics, MAT">
+    <title>{{ page_seo.meta_title|default:page_default_title }}</title>
+    <meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
+    <meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
 
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
@@ -17,8 +17,8 @@
     <meta name="google-site-verification" content="UNpQRqXhbK41aS0c7qMpKu5zwnJ-GTT7sYdzb77BGGQ">
 
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="CEE MCQ – Free CEE MCQ Questions">
-    <meta property="og:description" content="Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
+    <meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
+    <meta property="og:description" content="{{ page_seo.og_description|default:page_default_og_description }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">

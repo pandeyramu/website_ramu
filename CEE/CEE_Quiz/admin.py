@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subject, Chapter, SubChapter, Question, TestResult
+from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO
 
 
 class SubjectAdmin(admin.ModelAdmin):
@@ -11,6 +11,7 @@ class SubChapterInline(admin.TabularInline):
     model = SubChapter
     extra = 1
     ordering = ['order']
+    fields = ('name', 'order', 'slug', 'seo_description')
 
 
 class ChapterAdmin(admin.ModelAdmin):
@@ -25,6 +26,12 @@ class SubChapterAdmin(admin.ModelAdmin):
     list_filter = ('chapter__subject', 'chapter')
     ordering = ['chapter', 'order']
     prepopulated_fields = {'slug': ('name',)}
+    fields = ('chapter', 'name', 'order', 'slug', 'seo_description')
+
+
+class PageSEOAdmin(admin.ModelAdmin):
+    list_display = ['page_slug', 'meta_title']
+    search_fields = ['page_slug']
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -81,3 +88,4 @@ admin.site.register(Chapter, ChapterAdmin)
 admin.site.register(SubChapter, SubChapterAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(TestResult, UserAdmin)
+admin.site.register(PageSEO, PageSEOAdmin)

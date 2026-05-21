@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CEE {{ subject.name }} MCQ Questions – Chapter Wise | CEE MCQ</title>
+    <title>{{ page_seo.meta_title|default:page_default_title }}</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
      crossorigin="anonymous"></script>
-    <meta name="description" content="Explore all {{ subject.name }} chapters and practice chapter-wise MCQ questions to prepare for Nepal's Common Entrance Examination.">
-    <meta name="keywords" content="CEE MCQ, {{ subject.name }}, CEE Nepal, Chapters, Practice Questions">
+    <meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
+    <meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
 
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="{{ subject.name }} Chapters | CEE MCQ">
-    <meta property="og:description" content="Practice chapter-wise MCQ questions for {{ subject.name }}. Prepare for Nepal's Common Entrance Examination.">
+    <meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
+    <meta property="og:description" content="{{ page_seo.og_description|default:page_default_og_description }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="https://ceemcq.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">

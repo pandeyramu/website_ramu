@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}About Us | CEE MCQ{% endblock %}
-{% block meta_description %}Learn about CEE MCQ, a free Nepali CEE practice platform created for students who want chapter-wise MCQs, exam tips, and better revision habits.{% endblock %}
-{% block og_title %}About Us | CEE MCQ{% endblock %}
-{% block og_description %}CEE MCQ is a free CEE practice platform for Nepali students with chapter-wise MCQs, full tests, and study resources.{% endblock %}
+{% block title %}{{ page_seo.meta_title|default:"About Us | CEE MCQ" }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:"Learn about CEE MCQ, a free Nepali CEE practice platform created for students who want chapter-wise MCQs, exam tips, and better revision habits." }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, About Us, Nepal CEE practice, exam tips" }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"About Us | CEE MCQ" }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"CEE MCQ is a free CEE practice platform for Nepali students with chapter-wise MCQs, full tests, and study resources." }}{% endblock %}
 {% block twitter_title %}About Us | CEE MCQ{% endblock %}
 {% block twitter_description %}CEE MCQ is a free CEE practice platform for Nepali students with chapter-wise MCQs, full tests, and study resources.{% endblock %}
 

@@ -6,19 +6,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full CEE MCQ Test | 180 Questions | CEE MCQ</title>
+    <title>{{ page_seo.meta_title|default:page_default_title }}</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
      crossorigin="anonymous"></script>
     <!-- SEO Meta -->
-    <meta name="description" content="Take the full CEE MCQ test online with 180 questions, 2.5 hours duration, and detailed results including negative marking.">
-    <meta name="keywords" content="CEE Full MCQ Test, CEE Practice Test, Online MCQ, CEE Nepal">
+    <meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
+    <meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
     <meta name="author" content="Ramu Pandey">
 
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="Full CEE MCQ Test | 180 Questions | CEE MCQ">
-    <meta property="og:description" content="Take the full CEE MCQ test online with 180 questions and detailed scoring.">
+    <meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
+    <meta property="og:description" content="{{ page_seo.og_description|default:page_default_og_description }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">

@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Privacy Policy | CEE MCQ{% endblock %}
-{% block meta_description %}Read the privacy policy for CEE MCQ. Learn what minimal data may be collected, how cookies are used, and how AdSense or analytics may operate on the site.{% endblock %}
-{% block og_title %}Privacy Policy | CEE MCQ{% endblock %}
-{% block og_description %}Privacy policy for CEE MCQ, including cookies, minimal data handling, and AdSense or analytics usage.{% endblock %}
+{% block title %}{{ page_seo.meta_title|default:"Privacy Policy | CEE MCQ" }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:"Read the privacy policy for CEE MCQ. Learn what minimal data may be collected, how cookies are used, and how AdSense or analytics may operate on the site." }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, Privacy Policy, cookies, data handling, AdSense" }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"Privacy Policy | CEE MCQ" }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Privacy policy for CEE MCQ, including cookies, minimal data handling, and AdSense or analytics usage." }}{% endblock %}
 {% block twitter_title %}Privacy Policy | CEE MCQ{% endblock %}
 {% block twitter_description %}Privacy policy for CEE MCQ, including cookies, minimal data handling, and AdSense or analytics usage.{% endblock %}
 

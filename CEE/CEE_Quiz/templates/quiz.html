@@ -6,16 +6,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if sub_chapter %}{{ sub_chapter.name }} MCQ – {{ chapter.name }}{% else %}{{ chapter.name }} MCQ | CEE Chapter-wise Practice{% endif %}</title>
-    <meta name="description" content="{% if sub_chapter %}Practice the {{ sub_chapter.name }} MCQ from {{ chapter.name }} for the Common Entrance Examination. Track your performance with detailed results.{% else %}Practice the {{ chapter.name }} MCQ for the Common Entrance Examination. Track your performance with detailed results.{% endif %}">
-    <meta name="keywords" content="CEE MCQ, {% if sub_chapter %}{{ sub_chapter.name }} MCQ, {{ chapter.name }}{% else %}{{ chapter.name }} MCQ, Chapter-wise Questions{% endif %}, Online Practice">
+    <title>{{ page_seo.meta_title|default:page_default_title }}</title>
+    <meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
+    <meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
     <meta name="author" content="Ramu Pandey">
 
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph / Social Preview -->
-    <meta property="og:title" content="{% if sub_chapter %}{{ sub_chapter.name }} MCQ – {{ chapter.name }}{% else %}{{ chapter.name }} MCQ | CEE Chapter-wise Practice{% endif %}">
-    <meta property="og:description" content="{% if sub_chapter %}Practice the {{ sub_chapter.name }} MCQ from {{ chapter.name }} for the Common Entrance Examination. Track your performance with detailed results.{% else %}Practice the {{ chapter.name }} MCQ for the Common Entrance Examination. Track your performance with detailed results.{% endif %}">
+    <meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
+    <meta property="og:description" content="{{ page_seo.og_description|default:page_default_og_description }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
@@ -51,6 +51,9 @@
         <div class="container">
             <h1>{% if sub_chapter %}{{ sub_chapter.name }} MCQ{% else %}{{ chapter.name }} MCQ{% endif %}</h1>
             <p>{% if sub_chapter %}Test your knowledge of {{ sub_chapter.name }} from {{ chapter.name }} with topic-wise MCQ questions and track your score.{% else %}Test your knowledge of {{ chapter.name }} with chapter-wise MCQ questions and track your score.{% endif %}</p>
+            {% if subchapter and subchapter.seo_description %}
+                <p class="subchapter-description">{{ subchapter.seo_description }}</p>
+            {% endif %}
         </div>
     </header>
 
