@@ -15,8 +15,9 @@ from django.db import connection
 from django.db.utils import DatabaseError
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Subject, Chapter, SubChapter, Question, TestResult
+from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO
 from .sitemaps import sitemaps
+from .seo_provider import get_supabase_page_seo
 
 
 logger = logging.getLogger(__name__)
@@ -1060,6 +1061,58 @@ def chapters_redirect(request, subject_id):
     """Redirect old numeric subject URL to slug URL (301)."""
     subject = get_object_or_404(Subject, id=subject_id)
     return redirect('chapters', slug=subject.slug, permanent=True)
+
+
+def _slug_aliases(page_slug):
+    aliases = [page_slug]
+    for suffix in ('-mcq', '-mc', '-quiz', '-questions'):
+        if page_slug.endswith(suffix):
+            trimmed = page_slug[: -len(suffix)]
+            if trimmed:
+                aliases.append(trimmed)
+    return aliases
+
+
+def dynamic_page(request, page_slug):
+    """Resolve SEO slugs such as /physics-mcq/ without defining separate URL patterns."""
+    request.page_slug = page_slug
+    slug_options = _slug_aliases(page_slug)
+
+    for candidate in slug_options:
+        subject = Subject.objects.filter(slug=candidate).first()
+        if subject:
+            chapters_list = Chapter.objects.filter(subject=subject).order_by('id')
+            page_default_title = f'CEE {subject.name} MCQ Questions – Chapter Wise | CEE MCQ'
+            page_default_description = f"Explore all {subject.name} chapters and practice chapter-wise MCQ questions to prepare for Nepal's Common Entrance Examination."
+            page_default_keywords = f'CEE MCQ, {subject.name}, CEE Nepal, Chapters, Practice Questions'
+            return render(request, 'chapter.html', {
+                'subject': subject,
+                'chapters': chapters_list,
+                'page_slug': page_slug,
+                'page_default_title': page_default_title,
+                'page_default_description': page_default_description,
+                'page_default_keywords': page_default_keywords,
+                'page_default_og_title': f'{subject.name} Chapters | CEE MCQ',
+                'page_default_og_description': f"Practice chapter-wise MCQ questions for {subject.name}. Prepare for Nepal's Common Entrance Examination.",
+            })
+
+        chapter = Chapter.objects.filter(slug=candidate).first()
+        if chapter:
+            if chapter.has_subchapters:
+                return redirect('subchapters', slug=chapter.slug)
+            return redirect('quiz', slug=chapter.slug)
+
+        subchapter = SubChapter.objects.filter(slug=candidate).first()
+        if subchapter:
+            return redirect('subchapter_quiz', slug=subchapter.slug)
+
+    # If SEO exists but content route is not mapped yet, show a soft landing page.
+    seo_entry = PageSEO.objects.filter(page_slug=page_slug).first()
+    supabase_entry = get_supabase_page_seo(page_slug)
+    if seo_entry or supabase_entry:
+        return render(request, 'dynamic_page.html', {'page_slug': page_slug})
+
+    raise Http404('Page not found')
 
 
 def quiz_redirect(request, chapter_id):

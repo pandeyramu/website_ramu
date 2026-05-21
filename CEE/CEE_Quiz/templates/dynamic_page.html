@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page_seo.meta_title|default:'CEE MCQ' }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:'Practice CEE MCQs and explore topic-wise resources.' }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:'CEE MCQ, CEE Nepal, practice questions' }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:'CEE MCQ' }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:'Practice CEE MCQs and explore topic-wise resources.' }}{% endblock %}
+
+{% block content %}
+<h1>{{ page_seo.meta_title|default:'CEE MCQ' }}</h1>
+<p class="muted">{{ page_seo.meta_description|default:'This SEO page is active, but its destination content is not connected yet.' }}</p>
+<p>We could not map the URL <strong>/{{ page_slug }}/</strong> to a subject, chapter, or subchapter page.</p>
+<a class="cta-link" href="/">Go to Home</a>
+{% endblock %}

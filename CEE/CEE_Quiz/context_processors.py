@@ -1,6 +1,7 @@
 from types import SimpleNamespace
 
 from .models import Chapter, PageSEO, SubChapter, Subject
+from .seo_provider import get_supabase_page_seo
 
 
 SITE_NAME = 'CEE MCQ'
@@ -113,6 +114,17 @@ def _safe_lookup(request):
     page_slug = getattr(request, 'page_slug', '') or (resolver.kwargs.get('slug') if resolver and resolver.kwargs else '') or route_name
 
     try:
+        supabase_seo = get_supabase_page_seo(page_slug)
+        if supabase_seo:
+            return SimpleNamespace(
+                page_slug=supabase_seo.get('page_slug', page_slug),
+                meta_title=supabase_seo.get('meta_title', SITE_NAME),
+                meta_description=supabase_seo.get('meta_description', ''),
+                meta_keywords=supabase_seo.get('meta_keywords', ''),
+                og_title=supabase_seo.get('og_title') or supabase_seo.get('meta_title', SITE_NAME),
+                og_description=supabase_seo.get('og_description') or supabase_seo.get('meta_description', ''),
+            )
+
         seo = PageSEO.objects.filter(page_slug=page_slug).first()
         if seo:
             return seo

@@ -63,4 +63,6 @@ urlpatterns = [
     )),
     path("sitemap.xml", views.sitemap_xml, name="sitemap"),
     path("ads.txt", views.ads_txt, name="ads_txt"),
+    # Catch-all SEO slug route (must stay last)
+    path('<slug:page_slug>/', views.dynamic_page, name='dynamic_page'),
 ]
