@@ -101,7 +101,7 @@
     </style>
 </head>
 
-<body data-quiz-key="full-test" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="Full Test">
+<body data-quiz-key="full-test" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="Full Test" data-exit-url="{% url 'home' %}">
     <div class="quiz-watermark" id="quiz-watermark" aria-hidden="true"></div>
     <div class="container {% if score is not None %}result-page{% endif %}">
         <h1>Full MCQ Test</h1>
@@ -122,6 +122,7 @@
             <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% url 'full_test' %}" id="full-test-form" style="display: block;">
                 {% csrf_token %}
                 <input type="hidden" name="name" id="hidden-name" value="{{ user_name|default:history_user_name|default:'' }}">
+                <input type="hidden" name="attempt_reference" value="{{ attempt_reference|default:'' }}">
                 <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
                 {% if question_ids_csv %}
                     <input type="hidden" name="question_ids" value="{{ question_ids_csv }}">

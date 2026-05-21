@@ -4,6 +4,7 @@ let currentUserName;
 let allowDirectSubmit = false;
 let currentTimeLeft = 2700;
 let activeFlagPayload = null;
+let submissionLocked = false;
 
 const QUIZ_DURATION_SECONDS = 2700;
 const timerDisplay = document.getElementById('timer');
@@ -15,6 +16,7 @@ const closeReviewBtn = document.getElementById('close-review-btn');
 const reviewTimeLeft = document.getElementById('review-time-left');
 const reviewTotalQuestions = document.getElementById('review-total-questions');
 const timeTakenInput = document.getElementById('time-taken-seconds');
+const primarySubmitBtn = document.getElementById('submit-quiz-btn');
 
 const flagReviewPanel = document.getElementById('flag-review-panel');
 const flagReviewBackdrop = document.getElementById('flag-review-backdrop');
@@ -28,6 +30,37 @@ const quizContextKey = document.body.dataset.quizKey || 'quiz';
 const watermarkText = document.body.dataset.watermark || '';
 const attemptReference = document.body.dataset.attemptReference || '';
 const topicName = document.body.dataset.topic || '';
+const exitUrl = document.body.dataset.exitUrl || '/';
+
+function submittedAttemptStorageKey() {
+    return `${storagePrefix()}_submitted_attempts_client`;
+}
+
+function getSubmittedAttempts() {
+    return new Set(safeParseJSON(localStorage.getItem(submittedAttemptStorageKey()), []));
+}
+
+function markAttemptSubmittedClient() {
+    if (!attemptReference) {
+        return;
+    }
+    const submitted = getSubmittedAttempts();
+    submitted.add(attemptReference);
+    localStorage.setItem(submittedAttemptStorageKey(), JSON.stringify(Array.from(submitted)));
+}
+
+function isAttemptSubmittedClient() {
+    return Boolean(attemptReference) && getSubmittedAttempts().has(attemptReference);
+}
+
+function redirectIfSubmittedAttempt() {
+    if (!quizForm || quizForm.classList.contains('submitted') || !attemptReference || !isAttemptSubmittedClient()) {
+        return false;
+    }
+
+    window.location.replace(exitUrl);
+    return true;
+}
 
 function buildUserStorageKey(rawName) {
     return rawName.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
@@ -217,7 +250,49 @@ function afterSubmit() {
         localStorage.removeItem(timerStorageKey());
     }
 
+    markAttemptSubmittedClient();
+
     closeReviewModal();
+}
+
+function lockSubmissionActions() {
+    if (submissionLocked) {
+        return;
+    }
+    submissionLocked = true;
+
+    if (primarySubmitBtn) {
+        primarySubmitBtn.disabled = true;
+        primarySubmitBtn.textContent = 'Submitting...';
+    }
+    if (submitNowBtn) {
+        submitNowBtn.disabled = true;
+        submitNowBtn.textContent = 'Submitting...';
+    }
+}
+
+function setupBackNavigationHandling() {
+    if (!quizForm) {
+        return;
+    }
+
+    if (quizForm.classList.contains('submitted')) {
+        history.pushState({ resultGuard: true }, '', window.location.href);
+        window.addEventListener('popstate', () => {
+            window.location.replace(exitUrl);
+        });
+        return;
+    }
+
+    history.pushState({ quizGuard: true }, '', window.location.href);
+    window.addEventListener('popstate', () => {
+        const shouldLeave = window.confirm('Are you sure you want to leave this quiz? Your attempt in progress will be lost.');
+        if (shouldLeave) {
+            window.location.replace(exitUrl);
+            return;
+        }
+        history.pushState({ quizGuard: true }, '', window.location.href);
+    });
 }
 
 function updateTimer() {
@@ -431,7 +506,8 @@ function setupSubmitReviewActions() {
     }
 
     quizForm.addEventListener('submit', (event) => {
-        if (quizForm.classList.contains('submitted')) {
+        if (quizForm.classList.contains('submitted') || submissionLocked) {
+            event.preventDefault();
             return;
         }
 
@@ -441,6 +517,7 @@ function setupSubmitReviewActions() {
             return;
         }
 
+        lockSubmissionActions();
         afterSubmit();
     });
 
@@ -622,8 +699,13 @@ document.addEventListener('DOMContentLoaded', () => {
         timerDisplay.remove();
     }
 
+    if (redirectIfSubmittedAttempt()) {
+        return;
+    }
+
     closeReviewModal();
     closeFlagModal();
+    setupBackNavigationHandling();
     initializeTimerForActiveQuiz();
     setupSubmitReviewActions();
     setupFlagModalActions();
@@ -654,5 +736,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hasActiveQuiz) {
         pingKeepalive();
         setInterval(pingKeepalive, 900000);
+    }
+});
+
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        redirectIfSubmittedAttempt();
     }
 });

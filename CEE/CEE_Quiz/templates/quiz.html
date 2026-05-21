@@ -45,7 +45,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
-<body data-quiz-key="{% if sub_chapter %}subchapter-{{ sub_chapter.id }}{% else %}chapter-{{ chapter.id }}{% endif %}" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="{% if sub_chapter %}{{ chapter.name }} - {{ sub_chapter.name }}{% else %}{{ chapter.name }}{% endif %}">
+<body data-quiz-key="{% if sub_chapter %}subchapter-{{ sub_chapter.id }}{% else %}chapter-{{ chapter.id }}{% endif %}" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="{% if sub_chapter %}{{ chapter.name }} - {{ sub_chapter.name }}{% else %}{{ chapter.name }}{% endif %}" data-exit-url="{% url 'chapters' chapter.subject.slug %}">
     <div class="quiz-watermark" id="quiz-watermark" aria-hidden="true"></div>
     <header>
         <div class="container">
@@ -66,6 +66,7 @@
             <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.slug %}{% else %}{% url 'quiz' chapter.slug %}{% endif %}" id="quiz-form" style="display: block;">
                 {% csrf_token %}
                 <input type="hidden" name="name" id="hidden-name" value="{{ user_name|default:history_user_name|default:'' }}">
+                <input type="hidden" name="attempt_reference" value="{{ attempt_reference|default:'' }}">
                 <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
                 {% if question_ids_csv %}
                     <input type="hidden" name="question_ids" value="{{ question_ids_csv }}">
@@ -252,7 +253,7 @@
                 {% endfor %}
 
                 {% if score is None %}
-                    <button type="submit" class="submit-btn">Submit</button>
+                    <button type="submit" class="submit-btn" id="submit-quiz-btn">Submit</button>
                 {% endif %}
 
                 {% if score is not None %}

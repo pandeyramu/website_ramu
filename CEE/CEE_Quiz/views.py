@@ -721,15 +721,35 @@ def _sample_question_ids(base_queryset, limit):
     return random.sample(question_ids, min(limit, len(question_ids)))
 
 
-def _attempt_reference(session, key_prefix):
+def _attempt_reference(session, key_prefix, force_new=False):
     """Return a short stable attempt reference for the current quiz session."""
     session_key = f"{key_prefix}_attempt_reference"
-    attempt_reference = session.get(session_key)
+    attempt_reference = None if force_new else session.get(session_key)
     if not attempt_reference:
         attempt_reference = uuid.uuid4().hex[:8].upper()
         session[session_key] = attempt_reference
         session.modified = True
     return attempt_reference
+
+
+def _is_attempt_already_submitted(session, key_prefix, attempt_reference):
+    if not attempt_reference:
+        return False
+    submitted_key = f"{key_prefix}_submitted_attempts"
+    submitted = session.get(submitted_key, [])
+    return attempt_reference in submitted
+
+
+def _mark_attempt_submitted(session, key_prefix, attempt_reference):
+    if not attempt_reference:
+        return
+    submitted_key = f"{key_prefix}_submitted_attempts"
+    submitted = session.get(submitted_key, [])
+    if attempt_reference in submitted:
+        return
+    submitted.append(attempt_reference)
+    session[submitted_key] = submitted[-20:]
+    session.modified = True
 
 
 def _parse_non_negative_int(raw_value, default=0):
@@ -1054,13 +1074,23 @@ def quiz(request, slug):
     chapter_id = chapter.id
     user_name = _normalize_exact_name(request.GET.get('name') or request.POST.get('name'))
     quiz_started = (request.GET.get('start') == '1' and user_name)
-    attempt_reference = _attempt_reference(request.session, f'quiz_{chapter_id}')
+    attempt_key_prefix = f'quiz_{chapter_id}'
+    attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
 
     if request.method == 'POST':
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the quiz.')
             return redirect('quiz', slug=chapter.slug)
+
+        posted_attempt_reference = (request.POST.get('attempt_reference') or '').strip()
+        if posted_attempt_reference != attempt_reference:
+            messages.warning(request, 'This quiz attempt is no longer active. Please start a new attempt.')
+            return redirect('chapters', slug=chapter.subject.slug)
+
+        if _is_attempt_already_submitted(request.session, attempt_key_prefix, posted_attempt_reference):
+            messages.warning(request, 'This quiz attempt was already submitted.')
+            return redirect('chapters', slug=chapter.subject.slug)
 
         try:
             connection.ensure_connection()
@@ -1086,6 +1116,8 @@ def quiz(request, slug):
                 messages.error(request, 'Session data is stale. Please restart the quiz.')
                 request.session.pop(f'quiz_questions_{chapter_id}', None)
                 return redirect('quiz', slug=chapter.slug)
+
+            _mark_attempt_submitted(request.session, attempt_key_prefix, posted_attempt_reference)
 
             total_score = 0
             total_attempted = 0
@@ -1165,7 +1197,7 @@ def quiz(request, slug):
         questions = []
 
         if quiz_started:
-            attempt_reference = _attempt_reference(request.session, f'quiz_{chapter_id}')
+            attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
             questions_qs = Question.objects.filter(chapter=chapter)
             questions = _pick_random_questions(questions_qs, limit=50)
             request.session[f'quiz_questions_{chapter_id}'] = [q.id for q in questions]
@@ -1193,13 +1225,23 @@ def subchapter_quiz(request, slug):
     subchapter_id = sub_chapter.id
     chapter = sub_chapter.chapter
     session_key = f'quiz_questions_sub_{subchapter_id}'
-    attempt_reference = _attempt_reference(request.session, f'subchapter_{subchapter_id}')
+    attempt_key_prefix = f'subchapter_{subchapter_id}'
+    attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
 
     if request.method == 'POST':
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the quiz.')
             return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
+        posted_attempt_reference = (request.POST.get('attempt_reference') or '').strip()
+        if posted_attempt_reference != attempt_reference:
+            messages.warning(request, 'This quiz attempt is no longer active. Please start a new attempt.')
+            return redirect('chapters', slug=chapter.subject.slug)
+
+        if _is_attempt_already_submitted(request.session, attempt_key_prefix, posted_attempt_reference):
+            messages.warning(request, 'This quiz attempt was already submitted.')
+            return redirect('chapters', slug=chapter.subject.slug)
 
         try:
             connection.ensure_connection()
@@ -1225,6 +1267,8 @@ def subchapter_quiz(request, slug):
                 messages.error(request, 'Session data is stale. Please restart the quiz.')
                 request.session.pop(session_key, None)
                 return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
+            _mark_attempt_submitted(request.session, attempt_key_prefix, posted_attempt_reference)
 
             total_score = 0
             total_attempted = 0
@@ -1306,7 +1350,7 @@ def subchapter_quiz(request, slug):
         questions = []
 
         if quiz_started:
-            attempt_reference = _attempt_reference(request.session, f'subchapter_{subchapter_id}')
+            attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
             questions_qs = Question.objects.filter(sub_chapter=sub_chapter)
             questions = _pick_random_questions(questions_qs, limit=50)
             request.session[session_key] = [q.id for q in questions]
@@ -1331,12 +1375,22 @@ def subchapter_quiz(request, slug):
 
 def full_test(request):
     result_session_key = 'full_test_result_data'
-    attempt_reference = _attempt_reference(request.session, 'full_test')
+    attempt_key_prefix = 'full_test'
+    attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
     if request.method == "POST":
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the test.')
             return redirect('full_test')
+
+        posted_attempt_reference = (request.POST.get('attempt_reference') or '').strip()
+        if posted_attempt_reference != attempt_reference:
+            messages.warning(request, 'This full test attempt is no longer active. Please start a new attempt.')
+            return redirect('home')
+
+        if _is_attempt_already_submitted(request.session, attempt_key_prefix, posted_attempt_reference):
+            messages.warning(request, 'This full test attempt was already submitted.')
+            return redirect('home')
         
         try:
             # Ensure database connection is active
@@ -1365,6 +1419,8 @@ def full_test(request):
                 messages.error(request, 'Session data is stale. Please restart the test.')
                 request.session.pop('full_test_questions', None)
                 return redirect('full_test')
+
+            _mark_attempt_submitted(request.session, attempt_key_prefix, posted_attempt_reference)
             
             total_score = 0
             total_attempted = 0
@@ -1453,6 +1509,7 @@ def full_test(request):
                 'history_user_name': user_name,
             })
 
+        attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
         selected_ids = _build_full_test_question_ids()
 
         questions_qs = Question.objects.filter(id__in=selected_ids).select_related('chapter', 'sub_chapter')

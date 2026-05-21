@@ -572,6 +572,12 @@ h1 {
     color: #8e1e1e;
 }
 
+.q-link.flagged.unattempted {
+    background: #f4e8ff;
+    border-color: #8e44ad;
+    color: #632b98;
+}
+
 .question-status-legend {
     display: flex;
     flex-wrap: wrap;
