@@ -187,6 +187,7 @@
             <span class="tag">{{ post.tag }}</span>
             <h1>{{ post.title }}</h1>
             <p class="excerpt">{{ post.excerpt }}</p>
+            <p class="muted">By Ramu Pandey · Published: {{ date_published }} · {{ reading_time }} min read</p>
 
             {% for section in post.sections %}
             <section>
@@ -235,5 +236,17 @@
             <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
         </footer>
     </main>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "{{ post.title }}",
+            "description": "{{ post.description }}",
+            "author": {"@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np"},
+            "publisher": {"@type": "Organization", "name": "CEE MCQ", "url": "https://ceemcq.pandeyramu.com.np"},
+            "datePublished": "{{ date_published }}",
+            "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+        }
+        </script>
 </body>
 </html>

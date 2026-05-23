@@ -27,6 +27,13 @@
     <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260518-1">
+    <style>
+        .result-actions .btn.retry { background:#6b7280; }
+        .result-actions .btn.home { background:#1458a6; }
+        .result-actions .btn.retry:hover { background:#51545a; color:#fff; transform:translateY(-2px); }
+        .result-actions .btn.home:hover { background:#0f4a86; color:#fff; transform:translateY(-2px); }
+    </style>
+    <!-- Back-to-home visibility handled explicitly in template markup -->
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
 
@@ -63,6 +70,7 @@
                 <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
                 <button type="submit" name="start" value="1" id="start_btn" class="start_test">Start MCQ Test</button>
             </form>
+            
             <div id="timer" style="display: none;"></div>
         {% elif questions %}
             <div id="timer" style="display: block;"></div>
@@ -94,10 +102,10 @@
                                 <span class="legend-item legend-unattempted">Blank</span>
                             </p>
                             <div id="question-number-links" class="question-number-links"></div>
-                            <div class="submit-review-actions">
-                                <button type="button" id="submit-now-btn" class="submit-now-btn">Submit Now</button>
-                                <button type="button" id="close-review-btn" class="close-review-btn">Continue Solving</button>
-                            </div>
+                                        <div class="submit-review-actions">
+                                            <button type="button" id="submit-now-btn" class="submit-now-btn">Submit Now</button>
+                                            <button type="button" id="close-review-btn" class="close-review-btn">Continue Solving</button>
+                                        </div>
                         </div>
                     </section>
                 {% endif %}
@@ -123,7 +131,7 @@
                 </section>
 
                 {% if score is not None %}
-                    <div class="result-layout">
+                    <div class="result-layout" style="position:relative; padding-bottom:4.5rem;">
                         <aside class="history-sidebar">
                             <div class="history-sidebar-header">
                                 <p class="history-eyebrow">Your last 5 test attempts</p>
@@ -215,6 +223,7 @@
                                 </div>
                                 <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
                             </section>
+                            
                 {% endif %}
 
                 {% for q in questions %}
@@ -261,6 +270,10 @@
 
                 {% if score is not None %}
                         </div>
+                        <div class="result-actions" style="position:absolute; left:50%; transform:translateX(-50%); bottom:1.25rem; display:flex; gap:1.25rem; align-items:center;">
+                            <a href="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.slug %}{% else %}{% url 'quiz' chapter.slug %}{% endif %}" class="btn retry" style="color:#fff;padding:0.5rem 0.9rem;border-radius:8px;text-decoration:none;">Retry MCQ Test</a>
+                            <a href="{% url 'home' %}" class="btn home" style="color:#fff;padding:0.5rem 0.9rem;border-radius:8px;text-decoration:none;">Back to Home</a>
+                        </div>
                     </div>
                 {% endif %}
             </form>
@@ -268,24 +281,18 @@
             <p class="no-questions">No questions available for this {% if sub_chapter %}subchapter{% else %}chapter{% endif %}.</p>
         {% endif %}
 
-        <nav class="links">
-            {% if questions %}
-                {% if score is not None or quiz_started %}
-                    <a href="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.slug %}{% else %}{% url 'quiz' chapter.slug %}{% endif %}" class="go_back">Retry MCQ Test</a>
+                {% if score is None %}
+                <nav class="links">
+                    <a href="{% url 'chapters' chapter.subject.slug %}" class="back-chapters">Back to Subchapters</a>
+                    <a href="{% url 'home' %}" class="back-subjects">Back to Subjects</a>
+                </nav>
                 {% endif %}
-            {% endif %}
-            {% if sub_chapter %}
-                <a href="{% url 'subchapters' chapter.slug %}" class="back-chapters">Back to Subchapters</a>
-            {% else %}
-            <a href="{% url 'chapters' chapter.subject.slug %}" class="back-chapters">Back to Chapters</a>
-            {% endif %}
-            <a href="{% url 'home' %}" class="back-subjects">Back to Subjects</a>
-        </nav>
     </main>
 
+    {# Buttons are rendered inside the result container only; no duplicates after main #}
+
     <footer class="container" style="text-align:center; margin-top:2rem;">
-        <p>Made with ❤️ by Ramu Pandey</p>
-        <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
+        <p style="margin-top:0.85rem">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
     </footer>
 
     <script src="{% static 'js/style.js' %}"></script>

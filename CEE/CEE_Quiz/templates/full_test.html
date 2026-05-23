@@ -98,7 +98,38 @@
             font-size: 0.9rem;
             color: rgba(255,255,255,0.82);
         }
+        .result-actions .btn.retry { background:#6b7280; }
+        .result-actions .btn.home { background:#1458a6; }
+        .result-actions .btn.retry:hover { background:#51545a; color:#fff; transform:translateY(-2px); }
+        .result-actions .btn.home:hover { background:#0f4a86; color:#fff; transform:translateY(-2px); }
+
+        /* General home button style for start / running views */
+        .btn.home {
+            background: #1458a6;
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
+        }
+        .btn.home:hover {
+            background: #0f4a86;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15,74,134,0.18);
+            color: #fff;
+        }
+
+        /* Vertical stacks used on start / running pages to keep consistent gap */
+        .start-actions, .action-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            margin-top: 1rem;
+        }
     </style>
+    <!-- Back-to-home visibility handled explicitly in template markup -->
 </head>
 
 <body data-quiz-key="full-test" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="Full Test" data-exit-url="{% url 'home' %}">
@@ -108,16 +139,21 @@
         <p>Total Questions: 180 | Time: 2.5 hours | Negative Marking: 0.25 per wrong answer</p>
 
         {% if score is None and not quiz_started %}
-            <form method="get" id="name-form" class="start-form">
-                <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
-                <button type="submit" name="start" value="1" id="start_full_test" class="start_test">Start Full MCQ Test</button>
-            </form>
+            <div class="start-actions">
+                <form method="get" id="name-form" class="start-form">
+                    <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
+                    <button type="submit" name="start" value="1" id="start_full_test" class="start_test">Start Full MCQ Test</button>
+                </form>
+                <a href="{% url 'home' %}" class="btn home">Back to Home</a>
+            </div>
         {% endif %}
 
         {% if questions %}
             {% if score is None %}
                 <div id="full_test_timer" style="display: block;"></div>
             {% endif %}
+
+            {# no top Back-to-Home; show Back-to-Home only inside result box after submission #}
 
             <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% url 'full_test' %}" id="full-test-form" style="display: block;">
                 {% csrf_token %}
@@ -129,7 +165,7 @@
                 {% endif %}
 
                 {% if score is not None %}
-                    <div class="result-layout">
+                    <div class="result-layout" style="position:relative; padding-bottom:4.5rem;">
                         <aside class="history-sidebar">
                             <div class="history-sidebar-header">
                                 <p class="history-eyebrow">Your last 5 test attempts</p>
@@ -221,6 +257,7 @@
                                 </div>
                                 <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
                             </div>
+                            
                 {% endif %}
 
                 {% if score is None %}
@@ -243,9 +280,9 @@
                             </p>
                             <div id="question-number-links" class="question-number-links"></div>
                             <div class="submit-review-actions">
-                                <button type="button" id="submit-now-btn" class="submit-now-btn">Submit Now</button>
-                                <button type="button" id="close-review-btn" class="close-review-btn">Continue Solving</button>
-                            </div>
+                                        <button type="button" id="submit-now-btn" class="submit-now-btn">Submit Now</button>
+                                        <button type="button" id="close-review-btn" class="close-review-btn">Continue Solving</button>
+                                    </div>
                         </div>
                     </section>
                 {% endif %}
@@ -312,7 +349,17 @@
                     <button type="submit" class="submit-btn" id="submit-full-test-btn">Submit</button>
                 {% endif %}
 
+                {% if quiz_started and score is None %}
+                    <div class="action-stack">
+                        <a href="{% url 'home' %}" class="btn home">Back to Home</a>
+                    </div>
+                {% endif %}
+
                 {% if score is not None %}
+                        <div class="result-actions" style="position:absolute; left:50%; transform:translateX(-50%); bottom:1.25rem; display:flex; gap:1.25rem; align-items:center;">
+                                <a href="{% url 'full_test' %}" class="btn retry" style="color:#fff;padding:0.45rem 0.8rem;border-radius:8px;text-decoration:none;">Retry MCQ Test</a>
+                                <a href="{% url 'home' %}" class="btn home" style="color:#fff;padding:0.45rem 0.8rem;border-radius:8px;text-decoration:none;">Back to Home</a>
+                            </div>
                         </div>
                     </div>
                 {% endif %}
@@ -321,23 +368,14 @@
             <p class="no-questions">No questions available for this test.</p>
         {% endif %}
 
-        <div class="links">
-            <a href="{% url 'home' %}" class="home-btn">Back to Home</a>
-        </div>
+        
     </div>
+
+    {# Buttons are rendered inside the result container only; no duplicates after main #}
 
     <footer class="full-test-footer">
         <div class="footer-container">
-            <div class="footer-nav" style="display:flex; flex-direction:row; flex-wrap:nowrap; justify-content:center; align-items:center; gap:0.7rem; overflow-x:auto; white-space:nowrap;">
-                <a href="/">Home</a>
-                <a href="/about/">About Us</a>
-                <a href="/contact/">Contact</a>
-                <a href="/privacy-policy/">Privacy Policy</a>
-                <a href="/disclaimer/">Disclaimer</a>
-                <a href="{% url 'blog_index' %}">Blog</a>
-            </div>
-
-            <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
+            <p class="footer-copy" style="margin-top:0.85rem">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
         </div>
     </footer>
 

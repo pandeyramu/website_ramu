@@ -7,10 +7,12 @@ import logging
 from functools import lru_cache
 import requests
 from django.contrib.sites.requests import RequestSite
+from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import Http404, HttpResponse, JsonResponse
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from django.db.utils import DatabaseError
 from django.core.mail import send_mail
@@ -22,6 +24,113 @@ from .seo_provider import get_supabase_page_seo
 
 logger = logging.getLogger(__name__)
 TEST_HISTORY_LIMIT = 5
+
+
+def _ordered_subjects():
+    return list(Subject.objects.only('id', 'name', 'slug').order_by('id'))
+
+
+def _subject_alias_url(subject_slug):
+    return f'/{subject_slug}-mcq/' if subject_slug else '/'
+
+
+def _crawl_navigation_links(subject_slug=None):
+    links = {
+        'all_subjects_url': reverse('all_subjects'),
+        'all_mcq_url': reverse('all_mcq'),
+    }
+
+    if subject_slug:
+        links['subject_mcq_url'] = _subject_alias_url(subject_slug)
+
+    subjects = _ordered_subjects()
+    if subject_slug and subjects:
+        current_index = next((index for index, subject in enumerate(subjects) if subject.slug == subject_slug), None)
+        if current_index is not None:
+            previous_subject = subjects[current_index - 1] if current_index > 0 else None
+            next_subject = subjects[current_index + 1] if current_index < len(subjects) - 1 else None
+
+            if previous_subject:
+                links['previous_subject'] = {
+                    'name': previous_subject.name,
+                    'subject_url': reverse('chapters', args=[previous_subject.slug]),
+                    'mcq_url': _subject_alias_url(previous_subject.slug),
+                }
+            if next_subject:
+                links['next_subject'] = {
+                    'name': next_subject.name,
+                    'subject_url': reverse('chapters', args=[next_subject.slug]),
+                    'mcq_url': _subject_alias_url(next_subject.slug),
+                }
+
+    return links
+
+
+def _crawl_hubs():
+    hubs = []
+    for subject in _ordered_subjects():
+        hubs.append({
+            'name': f'{subject.name} MCQ',
+            'url': _subject_alias_url(subject.slug),
+            'description': f'Go straight to {subject.name} chapter-wise practice and crawl the full {subject.name} topic tree.',
+        })
+    hubs.append({
+        'name': 'All Subjects',
+        'url': reverse('all_subjects'),
+        'description': 'Browse every subject landing page from one hub.',
+    })
+    hubs.append({
+        'name': 'All MCQ',
+        'url': reverse('all_mcq'),
+        'description': 'Open the direct MCQ landing pages and keep crawl paths short.',
+    })
+    hubs.append({
+        'name': 'Full Test',
+        'url': reverse('full_test'),
+        'description': 'Run the full mock test and reinforce the strongest exam-level URL.',
+    })
+    return hubs
+
+
+@csrf_exempt
+def contact_submit(request):
+    """Receive contact form POSTs and send email to site owner.
+    Expects: name, email, message in POST body.
+    Returns JSON {ok: true} on success or error message.
+    """
+    if request.method != 'POST':
+        return JsonResponse({'error': 'method_not_allowed'}, status=405)
+
+    name = request.POST.get('name', '').strip()
+    email = request.POST.get('email', '').strip()
+    message = request.POST.get('message', '').strip()
+
+    if not (name and email and message):
+        return JsonResponse({'error': 'missing_fields'}, status=400)
+
+    subject = f'Website contact from {name}'
+    body = f'From: {name} <{email}>\n\n{message}'
+    try:
+        send_mail(subject, body, getattr(settings, 'DEFAULT_FROM_EMAIL', email), ['pandeyramu57@gmail.com'])
+        return JsonResponse({'ok': True})
+    except Exception as exc:
+        logger.exception('Failed to send contact email')
+        return JsonResponse({'error': 'send_failed'}, status=500)
+
+
+def _hub_page_context(*, page_slug, title, description, keywords, og_title, og_description, hub_heading, hub_intro, hub_items):
+    return {
+        **_crawl_navigation_links(),
+        'page_slug': page_slug,
+        'page_default_title': title,
+        'page_default_description': description,
+        'page_default_keywords': keywords,
+        'page_default_og_title': og_title,
+        'page_default_og_description': og_description,
+        'hub_heading': hub_heading,
+        'hub_intro': hub_intro,
+        'hub_items': hub_items,
+    }
 
 
 BLOG_POSTS = {
@@ -520,6 +629,204 @@ BLOG_POSTS = {
             }
         ]
     },
+    'chapter-wise-marks-distribution': {
+        'title': 'Chapter-wise Marks Distribution for CEE: What to Prioritise',
+        'tag': 'Exam Strategy',
+        'accent': '#1458a6',
+        'accent_soft': 'rgba(20, 88, 166, 0.08)',
+        'accent_border': 'rgba(20, 88, 166, 0.22)',
+        'description': 'A practical chapter-wise marks distribution guide for CEE Nepal to prioritise study effort and improve score efficiently.',
+        'excerpt': 'Understand which chapters carry the most marks in CEE and how to allocate your study time for maximum impact.',
+        'sections': [
+            {
+                'heading': 'Why chapter-wise weightage matters',
+                'paragraphs': [
+                    'Not all chapters are equally important in the CEE pattern. Knowing which chapters routinely contribute more MCQs helps you prioritise revision and MCQ practice so that your study time converts to the largest possible score gains.',
+                    'This guide summarises typical chapter weightage across Biology, Chemistry, Physics and MAT and gives actionable advice on how to split revision hours for the maximum return.'
+                ],
+                'bullets': []
+            },
+            {
+                'heading': 'Biology (Botany + Zoology) — high yield chapters',
+                'paragraphs': [
+                    'Biology traditionally contributes the largest block of questions in CEE. Within Biology, Human Physiology, Genetics, Cell Biology and Biodiversity are frequent sources of straightforward MCQs. If you focus first on human physiology and genetics, you can secure many marks with relatively high accuracy.',
+                    'For practical study planning, aim to spend 35–40% of your Biology study time on these high-yield chapters during early revision phases.'
+                ],
+                'bullets': [
+                    'Human Physiology: diagrams and functional questions',
+                    'Genetics: inheritance patterns and simple calculations',
+                    'Cell Biology: organelles, structure and processes'
+                ]
+            },
+            {
+                'heading': 'Chemistry — divide by topic type',
+                'paragraphs': [
+                    'Chemistry weight often splits between Physical, Organic and Inorganic sub-sections. Physical and Organic together commonly carry the majority of Chemistry marks. Prioritise reaction mapping, stoichiometry, and core physical chemistry concepts first.',
+                    'Allocate roughly 40% of Chemistry revision time to Physical and Organic combined, and the rest to Inorganic and application questions.'
+                ],
+                'bullets': [
+                    'Physical Chemistry: equations and numericals',
+                    'Organic Chemistry: reaction types and mechanisms',
+                    'Inorganic Chemistry: important facts and periodic trends'
+                ]
+            },
+            {
+                'heading': 'Physics — target numericals and modern physics',
+                'paragraphs': [
+                    'Mechanics and Modern Physics often appear with numerical problems that favour structured problem solving. Current Electricity and Magnetism also carry consistent weight. Strengthen formula recall and common numerical strategies to convert practice into points.',
+                    'Dedicate timed problem sets to mechanics and electricity early in your plan; these are high-return chapters.'
+                ],
+                'bullets': [
+                    'Mechanics: vectors, motion, energy problems',
+                    'Modern Physics: direct concept application',
+                    'Electricity & Magnetism: circuits and field concepts'
+                ]
+            },
+            {
+                'heading': 'MAT — speed and pattern recognition',
+                'paragraphs': [
+                    'MAT is short but high impact: consistent daily practice yields fast gains. Treat MAT as a speed-building exercise, not a deep-concept subject. Use short timed drills and focus on accuracy under time pressure.',
+                    'Because MAT is quicker to improve, keep a small but regular allocation to MAT throughout your preparation cycle.'
+                ],
+                'bullets': []
+            },
+            {
+                'heading': 'Practical study allocation example',
+                'paragraphs': [
+                    'If you have 10 hours a week, a practical split might be: Biology 4 hours (focused on high-yield chapters), Chemistry 3 hours (physical + organic focus), Physics 2 hours (mechanics and electricity), MAT 1 hour (daily short drills). Adjust based on your personal strengths and weaknesses.',
+                    'Use chapter-wise MCQ trackers to validate whether more time on a subject yields better accuracy; move hours between subjects based on that feedback.'
+                ],
+                'bullets': [
+                    'Track accuracy per chapter and reassign study hours weekly',
+                    'Run weekly full-length mocks to test allocation efficiency'
+                ]
+            }
+        ]
+    },
+    'last-30-days-cee-prep-plan': {
+        'title': 'Last 30 Days CEE Preparation Plan: Time-sensitive, High-Impact',
+        'tag': 'Plan',
+        'accent': '#c04b62',
+        'accent_soft': 'rgba(192, 75, 98, 0.08)',
+        'accent_border': 'rgba(192, 75, 98, 0.22)',
+        'description': 'A focused 30-day plan to maximise CEE score before exam day with a mix of revision, MCQ practice and full mocks.',
+        'excerpt': 'Use this high-impact, 30-day checklist to polish topics, fix weak areas, and simulate exam conditions before your CEE.',
+        'sections': [
+            {
+                'heading': 'Overview and mindset for the last 30 days',
+                'paragraphs': [
+                    'The final 30 days before CEE are about consolidation, not new learning. Prioritise high-yield chapters, error correction, and realistic mock tests. Keep your routine steady and focus on exam temperament and pacing.',
+                    'This plan breaks the 30 days into three 10-day cycles: quick review, intensive MCQ practice, and mock-test simulation.'
+                ],
+                'bullets': []
+            },
+            {
+                'heading': 'Days 1–10: quick review and patching',
+                'paragraphs': [
+                    'Use the first 10 days to patch conceptual gaps and compile a short error-sheet of topics you repeatedly miss. Revisit formulas, reaction maps, and key diagrams. Avoid major new chapters at this stage.',
+                    'Schedule short daily timed quizzes (30–45 minutes) to stabilise recall under pressure.'
+                ],
+                'bullets': [
+                    'Daily checklist: 45 minutes revision + 30 minutes MCQs',
+                    'Maintain an error-tracking sheet for repeated mistakes'
+                ]
+            },
+            {
+                'heading': 'Days 11–20: intensive MCQ practice',
+                'paragraphs': [
+                    'Increase MCQ volume and mix chapters to simulate real exam unpredictability. Do targeted chapter sessions in the morning and mixed timed sets in the evening. Focus corrections on the error-sheet and re-test those questions.',
+                    'Gradually reduce reliance on notes and force retrieval from memory during these drills.'
+                ],
+                'bullets': [
+                    'Two daily MCQ sessions: focused chapter set + mixed timed set',
+                    'Correct and re-attempt error-sheet questions after 48 hours'
+                ]
+            },
+            {
+                'heading': 'Days 21–30: mock tests and exam simulation',
+                'paragraphs': [
+                    'Switch to full-length mock tests under exam-like conditions. Time yourself strictly and practice the three-pass strategy: easy first, moderate second, hard last. Use the final 48 hours for light revision and rest—avoid cramming.',
+                    'Simulate exam timing, breaks, and environment to build endurance and pacing.'
+                ],
+                'bullets': [
+                    'At least 3 full mocks in the final 10 days',
+                    'Review mocks thoroughly: identify why errors occurred and update the error-sheet'
+                ]
+            },
+            {
+                'heading': 'Final pre-exam checklist',
+                'paragraphs': [
+                    'In the last 48 hours confirm logistics, necessary documents, and a calm routine. Keep final revision selective—formula lists, reaction maps and quick fact checks only. Prioritise sleep and a consistent routine.',
+                    'Plan exam-day pacing: secure easy marks early, manage time per section, and reserve the final 10–12 minutes for review.'
+                ],
+                'bullets': [
+                    'Pack documents and test kit a day before',
+                    'Avoid new topics in the final 48 hours',
+                    'Get regular sleep and small, steady meals'
+                ]
+            }
+        ]
+    },
+    'how-to-remember-organic-reactions': {
+        'title': 'How to Remember Organic Chemistry Reactions: Practical Techniques',
+        'tag': 'Chemistry',
+        'accent': '#b36a00',
+        'accent_soft': 'rgba(179, 106, 0, 0.08)',
+        'accent_border': 'rgba(179, 106, 0, 0.24)',
+        'description': 'Memory techniques and practical strategies to retain organic chemistry reactions for exams like CEE.',
+        'excerpt': 'Use maps, categorization, reaction families and active recall to remember organic chemistry reactions more reliably and efficiently.',
+        'sections': [
+            {
+                'heading': 'Why reactions are hard to remember',
+                'paragraphs': [
+                    'Organic reactions can feel like an endless list of reagents and conditions. The trick is not rote memorisation but pattern recognition—grouping reactions by functional-group transformations and mechanistic similarity.',
+                    'This article provides practical memory strategies, example reaction clusters, and study routines that convert into better recall under test conditions.'
+                ],
+                'bullets': []
+            },
+            {
+                'heading': 'Build reaction maps and family trees',
+                'paragraphs': [
+                    'Instead of isolated notes, create reaction maps that connect starting materials to products through common transformations. For example, track conversions from alkanes → haloalkanes → alcohols → carbonyl compounds. This reduces memory load and creates logical hooks.',
+                    'Use a single-page reaction map for each functional group family and review it frequently.'
+                ],
+                'bullets': [
+                    'Create one-page maps for hydrocarbons, alcohols, carbonyls, and amines',
+                    'Highlight common reagents and typical outcomes'
+                ]
+            },
+            {
+                'heading': 'Use mechanistic logic as a mnemonic',
+                'paragraphs': [
+                    'Understanding the mechanism (even at a high level) helps you predict reaction outcomes and remember reagent behavior. When you know whether a reaction proceeds by nucleophilic substitution, electrophilic addition, or radical initiation, the products become more predictable and memorable.',
+                    'Convert mechanism steps into short phrases you can rehearse quickly.'
+                ],
+                'bullets': [
+                    'Label reactions as SN1/SN2, E1/E2, electrophilic addition, etc.',
+                    'Use brief mechanism notes to predict exceptions'
+                ]
+            },
+            {
+                'heading': 'Active recall and spaced repetition',
+                'paragraphs': [
+                    'Practice recall by writing reaction outcomes from memory and testing yourself after increasing intervals. Spaced repetition ensures longer retention than cramming. Convert your reaction maps into flashcards and review them daily for short intervals.',
+                    'Prioritise reactions that appear most frequently in previous CEE patterns.'
+                ],
+                'bullets': [
+                    'Use short daily flashcard sessions (10–15 minutes)',
+                    'Re-attempt incorrectly recalled reactions after 2, 5 and 10 days'
+                ]
+            },
+            {
+                'heading': 'Practical drilling and problem sets',
+                'paragraphs': [
+                    'Apply reactions in small timed problem sets rather than passive review. Doing product-prediction questions and mechanism-based MCQs helps cement reactions by use, not just recall. Over time, this practice builds recognition speed crucial for MCQ exams.',
+                    'Mix reaction recall with small applied problems and re-check using your reaction map to close knowledge gaps.'
+                ],
+                'bullets': []
+            }
+        ]
+    },
     'past-papers-smart-practice-cee': {
         'title': 'How I Use Past Papers to Study Smarter',
         'tag': 'Study Tips',
@@ -570,6 +877,9 @@ BLOG_POSTS = {
 }
 
 BLOG_POST_ORDER = [
+    'chapter-wise-marks-distribution',
+    'last-30-days-cee-prep-plan',
+    'how-to-remember-organic-reactions',
     'how-to-prepare-for-cee',
     'human-biology-cee-questions',
     'organic-chemistry-cee-tips',
@@ -1019,7 +1329,7 @@ def report_question(request):
 
 @cache_page(0)  # Disable caching for development
 def home(request):
-    subject_list = Subject.objects.only('id', 'name').order_by('id')
+    subject_list = _ordered_subjects()
     total_questions = Question.objects.count()
     page_default_title = 'CEE MCQ – Free Practice Questions | CEE MCQ'
     page_default_description = "Free CEE MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination."
@@ -1028,6 +1338,7 @@ def home(request):
     return render(request, 'home.html', {
         'subjects': subject_list,
         'total_questions': total_questions,
+        'crawl_hubs': _crawl_hubs(),
         'page_slug': 'home',
         'page_default_title': page_default_title,
         'page_default_description': page_default_description,
@@ -1035,6 +1346,37 @@ def home(request):
         'page_default_og_title': 'CEE MCQ – Free CEE MCQ Questions',
         'page_default_og_description': "Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.",
     })
+
+
+def all_subjects(request):
+    subjects = _ordered_subjects()
+    hub_items = []
+    for subject in subjects:
+        chapter_total = Chapter.objects.filter(subject=subject).count()
+        hub_items.append({
+            'name': f'{subject.name} MCQ',
+            'url': _subject_alias_url(subject.slug),
+            'description': f'Open {subject.name} MCQ and the {chapter_total} linked chapter pages from one crawl-friendly landing page.',
+        })
+
+    request.page_slug = 'all-subjects'
+    context = _hub_page_context(
+        page_slug='all-subjects',
+        title='All Subjects | CEE MCQ',
+        description='Browse every CEE subject landing page and move quickly between Biology, Chemistry, Physics, and MAT.',
+        keywords='CEE MCQ, All Subjects, Biology MCQ, Chemistry MCQ, Physics MCQ, MAT MCQ',
+        og_title='All Subjects | CEE MCQ',
+        og_description='Browse every CEE subject landing page and move quickly between Biology, Chemistry, Physics, and MAT.',
+        hub_heading='All Subject Entry Points',
+        hub_intro='This hub keeps crawl paths short and gives Google a single page that links to every major subject landing page.',
+        hub_items=hub_items,
+    )
+    return render(request, 'seo_hub.html', context)
+
+
+def all_mcq(request):
+    # Route disabled: redirect to home to avoid exposing a separate "All MCQ" hub.
+    return redirect('home')
 
 
 def chapters(request, slug):
@@ -1048,6 +1390,7 @@ def chapters(request, slug):
     return render(request, 'chapter.html', {
         'subject': subject,
         'chapters': chapters_list,
+        **_crawl_navigation_links(subject.slug),
         'page_slug': slug,
         'page_default_title': page_default_title,
         'page_default_description': page_default_description,
@@ -1088,6 +1431,7 @@ def dynamic_page(request, page_slug):
             return render(request, 'chapter.html', {
                 'subject': subject,
                 'chapters': chapters_list,
+                **_crawl_navigation_links(subject.slug),
                 'page_slug': page_slug,
                 'page_default_title': page_default_title,
                 'page_default_description': page_default_description,
@@ -1137,6 +1481,7 @@ def subchapters(request, slug):
     return render(request, 'subchapter.html', {
         'chapter': chapter,
         'subchapters': subchapter_list,
+        **_crawl_navigation_links(chapter.subject.slug),
     })
 
 
@@ -1308,6 +1653,7 @@ def quiz(request, slug):
             'page_default_keywords': page_default_keywords,
             'page_default_og_title': page_default_title,
             'page_default_og_description': page_default_description,
+            **_crawl_navigation_links(chapter.subject.slug),
         })
 
 
@@ -1627,6 +1973,7 @@ def full_test(request):
                 'page_default_keywords': page_default_keywords,
                 'page_default_og_title': page_default_title,
                 'page_default_og_description': page_default_description,
+                **_crawl_navigation_links(),
             })
 
         attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
@@ -1656,12 +2003,18 @@ def full_test(request):
             'page_default_keywords': page_default_keywords,
             'page_default_og_title': page_default_title,
             'page_default_og_description': page_default_description,
+            **_crawl_navigation_links(),
         })
 
 
 def full_test_results(request):
     request.page_slug = 'full-test'
-    result_payload = request.session.get('full_test_result_data')
+    # Default page metadata for full test results
+    page_default_title = 'CEE Full Mock Test – 180 Questions Online | CEE MCQ'
+    page_default_description = 'Take a full CEE mock test online with 180 questions, negative marking, and a 2.5-hour timer. Simulate the real MEC entrance exam experience.'
+    page_default_keywords = 'CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 180 questions, CEE practice exam'
+    # Consume the stored result data so visiting the results URL directly won't re-show old results.
+    result_payload = request.session.pop('full_test_result_data', None)
     if not result_payload:
         messages.error(request, 'No completed test result found. Please take the test first.')
         return redirect('full_test')
@@ -1721,6 +2074,7 @@ def full_test_results(request):
         'page_default_keywords': page_default_keywords,
         'page_default_og_title': page_default_title,
         'page_default_og_description': page_default_description,
+        **_crawl_navigation_links(),
         **result_metrics,
     })
 
@@ -1845,9 +2199,26 @@ def blog_post(request, slug):
         'sections': expanded_sections,
     }
 
+    # Calculate reading time (approx. 200 wpm)
+    text_parts = [post_with_depth['title'], post_with_depth.get('excerpt', ''), post_with_depth.get('description', '')]
+    for sec in post_with_depth['sections']:
+        text_parts.append(sec.get('heading', ''))
+        for p in sec.get('paragraphs', []):
+            text_parts.append(p)
+        for b in sec.get('bullets', []):
+            text_parts.append(b)
+    all_text = ' '.join(text_parts)
+    words = len(re.findall(r"\w+", all_text))
+    reading_time = max(1, round(words / 200))
+
+    # Use a stable published date for these static posts
+    date_published = '2026-05-23'
+
     return render(request, 'blog_post.html', {
         'slug': slug,
         'post': post_with_depth,
         'theme': BLOG_THEMES.get(slug, BLOG_THEMES['how-to-prepare-for-cee']),
         'related_links': BLOG_INTERNAL_LINKS.get(slug, []),
+        'reading_time': reading_time,
+        'date_published': date_published,
     })

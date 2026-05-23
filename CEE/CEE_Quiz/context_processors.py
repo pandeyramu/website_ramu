@@ -2,6 +2,7 @@ from types import SimpleNamespace
 
 from .models import Chapter, PageSEO, SubChapter, Subject
 from .seo_provider import get_supabase_page_seo
+from django.conf import settings
 
 
 SITE_NAME = 'CEE MCQ'
@@ -65,6 +66,26 @@ def _full_test_defaults():
         keywords='CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 180 questions, CEE practice exam',
         og_title='CEE Full Mock Test – 180 Questions Online | CEE MCQ',
         og_description='Take a full CEE mock test online with 180 questions, negative marking, and a 2.5-hour timer.',
+    )
+
+
+def _all_subjects_defaults():
+    return _defaults(
+        title='All Subjects | CEE MCQ',
+        description='Browse every CEE subject landing page and move quickly between Biology, Chemistry, Physics, and MAT.',
+        keywords='CEE MCQ, All Subjects, Biology MCQ, Chemistry MCQ, Physics MCQ, MAT MCQ',
+        og_title='All Subjects | CEE MCQ',
+        og_description='Browse every CEE subject landing page and move quickly between Biology, Chemistry, Physics, and MAT.',
+    )
+
+
+def _all_mcq_defaults():
+    return _defaults(
+        title='All MCQ Pages | CEE MCQ',
+        description='Open the direct MCQ landing pages, full test, and crawl hub pages from one place.',
+        keywords='CEE MCQ, All MCQ, Biology MCQ, Chemistry MCQ, Physics MCQ, Full Test',
+        og_title='All MCQ Pages | CEE MCQ',
+        og_description='Open the direct MCQ landing pages, full test, and crawl hub pages from one place.',
     )
 
 
@@ -152,6 +173,12 @@ def _safe_lookup(request):
         if route_name == 'full_test':
             return _full_test_defaults()
 
+        if route_name == 'all_subjects':
+            return _all_subjects_defaults()
+
+        if route_name == 'all_mcq':
+            return _all_mcq_defaults()
+
         if route_name == 'about':
             return _about_defaults()
 
@@ -176,3 +203,9 @@ def _safe_lookup(request):
 
 def page_seo(request):
     return {'page_seo': _safe_lookup(request)}
+
+
+def site_url(request):
+    # Provide SITE_URL to templates; fall back to request host if missing
+    url = getattr(settings, 'SITE_URL', '') or f"{request.scheme}://{request.get_host()}"
+    return {'SITE_URL': url}

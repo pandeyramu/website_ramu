@@ -8,6 +8,9 @@
     <meta name="description" content="{% block meta_description %}{{ page_seo.meta_description|default:"CEE MCQ Nepal - free practice MCQs, exam tips, and study resources for Nepali students." }}{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, CEE Nepal, CEE entrance exam, chapter wise MCQ, free practice questions" }}{% endblock %}">
     <meta name="author" content="Ramu Pandey">
+    <meta name="theme-color" content="#1458a6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <meta property="og:type" content="website">
     <meta property="og:title" content="{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"CEE MCQ" }}{% endblock %}">
     <meta property="og:description" content="{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Free CEE practice MCQs and preparation resources for Nepali students." }}{% endblock %}">
@@ -150,6 +153,11 @@
             .page-card { padding: 1.2rem; }
         }
     </style>
+    {% block structured_data %}{% endblock %}
+    <!-- AdSense placeholder (commented) -->
+    <!--
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    -->
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -158,12 +166,16 @@
             <a class="brand" href="/">CEE MCQ</a>
             <nav class="nav-links" aria-label="Main navigation">
                 {% if request.resolver_match.url_name == 'home' %}<span class="current-page" aria-current="page">Home</span>{% else %}<a href="/">Home</a>{% endif %}
+                {% if request.resolver_match.url_name == 'all_subjects' %}<span class="current-page" aria-current="page">All Subjects</span>{% else %}<a href="/all-subjects/">All Subjects</a>{% endif %}
                 {% if request.resolver_match.url_name == 'about' %}<span class="current-page" aria-current="page">About Us</span>{% else %}<a href="/about/">About Us</a>{% endif %}
                 {% if request.resolver_match.url_name == 'contact' %}<span class="current-page" aria-current="page">Contact</span>{% else %}<a href="/contact/">Contact</a>{% endif %}
                 {% if request.resolver_match.url_name == 'privacy_policy' %}<span class="current-page" aria-current="page">Privacy Policy</span>{% else %}<a href="/privacy-policy/">Privacy Policy</a>{% endif %}
                 {% if request.resolver_match.url_name == 'disclaimer' %}<span class="current-page" aria-current="page">Disclaimer</span>{% else %}<a href="/disclaimer/">Disclaimer</a>{% endif %}
                 {% if request.resolver_match.url_name == 'blog_index' %}<span class="current-page" aria-current="page">Blog</span>{% else %}<a href="/blog/">Blog</a>{% endif %}
             </nav>
+            <!-- AdSense Ad Unit Placeholder - after nav (uncomment after approval)
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="auto"></ins>
+            -->
         </div>
     </header>
 
@@ -176,6 +188,9 @@
                 {% endfor %}
             </div>
             {% endif %}
+            <!-- AdSense placeholder - after first content section (uncomment after approval)
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="0987654321" data-ad-format="auto"></ins>
+            -->
             {% block content %}{% endblock %}
         </section>
     </main>

@@ -39,7 +39,6 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "pandeyramu.com.np",
-    "ceequiz.pandeyramu.com.np",
     "ceemcq.pandeyramu.com.np",
     ".onrender.com",
 ]
@@ -51,6 +50,9 @@ CSRF_TRUSTED_ORIGINS = [
     "https://ceemcq.pandeyramu.com.np",
     "https://*.onrender.com",
 ]
+
+# Canonical site URL used in templates and structured data
+SITE_URL = os.environ.get('SITE_URL', 'https://ceemcq.pandeyramu.com.np')
 
 # Application definition
 
@@ -71,8 +73,8 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'django.middleware.gzip.GZipMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -95,6 +97,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'CEE_Quiz.context_processors.page_seo',
+                'CEE_Quiz.context_processors.site_url',
             ],
         },
     },

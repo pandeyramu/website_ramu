@@ -5,13 +5,15 @@ from CEE_Quiz.models import Subject, Chapter, SubChapter
 
 
 class StaticViewSitemap(Sitemap):
-    priority = 0.8
+    priority = 0.9
     changefreq = "weekly"
 
     def items(self):
         return [
             "home",
             "full_test",
+            "all_subjects",
+            "all_mcq",
             "about",
             "contact",
             "privacy_policy",
@@ -23,6 +25,9 @@ class StaticViewSitemap(Sitemap):
             "blog_physics_high_weightage_topics",
             "blog_mat_section_tips",
             "blog_cee_exam_day_strategy",
+            "blog_chapter_wise_marks_distribution",
+            "blog_last_30_days_cee_prep_plan",
+            "blog_how_to_remember_organic_reactions",
         ]
 
     def location(self, item):
@@ -30,7 +35,7 @@ class StaticViewSitemap(Sitemap):
 
 
 class SubjectSitemap(Sitemap):
-    priority = 0.9
+    priority = 0.8
     changefreq = "weekly"
 
     def items(self):
@@ -41,7 +46,7 @@ class SubjectSitemap(Sitemap):
 
 
 class ChapterSitemap(Sitemap):
-    priority = 0.8
+    priority = 0.7
     changefreq = "weekly"
 
     def items(self):
@@ -52,7 +57,7 @@ class ChapterSitemap(Sitemap):
 
 
 class SubChapterSitemap(Sitemap):
-    priority = 0.7
+    priority = 0.6
     changefreq = "weekly"
 
     def items(self):
@@ -62,9 +67,21 @@ class SubChapterSitemap(Sitemap):
         return reverse("subchapter_quiz", args=[item.slug])
 
 
+class SubjectAliasSitemap(Sitemap):
+    priority = 0.9
+    changefreq = "weekly"
+
+    def items(self):
+        return Subject.objects.order_by("id")
+
+    def location(self, item):
+        return reverse("dynamic_page", args=[f"{item.slug}-mcq"])
+
+
 sitemaps = {
     "static": StaticViewSitemap,
     "subjects": SubjectSitemap,
+    "subject_aliases": SubjectAliasSitemap,
     "chapters": ChapterSitemap,
     "subchapters": SubChapterSitemap,
 }

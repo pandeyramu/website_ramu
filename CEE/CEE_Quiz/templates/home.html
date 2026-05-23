@@ -44,6 +44,30 @@
     }
     </script>
 
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How many questions are in CEE Nepal?",
+                    "acceptedAnswer": {"@type": "Answer", "text": "CEE consists of 200 MCQ questions covering Physics (50), Chemistry (50), Biology (80), and MAT (20)."}
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is the marking scheme for CEE?",
+                    "acceptedAnswer": {"@type": "Answer", "text": "+1 for correct answer, -0.25 for wrong answer. Maximum score is 200."}
+                },
+                {
+                    "@type": "Question",
+                    "name": "How long is the CEE exam?",
+                    "acceptedAnswer": {"@type": "Answer", "text": "CEE is 3 hours long."}
+                }
+            ]
+        }
+        </script>
+
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
@@ -146,6 +170,43 @@
         .home-contact-copy {
             margin-top: 1rem;
             color: rgba(255,255,255,0.82);
+        }
+        .crawl-hub-section {
+            margin-top: 1.4rem;
+        }
+        .crawl-hub-note {
+            margin: 0.4rem 0 0;
+            color: #4b5563;
+        }
+        .crawl-hub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .crawl-hub-card {
+            display: block;
+            padding: 0.9rem 1rem;
+            border-radius: 16px;
+            border: 1px solid #d8e2ef;
+            background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+            text-decoration: none;
+            color: #15324a;
+            box-shadow: 0 8px 20px rgba(15, 58, 91, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .crawl-hub-card:hover {
+            transform: translateY(-2px);
+            border-color: #8fb4d8;
+            box-shadow: 0 12px 26px rgba(15, 58, 91, 0.1);
+        }
+        .crawl-hub-card strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .crawl-hub-card span {
+            color: #4b5563;
+            font-size: 0.95rem;
         }
     </style>
 </head>
@@ -397,6 +458,8 @@
                     <p>No subjects available</p>
                 {% endfor %}
             </div>
+
+            {# Direct crawl entry points removed per request: navigation simplified #}
 
             <!-- Full Test Button -->
             <div class="full-test-container">

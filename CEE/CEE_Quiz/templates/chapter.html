@@ -32,6 +32,30 @@
     <!-- Favicon -->
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <style>
+        .seo-link-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.2rem;
+        }
+        .seo-link-row a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.55rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid #d8e2ef;
+            background: #fff;
+            color: #1458a6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .seo-link-row a:hover {
+            border-color: #1458a6;
+            background: #eef5ff;
+        }
+    </style>
 </head>
 
 <body>
@@ -102,16 +126,22 @@
         <nav class="back-button">
             <a href="{% url 'home' %}">← Back to Subjects</a>
         </nav>
+
+        <nav class="seo-link-row" aria-label="Crawl navigation">
+            <a href="{{ all_subjects_url }}">All Subjects</a>
+            <a href="{{ subject_mcq_url }}">{{ subject.name }} MCQ</a>
+            {% if next_subject %}
+                <a href="{{ next_subject.mcq_url }}">Next: {{ next_subject.name }} MCQ</a>
+            {% endif %}
+            {% if previous_subject %}
+                <a href="{{ previous_subject.mcq_url }}">Previous: {{ previous_subject.name }} MCQ</a>
+            {% endif %}
+        </nav>
     </main>
 
     <footer class="footer" style="text-align:center; margin-top:2rem;">
         <p>Made with ❤️ by Ramu Pandey</p>
-        <p>Follow me on 
-            <a href="https://github.com/pandeyramu" target="_blank">GitHub</a> | 
-            <a href="https://www.facebook.com/ramu.pandey38" target="_blank">Facebook</a> |
-            <a href="{% url 'blog_index' %}">Blog</a> |
-            <a href="{% url 'privacy_policy' %}">Privacy / Terms</a>
-        </p>
+        <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
     </footer>
 
     <!-- Structured Data for SEO -->
