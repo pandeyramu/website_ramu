@@ -369,6 +369,56 @@
                 text-align: center;
             }
 
+            /* Contact form styling (card-like) */
+            .contact-form {
+                max-width: 920px;
+                background: #fff;
+                padding: 36px;
+                border-radius: 12px;
+                box-shadow: 0 8px 28px rgba(6,24,40,0.08);
+                border: 1px solid #e6eef6;
+                margin: 18px 0;
+            }
+            .contact-form label {
+                display:block;
+                margin:12px 0 6px;
+                color:#334e68;
+                font-weight:600;
+            }
+            .contact-form input[type="text"], .contact-form input[type="email"], .contact-form textarea {
+                width:100%;
+                padding:14px 16px;
+                border-radius:10px;
+                border:1px solid #d9e6f6;
+                background:#fbfdff;
+                font-size:1rem;
+                color:#0f1724;
+            }
+            .contact-form textarea { min-height:160px; resize:vertical }
+            .contact-form .linkbtn {
+                display:block;
+                width:100%;
+                text-align:center;
+                background:#1356a8;
+                color:#fff;
+                padding:14px 18px;
+                border-radius:28px;
+                margin-top:18px;
+                border: none;
+            }
+            .contact-form .linkbtn:hover { background:#0f4a86; transform:translateY(-2px); box-shadow:0 10px 30px rgba(15,74,134,0.18) }
+
+            /* Blog post card style to match site look */
+            .blog-article {
+                background-color: #fff;
+                padding: 32px 28px;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+                border: 1px solid #eef6fb;
+            }
+            .blog-header h1 { font-size:2.6rem }
+            .blog-article h2 a { font-weight:700 }
+
         img,
         video,
         iframe,

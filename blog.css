@@ -14,6 +14,55 @@ body {
     width: 100%;
 }
 
+body > article {
+    max-width: 920px;
+    margin: 24px auto;
+    padding: 28px 24px;
+    background: #fff;
+    border: 1px solid #eef4fb;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+}
+
+body > article h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    margin-bottom: 12px;
+    color: #12263a;
+}
+
+body > article h2,
+body > article h3 {
+    color: #17324d;
+    margin-top: 1.5rem;
+    margin-bottom: 0.6rem;
+}
+
+body > article p,
+body > article li {
+    font-size: 1.03rem;
+    color: #304457;
+}
+
+body > article nav,
+body > article footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e8eef5;
+}
+
+body > article nav a,
+body > article footer a {
+    color: #1458a6;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+body > article nav a:hover,
+body > article footer a:hover {
+    text-decoration: underline;
+}
+
 .container {
     max-width: 900px;
     margin: 0 auto;
@@ -48,9 +97,9 @@ body {
 /* Each article card */
 .blog-article {
     background-color: #fff;
-    padding: 25px 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    padding: 28px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -63,6 +112,15 @@ body {
     font-size: 1.8rem;
     margin-bottom: 12px;
 }
+
+/* Per-post article layout */
+.article-container {
+    max-width: 920px;
+    margin: 20px auto;
+    padding: 28px;
+}
+.article-container h1 { font-size: 2.4rem; margin-bottom: 12px }
+.article-container p.lead { color:#445; font-size:1.05rem; margin-bottom:18px }
 
 .blog-article h2 a {
     text-decoration: none;

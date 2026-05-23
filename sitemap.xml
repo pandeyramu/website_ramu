@@ -1,42 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- Main site -->
   <url>
     <loc>https://pandeyramu.com.np/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://pandeyramu.com.np/tictactoe/tic.html</loc>
+    <loc>https://pandeyramu.com.np/blog.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pandeyramu.com.np/blog/cee-preparation-tips.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pandeyramu.com.np/blog/web-projects-for-beginners.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pandeyramu.com.np/blog/improve-typing-speed.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pandeyramu.com.np/blog/how-i-built-cee-mcq-platform.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pandeyramu.com.np/blog/html-vs-html5.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pandeyramu.com.np/blog/how-to-get-com-np-domain.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pandeyramu.com.np/blog/how-i-built-typing-speed-test.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pandeyramu.com.np/privacy.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://pandeyramu.com.np/tictactoe/tic.html</loc>
+    <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://pandeyramu.com.np/rockpaperscissors/rock.html</loc>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://pandeyramu.com.np/calculator/calculator.html</loc>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://pandeyramu.com.np/typingspeedtest/typing.html</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ceemcq.pandeyramu.com.np/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pandeyramu.com.np/privacy.html</loc>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
 
-  <url>
-    <loc>https://pandeyramu.com.np/blog.html</loc>
-    <priority>0.8</priority>
-  </url>
 </urlset>

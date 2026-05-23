@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How I Built a Typing Speed Test from Scratch</title>
+  <meta name="description" content="A practical walkthrough building a typing speed test: architecture, input handling, scoring, latency considerations, and deployment tips.">
+  <link rel="canonical" href="https://pandeyramu.com.np/blog/how-i-built-typing-speed-test.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How I Built a Typing Speed Test from Scratch">
+  <meta property="og:description" content="A practical walkthrough building a typing speed test: architecture, input handling, scoring, latency considerations, and deployment tips.">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../blog.css">
+</head>
+<body>
+  <article>
+    <h1>How I Built a Typing Speed Test from Scratch</h1>
+    <p class="lead"><strong>By Ramu Pandey</strong> · Published: 2026-05-23 · 6 min read</p>
+
+    <p>Building a typing speed test is a rewarding project for practicing DOM events, timing, and UX design. I built a simple, reliable test with precise timing, character-level feedback, and a scoring model that balances speed and accuracy. This article covers the design choices and implementation tips I used to create a responsive typing experience that works well on both desktop and mobile.</p>
+
+    <h2>Goals and constraints</h2>
+    <p>The test should begin on first keypress, measure elapsed time precisely, show per-character correctness, and provide a final WPM (words per minute) and accuracy percentage. It must be resilient to focus-loss and work with varied text sources. Latency and input lag are important factors to consider for fair scoring.</p>
+
+    <h2>Text source and formatting</h2>
+    <p>I used short passages stored server-side and delivered as JSON to the client. Each passage is split into characters and rendered in spans so that the UI can highlight correct and incorrect keystrokes in real-time. Breaking text into characters simplifies caret handling and visual feedback.</p>
+
+    <h2>Input handling and timing</h2>
+    <p>Reliable timing is key. I start the timer on the first valid keypress (not on focus) and use the high-resolution <code>performance.now()</code> API to compute elapsed milliseconds. Every keystroke compares the expected character and updates the DOM span's class to show correct, incorrect, or current caret position.</p>
+
+    <h2>Scoring and accuracy</h2>
+    <p>WPM is calculated as (correctChars / 5) / (minutes). Accuracy is (correctChars / totalTypedChars) * 100. To discourage rapid but inaccurate typing, the final score is reported alongside accuracy and a composite score that penalises typos more heavily. Users see per-character feedback and a summary at the end.</p>
+
+    <h2>Handling corrections</h2>
+    <p>Backspace behaviour needs careful handling. When users hit backspace, the test should move the caret back and allow correction, updating correctness counts accordingly. I implemented a cursor index and only allow backspace within typed range; deleting before start is ignored.</p>
+
+    <h2>Mobile considerations</h2>
+    <p>Mobile keyboards behave differently: autocorrect and suggestions can interfere with character-level testing. To mitigate this, the mobile UI uses a dedicated input element with autocorrect disabled and captures input events thoughtfully. The on-screen keyboard still provides a good enough experience for casual users.</p>
+
+    <h2>Latency and fairness</h2>
+    <p>Network latency should not affect timing. All timing runs client-side. However, initial passage fetch must be fast, so prefetch passages on page load to avoid delays. For multiplayer or competitive modes, use synchronized clocks or server-side validation to ensure fairness.</p>
+
+    <h2>Accessibility and UX</h2>
+    <p>Make sure visual cues are accessible: use color plus icons to indicate correctness, provide a visible caret, and allow keyboard-only operation. Offer adjustable font sizes and themes to improve readability for different users.</p>
+
+    <h2>Testing and analytics</h2>
+    <p>Collect simple, GDPR-friendly analytics: average WPM, difficulty of passages, and error hotspots. These signals help refine the passage pool and identify problematic character sequences. For testing, run unit tests for timing functions and end-to-end tests to simulate typing at different speeds and error rates.</p>
+
+    <h2>Deployment tips</h2>
+    <p>Serve the app as static files or integrate into a small backend. Compress assets, cache passages, and use a CDN for global users. HTTPS is required for secure usage and to prevent mixed-content warnings if integrating with other services.</p>
+
+    <h2>Conclusion</h2>
+    <p>A typing test is an excellent project that touches many parts of web development: precise timing, DOM manipulation, UX, and analytics. Start small, focus on reliability, and iterate with user feedback to refine scoring and passage selection. Over time, you can add leaderboards, user profiles, and learning-oriented features like targeted drills for common mistakes.</p>
+
+    <footer>
+      <p><a href="../blog.html">Back to Blog</a> <span style="margin:0 12px;color:#9eb3c7;">|</span> <a href="../index.html">Home</a></p>
+    </footer>
+  </article>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"How I Built a Typing Speed Test from Scratch","author":{"@type":"Person","name":"Ramu Pandey"},"datePublished":"2026-05-23","mainEntityOfPage":"https://pandeyramu.com.np/blog/how-i-built-typing-speed-test.html"}
+  </script>
+</body>
+</html>

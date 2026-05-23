@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML vs HTML5, What Actually Changed</title>
+  <meta name="description" content="Understand the practical differences between classic HTML and HTML5, new semantic elements, APIs, and what beginners should focus on today.">
+  <link rel="canonical" href="https://pandeyramu.com.np/blog/html-vs-html5.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="HTML vs HTML5, What Actually Changed">
+  <meta property="og:description" content="Understand the practical differences between classic HTML and HTML5, new semantic elements, APIs, and what beginners should focus on today.">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../blog.css">
+</head>
+<body>
+  <article>
+    <h1>HTML vs HTML5, What Actually Changed</h1>
+    <p class="lead"><strong>By Ramu Pandey</strong> · Published: 2026-05-23 · 5 min read</p>
+
+    <p>When beginners ask “what changed in HTML5?” they often expect a laundry list of tags. The real answer is broader: HTML5 introduced semantic structure, native multimedia support, and browser APIs that turned the web into a capable application platform. This article focuses on practical differences you should care about as a learner or a junior developer.</p>
+
+    <h2>Semantic structure and accessibility</h2>
+    <p>Classic HTML relied heavily on generic elements like <code>div</code> and <code>span</code>. HTML5 introduced semantic tags, such as <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;footer&gt;</code>, that convey meaning to browsers, assistive technologies, and search engines. Using semantic elements makes your markup clearer and improves accessibility without extra ARIA roles in many cases.</p>
+
+    <h2>Native multimedia</h2>
+    <p>One of the most visible additions is native audio and video via <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code>. Before HTML5, developers relied on plugins like Flash. Native multimedia simplifies embedding media, gives browser-level controls, and integrates with other web APIs (e.g., MediaSource) for advanced use cases.</p>
+
+    <h2>Forms and input types</h2>
+    <p>HTML5 extended form capabilities with new input types, such as <code>email</code>, <code>tel</code>, <code>number</code>, and <code>date</code>, plus attributes like <code>placeholder</code>, <code>required</code>, and pattern validation. These additions reduce JavaScript boilerplate and improve UX on mobile by triggering appropriate keyboards.</p>
+
+    <h2>Client-side APIs</h2>
+    <p>HTML5 isn’t just new tags; it includes many APIs that make web apps richer: Canvas for drawing, Web Storage (localStorage/sessionStorage), IndexedDB for local databases, Geolocation, Drag and Drop, and History API for navigation state. These capabilities help build applications that once required native code.</p>
+
+    <h2>Offline and progressive capabilities</h2>
+    <p>Service Workers and the Cache API (modern descendants of the old application cache) enable offline-first experiences and background sync, features that moved the web far beyond static pages. Progressive Web Apps (PWAs) build on these APIs to deliver app-like behavior with installable manifests and push notifications.</p>
+
+    <h2>What beginners should focus on</h2>
+    <p>If you’re starting today, focus on semantic HTML, basic accessibility, forms with modern input types, and how the DOM works with JavaScript. Learn a few key APIs (Fetch, localStorage) and practice responsive layouts with CSS. Save advanced APIs like Service Workers and IndexedDB for when you build larger apps.</p>
+
+    <h2>Summary: practical differences</h2>
+    <ul>
+      <li>HTML5 provides semantic structure that helps SEO and accessibility.</li>
+      <li>Native audio/video and canvas remove the need for plugins.</li>
+      <li>New form features and input types simplify validation and UX.</li>
+      <li>Client APIs enable offline and app-like experiences.</li>
+      <li>For beginners: focus on semantics, forms, and DOM + Fetch.</li>
+    </ul>
+
+    <h2>Migration tips and browser support</h2>
+    <p>Most modern browsers fully support HTML5 features now, but if you work with older environments, check compatibility tables before adopting advanced APIs. For progressive enhancement, always provide sensible fallbacks: for example, ensure media has downloadable sources or text alternatives and that critical features gracefully degrade.</p>
+
+    <h2>Practical checklist for learners</h2>
+    <ol>
+      <li>Use semantic layout tags for page structure (<code>header, nav, main, footer</code>).</li>
+      <li>Prefer modern input types and built-in validation for forms.</li+
+      <li>Start using <code>fetch()</code> for network requests instead of old XHR.</li>
+      <li>Learn about localStorage and sessionStorage for small stateful features.</li>
+      <li>Explore Canvas or SVG for simple visuals, then progress to animations.</li>
+    </ol>
+
+    <p>Understanding the practical differences between HTML and HTML5 prepares you to build accessible, modern web pages that perform well across devices. The changes were evolutionary and focused on improving semantics, interactivity, and the web’s role as a capable application platform, not merely incremental tag additions.</p>
+
+    <footer>
+      <p><a href="../blog.html">Back to Blog</a> <span style="margin:0 12px;color:#9eb3c7;">|</span> <a href="../index.html">Home</a></p>
+    </footer>
+  </article>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"HTML vs HTML5, What Actually Changed","author":{"@type":"Person","name":"Ramu Pandey"},"datePublished":"2026-05-23","mainEntityOfPage":"https://pandeyramu.com.np/blog/html-vs-html5.html"}
+  </script>
+</body>
+</html>
+<script src="../link-fix.js" defer></script>

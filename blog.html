@@ -3,13 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog & Articles | Ramu Pandey</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-     crossorigin="anonymous"></script>
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Ramu Pandey">
+    <meta name="theme-color" content="#1458a6">
+    <link rel="canonical" href="https://pandeyramu.com.np/blog.html">
 
-    <meta name="description" content="Read articles, tips, and tutorials about web development, coding, and online quizzes by Ramu Pandey.">
+    <title>Blog | Web Dev Tips by Ramu Pandey</title>
+    <meta name="description" content="Read web development tips, CEE preparation guides, and learning insights by Ramu Pandey.">
     <link rel="stylesheet" href="blog.css">
-    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="icon" href="favicon2.png" type="image/png">
+    <!-- Twitter / Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ramu Pandey">
+    <meta property="og:url" content="https://pandeyramu.com.np/blog.html">
+    <meta property="og:title" content="Blog | Web Dev Tips by Ramu Pandey">
+    <meta property="og:description" content="Read web development tips, CEE preparation guides, and learning insights by Ramu Pandey.">
+    <meta property="og:image" content="https://pandeyramu.com.np/logo.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blog | Web Dev Tips by Ramu Pandey">
+    <meta name="twitter:description" content="Read web development tips, CEE preparation guides, and learning insights by Ramu Pandey.">
+    <meta name="twitter:image" content="https://pandeyramu.com.np/logo.jpg">
+    <style>
+        .blog-header {
+            text-align: left;
+            padding: 34px 24px 10px;
+        }
+        .blog-header h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #10324f;
+            margin-bottom: 8px;
+        }
+        .blog-header p {
+            color: #52657a;
+            font-size: 1.05rem;
+        }
+        .blog-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+        .blog-article {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 220px;
+        }
+        .post-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            font-size: .92rem;
+            color: #5b6c7d;
+        }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 999px;
+            color: #fff;
+            font-weight: 700;
+            font-size: .85rem;
+        }
+        .post-excerpt { line-height: 1.75; color:#415166; }
+        .read-more {
+            margin-top: auto;
+            font-weight: 800;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -21,19 +84,52 @@
 
         <main>
             <section class="blog-section">
-                <article class="blog-article">
-                    <h2><a href="#">How to Prepare for CEE Effectively</a></h2>
-                    <p>Learn tips and strategies to improve your Common Entrance Examination preparation...</p>
+                <article class="blog-article" style="border-color:#d8e7fb;">
+                    <div class="post-meta"><span class="pill" style="background:#1458a6;">Study Tips</span><span>8 min read</span></div>
+                    <h2><a href="blog/cee-preparation-tips.html">How to Prepare for CEE Effectively</a></h2>
+                    <p class="post-excerpt">Build a realistic routine, focus on high-weightage chapters, and use timed practice to steadily improve your CEE score.</p>
+                    <a class="read-more" href="blog/cee-preparation-tips.html">Read more</a>
                 </article>
 
-                <article class="blog-article">
-                    <h2><a href="#">Top 5 Interactive Web Projects for Beginners</a></h2>
-                    <p>Discover fun web development projects to strengthen your coding skills...</p>
+                <article class="blog-article" style="border-color:#d9ecd9;">
+                    <div class="post-meta"><span class="pill" style="background:#1f8a4c;">Web Dev</span><span>7 min read</span></div>
+                    <h2><a href="blog/web-projects-for-beginners.html">Top 5 Web Projects for Beginners</a></h2>
+                    <p class="post-excerpt">Discover fun web development projects to strengthen your coding skills and build confidence with real UI logic.</p>
+                    <a class="read-more" href="blog/web-projects-for-beginners.html">Read more</a>
                 </article>
 
-                <article class="blog-article">
-                    <h2><a href="#">Improving Typing Speed: Tools & Techniques</a></h2>
-                    <p>Check out simple ways to improve typing speed and accuracy using online tools...</p>
+                <article class="blog-article" style="border-color:#f2dfc1;">
+                    <div class="post-meta"><span class="pill" style="background:#cc7a00;">Typing</span><span>6 min read</span></div>
+                    <h2><a href="blog/improve-typing-speed.html">Improving Typing Speed: Tools & Techniques</a></h2>
+                    <p class="post-excerpt">Check out simple ways to improve typing speed and accuracy using online tools and focused practice habits.</p>
+                    <a class="read-more" href="blog/improve-typing-speed.html">Read more</a>
+                </article>
+                <article class="blog-article" style="border-color:#dbe9f6;">
+                    <div class="post-meta"><span class="pill" style="background:#0f7a8a;">Django</span><span>9 min read</span></div>
+                    <h2><a href="blog/how-i-built-cee-mcq-platform.html">How I Built a CEE MCQ Platform with Django</a></h2>
+                    <p class="post-excerpt">Behind-the-scenes of my largest project: architecture, Django choices, and lessons learned from building a live practice platform.</p>
+                    <a class="read-more" href="blog/how-i-built-cee-mcq-platform.html">Read more</a>
+                </article>
+
+                <article class="blog-article" style="border-color:#eaded9;">
+                    <div class="post-meta"><span class="pill" style="background:#b56a00;">Web Basics</span><span>5 min read</span></div>
+                    <h2><a href="blog/html-vs-html5.html">HTML vs HTML5, What Actually Changed</a></h2>
+                    <p class="post-excerpt">Understand the practical differences between HTML and HTML5 and what beginners should focus on today.</p>
+                    <a class="read-more" href="blog/html-vs-html5.html">Read more</a>
+                </article>
+
+                <article class="blog-article" style="border-color:#e4e8f8;">
+                    <div class="post-meta"><span class="pill" style="background:#5a67d8;">Domain</span><span>5 min read</span></div>
+                    <h2><a href="blog/how-to-get-com-np-domain.html">How to Get a .com.np Domain in Nepal, Step by Step</a></h2>
+                    <p class="post-excerpt">A step-by-step guide to registering a .com.np domain in Nepal with tips to avoid common pitfalls.</p>
+                    <a class="read-more" href="blog/how-to-get-com-np-domain.html">Read more</a>
+                </article>
+
+                <article class="blog-article" style="border-color:#f0e3cf;">
+                    <div class="post-meta"><span class="pill" style="background:#8a5b00;">Typing</span><span>6 min read</span></div>
+                    <h2><a href="blog/how-i-built-typing-speed-test.html">How I Built a Typing Speed Test from Scratch</a></h2>
+                    <p class="post-excerpt">A developer walkthrough showing architecture, timing logic, and UX choices for a typing test.</p>
+                    <a class="read-more" href="blog/how-i-built-typing-speed-test.html">Read more</a>
                 </article>
             </section>
         </main>
@@ -42,10 +138,16 @@
             <p>&copy; 2026 Ramu Pandey. All Rights Reserved.</p>
             <nav>
                 <a href="index.html">Home</a> |  
-                <a href="privacy.html">Privacy / Terms</a>
+                <a href="privacy.html">Privacy Policy</a> | 
+                <a href="contact.html">Contact</a>
             </nav>
+            <!-- AdSense placeholder (commented) -->
+            <!--
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="2222222222" data-ad-format="auto"></ins>
+            -->
         </footer>
 
     </div>
 </body>
 </html>
+<script src="link-fix.js" defer></script>

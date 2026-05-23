@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact | Ramu Pandey</title>
+  <meta name="description" content="Contact page for Ramu Pandey, send a quick message and get a thank-you response.">
+  <link rel="canonical" href="https://pandeyramu.com.np/contact.html">
+  <link rel="icon" href="favicon2.png" type="image/png">
+  <link rel="stylesheet" href="web.css">
+  <style>
+    body {
+      background: #f4f7fb;
+      color: #17324d;
+    }
+    .contact-shell {
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 16px 40px;
+    }
+    .contact-card {
+      background: #fff;
+      border: 1px solid #e4edf7;
+      border-radius: 16px;
+      box-shadow: 0 12px 34px rgba(12, 32, 53, 0.08);
+      padding: 32px;
+    }
+    .contact-card h1 {
+      margin-bottom: 12px;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      color: #10253d;
+    }
+    .contact-card p {
+      color: #4a5d73;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .contact-form {
+      margin-top: 18px;
+    }
+    .contact-form label {
+      display: block;
+      margin: 14px 0 6px;
+      font-weight: 700;
+      color: #1f3550;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      border: 1px solid #cfdceb;
+      border-radius: 12px;
+      background: #fff;
+      padding: 14px 16px;
+      font-size: 1rem;
+      color: #10253d;
+      box-shadow: none;
+    }
+    .contact-form textarea {
+      min-height: 170px;
+      resize: vertical;
+    }
+    .contact-form .linkbtn {
+      width: 100%;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 999px;
+      background: #1458a6;
+      color: #fff;
+      font-weight: 700;
+      padding: 14px 18px;
+      text-decoration: none;
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .contact-form .linkbtn:hover {
+      background: #0f4a86;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(20, 88, 166, 0.18);
+    }
+    .contact-links-row {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .contact-links-row a {
+      color: #1458a6;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .contact-links-row a:hover {
+      text-decoration: none;
+    }
+    .contact-card a {
+      text-decoration: none;
+      color: #1458a6;
+    }
+    .contact-card a:hover {
+      text-decoration: none;
+    }
+    #contact-status {
+      margin-top: 12px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main class="contact-shell">
+    <section class="contact-card">
+    <h1>Contact</h1>
+    <p>If you have questions about the practice MCQs, find an issue on the site, or want to share feedback, you can use the form below. We try to keep the site simple and easy to use, so feedback is always welcome.</p>
+
+    <form id="contact-form" class="contact-form" onsubmit="return false;">
+      <label for="name">Your name</label>
+      <input id="name" name="name" type="text" placeholder="Your name" required>
+
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="6" placeholder="Write your message..." required></textarea>
+
+      <button type="submit" id="contact-send-btn" class="linkbtn">Submit</button>
+      <div id="contact-status" aria-live="polite" style="margin-top:12px"></div>
+    </form>
+
+    <div class="contact-links-row">
+      <a href="blog.html">Back to Blog</a>
+      <a href="index.html">Home</a>
+    </div>
+
+    <script>
+    (function () {
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('contact-status');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const name = form.elements.name.value.trim();
+        const email = form.elements.email.value.trim();
+        const message = form.elements.message.value.trim();
+
+        if (!name || !email || !message) {
+          status.textContent = 'Please fill in all fields.';
+          status.style.color = '#c0392b';
+          return;
+        }
+
+        status.textContent = 'Thank you for contacting us!';
+        status.style.color = '#1458a6';
+        form.reset();
+      });
+    })();
+    </script>
+
+    <script src="link-fix.js" defer></script>
+    </section>
+  </main>
+</body>
+</html>
