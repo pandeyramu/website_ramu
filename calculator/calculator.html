@@ -10,6 +10,8 @@
 <meta name="description" content="Use this interactive online calculator by Pandey Ramu to perform basic and advanced calculations. Easy to use, responsive, and perfect for practice.">
 <meta name="keywords" content="Calculator, Online Calculator, Pandey Ramu, Web Development Project, Math Tool">
 <meta name="author" content="Pandey Ramu">
+<meta name="theme-color" content="#1458a6">
+<link rel="canonical" href="https://pandeyramu.com.np/calculator/calculator.html">
 
 <!-- Open Graph -->
 <meta property="og:title" content="Online Calculator | Pandey Ramu">
@@ -26,48 +28,132 @@
 
 <link rel="icon" href="favicon.png" type="image/png">
 <link rel="stylesheet" href="calculator.css">
+<style>
+body {
+  font-family: Inter, Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.project-page {
+  width: min(100%, 960px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+
+.project-intro {
+  width: 100%;
+  background: rgba(22, 27, 34, 0.96);
+  border: 1px solid rgba(20, 88, 166, 0.28);
+  border-radius: 18px;
+  padding: 22px 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.project-intro h1 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-bottom: 10px;
+  color: #f7fbff;
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.project-links a {
+  color: #9cc9ff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.project-links a:hover {
+  text-decoration: underline;
+}
+
+.project-intro p {
+  color: #b7c4d6;
+  line-height: 1.75;
+  margin-bottom: 10px;
+}
+</style>
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-<main class="calculator">
+<header class="site-header">
+  <div class="site-nav">
+    <a class="site-brand" href="../index.html">Ramu Pandey</a>
+    <details class="nav-menu">
+      <summary class="nav-toggle">Menu</summary>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="../index.html">Home</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main class="project-page" style="padding: 20px 16px 48px;">
+  <section class="project-intro">
+    <h1>Calculator Project</h1>
+    <p><strong>What it is:</strong> This calculator is a small frontend project built with HTML, CSS, and JavaScript to practice layout design, event handling, and state management. It keeps the interface simple, but the logic behind the display and buttons gives real practice with how interactive pages work.</p>
+    <p><strong>How to use it:</strong> Press the number buttons, choose an operator, and use the display just like a basic calculator. You can clear the current entry, remove the last digit, or reset everything with AC. The layout is made for quick mobile and desktop use, so the buttons remain easy to tap and read.</p>
+    <p><strong>What I learned:</strong> Building this project helped me think carefully about how users move through a task. I learned to separate the visual layout from the calculation logic, keep track of what the user has entered, and make the interface feel stable instead of fragile.</p>
+  </section>
+
+  <section class="calculator">
     <header class="header">
-        <div class="title">Calculator</div>
-        <button class="theme" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      <div class="title">Calculator</div>
+      <button class="theme" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
     </header>
 
     <section class="mode" aria-label="Calculator Mode">Basic</section>
 
     <section class="display" aria-label="Calculator Display">
-        <div class="expression" id="expression"></div>
-        <div class="result" id="result">0</div>
+      <div class="expression" id="expression"></div>
+      <div class="result" id="result">0</div>
     </section>
 
     <section class="buttons" aria-label="Calculator Buttons">
-        <button class="clear" onclick="clearAll()">AC</button>
-        <button class="clear" onclick="clearEntry()">C</button>
-        <button class="function" onclick="backspace()">⌫</button>
-        <button class="operator" onclick="inputOperator('/')">÷</button>
+      <button class="clear" onclick="clearAll()">AC</button>
+      <button class="clear" onclick="clearEntry()">C</button>
+      <button class="function" onclick="backspace()">⌫</button>
+      <button class="operator" onclick="inputOperator('/')">÷</button>
 
-        <button class="number" onclick="inputNumber('7')">7</button>
-        <button class="number" onclick="inputNumber('8')">8</button>
-        <button class="number" onclick="inputNumber('9')">9</button>
-        <button class="operator" onclick="inputOperator('*')">×</button>
+      <button class="number" onclick="inputNumber('7')">7</button>
+      <button class="number" onclick="inputNumber('8')">8</button>
+      <button class="number" onclick="inputNumber('9')">9</button>
+      <button class="operator" onclick="inputOperator('*')">×</button>
 
-        <button class="number" onclick="inputNumber('4')">4</button>
-        <button class="number" onclick="inputNumber('5')">5</button>
-        <button class="number" onclick="inputNumber('6')">6</button>
-        <button class="operator" onclick="inputOperator('-')">−</button>
+      <button class="number" onclick="inputNumber('4')">4</button>
+      <button class="number" onclick="inputNumber('5')">5</button>
+      <button class="number" onclick="inputNumber('6')">6</button>
+      <button class="operator" onclick="inputOperator('-')">−</button>
 
-        <button class="number" onclick="inputNumber('1')">1</button>
-        <button class="number" onclick="inputNumber('2')">2</button>
-        <button class="number" onclick="inputNumber('3')">3</button>
-        <button class="operator add" onclick="inputOperator('+')">+</button>
+      <button class="number" onclick="inputNumber('1')">1</button>
+      <button class="number" onclick="inputNumber('2')">2</button>
+      <button class="number" onclick="inputNumber('3')">3</button>
+      <button class="operator add" onclick="inputOperator('+')">+</button>
 
-        <button class="number zero" onclick="inputNumber('0')">0</button>
-        <button class="number" onclick="inputDecimal()">.</button>
-        <button class="equals" onclick="calculate()">=</button>
+      <button class="number zero" onclick="inputNumber('0')">0</button>
+      <button class="number" onclick="inputDecimal()">.</button>
+      <button class="equals" onclick="calculate()">=</button>
     </section>
+  </section>
 </main>
+
+<footer class="site-footer footer">
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="../index.html">Home</a>
+    <a href="../blog.html">Blog</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+  <p class="copyright">© 2026 Ramu Pandey. All Rights Reserved.</p>
+</footer>
 
 <script src="calculator.js"></script>
 
@@ -86,5 +172,6 @@
   "description": "Interactive online calculator to perform basic and advanced calculations developed by Pandey Ramu."
 }
 </script>
+  <script src="../privacy-banner.js" defer></script>
 </body>
 </html>

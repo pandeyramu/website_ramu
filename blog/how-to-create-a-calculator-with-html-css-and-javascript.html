@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Ramu Pandey">
+  <meta name="theme-color" content="#1458a6">
+  <link rel="canonical" href="https://pandeyramu.com.np/blog/how-to-create-a-calculator-with-html-css-and-javascript.html">
+  <title>How to Create a Calculator with HTML CSS and JavaScript | Ramu Pandey</title>
+  <meta name="description" content="A practical guide to building a calculator with HTML, CSS, and JavaScript, including layout, button behavior, and calculation logic.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Ramu Pandey">
+  <meta property="og:url" content="https://pandeyramu.com.np/blog/how-to-create-a-calculator-with-html-css-and-javascript.html">
+  <meta property="og:title" content="How to Create a Calculator with HTML CSS and JavaScript | Ramu Pandey">
+  <meta property="og:description" content="A practical guide to building a calculator with HTML, CSS, and JavaScript, including layout, button behavior, and calculation logic.">
+  <meta property="og:image" content="https://pandeyramu.com.np/logo.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Create a Calculator with HTML CSS and JavaScript | Ramu Pandey">
+  <meta name="twitter:description" content="A practical guide to building a calculator with HTML, CSS, and JavaScript, including layout, button behavior, and calculation logic.">
+  <meta name="twitter:image" content="https://pandeyramu.com.np/logo.jpg">
+  <link rel="icon" href="../favicon2.png" type="image/png">
+  <link rel="stylesheet" href="../blog.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-nav">
+      <a class="site-brand" href="../index.html">Ramu Pandey</a>
+      <details class="nav-menu">
+        <summary class="nav-toggle">Menu</summary>
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="../index.html">Home</a>
+          <a href="../blog.html">Blog</a>
+          <a href="../contact.html">Contact</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <article class="post-shell">
+    <header class="post-header">
+      <p class="post-kicker">Projects</p>
+      <h1>How to Create a Calculator with HTML CSS and JavaScript</h1>
+      <div class="post-meta"><span>By Ramu Pandey</span><span>Published June 2026</span><span>7 min read</span></div>
+      <p class="post-lead">A calculator is one of the most practical beginner projects because it teaches structure, layout, event handling, and careful state management in one small app. It looks simple on the surface, but the details matter if you want it to feel solid.</p>
+    </header>
+
+    <div class="post-content">
+      <h2>Start with a clear interface</h2>
+      <p>The first step is layout. Before writing any JavaScript, decide where the display will sit, how the number buttons will line up, and how the operator buttons should look. A calculator works best when the interface is familiar, because users already know what to expect. That means your design should be clean, readable, and consistent.</p>
+      <p>HTML gives you the structure. CSS gives you the appearance. If those two layers are clear, the JavaScript layer becomes much easier to manage. A calculator is a great reminder that good frontend work is not just about code logic. It is also about making the screen understandable at a glance.</p>
+
+      <h2>Think carefully about state</h2>
+      <p>The main logic challenge is not the arithmetic itself. It is keeping track of what the user is building. Are they entering a new number? Are they choosing an operator? Have they already pressed equals? Those questions define the state of the calculator, and the app behaves differently depending on the answer.</p>
+      <p>A clear state model prevents bugs like duplicated operators, broken decimals, or results that do not reset correctly. This is why calculator projects teach more than math. They teach you how to design a small flow of user actions and keep the app synchronized with that flow.</p>
+
+      <h2>Handle button events one by one</h2>
+      <p>Each calculator button should do one job. Numbers append digits, operators store the current expression, clear removes the current state, backspace removes one character, and equals computes the result. This one-button-one-action approach keeps the logic readable and easier to debug.</p>
+      <p>It helps to test the buttons in a specific order. First check that numbers appear correctly, then add operators, then verify repeated calculations, then test edge cases such as decimal points and empty display values. Many beginner bugs appear only when a user presses buttons in an unusual sequence, so those edge cases matter.</p>
+
+      <h2>Keep calculations safe and predictable</h2>
+      <p>JavaScript gives you a few ways to evaluate expressions, but not all of them are equally good for a beginner project. The key idea is to keep the input controlled. Let the calculator build the expression from known buttons instead of accepting random text. That makes the result more predictable and reduces the chance of bad input breaking the app.</p>
+      <p>If you later add advanced functions like percentages or scientific buttons, expand the parser carefully instead of stuffing everything into one huge function. Small, testable steps are safer than a giant rewrite.</p>
+
+      <h2>Design for real use, not just demonstration</h2>
+      <p>A calculator should feel usable on both desktop and mobile. Buttons should be large enough to tap comfortably, the display should be easy to read, and the result should stand out from the rest of the interface. Simple touches like this turn a classroom project into something that feels finished.</p>
+      <p>That matters because users judge quality quickly. If the calculator responds smoothly and looks stable, the project feels trustworthy. If the layout is cramped or the buttons misalign, even correct logic will feel weak. Good frontend work connects the logic and the visual experience.</p>
+
+      <h2>What this project taught me</h2>
+      <p>Building a calculator helped me understand the importance of clean event flows and state updates. It also showed me that small projects can still benefit from thoughtful structure. The more I worked on the calculator, the more I understood how to break a task into pieces that are easy to test and easy to improve later.</p>
+      <p>That lesson applies to every frontend project I build now. If the interaction can be described clearly, the code is usually easier to write clearly too.</p>
+    </div>
+  </article>
+   <footer class="site-footer">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="../blog.html">Blog</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <p class="copyright">© 2026 Ramu Pandey. All Rights Reserved.</p>
+    </footer>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Improve Typing Speed: Tools and Techniques",
+      "author": {"@type": "Person", "name": "Ramu Pandey"},
+      "datePublished": "2026-05-23",
+      "description": "Why typing speed matters and practical steps to improve accuracy and words-per-minute.",
+      "mainEntityOfPage": "https://pandeyramu.com.np/blog/improve-typing-speed.html"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://pandeyramu.com.np/"},
+        {"@type":"ListItem","position":2,"name":"Blog","item":"https://pandeyramu.com.np/blog.html"},
+        {"@type":"ListItem","position":3,"name":"How to Improve Typing Speed","item":"https://pandeyramu.com.np/blog/improve-typing-speed.html"}
+      ]
+    }
+    </script>
+  
+  <script src="../privacy-banner.js" defer></script>
+</body>
+</html>

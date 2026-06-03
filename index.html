@@ -9,10 +9,6 @@
 <link rel="canonical" href="https://pandeyramu.com.np/">
 
 <title>Ramu Pandey | Web Developer Portfolio</title>
-<!-- AdSense placeholder - uncomment after approval -->
-<!--
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
--->
 <meta name="description" content="Explore Ramu Pandey's portfolio, web projects, interactive games, and tools built with HTML, CSS, and JavaScript. Student developer from Nepal.">
 <meta name="keywords" content="Ramu Pandey, web development, portfolio, projects, games">
 
@@ -33,9 +29,24 @@
 <link rel="icon" href="favicon2.png" type="image/png">
 <link rel="apple-touch-icon" href="logo.jpg">
 <link rel="stylesheet" href="web.css">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container">
+<body class="page-home">
+    <header class="site-header">
+        <div class="site-nav">
+            <a class="site-brand" href="index.html">Ramu Pandey</a>
+            <details class="nav-menu">
+                <summary class="nav-toggle">Menu</summary>
+                <nav class="nav-links" aria-label="Primary navigation">
+                    <a href="index.html">Home</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="contact.html">Contact</a>
+                </nav>
+            </details>
+        </div>
+    </header>
+
+    <div class="image-container">
         <div class="introduction fade-in">
             <div id="logo">
                 <img src="logo.jpg" alt="Ramu Pandey - Web Developer Portfolio" width="200" height="200">
@@ -49,12 +60,16 @@
         <section id="aboutme" class="fade-in">
             <h2 id="about">About Me</h2>
             <p id="intro">
-                Welcome to my portfolio!<br><br>
-                I'm a passionate learner exploring the world of web development with HTML, CSS, and JavaScript. Currently,
-                I'm building my skills by creating small projects like interactive games and web tools.<br>
-                Here, you'll find a collection of my practice projects such as Tic Tac Toe, Rock Paper Scissors, calculators, typing tests, and more fun experiments as I grow as a developer.<br>
-                I'm eager to keep learning, improve my coding skills, and one day contribute to bigger projects. When I'm
-                not coding, I enjoy exploring new tech concepts and finding creative ways to solve problems.
+                Welcome to my portfolio. I am Ramu Pandey, a student from Nepal who is learning web development one project at a time.
+                My main focus is HTML, CSS, and JavaScript, and I enjoy turning simple ideas into interactive pages that feel useful and
+                practical. I started this site to document my progress, share what I learn, and build a body of work that shows how I grow
+                through practice instead of waiting for perfect knowledge.<br><br>
+                I built these projects because I believe learning becomes stronger when it is connected to real things. A calculator teaches
+                logic, a game teaches state management, a typing test teaches timing and accuracy, and a blog teaches content structure and
+                communication. Each project helps me understand how design, code, and user experience fit together.<br><br>
+                My goal is to become a better frontend developer and eventually work on larger, more meaningful projects for students and
+                users in Nepal. I want to keep improving my skills, share clear explanations, and create web tools that are both simple and
+                genuinely helpful.
             </p>
         </section>
 
@@ -96,40 +111,18 @@
                 <a href="typingspeedtest/typing.html" class="linkbtn" target="_blank">Test Now</a>
             </div>
         </div>
-        <footer id="foot" class="fade-in">
-    <h2>Get In Touch</h2>
-    <p>I'm always open to discussing new opportunities and interesting projects!</p>
-
-    <!-- Contact Links -->
-    <div class="contact-links">
-        <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" class="btn" rel="noopener noreferrer">📧 Email</a>
-        <a href="https://github.com/pandeyramu" target="_blank" class="btn" rel="noopener noreferrer">🐱 GitHub</a>
-        <a href="https://www.facebook.com/ramu.pandey38" target="_blank" class="btn" rel="noopener noreferrer">ⓕ Facebook</a>
     </div>
-
-    <!-- Internal Navigation Links -->
-    <div class="footer-links">
-        <a href="blog.html">Blog</a> |
-        <a href="privacy.html">Privacy Policy</a> |
-        <a href="contact.html">Contact</a>
-    </div>
-
-        <!-- AdSense placeholder (commented) -->
-        <!--
-        <script async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-            crossorigin="anonymous">
-        </script>
-        -->
-
-        <!-- Copyright -->
-    <p class="copyright">© 2026 Ramu Pandey. All Rights Reserved.</p>
-</footer>
-
-    </div>
-
+<footer class="site-footer fade-in">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="blog.html">Blog</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <p class="copyright">© 2026 Ramu Pandey. All Rights Reserved.</p>
+        </footer>
     <script src="web.js" defer></script>
     <script src="link-fix.js" defer></script>
+    <script src="privacy-banner.js" defer></script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">

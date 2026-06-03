@@ -1,18 +1,18 @@
 body {
-  background-color: rgb(11, 128, 116);
-  background-image: linear-gradient(135deg, #078684, rgb(15, 160, 90));
-  font-family: 'Arial', sans-serif;
-  color: rgb(0, 0, 0);
+  background: #f0f2f5;
+  color: #1f2328;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   width: 100%;
 }
+
 #header {
   text-align: center;
   font-size: 2rem;
   padding: 15px;
-  color: #fff;
+  color: #0f3460;
 }
 .box {
   display: grid;
@@ -27,26 +27,26 @@ body {
 }
 .content {
   font-size: 2rem;
-  color: #050303;
+  color: #0f3460;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   aspect-ratio: 1/1;
-  background-color: #00bcd4;
+  background-color: #f3ff52;
   border-radius: 10px;
-  border: 2px solid #fff;
+  border: 1px solid #85a5ce;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .content:hover:not(.inactive):not(:disabled) {
-  background-color: #0288d1;
-  transform: scale(0.9);
-  box-shadow: 2px 7px 30px rgba(186, 23, 195, 1);
+  background-color: #ecf4ff;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(20, 88, 166, 0.14);
 }
 .content:disabled {
-  background-color: #00bcd4;
+  background-color: #e9eef4;
   cursor: not-allowed;
   box-shadow: none;       
 }
@@ -57,10 +57,11 @@ background-color: #00bcd4;
 
 #reset {
   display: block;
-  background-color: #9b1a56;
+  background-color: #0f3460;
+  color: #fff;
   padding: 12px 24px;
-  border-radius: 20px;
-  border: 2px solid #fff;
+  border-radius: 999px;
+  border: 1px solid #0f3460;
   cursor: pointer;
   margin: 20px auto;
   font-size: 1.2rem;
@@ -68,12 +69,13 @@ background-color: #00bcd4;
 }
 
 #reset:hover {
-  background-color: #c2185b;
-  transform: scale(1.05);
+  background-color: #1458a6;
+  border-color: #1458a6;
+  transform: translateY(-1px);
 }
 
 .msgB {
-  background-color: #00e676;
+  background-color: #fff8dc;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,7 +87,7 @@ background-color: #00bcd4;
   height: auto;
   min-height: 60px;
   font-size: 1rem;
-  color: #000;
+  color: #1f2328;
   padding: 10px;
   text-align: center;
   overflow-wrap: anywhere;

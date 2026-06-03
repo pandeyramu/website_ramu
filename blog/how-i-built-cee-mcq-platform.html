@@ -3,75 +3,122 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Ramu Pandey">
+  <meta name="theme-color" content="#1458a6">
+  <link rel="canonical" href="https://pandeyramu.com.np/blog/how-i-built-cee-mcq-platform.html">
   <title>How I Built a CEE MCQ Platform with Django | Ramu Pandey</title>
   <meta name="description" content="A developer's walkthrough: building a chapter-wise CEE MCQ platform using Django, architecture, design choices, and lessons learned.">
-  <link rel="canonical" href="https://pandeyramu.com.np/blog/how-i-built-cee-mcq-platform.html">
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Ramu Pandey">
+  <meta property="og:url" content="https://pandeyramu.com.np/blog/how-i-built-cee-mcq-platform.html">
   <meta property="og:title" content="How I Built a CEE MCQ Platform with Django | Ramu Pandey">
   <meta property="og:description" content="A developer's walkthrough: building a chapter-wise CEE MCQ platform using Django, architecture, design choices, and lessons learned.">
   <meta property="og:image" content="https://pandeyramu.com.np/logo.jpg">
-  <link rel="icon" href="../favicon.ico">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How I Built a CEE MCQ Platform with Django | Ramu Pandey">
+  <meta name="twitter:description" content="A developer's walkthrough: building a chapter-wise CEE MCQ platform using Django, architecture, design choices, and lessons learned.">
+  <meta name="twitter:image" content="https://pandeyramu.com.np/logo.jpg">
+  <link rel="icon" href="../favicon2.png" type="image/png">
   <link rel="stylesheet" href="../blog.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-  <article>
-    <h1>How I Built a CEE MCQ Platform with Django</h1>
-    <p class="lead"><strong>By Ramu Pandey</strong> · Published: 2026-05-23 · 9 min read</p>
+  <header class="site-header">
+    <div class="site-nav">
+      <a class="site-brand" href="../index.html">Ramu Pandey</a>
+      <details class="nav-menu">
+        <summary class="nav-toggle">Menu</summary>
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="../index.html">Home</a>
+          <a href="../blog.html">Blog</a>
+          <a href="../contact.html">Contact</a>
+        </nav>
+      </details>
+    </div>
+  </header>
 
-    <p>Building the CEE MCQ platform was the largest project I had undertaken as a student developer. The goal was simple but ambitious: create a chapter-wise MCQ practice site that is fast, easy to navigate, and replicable for thousands of questions. I chose Django because it provides a strong, well-documented backend with a batteries-included approach which made it possible to handle models, admin, templating, and sitemaps with minimal overhead.</p>
+  <article class="post-shell">
+    <header class="post-header">
+      <p class="post-kicker">Django Project</p>
+      <h1>How I Built a CEE MCQ Platform with Django</h1>
+      <div class="post-meta">
+        <span>By Ramu Pandey</span>
+        <span>Published May 2026</span>
+        <span>9 min read</span>
+      </div>
+      <p class="post-lead">Building the CEE MCQ platform was the largest project I had undertaken as a student developer. The goal was simple but ambitious: create a chapter-wise MCQ practice site that is fast, easy to navigate, and scalable for thousands of questions across Biology, Chemistry, Physics, and MAT.</p>
+    </header>
 
-    <h2>Project goals and constraints</h2>
-    <p>The platform needed to support: organized chapter/subchapter structures, fast question lookup, per-user test results, simple content editing for new MCQs, and SEO-friendly public pages for indexing by search engines. Additionally, because hosting resources were modest, performance and static-file handling were key constraints. I also wanted the site to be easy to extend and maintain.</p>
+    <div class="post-content">
+      <h2>Project goals and constraints</h2>
+      <p>The platform needed to support organized chapter and subchapter structures, fast question lookup, per-user test results, simple content editing for new MCQs, and SEO-friendly public pages for indexing by search engines. Because hosting resources were modest, performance and static file handling were key constraints from the start. I also wanted the site to be easy to extend and maintain over time without major rewrites.</p>
 
-    <h2>Why Django?</h2>
-    <p>Django’s ORM makes it straightforward to design relational models for subjects, chapters, subchapters and questions. The admin interface offered an immediate CMS for uploading MCQs and editing metadata. Built-in features for URL routing, templating, forms, and security saved development time and reduced boilerplate.</p>
+      <h2>Why Django?</h2>
+      <p>Django's ORM makes it straightforward to design relational models for subjects, chapters, subchapters, and questions. The admin interface offered an immediate content management system for uploading MCQs and editing metadata. Built-in features for URL routing, templating, forms, and security saved development time and reduced boilerplate code significantly compared to building from scratch.</p>
 
-    <h2>Data model and architecture</h2>
-    <p>The core models included: Subject, Chapter, SubChapter, Question, and TestResult. Questions reference a Chapter and optionally a SubChapter, which allows both chapter-wide sets and granular subchapter quizzes. For fast reads, index fields are kept small and optimistic queries are used to assemble page data with select_related when useful.</p>
+      <h2>Data model and architecture</h2>
+      <p>The core models included Subject, Chapter, SubChapter, Question, and TestResult. Questions reference a Chapter and optionally a SubChapter, which allows both chapter-wide question sets and granular subchapter quizzes. For fast reads, index fields are kept small and optimistic queries are used to assemble page data using select_related where useful.</p>
 
-    <h2>SEO and indexing</h2>
-    <p>Since the site’s main goal is discoverability for students searching chapter-wise MCQs, SEO was essential. I implemented friendly slugs, dynamic meta tags via a context processor, breadcrumb structured data, and sitemaps. This combination ensures search engines can crawl subject and chapter pages effectively and improves visibility for specific queries like “mechanics MCQ CEE” or “human physiology MCQ CEE”.</p>
+      <h2>SEO and indexing</h2>
+      <p>Since the site's main goal is discoverability for students searching chapter-wise MCQs, SEO was essential from day one. I implemented friendly slugs, dynamic meta tags via a context processor, breadcrumb structured data, and sitemaps. This combination ensures search engines can crawl subject and chapter pages effectively and improves visibility for specific queries like "mechanics MCQ CEE" or "human physiology MCQ CEE".</p>
 
-    <h2>Performance and static files</h2>
-    <p>Hosting resource limits required careful static file handling. I used WhiteNoise for static serving, compressed manifest storage, and GZip middleware for responses. Images and icons are optimised, and scripts are deferred to avoid render-blocking. These changes made the site noticeably faster on modest hosting plans.</p>
+      <h2>Performance and static files</h2>
+      <p>Hosting resource limits required careful static file handling. I used WhiteNoise for static serving, compressed manifest storage, and GZip middleware for responses. Images and icons are optimised, and scripts are deferred to avoid render-blocking. These changes made the site noticeably faster on modest hosting plans and improved Core Web Vitals scores.</p>
 
-    <h2>Deployment and operations</h2>
-    <p>Deploying the site required a simple, repeatable process. I use environment variables for secrets, a small process manager for the app, and staticfile collection during build. Automated deploys run unit checks and collect static files. Backups for question data are scheduled nightly to a safe storage location, and I keep a lightweight health-check endpoint for uptime monitoring.</p>
+      <h2>Data seeding and content workflow</h2>
+      <p>Populating thousands of questions manually is slow and error-prone. I created a CSV import tool and admin forms to batch-import question sets. This import pipeline validates formats, normalises whitespace, and rejects duplicates automatically. Content edits are made through Django admin by trusted contributors to keep the workflow safe while remaining practical for rapid updates.</p>
 
-    <h2>Data seeding and content workflow</h2>
-    <p>Populating thousands of questions manually is slow; I created a CSV import tool and admin forms to batch-import question sets. This import pipeline validates formats, normalises whitespace, and rejects duplicates. Content edits are made through Django admin by trusted contributors to keep the workflow safe while remaining practical for rapid updates.</p>
+      <h2>Security and reliability</h2>
+      <p>Security is important even on small projects. I enforce secure cookies in production, enable CSRF protection, and keep dependency versions updated regularly. Public endpoints are rate-limited where appropriate to mitigate abuse. I also keep the admin interface behind a restricted access policy and use strong passwords for any maintainer accounts.</p>
 
-    <h2>Security and reliability</h2>
-    <p>Security is important even on small projects. I enforce secure cookies in production, enable CSRF protection, and keep dependency versions updated. Public endpoints are rate-limited where appropriate to mitigate abuse. I also keep the admin interface behind a restricted access policy and use strong passwords for any maintainer accounts.</p>
+      <h2>Community feedback and iteration</h2>
+      <p>User feedback is vital for a platform that students depend on for exam preparation. I added a short feedback form and an in-page report feature so students can flag ambiguous questions or errors. This resulted in a steady stream of corrections and improvements that make the platform more reliable over time. Iteration cycles are intentionally short so that feedback gets acted on quickly.</p>
 
-    <h2>Monitoring and analytics</h2>
-    <p>Basic monitoring reveals traffic trends and helps prioritise content. I track page views for chapter pages and monitor which chapters are most frequently attempted; these signals guide content prioritisation. For errors, simple logging with alerts on recurring exceptions ensures I can react quickly to production issues.</p>
+      <h2>User experience and testing</h2>
+      <p>For quizzes, the UI needed to be minimal and distraction-free. I designed question pages with clear navigation, instant feedback, and a results summary that stores basic analytics including score, accuracy, and time taken. Tests are checkpointed to avoid losing progress and a simple error log helps users revisit questions they answered incorrectly.</p>
 
-    <h2>Community feedback and iteration</h2>
-    <p>User feedback is vital. I added a short feedback form and an in-page report feature so students can flag ambiguous questions or errors. This resulted in a steady stream of corrections and improvements that make the platform more reliable over time. Iteration cycles are short, so collect feedback, patch content, and redeploy within a day where possible.</p>
+      <h2>Lessons learned</h2>
+      <p>Key takeaways from building the platform: keep models simple, design URLs for humans and SEO at the same time, automate sitemap generation early, and measure performance before it becomes a problem. Prioritise features that directly help students such as chapter filters and revision lists before adding anything decorative.</p>
 
-    <h2>User experience and testing</h2>
-    <p>For quizzes, the UI needed to be minimal and distraction-free. I designed question pages with clear navigation, instant feedback, and a results summary that stores basic analytics (score, accuracy, time taken). Tests are checkpointed to avoid losing progress and a simple error log helps users revisit mistaken questions.</p>
-
-    <h2>Lessons learned</h2>
-    <p>Key takeaways from building the platform: keep models simple, design URLs for humans and SEO, automate sitemap generation, and measure performance early. Prioritise features that help students (chapter filters, revision lists) before adding bells and whistles.</p>
-
-    <h2>Next steps and extensibility</h2>
-    <p>The platform is designed to be extended. Adding multi-author blog posts, user accounts with progress graphs, and exportable reports are natural next steps. The codebase is intentionally modular so future contributors can add subjects or translate content without major rewrites.</p>
-
-    <footer>
-      <p><a href="../blog.html">Back to Blog</a> <span style="margin:0 12px;color:#9eb3c7;">|</span> <a href="../index.html">Home</a></p>
-    </footer>
+      <h2>Next steps and extensibility</h2>
+      <p>The platform is designed to be extended gradually. Adding multi-author blog posts, user accounts with progress graphs, and exportable revision reports are natural next steps. The codebase is intentionally modular so future contributors can add subjects or translate content without major rewrites to the core application.</p>
+    </div>
   </article>
+
+  <footer class="site-footer">
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="../blog.html">Blog</a>
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+    <p class="copyright">© 2026 Ramu Pandey. All Rights Reserved.</p>
+  </footer>
+
   <script type="application/ld+json">
   {
-    "@context":"https://schema.org",
-    "@type":"Article",
-    "headline":"How I Built a CEE MCQ Platform with Django",
-    "author":{"@type":"Person","name":"Ramu Pandey"},
-    "datePublished":"2026-05-23",
-    "mainEntityOfPage":"https://pandeyramu.com.np/blog/how-i-built-cee-mcq-platform.html"
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How I Built a CEE MCQ Platform with Django",
+    "author": {"@type": "Person", "name": "Ramu Pandey"},
+    "datePublished": "2026-05-23",
+    "description": "A developer's walkthrough: building a chapter-wise CEE MCQ platform using Django, architecture, design choices, and lessons learned.",
+    "mainEntityOfPage": "https://pandeyramu.com.np/blog/how-i-built-cee-mcq-platform.html"
   }
   </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://pandeyramu.com.np/"},
+      {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://pandeyramu.com.np/blog.html"},
+      {"@type": "ListItem", "position": 3, "name": "How I Built a CEE MCQ Platform with Django", "item": "https://pandeyramu.com.np/blog/how-i-built-cee-mcq-platform.html"}
+    ]
+  }
+  </script>
+
+  <script src="../privacy-banner.js" defer></script>
 </body>
 </html>

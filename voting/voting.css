@@ -1,24 +1,27 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-    margin: 10px;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 18px;
     overflow-y: auto;
 }
-#img1,#img2 {
-    width: 90vh;
+#candi {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    gap: 18px;
+    max-width: 980px;
+    margin: 0 auto;
+}
+#img1, #img2 {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff; 
-    border: 2px solid #ccc; 
-    margin: 20px;
-    overflow: auto;
+    align-items: stretch;
+    background: #fff;
+    border: 1px solid #e4e8ee;
+    border-left: 4px solid #1458a6;
+    border-radius: 8px;
+    padding: 18px;
+    box-shadow: none;
 }
 input[type="file"], input[type="text"] {
     margin-bottom: 10px;
@@ -28,28 +31,27 @@ input[type="file"], input[type="text"] {
     border-radius: 4px; 
     box-sizing: border-box;
 }
-#cad1,#cad2 {
-    width: 50%;
-    height: 50%;
+#cad1, #cad2 {
+    width: 100%;
+    display: block;
+    align-self: stretch;
+    margin-bottom: 8px;
+}
+.cad {
+    width: 100%;
+    max-width: 180px;
+    height: 140px;
     display: block;
     align-self: center;
-    margin-bottom: 8px; 
-    height: auto;
-
+    margin: 10px 0 8px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #e4e8ee;
+    background: #f7f9fc;
 }
-.cad{
-    width: 20%;
-    height: 15vh;
-    display: block;
-    align-self: center;
-    margin-bottom: 8px; 
-    height: auto;
-
-}
-#candi{
-    border: 3px solid red;
-    overflow:auto;
-    width: 90vh;
+#candi {
+    border: none;
+    overflow: visible;
 }
 #btn{
     margin-top: 15px;

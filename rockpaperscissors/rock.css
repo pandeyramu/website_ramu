@@ -1,17 +1,18 @@
 body {
             margin: 0;
             padding: 0;
-            background-color: rgb(11, 128, 116);
-            background-image: linear-gradient(135deg, #077786, rgb(130, 118, 49));
+            background: #f0f2f5;
+            color: #1f2328;
             min-height: 100vh;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
             overflow-x: hidden;
             width: 100%;
         }
 
         #header {
             text-align: center;
-            background-color: azure;
+            background-color: #fff;
+            color: #0f3460;
             padding: 1.5rem;
             font-size: 2rem;
             margin: 0;
@@ -28,9 +29,9 @@ body {
 
         #message {
             text-align: center;
-            color: aliceblue;
+            color: #0f3460;
             font-size: 2.5rem;
-            background-color: rgb(86, 190, 107);
+            background-color: #fff;
             border-radius: 1rem;
             max-width: 90%;
             padding: 1rem;
@@ -49,16 +50,19 @@ body {
         }
 
         .choice {
-            width: 25vmin;
-            height: 25vmin;
+            width: 120px;
+            aspect-ratio: 1 / 1;
             border-radius: 50%;
             transition: all 0.3s ease;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
+            background: #fff;
+            border: 1px solid #dfe6ef;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            padding: 12px;
+            overflow: hidden;
         }
 
         .choice:hover {
@@ -70,13 +74,13 @@ body {
             transform: scale(0.95);
         }
 
-        img {
-            width: 18vmin;
-            height: 18vmin;
+        .choice img {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
             pointer-events: none;
-            max-width: 100%;
+            display: block;
         }
 
         table,
@@ -104,9 +108,10 @@ body {
 
         #uchoice, #compchoice {
             text-align: center;
-            color: aliceblue;
+            color: #1f2328;
             font-size: 1.6rem;
-            background-color: rgb(196, 118, 59);
+            background-color: #fff;
+            border: 1px solid #dfe6ef;
             border-radius: 1rem;
             padding: 1rem;
             margin: 0;
@@ -124,19 +129,26 @@ body {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-weight: 300;
             justify-content: center;
-            align-items: center;
+            align-items: stretch;
             text-align: center;
             padding: 2rem 1rem;
             flex-wrap: wrap;
         }
 
         .score {
-            background: rgba(255,255,255,0.2);
+            flex: 1 1 140px;
+            max-width: 180px;
+            min-width: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
             padding: 1.5rem;
             border-radius: 1rem;
-            color: aliceblue;
+            color: #1f2328;
+            border: 1px solid #dfe6ef;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            min-width: 100px;
         }
 
         .score p {
@@ -146,7 +158,7 @@ body {
         #usersc, #compsc {
             font-size: 3rem;
             font-weight: bold;
-            color: #FFD700;
+            color: #1458a6;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         @media (max-width: 1024px) {
@@ -176,13 +188,8 @@ body {
             }
             
             .choice {
-                width: 22vmin;
-                height: 22vmin;
-            }
-            
-            img {
-                width: 16vmin;
-                height: 16vmin;
+                width: 100px;
+                padding: 10px;
             }
             
             .scoreb {
@@ -224,13 +231,8 @@ body {
             }
             
             .choice {
-                width: 20vmin;
-                height: 20vmin;
-            }
-            
-            img {
-                width: 14vmin;
-                height: 14vmin;
+                width: 88px;
+                padding: 8px;
             }
             
             .scoreb {
@@ -267,13 +269,8 @@ body {
 
         @media (max-width: 320px) {
             .choice {
-                width: 18vmin;
-                height: 18vmin;
-            }
-            
-            img {
-                width: 12vmin;
-                height: 12vmin;
+                width: 76px;
+                padding: 7px;
             }
             
             .scoreb {
@@ -288,10 +285,11 @@ body {
         }
         #reset {
   display: block;
-  background-color: #9b1a56;
+  background-color: #0f3460;
+  color: #fff;
   padding: 12px 24px;
-  border-radius: 20px;
-  border: 2px solid #fff;
+  border-radius: 999px;
+  border: 1px solid #0f3460;
   cursor: pointer;
   margin: 20px auto;
   font-size: 1.2rem;
@@ -299,8 +297,9 @@ body {
 }
 
 #reset:hover {
-  background-color: #c2185b;
-  transform: scale(1.05);
+  background-color: #1458a6;
+  border-color: #1458a6;
+  transform: translateY(-1px);
 }
  #reset {
     font-size: 2rem;

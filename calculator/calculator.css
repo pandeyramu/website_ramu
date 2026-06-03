@@ -5,15 +5,7 @@
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px;
-    transition: background 0.3s ease;
-    overflow-x: hidden;
-    width: 100%;
+  overflow-x: hidden;
 }
 
 body.dark-theme {
@@ -21,10 +13,10 @@ body.dark-theme {
 }
 
 .calculator {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #ffffff;
+    backdrop-filter: none;
+    border-radius: 18px;
+    border: 1px solid #dfe6ef;
     padding: 25px;
     width: 100%;
     max-width: 400px;
@@ -40,21 +32,21 @@ body.dark-theme {
 }
 
 .title {
-    color: white;
+    color: #0f3460;
     font-size: 1.5rem;
     font-weight: 600;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .theme {
-    background: rgba(255, 255, 255, 0.2);
+    background: #edf3fb;
     border: none;
     border-radius: 50%;
     width: 45px;
     height: 45px;
     font-size: 1.2rem;
     cursor: pointer;
-    color: white;
+    color: #0f3460;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
@@ -69,22 +61,22 @@ body.dark-theme {
 .mode{
     flex: 1;
     padding: 10px 15px;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.7);
+    background: #f7f9fc;
+    color: #0f3460;
     margin-bottom: 10px ;
     border: none;
     border-radius: 12px;
     font-size: 42px;
     font-weight: 500;
     transition: all 0.3s ease;
-     background: rgba(255, 255, 255, 0.25);
+     background: #edf3fb;
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 .display {
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
+    background: #0f3460;
+    color: #fff;
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 15px;
@@ -171,7 +163,7 @@ button {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    color: white;
+    color: #1f2328;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
@@ -180,7 +172,7 @@ button {
 
 button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 18px rgba(15, 52, 96, 0.14);
 }
 
 button:active {
@@ -188,45 +180,48 @@ button:active {
 }
 
 .number {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
+    background: #edf3fb;
+    color: #1f2328;
 }
 
 .number:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: #e2ebf7;
 }
 .operator {
-    background: rgba(255, 159, 10, 0.9);
+    background: #f5c518;
+    color: #0b2548;
     font-weight: 700;
 }
 
 .operator:hover {
-    background: rgba(255, 159, 10, 1);
+    background: #d6ab10;
 }
 .function {
-    background: rgba(52, 152, 219, 0.8);
+    background: #1458a6;
+    color: #fff;
     font-size: 0.8rem;
 }
 
 .function:hover {
-    background: rgba(52, 152, 219, 1);
+    background: #0e3d7a;
 }
 .clear {
-    background: rgba(255, 69, 58, 0.8);
+    background: #d64545;
+    color: #fff;
     font-weight: 700;
 }
 
 .clear:hover {
-    background: rgba(255, 69, 58, 1);
+    background: #ba2f2f;
 }
 .equals {
-    background: linear-gradient(45deg, #ff6b6b, #feca57);
+    background: linear-gradient(45deg, #1458a6, #f5c518);
+    color: #fff;
     font-weight: 700;
     font-size: 1.3rem;
 }
-
 .equals:hover {
-    background: linear-gradient(45deg, #ff5252, #ffc107);
+    background: linear-gradient(45deg, #0e3d7a, #d6ab10);
 }
 .scientific-functions button {
     padding: 10px;
@@ -237,7 +232,9 @@ button:active {
     color: #ff6b6b !important;
     animation: shake 0.5s ease-in-out;
 }
-
+.footer{
+    margin-top: 30px;
+}
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }

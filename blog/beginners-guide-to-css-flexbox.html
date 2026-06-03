@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Ramu Pandey">
+  <meta name="theme-color" content="#1458a6">
+  <link rel="canonical" href="https://pandeyramu.com.np/blog/beginners-guide-to-css-flexbox.html">
+  <title>Beginner's Guide to CSS Flexbox | Ramu Pandey</title>
+  <meta name="description" content="A beginner-friendly guide to CSS Flexbox explaining direction, alignment, spacing, responsive layouts, and common mistakes.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Ramu Pandey">
+  <meta property="og:url" content="https://pandeyramu.com.np/blog/beginners-guide-to-css-flexbox.html">
+  <meta property="og:title" content="Beginner's Guide to CSS Flexbox | Ramu Pandey">
+  <meta property="og:description" content="A beginner-friendly guide to CSS Flexbox explaining direction, alignment, spacing, responsive layouts, and common mistakes.">
+  <meta property="og:image" content="https://pandeyramu.com.np/logo.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Beginner's Guide to CSS Flexbox | Ramu Pandey">
+  <meta name="twitter:description" content="A beginner-friendly guide to CSS Flexbox explaining direction, alignment, spacing, responsive layouts, and common mistakes.">
+  <meta name="twitter:image" content="https://pandeyramu.com.np/logo.jpg">
+  <link rel="icon" href="../favicon2.png" type="image/png">
+  <link rel="stylesheet" href="../blog.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-nav">
+      <a class="site-brand" href="../index.html">Ramu Pandey</a>
+      <details class="nav-menu">
+        <summary class="nav-toggle">Menu</summary>
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="../index.html">Home</a>
+          <a href="../blog.html">Blog</a>
+          <a href="../contact.html">Contact</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <article class="post-shell">
+    <header class="post-header">
+      <p class="post-kicker">CSS</p>
+      <h1>Beginner's Guide to CSS Flexbox</h1>
+      <div class="post-meta"><span>By Ramu Pandey</span><span>Published June 2026</span><span>7 min read</span></div>
+      <p class="post-lead">Flexbox is one of the first layout tools that makes CSS feel powerful instead of confusing. Once you understand the main axis, cross axis, and alignment properties, many common layout problems become much easier to solve.</p>
+    </header>
+
+    <div class="post-content">
+      <h2>Why Flexbox matters for beginners</h2>
+      <p>Before Flexbox, many beginners relied on random margins, floats, or awkward positioning tricks to align elements. That works for tiny pages, but it becomes messy fast. Flexbox gives you a cleaner mental model. You declare a container as flexible, then tell it how the children should flow, align, and space themselves. That makes your code easier to read and easier to adjust later.</p>
+      <p>It is also a great bridge between simple layouts and more advanced ones. If you can use Flexbox well, you can build navigation bars, card rows, centered panels, button groups, and mobile-friendly sections without much stress. For most beginner projects, that covers a lot of the layout work you need.</p>
+
+      <h2>Understand the two axes first</h2>
+      <p>The biggest Flexbox concept is that everything happens around two directions. The main axis is the direction your items flow in, and the cross axis is the direction perpendicular to it. If you use <strong>flex-direction: row</strong>, items go horizontally. If you use <strong>flex-direction: column</strong>, items stack vertically. Once that is clear, the rest of the properties start making sense.</p>
+      <h3>justify-content works on the main axis</h3>
+      <p>This property is used for distributing items along the main direction. It helps with spacing, grouping, and centering. If your items look too close together or too spread out, this is often the property you need to change first.</p>
+      <h3>align-items works on the cross axis</h3>
+      <p>This property controls how items line up vertically when the main axis is horizontal, or horizontally when the main axis is vertical. Many layout problems are simply cross-axis alignment problems in disguise. Learning this early saves a lot of time.</p>
+
+      <h2>The properties you should learn first</h2>
+      <p>You do not need to memorize every Flexbox property on day one. Start with a small core set: display, flex-direction, justify-content, align-items, gap, flex-wrap, and flex. These are enough to build most beginner interfaces. The more you use them, the more natural they become.</p>
+      <p>The <strong>gap</strong> property is especially useful because it removes the need for extra margin hacks between items. <strong>flex-wrap</strong> helps when elements need to move onto a new line on smaller screens. And <strong>flex</strong> allows children to grow or shrink based on available space, which is useful for responsive cards and form layouts.</p>
+
+      <h2>Common beginner layouts made easier</h2>
+      <p>A navigation bar is probably the simplest example. Put the logo on one side, links on the other, and use Flexbox to align them. A card row is another good example: if the screen is wide, the cards sit side by side; if the screen is narrow, they stack. Flexbox handles both without a lot of code.</p>
+      <p>It is also useful for centering content on the page. Many beginners struggle with vertical centering because it used to require awkward tricks. With Flexbox, centering a box both horizontally and vertically becomes straightforward and readable. That is one of the reasons it became so popular so quickly.</p>
+
+      <h2>Common mistakes to avoid</h2>
+      <p>One mistake is using Flexbox for everything just because it is convenient. Flexbox is excellent for one-dimensional layouts, but it is not always the best tool for complex page grids. Another mistake is forgetting that the container controls the layout. If the container is not set up correctly, the children cannot behave the way you expect.</p>
+      <p>Another common issue is mixing too many margin rules with Flexbox spacing. If you are already using <strong>gap</strong> and alignment properties, you often do not need large manual margins. Reducing those extra rules makes the layout easier to maintain and less likely to break on smaller screens.</p>
+
+      <h2>How to practice Flexbox properly</h2>
+      <p>Instead of reading a long list of properties, build small practice pages. Try a centered card, a navbar, a three-column feature section, and a footer with items spread apart. Rebuild the same layout two or three times from memory. That repetition matters more than just scrolling through documentation.</p>
+      <p>Once you are comfortable, combine Flexbox with responsive design. Resize the browser window and see how your layout behaves. If the items stay readable and nicely spaced, you are using Flexbox in the right way.</p>
+    </div>
+</article>
+   <footer class="site-footer">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="../blog.html">Blog</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <p class="copyright">© 2026 Ramu Pandey. All Rights Reserved.</p>
+    </footer>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Improve Typing Speed: Tools and Techniques",
+      "author": {"@type": "Person", "name": "Ramu Pandey"},
+      "datePublished": "2026-05-23",
+      "description": "Why typing speed matters and practical steps to improve accuracy and words-per-minute.",
+      "mainEntityOfPage": "https://pandeyramu.com.np/blog/improve-typing-speed.html"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://pandeyramu.com.np/"},
+        {"@type":"ListItem","position":2,"name":"Blog","item":"https://pandeyramu.com.np/blog.html"},
+        {"@type":"ListItem","position":3,"name":"How to Improve Typing Speed","item":"https://pandeyramu.com.np/blog/improve-typing-speed.html"}
+      ]
+    }
+    </script>
+  <script src="../privacy-banner.js" defer></script>
+</body>
+</html>
