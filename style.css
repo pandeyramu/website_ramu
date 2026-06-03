@@ -518,6 +518,6 @@ body > article { max-width: var(--article-width); }
   flex: 1 0 auto;
 flex: none;}
 }
-.contact-shell{
+.contact-shell, .privacy-shell{
   padding: 32px 0 48px;
 }
