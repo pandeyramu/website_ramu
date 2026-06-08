@@ -1,6 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from CEE_Quiz.models import Subject, Chapter
+from CEE_Quiz.models import Subject, Chapter, SubChapter
 
 class StaticViewSitemap(Sitemap):
     priority = 1.0
@@ -23,6 +23,26 @@ class SubjectSitemap(Sitemap):
     def location(self, obj):
         return f'/subject/{obj.slug}/'
 
+class ChapterSitemap(Sitemap):
+    priority = 0.7
+    changefreq = 'weekly'
+
+    def items(self):
+        return Chapter.objects.all()
+
+    def location(self, obj):
+        return f'/chapter/{obj.slug}/'
+
+class SubChapterSitemap(Sitemap):
+    priority = 0.6
+    changefreq = 'weekly'
+
+    def items(self):
+        return SubChapter.objects.all()
+
+    def location(self, obj):
+        return f'/mcq/{obj.slug}/'
+
 class BlogSitemap(Sitemap):
     priority = 0.7
     changefreq = 'monthly'
@@ -36,8 +56,11 @@ class BlogSitemap(Sitemap):
 
     def location(self, obj):
         return f'/blog/{obj.slug}/'
+
 sitemaps = {
     "static": StaticViewSitemap,
     "subjects": SubjectSitemap,
+    "chapters": ChapterSitemap,
+    "subchapters": SubChapterSitemap,
     "blog": BlogSitemap,
 }

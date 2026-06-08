@@ -19,11 +19,13 @@ from django.views.generic import TemplateView
 from django.urls import path
 from CEE_Quiz import views
 from django.contrib.sitemaps.views import sitemap
-from CEE_Quiz.sitemaps import StaticViewSitemap, SubjectSitemap, BlogSitemap
+from CEE_Quiz.sitemaps import StaticViewSitemap, SubjectSitemap, BlogSitemap, ChapterSitemap, SubChapterSitemap
 
 sitemaps = {
     'static': StaticViewSitemap,
     'subjects': SubjectSitemap,
+    'chapters': ChapterSitemap,
+    'subchapters': SubChapterSitemap,
     'blog': BlogSitemap,
 }
 
