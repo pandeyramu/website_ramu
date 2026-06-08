@@ -765,6 +765,12 @@ body.review-modal-open {
     padding: 20px;
     margin: 20px 0;
 }
+.reported-btn {
+    background: #8e44ad;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.85;
+}
 
 @media (max-width: 1080px) {
     .result-layout {

@@ -498,13 +498,21 @@ async function sendQuestionReport() {
         persistReportedQuestions(reported);
         updateReportedCount();
 
-        const targetButton = quizForm?.querySelector(`.flag-question-btn[data-question-number="${activeFlagPayload.questionNumber}"]`);
-        targetButton?.setAttribute('aria-pressed', 'true');
-        if (targetButton) {
-            targetButton.textContent = 'Reported';
-        }
-        quizForm?.querySelector(`.question-block[data-question-number="${activeFlagPayload.questionNumber}"]`)?.classList.add('flagged');
+       const targetButton = quizForm?.querySelector(
+    `.flag-question-btn[data-question-number="${activeFlagPayload.questionNumber}"]`
+);
 
+if (targetButton) {
+    targetButton.textContent = 'Reported';
+    targetButton.disabled = true; 
+    targetButton.style.pointerEvents = 'none';
+    targetButton.classList.add('reported-btn'); 
+    targetButton.setAttribute('aria-pressed', 'true');
+}
+
+quizForm
+    ?.querySelector(`.question-block[data-question-number="${activeFlagPayload.questionNumber}"]`)
+    ?.classList.add('flagged');
         alert('Review report sent. Thank you.');
         closeFlagModal();
     } catch (error) {

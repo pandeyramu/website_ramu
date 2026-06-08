@@ -1025,6 +1025,12 @@ table {
 body.review-modal-open .full-test-footer {
     display: none;
 }
+.reported-btn {
+    background: #8e44ad;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.85;
+}
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {

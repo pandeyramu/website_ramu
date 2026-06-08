@@ -14,7 +14,7 @@ from django.contrib import messages
 from django.http import Http404, HttpResponse, JsonResponse
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
-from django.db import connection
+from django.db import connection, IntegrityError
 from django.db.utils import DatabaseError
 from django.core.mail import send_mail
 from django.conf import settings
@@ -1228,8 +1228,6 @@ def keepalive(request):
         return HttpResponse("OK", status=200)
     except Exception as e:
         return HttpResponse(f"Error: {str(e)}", status=500)
-
-
 def report_question(request):
     try:
         if request.method != 'POST':
@@ -1241,9 +1239,8 @@ def report_question(request):
         attempt_reference = (payload.get('attempt_reference') or '').strip()
         topic = (payload.get('topic') or '').strip()
         reason = (payload.get('reason') or '').strip()
-        question_id = _parse_non_negative_int(payload.get('question_id'), default=-1)
+        question_id = int(payload.get('question_id') or -1)
         question_text = (payload.get('question_text') or '').strip()
-
         if question_id <= 0 or not question_text or not reason:
             return JsonResponse({'ok': False, 'message': 'Missing question details.'}, status=400)
         exists = QuestionReport.objects.filter(
@@ -1256,72 +1253,64 @@ def report_question(request):
                 'ok': False,
                 'message': 'Already reported for this attempt.'
             }, status=200)
+        subject = f"CEE Quiz Report | QID {question_id}"
 
-        subject = f"CEE Quiz Review Report | QID {question_id}"
-        message = (
-            "🚨Wake Up Master :) ^_^🚨"
+        message = ( 
+            "🚨Wake Up Master :) ^_^🚨\n\n" 
             "🚨 CEE Quiz Report Notification 🚨\n\n"
-            "A question has been flagged for review in the CEE Quiz application.\n"
-            "Please find the details below:\n\n"
-            f"👤 User: {user_name or 'Unknown'}\n"
-            f"🧾 Attempt ID: {attempt_reference or 'N/A'}\n"
-            f"📚 Topic: {topic or 'N/A'}\n"
-            f"⚠️ Reason for Report: {reason}\n"
-            f"🆔 Question ID: {question_id}\n\n"
-            f"📝 Question Text:\n{question_text}\n\n"
-            "This report was generated automatically by the system."
-)
-
-        use_resend = (
-            bool(getattr(settings, 'RESEND_API_KEY', '')) or
-            getattr(settings, 'REPORT_EMAIL_PROVIDER', 'smtp') == 'resend'
-        )
+              "A question has been flagged for review in the CEE Quiz application.\n" 
+              "Please find the details below:\n\n" f"👤 User: {user_name or 'Unknown'}\n" 
+              f"🧾 Attempt ID: {attempt_reference or 'N/A'}\n" 
+              f"📚 Topic: {topic or 'N/A'}\n"
+                f"⚠️ Reason for Report: {reason}\n" 
+                f"🆔 Question ID: {question_id}\n\n" 
+                f"📝 Question Text:\n{question_text}\n\n" 
+                "This report was generated automatically by the system."
+                  )
+        use_resend = bool(getattr(settings, 'RESEND_API_KEY', '')) or \
+                      getattr(settings, 'REPORT_EMAIL_PROVIDER', 'smtp') == 'resend'
 
         email_success = False
 
-        try:
-            if use_resend:
-                resend_key = getattr(settings, 'RESEND_API_KEY', '')
+        if use_resend:
+            resend_key = getattr(settings, 'RESEND_API_KEY', '')
 
-                if not resend_key:
-                    return JsonResponse({
-                        'ok': False,
-                        'message': 'Resend is selected but RESEND_API_KEY is missing.'
-                    }, status=200)
+            if not resend_key:
+                return JsonResponse({
+                    'ok': False,
+                    'message': 'Resend API key missing.'
+                }, status=200)
 
-                response = requests.post(
-                    getattr(settings, 'RESEND_API_URL', 'https://api.resend.com/emails'),
-                    headers={
-                        'Authorization': f'Bearer {resend_key}',
-                        'Content-Type': 'application/json',
-                    },
-                    json={
-                        'from': settings.DEFAULT_FROM_EMAIL,
-                        'to': [getattr(settings, 'REPORT_TO_EMAIL', 'ceequiz9830@gmail.com')],
-                        'subject': subject,
-                        'text': message,
-                    },
-                    timeout=getattr(settings, 'EMAIL_HTTP_TIMEOUT', 10),
-                )
+            response = requests.post(
+                getattr(settings, 'RESEND_API_URL', 'https://api.resend.com/emails'),
+                headers={
+                    'Authorization': f'Bearer {resend_key}',
+                    'Content-Type': 'application/json',
+                },
+                json={
+                    'from': settings.DEFAULT_FROM_EMAIL,
+                    'to': [getattr(settings, 'REPORT_TO_EMAIL', 'admin@example.com')],
+                    'subject': subject,
+                    'text': message,
+                },
+                timeout=getattr(settings, 'EMAIL_HTTP_TIMEOUT', 10),
+            )
 
-                email_success = response.status_code < 300
+            email_success = response.status_code < 300
 
-            else:
-                send_mail(
-                    subject=subject,
-                    message=message,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[getattr(settings, 'REPORT_TO_EMAIL', 'ceequiz9830@gmail.com')],
-                    fail_silently=False,
-                )
-                email_success = True
-
-        except Exception:
-            email_success = False
+        else:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[getattr(settings, 'REPORT_TO_EMAIL', 'admin@example.com')],
+                fail_silently=False,
+            )
+            email_success = True
         if not email_success:
             return JsonResponse({
                 'ok': False,
-                'message': 'Email failed, report not saved.'
+                'message': 'Email failed. Report not saved.'
             }, status=500)
 
         QuestionReport.objects.create(
@@ -1333,17 +1322,16 @@ def report_question(request):
             question_text=question_text
         )
 
-        return JsonResponse({'ok': True, 'message': 'Report submitted successfully.'}, status=200)
+        return JsonResponse({'ok': True, 'message': 'Report submitted successfully.'})
 
-    except (json.JSONDecodeError, UnicodeDecodeError):
+    except json.JSONDecodeError:
         return JsonResponse({'ok': False, 'message': 'Invalid JSON payload.'}, status=400)
 
     except requests.RequestException as exc:
-        return JsonResponse({'ok': False, 'message': f'Email API request failed: {exc}'}, status=200)
+        return JsonResponse({'ok': False, 'message': f'Email API error: {exc}'}, status=500)
 
     except Exception as exc:
-        return JsonResponse({'ok': False, 'message': f'Unexpected report error: {exc}'}, status=200)
-
+        return JsonResponse({'ok': False, 'message': f'Unexpected error: {exc}'}, status=500)
 @cache_page(0)  # Disable caching for development
 def home(request):
     subject_list = _ordered_subjects()
