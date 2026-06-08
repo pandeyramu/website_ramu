@@ -50,6 +50,19 @@
         };
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Quiz",
+      "name": "{% if sub_chapter %}{{ sub_chapter.name }}{% else %}{{ chapter.name }}{% endif %}",
+      "educationalLevel": "HighSchool",
+      "about": {
+        "@type": "Thing",
+        "name": "{{ chapter.subject.name }}"
+      }
+    }
+    </script>
 </head>
 
 <body data-quiz-key="{% if sub_chapter %}subchapter-{{ sub_chapter.id }}{% else %}chapter-{{ chapter.id }}{% endif %}" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="{% if sub_chapter %}{{ chapter.name }} - {{ sub_chapter.name }}{% else %}{{ chapter.name }}{% endif %}" data-exit-url="{% url 'chapters' chapter.subject.slug %}">

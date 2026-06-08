@@ -1,3 +1,4 @@
+from genericpath import exists
 import random
 import re
 import uuid
@@ -17,7 +18,7 @@ from django.db import connection
 from django.db.utils import DatabaseError
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO
+from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO, QuestionReport
 from .sitemaps import sitemaps
 from .seo_provider import get_supabase_page_seo
 
@@ -1245,87 +1246,103 @@ def report_question(request):
 
         if question_id <= 0 or not question_text or not reason:
             return JsonResponse({'ok': False, 'message': 'Missing question details.'}, status=400)
+        exists = QuestionReport.objects.filter(
+            question_id=question_id,
+            attempt_reference=attempt_reference
+        ).exists()
+
+        if exists:
+            return JsonResponse({
+                'ok': False,
+                'message': 'Already reported for this attempt.'
+            }, status=200)
 
         subject = f"CEE Quiz Review Report | QID {question_id}"
         message = (
-            f"User: {user_name or 'Unknown'}\n"
-            f"Attempt: {attempt_reference or 'N/A'}\n"
-            f"Topic: {topic or 'N/A'}\n"
-            f"Reason: {reason}\n"
-            f"Question ID: {question_id}\n\n"
-            f"Question Text:\n{question_text}\n"
+            "🚨Wake Up Master :) ^_^🚨"
+            "🚨 CEE Quiz Report Notification 🚨\n\n"
+            "A question has been flagged for review in the CEE Quiz application.\n"
+            "Please find the details below:\n\n"
+            f"👤 User: {user_name or 'Unknown'}\n"
+            f"🧾 Attempt ID: {attempt_reference or 'N/A'}\n"
+            f"📚 Topic: {topic or 'N/A'}\n"
+            f"⚠️ Reason for Report: {reason}\n"
+            f"🆔 Question ID: {question_id}\n\n"
+            f"📝 Question Text:\n{question_text}\n\n"
+            "This report was generated automatically by the system."
+)
+
+        use_resend = (
+            bool(getattr(settings, 'RESEND_API_KEY', '')) or
+            getattr(settings, 'REPORT_EMAIL_PROVIDER', 'smtp') == 'resend'
         )
 
-        use_resend = bool(getattr(settings, 'RESEND_API_KEY', '')) or getattr(settings, 'REPORT_EMAIL_PROVIDER', 'smtp') == 'resend'
+        email_success = False
 
-        if use_resend:
-            resend_key = getattr(settings, 'RESEND_API_KEY', '')
-            if not resend_key:
-                return JsonResponse(
-                    {'ok': False, 'message': 'Resend is selected but RESEND_API_KEY is missing.'},
-                    status=200,
-                )
+        try:
+            if use_resend:
+                resend_key = getattr(settings, 'RESEND_API_KEY', '')
 
-            response = requests.post(
-                getattr(settings, 'RESEND_API_URL', 'https://api.resend.com/emails'),
-                headers={
-                    'Authorization': f'Bearer {resend_key}',
-                    'Content-Type': 'application/json',
-                },
-                json={
-                    'from': settings.DEFAULT_FROM_EMAIL,
-                    'to': [getattr(settings, 'REPORT_TO_EMAIL', 'ceequiz9830@gmail.com')],
-                    'subject': subject,
-                    'text': message,
-                },
-                timeout=getattr(settings, 'EMAIL_HTTP_TIMEOUT', 10),
-            )
-
-            if response.status_code >= 300:
-                return JsonResponse(
-                    {
+                if not resend_key:
+                    return JsonResponse({
                         'ok': False,
-                        'message': f'Resend API error ({response.status_code}): {response.text[:300]}',
+                        'message': 'Resend is selected but RESEND_API_KEY is missing.'
+                    }, status=200)
+
+                response = requests.post(
+                    getattr(settings, 'RESEND_API_URL', 'https://api.resend.com/emails'),
+                    headers={
+                        'Authorization': f'Bearer {resend_key}',
+                        'Content-Type': 'application/json',
                     },
-                    status=200,
-                )
-        else:
-            if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
-                return JsonResponse(
-                    {'ok': False, 'message': 'Email is not configured on the server. Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD in Render.'},
-                    status=200,
+                    json={
+                        'from': settings.DEFAULT_FROM_EMAIL,
+                        'to': [getattr(settings, 'REPORT_TO_EMAIL', 'ceequiz9830@gmail.com')],
+                        'subject': subject,
+                        'text': message,
+                    },
+                    timeout=getattr(settings, 'EMAIL_HTTP_TIMEOUT', 10),
                 )
 
-            send_mail(
-                subject=subject,
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[getattr(settings, 'REPORT_TO_EMAIL', 'ceequiz9830@gmail.com')],
-                fail_silently=False,
-            )
+                email_success = response.status_code < 300
 
-        return JsonResponse({'ok': True, 'message': 'Review report sent.'})
+            else:
+                send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[getattr(settings, 'REPORT_TO_EMAIL', 'ceequiz9830@gmail.com')],
+                    fail_silently=False,
+                )
+                email_success = True
+
+        except Exception:
+            email_success = False
+        if not email_success:
+            return JsonResponse({
+                'ok': False,
+                'message': 'Email failed, report not saved.'
+            }, status=500)
+
+        QuestionReport.objects.create(
+            question_id=question_id,
+            user_name=user_name,
+            attempt_reference=attempt_reference,
+            topic=topic,
+            reason=reason,
+            question_text=question_text
+        )
+
+        return JsonResponse({'ok': True, 'message': 'Report submitted successfully.'}, status=200)
 
     except (json.JSONDecodeError, UnicodeDecodeError):
         return JsonResponse({'ok': False, 'message': 'Invalid JSON payload.'}, status=400)
-    except OSError as exc:
-        if getattr(exc, 'errno', None) == 101:
-            logger.error('SMTP network unreachable while sending report: %s', message if 'message' in locals() else 'no-message')
-            return JsonResponse(
-                {
-                    'ok': False,
-                    'message': 'Mail server network is unreachable from hosting. SMTP is blocked/unavailable; use an email API provider (SendGrid/Resend/Mailgun).',
-                },
-                status=200,
-            )
-        return JsonResponse({'ok': False, 'message': f'OS error while sending report: {exc}'}, status=200)
+
     except requests.RequestException as exc:
         return JsonResponse({'ok': False, 'message': f'Email API request failed: {exc}'}, status=200)
-    except (socket.timeout, TimeoutError) as exc:
-        return JsonResponse({'ok': False, 'message': f'Mail server timed out: {exc}'}, status=200)
+
     except Exception as exc:
         return JsonResponse({'ok': False, 'message': f'Unexpected report error: {exc}'}, status=200)
-
 
 @cache_page(0)  # Disable caching for development
 def home(request):
@@ -1354,10 +1371,13 @@ def all_subjects(request):
     for subject in subjects:
         chapter_total = Chapter.objects.filter(subject=subject).count()
         hub_items.append({
-            'name': f'{subject.name} MCQ',
-            'url': _subject_alias_url(subject.slug),
-            'description': f'Open {subject.name} MCQ and the {chapter_total} linked chapter pages from one crawl-friendly landing page.',
-        })
+        'name': f'{subject.name} MCQ',
+        'url': _subject_alias_url(subject.slug),
+        'description': (
+            f"Practice {subject.name} MCQs with structured chapter-wise questions. "
+            f"Includes {chapter_total} chapters for focused revision and exam preparation."
+        ),
+    })
 
     request.page_slug = 'all-subjects'
     context = _hub_page_context(
@@ -1368,7 +1388,11 @@ def all_subjects(request):
         og_title='All Subjects | CEE MCQ',
         og_description='Browse every CEE subject landing page and move quickly between Biology, Chemistry, Physics, and MAT.',
         hub_heading='All Subject Entry Points',
-        hub_intro='This hub keeps crawl paths short and gives Google a single page that links to every major subject landing page.',
+        hub_intro=(
+    "This page provides quick access to all major CEE subjects, "
+    "including Biology, Chemistry, Physics, and MAT, "
+    "making navigation simple and structured."
+),
         hub_items=hub_items,
     )
     return render(request, 'seo_hub.html', context)

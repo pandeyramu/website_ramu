@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Sitemap: https://pandeyramu.com.np/sitemap.xml
+
 Disallow: /admin/
-Disallow: /__debug__/
-Sitemap: https://ceemcq.pandeyramu.com.np/sitemap.xml
+Disallow: /full-test/result/

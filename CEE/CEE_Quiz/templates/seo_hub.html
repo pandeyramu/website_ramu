@@ -9,14 +9,21 @@
 {% block extra_head %}
 <style>
     .hub-intro {
-        margin-top: 0.5rem;
-        color: #4b5563;
-        max-width: 68ch;
+         margin: 0.5rem auto 0;
+    color: #4b5563;
+    max-width: 68ch;
+    text-align: center;
+    }
+    h1{
+        font-size: 1.75rem;
+        line-height: 1.2;
+        color: #15324a;
+        text-align: center;
     }
     .hub-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
         margin-top: 1.25rem;
     }
     .hub-card {
@@ -45,11 +52,13 @@
         color: #4b5563;
     }
     .hub-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.7rem;
-        margin-top: 1.3rem;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.3rem;
+    justify-content: center;
+    align-items: center;
+}
     .hub-links a {
         display: inline-flex;
         align-items: center;
@@ -62,6 +71,12 @@
         text-decoration: none;
         font-weight: 600;
     }
+    .hub-links a:hover {
+        background: #ffd94d;
+        transform: translateY(-1px);
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    
 </style>
 {% endblock %}
 
@@ -80,7 +95,6 @@
 
 <div class="hub-links">
     <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'all_subjects' %}">All Subjects</a>
     {# All MCQ removed per request - subject-level links provide needed navigation #}
     <a href="{% url 'full_test' %}">Full Test</a>
 </div>

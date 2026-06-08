@@ -8,7 +8,6 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.name
-
     def save(self, *args, **kwargs):
         if not self.slug:
             base = slugify(self.name) or 'subject'
@@ -107,3 +106,19 @@ class TestResult(models.Model):
 
     def __str__(self):
         return f"{self.name} -{self.topic} - {self.score}"
+class QuestionReport(models.Model):
+    question_id = models.IntegerField()
+    user_name = models.CharField(max_length=100, blank=True)
+    attempt_reference = models.CharField(max_length=100, blank=True)
+    topic = models.CharField(max_length=200, blank=True)
+    reason = models.TextField()
+    question_text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['question_id', 'attempt_reference'],
+                name='unique_question_report_per_attempt'
+            )
+        ]

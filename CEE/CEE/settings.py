@@ -39,7 +39,6 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "pandeyramu.com.np",
-    "ceemcq.pandeyramu.com.np",
     ".onrender.com",
 ]
 
@@ -47,12 +46,11 @@ CSRF_TRUSTED_ORIGINS = [
     "https://ramup.com.np",
     "https://www.ramup.com.np",
     "https://pandeyramu.com.np",
-    "https://ceemcq.pandeyramu.com.np",
     "https://*.onrender.com",
 ]
 
 # Canonical site URL used in templates and structured data
-SITE_URL = os.environ.get('SITE_URL', 'https://ceemcq.pandeyramu.com.np')
+SITE_URL = os.environ.get('SITE_URL', 'https://pandeyramu.com.np')
 
 # Application definition
 
@@ -158,7 +156,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kathmandu'
 
 USE_I18N = True
 

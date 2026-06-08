@@ -8,23 +8,33 @@
     <title>{{ page_seo.meta_title|default:page_default_title }}</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
      crossorigin="anonymous"></script>
+    {% if subject.slug == 'physics' %}
+    <meta name="description" content="Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for Nepal CEE 2025.">
+    {% elif subject.slug == 'chemistry' %}
+    <meta name="description" content="Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for Nepal CEE 2025.">
+    {% elif subject.slug == 'zoology' %}
+    <meta name="description" content="Practice 10,000+ CEE Zoology MCQ questions chapter-wise. Human Physiology, Animal Diversity, Histology — all with answers. Best free Zoology practice for Nepal CEE 2025.">
+    {% elif subject.slug == 'botany' %}
+    <meta name="description" content="Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Genetics, Cell Biology, Biodiversity — all with answers. Best free Botany practice for Nepal CEE 2025.">
+    {% else %}
     <meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
+    {% endif %}
     <meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
 
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph / Social -->
     <meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
-    <meta property="og:description" content="{{ page_seo.og_description|default:page_default_og_description }}">
+    <meta property="og:description" content="{% if subject.slug == 'physics' %}Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for Nepal CEE 2025.{% elif subject.slug == 'chemistry' %}Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for Nepal CEE 2025.{% elif subject.slug == 'zoology' %}Practice 10,000+ CEE Zoology MCQ questions chapter-wise. Human Physiology, Animal Diversity, Histology — all with answers. Best free Zoology practice for Nepal CEE 2025.{% elif subject.slug == 'botany' %}Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Genetics, Cell Biology, Biodiversity — all with answers. Best free Botany practice for Nepal CEE 2025.{% else %}{{ page_seo.og_description|default:page_default_og_description }}{% endif %}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="https://ceemcq.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta property="og:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ subject.name }} Chapters | CEE MCQ">
-    <meta name="twitter:description" content="Practice chapter-wise MCQ questions for {{ subject.name }}. Prepare for Nepal's Common Entrance Examination.">
-    <meta name="twitter:image" content="https://ceemcq.pandeyramu.com.np/static/images/favicon.e1a7d89574b8.png">
+    <meta name="twitter:description" content="{% if subject.slug == 'physics' %}Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for Nepal CEE 2025.{% elif subject.slug == 'chemistry' %}Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for Nepal CEE 2025.{% elif subject.slug == 'zoology' %}Practice 10,000+ CEE Zoology MCQ questions chapter-wise. Human Physiology, Animal Diversity, Histology — all with answers. Best free Zoology practice for Nepal CEE 2025.{% elif subject.slug == 'botany' %}Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Genetics, Cell Biology, Biodiversity — all with answers. Best free Botany practice for Nepal CEE 2025.{% else %}Practice chapter-wise MCQ questions for {{ subject.name }}. Prepare for Nepal's Common Entrance Examination.{% endif %}">
+    <meta name="twitter:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
