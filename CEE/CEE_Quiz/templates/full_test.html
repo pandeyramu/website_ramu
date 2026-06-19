@@ -1,385 +1,1251 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 {% load static %}
 {% load quiz_extra %}
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page_seo.meta_title|default:page_default_title }}</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-     crossorigin="anonymous"></script>
-    <!-- SEO Meta -->
-    <meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
-    <meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
-    <meta name="author" content="Ramu Pandey">
+{% block title %}
+{{ page_seo.meta_title|default:page_default_title }}
+{% endblock %}
 
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
-    <!-- Open Graph / Social -->
-    <meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
-    <meta property="og:description" content="{{ page_seo.og_description|default:page_default_og_description }}">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
+{% block extra_head %}
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Full CEE MCQ Test | 180 Questions | CEE MCQ">
-    <meta name="twitter:description" content="Take the full CEE MCQ test online with 180 questions and detailed scoring.">
-    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
+ crossorigin="anonymous"></script>
 
-    <!-- Schema Markup -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Quiz",
-        "name": "Full CEE MCQ Test",
-        "description": "Take the full CEE practice test online with 180 questions, 2.5 hours duration, and detailed results.",
-        "url": "{{ request.build_absolute_uri }}",
-        "author": {
-            "@type": "Person",
-            "name": "Ramu Pandey",
-            "url": "https://pandeyramu.com.np"
-        }
+
+<!-- SEO -->
+<meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
+<meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
+<meta name="author" content="Ramu Pandey">
+
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+
+<!-- Open Graph -->
+<meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
+<meta property="og:description" content="{{ page_seo.og_description|default:page_default_og_description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image"
+      content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
+
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Full CEE MCQ Test | CEE MCQ">
+<meta name="twitter:description"
+      content="Take the full CEE MCQ test online with 180 questions and detailed scoring.">
+<meta name="twitter:image"
+      content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' }}">
+
+
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        processEscapes: true
+    },
+    options: {
+        skipHtmlTags: [
+            'script',
+            'noscript',
+            'style',
+            'textarea',
+            'pre',
+            'code'
+        ]
     }
-    </script>
+};
+</script>
 
-    <link rel="stylesheet" href="{% static 'css/full_test.css' %}?v=20260508-5">
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <style>
-        html, body { height: 100%; }
-        body { display: flex; flex-direction: column; min-height: 100vh; }
-        .container { flex: 1 0 auto; }
-        .full-test-footer {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            background: linear-gradient(135deg, #0c2f4a, #184f79);
-            margin-top: 2rem;
-            padding: 1rem 1rem 1.15rem;
-            color: rgba(255,255,255,0.88);
-        }
-        .full-test-footer .footer-container {
-            max-width: 880px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .full-test-footer .footer-nav {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 0.7rem;
-            justify-content: center;
-            align-items: center;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-        .full-test-footer .footer-nav a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.45rem 0.8rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.22);
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-        }
-        .full-test-footer .footer-nav a:hover {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-            transform: translateY(-1px);
-        }
-        .full-test-footer .footer-copy {
-            margin-top: 0.85rem;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.82);
-        }
-        .result-actions .btn.retry { background:#6b7280; }
-        .result-actions .btn.home { background:#1458a6; }
-        .result-actions .btn.retry:hover { background:#51545a; color:#fff; transform:translateY(-2px); }
-        .result-actions .btn.home:hover { background:#0f4a86; color:#fff; transform:translateY(-2px); }
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-        /* General home button style for start / running views */
-        .btn.home {
-            background: #1458a6;
-            color: #fff;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
-            transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
-        }
-        .btn.home:hover {
-            background: #0f4a86;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(15,74,134,0.18);
-            color: #fff;
-        }
 
-        /* Vertical stacks used on start / running pages to keep consistent gap */
-        .start-actions, .action-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-            margin-top: 1rem;
-        }
-    </style>
-    <!-- Back-to-home visibility handled explicitly in template markup -->
-</head>
 
-<body data-quiz-key="full-test" data-watermark="{{ watermark_text|default:''|escape }}" data-attempt-reference="{{ attempt_reference|default:'' }}" data-topic="Full Test" data-exit-url="{% url 'home' %}">
-    <div class="quiz-watermark" id="quiz-watermark" aria-hidden="true"></div>
-    <div class="container {% if score is not None %}result-page{% endif %}">
-        <h1>Full MCQ Test</h1>
-        <p>Total Questions: 180 | Time: 2.5 hours | Negative Marking: 0.25 per wrong answer</p>
+<!-- Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Quiz",
+    "name": "Full CEE MCQ Test",
+    "description": "Full CEE practice test with 180 questions and detailed results.",
+    "url": "{{ request.build_absolute_uri }}",
+    "author": {
+        "@type": "Person",
+        "name": "Ramu Pandey",
+        "url": "https://pandeyramu.com.np"
+    }
+}
+</script>
 
-        {% if score is None and not quiz_started %}
-            <div class="start-actions">
-                <form method="get" id="name-form" class="start-form">
-                    <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
-                    <button type="submit" name="start" value="1" id="start_full_test" class="start_test">Start Full MCQ Test</button>
-                </form>
-                <a href="{% url 'home' %}" class="btn home">Back to Home</a>
-            </div>
-        {% endif %}
 
-        {% if questions %}
-            {% if score is None %}
-                <div id="full_test_timer" style="display: block;"></div>
-            {% endif %}
 
-            {# no top Back-to-Home; show Back-to-Home only inside result box after submission #}
+<link rel="stylesheet" href="{% static 'css/full_test.css' %}?v=20260508-5">
 
-            <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}" action="{% url 'full_test' %}" id="full-test-form" style="display: block;">
-                {% csrf_token %}
-                <input type="hidden" name="name" id="hidden-name" value="{{ user_name|default:history_user_name|default:'' }}">
-                <input type="hidden" name="attempt_reference" value="{{ attempt_reference|default:'' }}">
-                <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
-                {% if question_ids_csv %}
-                    <input type="hidden" name="question_ids" value="{{ question_ids_csv }}">
-                {% endif %}
 
-                {% if score is not None %}
-                    <div class="result-layout" style="position:relative; padding-bottom:4.5rem;">
-                        <aside class="history-sidebar">
-                            <div class="history-sidebar-header">
-                                <p class="history-eyebrow">Your last 5 test attempts</p>
-                                <h2 class="history-title">Exact name: {{ history_user_name|default:user_name|default:'User' }}</h2>
-                                <p class="history-note">Matches only the exact submitted name across all tests.</p>
-                            </div>
+<style>
 
-                            {% if history_entries %}
-                                <div class="history-table-wrap">
-                                    <table class="history-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Test</th>
-                                                <th>Attempted</th>
-                                                <th>Marks</th>
-                                                <th>Accuracy</th>
-                                                <th>Speed</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for entry in history_entries %}
-                                                <tr class="{% if forloop.first %}latest-attempt{% endif %}">
-                                                    <td>
-                                                        <span class="history-topic">{{ entry.topic }}</span>
-                                                        <span class="history-meta">{{ entry.created_at|date:"d M, H:i" }}</span>
-                                                        {% if forloop.first %}<span class="history-badge">Recent</span>{% endif %}
-                                                    </td>
-                                                    <td>{{ entry.total_attempted }}</td>
-                                                    <td>{{ entry.score }}</td>
-                                                    <td>{{ entry.accuracy_display }}</td>
-                                                    <td>
-                                                        <span class="history-speed">{{ entry.time_taken_display }}</span>
-                                                        <span class="history-meta">{{ entry.per_question_time_display }}/q</span>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            {% else %}
-                                <div class="history-empty">No previous tests found for this exact name yet.</div>
-                            {% endif %}
-                        </aside>
+html,
+body {
+    height:100%;
+}
 
-                        <div class="result-main">
-                            <div class="score-card">
-                                <h2 class="score-title">Test Results for {{ user_name|default:'User' }}</h2>
-                                <div class="score-stats">
-                                    <div class="stat-item">
-                                        <span class="stat-label">Total Questions:</span>
-                                        <span class="stat-value">{{ total_questions }}</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Attempted:</span>
-                                        <span class="stat-value">{{ total_attempted }}</span>
-                                    </div>
-                                    <div class="stat-item correct">
-                                        <span class="stat-label">Correct:</span>
-                                        <span class="stat-value">{{ total_correct }}</span>
-                                    </div>
-                                    <div class="stat-item wrong">
-                                        <span class="stat-label">Wrong:</span>
-                                        <span class="stat-value">{{ total_wrong }}</span>
-                                    </div>
-                                    <div class="stat-item skipped">
-                                        <span class="stat-label">Skipped:</span>
-                                        <span class="stat-value">{{ total_skipped }}</span>
-                                    </div>
-                                    <div class="stat-item final-score">
-                                        <span class="stat-label">Final Score:</span>
-                                        <span class="stat-value">{{ score }} / {{ total_questions }}</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Time Taken:</span>
-                                        <span class="stat-value">{{ time_taken_display }}</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Per Question:</span>
-                                        <span class="stat-value">{{ per_question_time_display }}</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Accuracy:</span>
-                                        <span class="stat-value">{{ accuracy_percent }}%</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <span class="stat-label">Completion:</span>
-                                        <span class="stat-value">{{ completion_percent }}%</span>
-                                    </div>
-                                </div>
-                                <p class="negative-marking-note">* Negative marking of 0.25 applied per wrong answer</p>
-                            </div>
-                            
-                {% endif %}
 
-                {% if score is None %}
-                    <section id="submit-review-panel" class="submit-review-modal" hidden aria-hidden="true">
-                        <div class="submit-review-backdrop" id="submit-review-backdrop"></div>
-                        <div class="submit-review-panel" role="dialog" aria-modal="true" aria-labelledby="review-modal-title">
-                            <h2 id="review-modal-title">Full Test</h2>
-                            <p class="submit-review-meta">Total Questions: 180 | Time: 2.5 hours | Negative Marking: 0.25 per wrong answer</p>
-                            <p class="submit-review-time" id="review-time-left">Time Left: --:--:--</p>
-                            <h3 class="submit-review-subtitle">Before Final Submit</h3>
-                            <p class="submit-review-summary">
-                                Attempted: <strong id="attempted-count">0</strong> |
-                                Flagged: <strong id="flagged-count">0</strong> |
-                                Unattempted: <strong id="unattempted-count">0</strong>
-                            </p>
-                            <p class="question-status-legend">
-                                <span class="legend-item legend-attempted">Answered</span>
-                                <span class="legend-item legend-flagged">Flagged</span>
-                                <span class="legend-item legend-unattempted">Blank</span>
-                            </p>
-                            <div id="question-number-links" class="question-number-links"></div>
-                            <div class="submit-review-actions">
-                                        <button type="button" id="submit-now-btn" class="submit-now-btn">Submit Now</button>
-                                        <button type="button" id="close-review-btn" class="close-review-btn">Continue Solving</button>
-                                    </div>
-                        </div>
-                    </section>
-                {% endif %}
+.full-test-footer {
+    border-top:1px solid rgba(255,255,255,0.1);
+    background:linear-gradient(135deg,#0c2f4a,#184f79);
+    margin-top:2rem;
+    padding:1rem;
+    color:rgba(255,255,255,0.88);
+}
 
-                <section id="flag-review-panel" class="submit-review-modal" hidden aria-hidden="true">
-                    <div class="submit-review-backdrop" id="flag-review-backdrop"></div>
-                    <div class="submit-review-panel" role="dialog" aria-modal="true" aria-labelledby="flag-review-title">
-                        <h2 id="flag-review-title">Flag Question for Review</h2>
-                        <p class="submit-review-meta">Question ID: <strong id="flag-question-id">--</strong></p>
-                        <p class="submit-review-summary" id="flag-question-preview">Choose why this question should be reviewed.</p>
-                        <label for="flag-reason" class="submit-review-subtitle">Reason</label>
-                        <select id="flag-reason" class="name_place">
-                            <option value="wrong">Wrong</option>
-                            <option value="question out of syllabus">Question out of syllabus</option>
-                            <option value="solution wrong">Solution wrong</option>
-                            <option value="all of the above">All of the above</option>
-                        </select>
-                        <div class="submit-review-actions">
-                            <button type="button" id="send-flag-btn" class="submit-now-btn">Send Review</button>
-                            <button type="button" id="close-flag-btn" class="close-review-btn">Cancel</button>
-                        </div>
-                    </div>
-                </section>
 
-                {% for q in questions %}
-                    <div class="question-block" id="question-{{ forloop.counter }}" data-question-number="{{ forloop.counter }}" data-question-id="{{ q.id }}" data-question-text="{{ q.question_text|escape }}">
-                        <div class="question-tools">
-                            <button type="button" class="flag-question-btn" data-question-number="{{ forloop.counter }}" aria-pressed="false">Flag for review</button>
-                        </div>
-                        <p><strong>{{ forloop.counter }}. {{ q.question_text }}</strong></p>
-                        {% for opt in "ABCD" %}
-                            {% with option_text=q|get_option_text:opt %}
-                            {% with user_choice=user_answers|dict_get:q.id %}
-                                <label class="option
-                                    {% if score is not None %}
-                                        {% if opt == q.correct_option %} correct {% endif %}
-                                        {% if user_choice|default:'' == opt and opt != q.correct_option %} wrong {% endif %}
-                                    {% endif %}
-                                    {% if user_choice|default:'' == opt %} selected {% endif %}">
-                                    <input type="radio" name="q{{ q.id }}" value="{{ opt }}" 
-                                        {% if score is not None %} disabled {% endif %} 
-                                        {% if user_choice|default:'' == opt %} checked {% endif %}>
-                                    <span class="option-text">{{ opt }}. {{ option_text }}</span>
-                                </label>
-                            {% endwith %}
-                            {% endwith %}
-                        {% endfor %}
-                        {% if score is not None %}
-                        <div class="solution-box">
-                            <p class="solution-title">Solution:</p>
-                            <p class="solution-text">
-                                {% if q.solution %}
-                                    {{ q.solution|linebreaksbr }}
-                                {% else %}
-                                    No solution for this question
-                                {% endif %}
-                            </p>
-                        </div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+.full-test-footer .footer-container {
+    max-width:880px;
+    margin:auto;
+    text-align:center;
+}
 
-                {% if score is None %}
-                    <button type="submit" class="submit-btn" id="submit-full-test-btn">Submit</button>
-                {% endif %}
 
-                {% if quiz_started and score is None %}
-                    <div class="action-stack">
-                        <a href="{% url 'home' %}" class="btn home">Back to Home</a>
-                    </div>
-                {% endif %}
+.footer-copy {
+    margin-top:.85rem;
+    font-size:.9rem;
+}
 
-                {% if score is not None %}
-                        <div class="result-actions" style="position:absolute; left:50%; transform:translateX(-50%); bottom:1.25rem; display:flex; gap:1.25rem; align-items:center;">
-                                <a href="{% url 'full_test' %}" class="btn retry" style="color:#fff;padding:0.45rem 0.8rem;border-radius:8px;text-decoration:none;">Retry MCQ Test</a>
-                                <a href="{% url 'home' %}" class="btn home" style="color:#fff;padding:0.45rem 0.8rem;border-radius:8px;text-decoration:none;">Back to Home</a>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            </form>
-        {% elif quiz_started %}
-            <p class="no-questions">No questions available for this test.</p>
-        {% endif %}
 
-        
-    </div>
 
-    {# Buttons are rendered inside the result container only; no duplicates after main #}
+.result-actions .btn.retry {
+    background:#6b7280;
+}
 
-    <footer class="full-test-footer">
-        <div class="footer-container">
-            <p class="footer-copy" style="margin-top:0.85rem">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
-        </div>
-    </footer>
 
-    <script src="{% static 'js/full_test.js' %}"></script>
-</body>
+.result-actions .btn.home {
+    background:#1458a6;
+}
 
-</html>
+
+.result-actions .btn.retry:hover {
+    background:#4b5563;
+}
+
+
+.result-actions .btn.home:hover {
+    background:#0f4a86;
+}
+
+
+
+.btn.home {
+    background:#1458a6;
+    color:white;
+    padding:.6rem 1rem;
+    border-radius:8px;
+    text-decoration:none;
+    display:inline-block;
+}
+
+
+.btn.home:hover {
+    background:#0f4a86;
+}
+
+
+
+.start-actions,
+.action-stack {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    align-items:center;
+    margin-top:1rem;
+}
+
+</style>
+
+
+{% endblock extra_head %}
+
+
+
+{% block content %}
+
+
+<div class="container {% if score is not None %}result-page{% endif %}"
+     data-quiz-key="full-test"
+     data-watermark="{{ watermark_text|default:''|escape }}"
+     data-attempt-reference="{{ attempt_reference|default:'' }}"
+     data-topic="Full Test"
+     data-exit-url="{% url 'home' %}">
+
+
+<div class="quiz-watermark" id="quiz-watermark"></div>
+
+
+
+<h1>Full MCQ Test</h1>
+
+<p>
+Total Questions: 180 |
+Time: 2.5 hours |
+Negative Marking: 0.25 per wrong answer
+</p>
+
+
+
+{% if score is None and not quiz_started %}
+
+<div class="start-actions">
+
+<form method="get" class="start-form">
+
+<input type="text"
+       name="name"
+       class="name_place"
+       placeholder="Enter your name"
+       required>
+
+
+<button type="submit"
+        name="start"
+        value="1"
+        id="start_full_test"
+        class="start_test">
+
+Start Full MCQ Test
+
+</button>
+
+
+</form>
+
+
+<a href="{% url 'home' %}" class="btn home">
+Back to Home
+</a>
+
+
+</div>
+
+{% endif %}
+{% if questions %}
+
+{% if score is None %}
+<div id="full_test_timer" style="display:block;"></div>
+{% endif %}
+
+
+
+<form method="POST"
+      class="quiz-form {% if score is not None %}submitted{% endif %}"
+      action="{% url 'full_test' %}"
+      id="full-test-form">
+
+{% csrf_token %}
+
+
+<input type="hidden"
+       name="name"
+       id="hidden-name"
+       value="{{ user_name|default:history_user_name|default:'' }}">
+
+
+<input type="hidden"
+       name="attempt_reference"
+       value="{{ attempt_reference|default:'' }}">
+
+
+<input type="hidden"
+       name="time_taken_seconds"
+       id="time-taken-seconds"
+       value="0">
+
+
+
+{% if question_ids_csv %}
+<input type="hidden"
+       name="question_ids"
+       value="{{ question_ids_csv }}">
+{% endif %}
+
+
+
+
+
+{# ================= SUBMIT REVIEW MODAL ================= #}
+
+
+{% if score is None %}
+
+<section id="submit-review-panel"
+         class="submit-review-modal"
+         hidden
+         aria-hidden="true">
+
+
+<div class="submit-review-backdrop"
+     id="submit-review-backdrop">
+</div>
+
+
+
+<div class="submit-review-panel"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="review-modal-title">
+
+
+<h2 id="review-modal-title">
+Full Test
+</h2>
+
+
+
+<p class="submit-review-meta">
+
+Total Questions: 180 |
+Time: 2.5 hours |
+Negative Marking: 0.25 per wrong answer
+
+</p>
+
+
+
+<p class="submit-review-time"
+   id="review-time-left">
+
+Time Left: --:--:--
+
+</p>
+
+
+
+<h3 class="submit-review-subtitle">
+Before Final Submit
+</h3>
+
+
+
+<p class="submit-review-summary">
+
+Attempted:
+<strong id="attempted-count">0</strong>
+
+|
+
+Flagged:
+<strong id="flagged-count">0</strong>
+
+|
+
+Unattempted:
+<strong id="unattempted-count">0</strong>
+
+</p>
+
+
+
+<p class="question-status-legend">
+
+<span class="legend-item legend-attempted">
+Answered
+</span>
+
+
+<span class="legend-item legend-flagged">
+Flagged
+</span>
+
+
+<span class="legend-item legend-unattempted">
+Blank
+</span>
+
+</p>
+
+
+
+<div id="question-number-links"
+     class="question-number-links">
+</div>
+
+
+
+<div class="submit-review-actions">
+
+
+<button type="button"
+        id="submit-now-btn"
+        class="submit-now-btn">
+
+Submit Now
+
+</button>
+
+
+
+<button type="button"
+        id="close-review-btn"
+        class="close-review-btn">
+
+Continue Solving
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+{% endif %}
+
+
+
+
+
+
+{# ================= FLAG QUESTION MODAL ================= #}
+
+
+<section id="flag-review-panel"
+         class="submit-review-modal"
+         hidden
+         aria-hidden="true">
+
+
+<div class="submit-review-backdrop"
+     id="flag-review-backdrop">
+</div>
+
+
+
+
+<div class="submit-review-panel"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="flag-review-title">
+
+
+
+<h2 id="flag-review-title">
+Flag Question for Review
+</h2>
+
+
+
+<p class="submit-review-meta">
+
+Question ID:
+<strong id="flag-question-id">
+--
+</strong>
+
+</p>
+
+
+
+
+<p class="submit-review-summary"
+   id="flag-question-preview">
+
+Choose why this question should be reviewed.
+
+</p>
+
+
+
+
+<label for="flag-reason"
+       class="submit-review-subtitle">
+
+Reason
+
+</label>
+
+
+
+
+<select id="flag-reason"
+        class="name_place">
+
+
+<option value="wrong">
+Wrong
+</option>
+
+
+<option value="question out of syllabus">
+Question out of syllabus
+</option>
+
+
+<option value="solution wrong">
+Solution wrong
+</option>
+
+
+<option value="all of the above">
+All of the above
+</option>
+
+
+</select>
+
+
+
+
+
+<div class="submit-review-actions">
+
+
+<button type="button"
+        id="send-flag-btn"
+        class="submit-now-btn">
+
+Send Review
+
+</button>
+
+
+
+
+<button type="button"
+        id="close-flag-btn"
+        class="close-review-btn">
+
+Cancel
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+{% if score is not None %}
+
+<div class="result-layout"
+     style="position:relative; padding-bottom:4.5rem;">
+
+
+
+<!-- ================= HISTORY SIDEBAR ================= -->
+
+<aside class="history-sidebar">
+
+
+<div class="history-sidebar-header">
+
+<p class="history-eyebrow">
+Your last 5 test attempts
+</p>
+
+
+<h2 class="history-title">
+
+Exact name:
+{{ history_user_name|default:user_name|default:'User' }}
+
+</h2>
+
+
+<p class="history-note">
+
+Matches only the exact submitted name across all tests.
+
+</p>
+
+
+</div>
+
+
+
+
+{% if history_entries %}
+
+
+<div class="history-table-wrap">
+
+
+<table class="history-table">
+
+
+<thead>
+
+<tr>
+
+<th>Test</th>
+<th>Attempted</th>
+<th>Marks</th>
+<th>Accuracy</th>
+<th>Speed</th>
+
+</tr>
+
+</thead>
+
+
+
+
+<tbody>
+
+
+{% for entry in history_entries %}
+
+
+<tr class="{% if forloop.first %}latest-attempt{% endif %}">
+
+
+<td>
+
+<span class="history-topic">
+{{ entry.topic }}
+</span>
+
+
+<span class="history-meta">
+{{ entry.created_at|date:"d M, H:i" }}
+</span>
+
+
+{% if forloop.first %}
+
+<span class="history-badge">
+Recent
+</span>
+
+{% endif %}
+
+
+</td>
+
+
+
+<td>
+{{ entry.total_attempted }}
+</td>
+
+
+<td>
+{{ entry.score }}
+</td>
+
+
+<td>
+{{ entry.accuracy_display }}
+</td>
+
+
+<td>
+
+<span class="history-speed">
+{{ entry.time_taken_display }}
+</span>
+
+
+<span class="history-meta">
+{{ entry.per_question_time_display }}/q
+</span>
+
+
+</td>
+
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+{% else %}
+
+
+<div class="history-empty">
+
+No previous tests found for this exact name yet.
+
+</div>
+
+
+{% endif %}
+
+
+
+</aside>
+
+
+
+
+
+
+<!-- ================= RESULT MAIN ================= -->
+
+
+<div class="result-main">
+
+
+
+<section class="score-card">
+
+
+<h2 class="score-title">
+
+Test Results for {{ user_name|default:'User' }}
+
+</h2>
+
+
+
+<div class="score-stats">
+
+
+
+<div class="stat-item">
+
+<span class="stat-label">
+Total Questions:
+</span>
+
+<span class="stat-value">
+{{ total_questions }}
+</span>
+
+</div>
+
+
+
+
+<div class="stat-item">
+
+<span class="stat-label">
+Attempted:
+</span>
+
+<span class="stat-value">
+{{ total_attempted }}
+</span>
+
+</div>
+
+
+
+
+
+<div class="stat-item correct">
+
+<span class="stat-label">
+Correct:
+</span>
+
+<span class="stat-value">
+{{ total_correct }}
+</span>
+
+</div>
+
+
+
+
+
+<div class="stat-item wrong">
+
+<span class="stat-label">
+Wrong:
+</span>
+
+<span class="stat-value">
+{{ total_wrong }}
+</span>
+
+</div>
+
+
+
+
+
+<div class="stat-item skipped">
+
+<span class="stat-label">
+Skipped:
+</span>
+
+<span class="stat-value">
+{{ total_skipped }}
+</span>
+
+</div>
+
+
+
+
+
+<div class="stat-item final-score">
+
+<span class="stat-label">
+Final Score:
+</span>
+
+
+<span class="stat-value">
+
+{{ score }} / {{ total_questions }}
+
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="stat-item">
+
+<span class="stat-label">
+Time Taken:
+</span>
+
+
+<span class="stat-value">
+{{ time_taken_display }}
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="stat-item">
+
+<span class="stat-label">
+Per Question:
+</span>
+
+
+<span class="stat-value">
+{{ per_question_time_display }}
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="stat-item">
+
+<span class="stat-label">
+Accuracy:
+</span>
+
+
+<span class="stat-value">
+{{ accuracy_percent }}%
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="stat-item">
+
+<span class="stat-label">
+Completion:
+</span>
+
+
+<span class="stat-value">
+{{ completion_percent }}%
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<p class="negative-marking-note">
+
+* Negative marking of 0.25 applied per wrong answer
+
+</p>
+
+
+
+</section>
+
+{% endif %}
+
+
+
+
+
+
+
+<!-- ================= QUESTIONS ================= -->
+
+
+{% for q in questions %}
+
+
+<div class="question-block"
+     id="question-{{ forloop.counter }}"
+     data-question-number="{{ forloop.counter }}"
+     data-question-id="{{ q.id }}"
+     data-question-text="{{ q.question_text|escape }}">
+
+
+
+<div class="question-tools">
+
+
+<button type="button"
+        class="flag-question-btn"
+        data-question-number="{{ forloop.counter }}"
+        aria-pressed="false">
+
+Flag for review
+
+</button>
+
+
+</div>
+
+
+
+
+
+<p>
+
+<strong>
+
+{{ forloop.counter }}.
+{{ q.question_text }}
+
+</strong>
+
+</p>
+
+
+
+
+
+{% for opt in "ABCD" %}
+
+
+{% with option_text=q|get_option_text:opt %}
+
+{% with user_choice=user_answers|dict_get:q.id %}
+
+
+
+<label class="option
+
+{% if score is not None %}
+
+{% if opt == q.correct_option %}
+correct
+{% endif %}
+
+
+{% if user_choice|default:'' == opt and opt != q.correct_option %}
+wrong
+{% endif %}
+
+
+{% endif %}
+
+
+{% if user_choice|default:'' == opt %}
+selected
+{% endif %}
+
+">
+
+
+
+<input type="radio"
+
+name="q{{ q.id }}"
+
+value="{{ opt }}"
+
+{% if score is not None %}
+disabled
+{% endif %}
+
+
+{% if user_choice|default:'' == opt %}
+checked
+{% endif %}
+
+>
+
+
+
+
+<span class="option-text">
+
+{{ opt }}. {{ option_text }}
+
+</span>
+
+
+</label>
+
+
+
+{% endwith %}
+
+{% endwith %}
+
+
+{% endfor %}
+
+
+
+
+
+{% if score is not None %}
+
+
+<div class="solution-box">
+
+
+<p class="solution-title">
+
+Solution:
+
+</p>
+
+
+
+<p class="solution-text">
+
+
+{% if q.solution %}
+
+{{ q.solution|linebreaksbr }}
+
+
+{% else %}
+
+No solution for this question
+
+
+{% endif %}
+
+
+</p>
+
+
+
+</div>
+
+
+{% endif %}
+
+
+
+
+
+</div>
+
+
+{% endfor %}
+
+{% if score is None %}
+
+<button type="submit"
+        class="submit-btn"
+        id="submit-full-test-btn">
+
+Submit
+
+</button>
+
+{% endif %}
+
+
+
+
+
+{% if quiz_started and score is None %}
+
+<div class="action-stack">
+
+<a href="{% url 'home' %}"
+   class="btn home">
+
+Back to Home
+
+</a>
+
+</div>
+
+{% endif %}
+
+
+
+
+
+
+
+{% if score is not None %}
+
+
+<div class="result-actions"
+     style="
+     position:absolute;
+     left:50%;
+     transform:translateX(-50%);
+     bottom:1.25rem;
+     display:flex;
+     gap:1.25rem;
+     align-items:center;
+     ">
+
+
+
+<a href="{% url 'full_test' %}"
+   class="btn retry"
+   style="
+   color:#fff;
+   padding:.45rem .8rem;
+   border-radius:8px;
+   text-decoration:none;
+   ">
+
+Retry MCQ Test
+
+</a>
+
+
+
+
+<a href="{% url 'home' %}"
+   class="btn home"
+   style="
+   color:#fff;
+   padding:.45rem .8rem;
+   border-radius:8px;
+   text-decoration:none;
+   ">
+
+Back to Home
+
+</a>
+
+
+
+</div>
+
+
+
+
+</div>
+
+</div>
+
+
+{% endif %}
+
+
+
+
+</form>
+
+
+
+
+
+{% elif quiz_started %}
+
+
+<p class="no-questions">
+
+No questions available for this test.
+
+</p>
+
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+{% block footer %}
+
+<footer class="full-test-footer">
+
+<div class="footer-container">
+
+
+<p class="footer-copy">
+
+Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+</footer>
+
+
+{% endblock footer %}
+
+
+
+
+
+
+{% block extra_js %}
+
+
+<script src="{% static 'js/full_test.js' %}"></script>
+
+
+{% endblock extra_js %}

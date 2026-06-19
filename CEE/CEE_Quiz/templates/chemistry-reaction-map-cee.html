@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Chemistry Reaction Maps for Faster Recall | CEE MCQ
+{% endblock %}
+
+{% block extra_head %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659" crossorigin="anonymous"></script>
+
+<meta name="description" content="I built one reaction map that connected every common Organic Chemistry conversion and it cut my revision time in half. Here is exactly how I made it.">
+<meta name="keywords" content="chemistry reaction map CEE, organic chemistry revision Nepal, CEE chemistry study method, functional group conversion CEE">
+<meta name="author" content="Ramu Pandey">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+<meta property="og:title" content="Chemistry Reaction Maps for Faster Recall | CEE MCQ">
+<meta property="og:description" content="One reaction map that connected every common Organic Chemistry conversion , how I built it and why it worked.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-cover.jpg' %}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chemistry Reaction Maps for Faster Recall | CEE MCQ">
+<meta name="twitter:description" content="One reaction map that cut my Organic Chemistry revision time in half.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-cover.jpg' %}">
+
+<style>
+.blog-content-box {
+    margin-top: 1.5rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(179,106,0,.05) 100%);
+    border: 1px solid rgba(179,106,0,.20);
+    border-radius: 14px;
+    padding: 1.3rem;
+    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+}
+.blog-category {
+    display: inline-block;
+    background: #b36a00;
+    color: white;
+    padding: .22rem .7rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    margin-bottom: .7rem;
+}
+.tip-box {
+    background: rgba(179,106,0,.07);
+    border-left: 4px solid #b36a00;
+    padding: 1rem 1.2rem;
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+}
+.tip-box strong { color: #b36a00; }
+.formula-box {
+    background: rgba(179,106,0,.06);
+    border: 1px solid rgba(179,106,0,.18);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    font-family: monospace;
+    font-size: .95rem;
+    line-height: 2;
+}
+.topic-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(179,106,0,.24);
+    background: white;
+}
+.topic-table th {
+    background: #b36a00;
+    color: white;
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+}
+.topic-table td { padding: .65rem 1rem; border-bottom: 1px solid #e5e7eb; }
+.topic-table tr:last-child td { border-bottom: none; }
+.topic-table tbody tr:nth-child(even) { background: rgba(179,106,0,.05); }
+.topic-table tbody tr:hover { background: rgba(179,106,0,.10); transition: .2s ease; }
+@media(max-width: 768px) {
+    .topic-table { display: block; overflow-x: auto; white-space: nowrap; }
+    .blog-content-box { padding: 1rem; }
+}
+.full-test-footer {
+    border-top: 1px solid rgba(255,255,255,.1);
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
+    margin-top: 2rem;
+    padding: 1.2rem 1rem 1.5rem;
+    color: rgba(255,255,255,.88);
+    text-align: center;
+}
+.footer-container { max-width: 880px; margin: auto; }
+.footer-copy { margin: .85rem 0 0; font-size: .9rem; }
+</style>
+{% endblock extra_head %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Chemistry Reaction Maps for Faster Recall",
+  "description": "I built one reaction map that connected every common Organic Chemistry conversion and it cut my revision time in half. Here is exactly how I made it.",
+  "author": { "@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np" },
+  "publisher": { "@type": "Organization", "name": "CEE MCQ", "url": "https://pandeyramu.com.np" },
+  "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock structured_data %}
+
+{% block content %}
+<main class="blog-wrap">
+<article class="article-card">
+<div class="blog-content-box">
+
+<span class="blog-category">Chemistry</span>
+
+<h1>Chemistry Reaction Maps for Faster Recall</h1>
+
+<p class="excerpt">
+  Instead of memorizing reactions in isolation, I built one map that linked every common conversion. That single page cut my confusion in half and made product-prediction questions feel obvious.
+</p>
+
+<p class="muted">By Ramu Pandey · Published: March 21, 2026 · 6 min read</p>
+
+<section>
+  <p>
+    Organic Chemistry used to be my least confident section. Not because I had not studied it, I had read the chapters multiple times but because every reaction felt like a separate isolated fact. When a CEE question asked what product forms when a primary alcohol is treated with a mild oxidizing agent, I would hesitate even though I had read the answer recently. The connection between "primary alcohol" and "aldehyde via mild oxidation" was not automatic enough.
+  </p>
+  <p>
+    The moment I stopped treating reactions as a list and started drawing them as a connected map, that hesitation went away. The map made the connections visible, and visible connections are far easier to recall under time pressure than lists of facts.
+  </p>
+</section>
+
+<section>
+  <h2>What a reaction map looks like</h2>
+  <p>
+    A reaction map is a single page where functional groups are nodes and arrows show the conversions between them. Each arrow has two pieces of information: the reagent and the type of reaction. That is all it needs.
+  </p>
+
+  <div class="formula-box">
+    Alkane  →(halogenation, UV)→  Haloalkane<br>
+    Haloalkane  →(NaOH/H₂O, hydrolysis)→  Alcohol<br>
+    Alcohol  →(PCC, mild oxidation)→  Aldehyde<br>
+    Aldehyde  →(KMnO₄, strong oxidation)→  Carboxylic Acid<br>
+    Carboxylic Acid  →(alcohol + H⁺, esterification)→  Ester<br>
+    Alkene  →(H₂O + H⁺, Markovnikov)→  Alcohol
+  </div>
+
+  <p>
+    When I first drew this, I immediately saw why I was mixing up PCC and KMnO₄ ,I had been thinking of them as "oxidizing agents" rather than as "mild" vs "strong" oxidation with different products. The map made that distinction visible.
+  </p>
+</section>
+
+<section>
+  <h2>The two pages I kept</h2>
+  <p>
+    <strong>Page 1 → The reaction map:</strong> Full conversion chain for all main functional groups. I redrew this from memory every two days. If I could not reproduce an arrow, I had identified a gap.
+  </p>
+  <p>
+    <strong>Page 2 → The exception sheet:</strong> Reactions that break the general pattern. Markovnikov exceptions with peroxides. The fact that secondary alcohols oxidize to ketones, not aldehydes. The conditions where dehydration gives an alkene versus an ether. CEE regularly tests these edge cases because they are exactly the things students get wrong.
+  </p>
+  <p>
+    I reviewed both pages before every Chemistry test. Together they took about 8 minutes and covered the most likely traps.
+  </p>
+</section>
+
+<div class="tip-box">
+  <p><strong>How to use the map for active recall:</strong> Cover the product side and try to recall it from reagent and starting material. Then flip and cover the reagent and try to recall it from the starting material and product. Both directions appear in CEE questions.</p>
+</div>
+
+<section>
+  <h2>What to put in the map first</h2>
+
+  <table class="topic-table">
+    <thead>
+      <tr><th>Functional Group Family</th><th>Key Conversions to Include</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Alcohols</td><td>Oxidation (mild → aldehyde/ketone, strong → acid), dehydration → alkene</td></tr>
+      <tr><td>Aldehydes & Ketones</td><td>Tollens vs Fehling distinction, reduction → alcohol, oxidation of aldehyde only</td></tr>
+      <tr><td>Carboxylic Acids</td><td>Esterification, reduction → alcohol, salt formation</td></tr>
+      <tr><td>Alkenes</td><td>Addition (H₂, HX, H₂O, X₂), Markovnikov rule, ozonolysis products</td></tr>
+      <tr><td>Haloalkanes</td><td>Hydrolysis, elimination, nucleophilic substitution</td></tr>
+      <tr><td>Amines</td><td>Classification, basicity trend, reaction with HNO₂</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>This is faster than re-reading chapters</h2>
+  <p>
+    I used to spend 2–3 hours re-reading the Organic Chemistry chapters during revision. After building the map, I could do a complete, active revision of all major reactions in about 20 minutes and the recall was better because it was active, not passive.
+  </p>
+  <p>
+    If you have not built a reaction map yet, spend one evening doing it. Draw it badly the first time, it does not matter. The act of constructing the map is itself a revision session, and what you produce is a revision tool you will use every week until the exam.
+  </p>
+</section>
+
+</div>
+</article>
+</main>
+{% endblock content %}
+
+{% block footer %}
+<footer class="full-test-footer">
+  <div class="footer-container">
+    <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
+  </div>
+</footer>
+{% endblock footer %}

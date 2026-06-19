@@ -1,278 +1,168 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEE Preparation Blog | Tips & Strategies</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-     crossorigin="anonymous"></script>
-    <meta name="description" content="Read CEE preparation tips, subject guides, and study strategies by Ramu Pandey for Biology, Chemistry, Physics, and MAT.">
-    <meta name="keywords" content="CEE preparation tips, CEE Nepal blog, CEE study guide, Biology Chemistry Physics MAT">
-    <meta name="author" content="Ramu Pandey">
-    <link rel="canonical" href="https://pandeyramu.com.np/blog/">
-    <meta property="og:title" content="CEE Preparation Blog | CEE MCQ">
-    <meta property="og:description" content="CEE preparation tips, subject guides, and exam strategy articles.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://pandeyramu.com.np/blog/">
-    <meta property="og:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CEE Preparation Blog | CEE MCQ">
-    <meta name="twitter:description" content="CEE preparation tips and study strategies for Nepal's Common Entrance Examination.">
-    <meta name="twitter:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-            color: #1f2937;
-            background: linear-gradient(180deg, #f4f8fc 0%, #ffffff 60%);
-            line-height: 1.7;
-            overflow-x: hidden;
-            width: 100%;
-        }
-        .site-header {
-            background: linear-gradient(135deg, #0c2f4a, #184f79);
-            color: #fff;
-            padding: 1.2rem 1rem 1.4rem;
-            box-shadow: 0 10px 28px rgba(15, 58, 91, 0.18);
-        }
-        .header-inner {
-            max-width: 1120px;
-            margin: 0 auto;
-        }
-        .blog-topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .brand {
-            margin: 0;
-            font-size: clamp(1.2rem, 2vw, 1.75rem);
-            line-height: 1.05;
-            text-align: left;
-        }
-        .nav-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            gap: 0.7rem;
-            margin: 0;
-        }
-        .nav-links a,
-        .nav-links .current-page {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.45rem 0.85rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.22);
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-        }
-        .nav-links a:hover {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-            transform: translateY(-1px);
-        }
-        .nav-links .current-page {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-        }
-        .blog-intro {
-            max-width: 920px;
-            margin: 1rem 0 0;
-            text-align: left;
-            color: rgba(255,255,255,0.96);
-            font-size: 1.02rem;
-            line-height: 1.75;
-        }
-        .container {
-            max-width: 1060px;
-            margin: 1.6rem auto 3rem;
-            padding: 0 1rem;
-        }
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 1rem;
-        }
-        .blog-card {
-            --accent: #1458a6;
-            --accent-soft: rgba(20, 88, 166, 0.08);
-            --accent-border: rgba(20, 88, 166, 0.22);
-            background: linear-gradient(180deg, #ffffff 0%, var(--accent-soft) 100%);
-            border: 1px solid var(--accent-border);
-            border-radius: 16px;
-            padding: 1.05rem;
-            box-shadow: 0 10px 24px rgba(15, 58, 91, 0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .blog-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 28px rgba(15, 58, 91, 0.12);
-        }
-        .tag {
-            display: inline-block;
-            background: var(--accent);
-            color: #fff;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 0.22rem 0.6rem;
-            margin-bottom: 0.75rem;
-        }
-        .blog-card h2 {
-            margin: 0 0 0.55rem;
-            font-size: 1.1rem;
-            line-height: 1.35;
-            color: #12344d;
-        }
-        .blog-card p {
-            margin: 0 0 0.9rem;
-            color: #374151;
-            font-size: 0.95rem;
-        }
-        .blog-card a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 700;
-        }
-        .blog-card a:hover { text-decoration: underline; }
-        .blog-footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.7rem;
-            margin-top: 0.75rem;
-        }
-        .blog-footer-links a,
-        .blog-footer-links .current-page {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.45rem 0.8rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.16);
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-        }
-        .blog-footer-links a:hover {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-            transform: translateY(-1px);
-        }
-        .blog-footer-links .current-page {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-        }
-        footer {
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            background: linear-gradient(135deg, #0c2f4a, #184f79);
-            padding: 1.35rem 1rem 1.8rem;
-            color: rgba(255,255,255,0.88);
-            font-size: 0.92rem;
-        }
 
-        img,
-        video,
-        iframe,
-        table {
-            max-width: 100%;
+{% block title %}
+CEE Preparation Blog | Tips & Strategies
+{% endblock %}
+
+{% block meta_description %}
+Read CEE preparation tips, subject guides, and study strategies by Ramu Pandey for Biology, Chemistry, Physics, and MAT.
+{% endblock %}
+
+{% block meta_keywords %}
+CEE preparation tips, CEE Nepal blog, CEE study guide, Biology Chemistry Physics MAT
+{% endblock %}
+
+
+{% block extra_head %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
+    crossorigin="anonymous"></script>
+
+<style>
+    .blog-container {
+        max-width: 1060px;
+        margin: 1.6rem auto 3rem;
+        padding: 0 1rem;
+    }
+
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+        gap: 1rem;
+    }
+
+    .blog-card {
+        --accent: #1458a6;
+        --accent-soft: rgba(20, 88, 166, 0.08);
+        --accent-border: rgba(20, 88, 166, 0.22);
+
+        background: linear-gradient(180deg,
+                #ffffff 0%,
+                var(--accent-soft) 100%);
+
+        border: 1px solid var(--accent-border);
+        border-radius: 16px;
+        padding: 1.05rem;
+        box-shadow: 0 10px 24px rgba(15, 58, 91, .08);
+        transition: .2s;
+    }
+
+    .blog-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 28px rgba(15, 58, 91, .12);
+    }
+
+
+    .tag {
+        display: inline-block;
+        background: var(--accent);
+        color: white;
+        border-radius: 999px;
+        font-size: .75rem;
+        font-weight: 700;
+        padding: .22rem .6rem;
+        margin-bottom: .75rem;
+    }
+
+
+    .blog-card h2 {
+        margin: 0 0 .55rem;
+        font-size: 1.1rem;
+        color: #12344d;
+    }
+
+
+    .blog-card p {
+        color: #374151;
+        font-size: .95rem;
+    }
+
+
+    .blog-card a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .blog-card a:hover {
+        text-decoration: underline;
+    }
+
+
+    .blog-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .blog-header h1 {
+        margin-top: 0;
+    }
+
+
+    @media(max-width:768px) {
+        .blog-container {
+            padding: 0 .6rem;
         }
+    }
+</style>
+{% endblock %}
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 0.6rem;
-                margin: 1.3rem auto 2rem;
-            }
 
-            .blog-card {
-                padding: 0.9rem;
-            }
 
-            .blog-card:hover {
-                transform: none;
-                box-shadow: 0 6px 14px rgba(15, 58, 91, 0.08);
-            }
+{% block content %}
 
-            .blog-topbar {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
+<div class="blog-container">
 
-            .brand {
-                text-align: center;
-            }
+    <div class="blog-header">
+        <h1>CEE Preparation Blog</h1>
 
-            .nav-links {
-                width: 100%;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-            }
+        <p class="muted">
+            Clear, practical CEE preparation notes written to feel like a real student guide.
+            Each article focuses on revision, timing, and test performance.
+        </p>
 
-            .nav-links a,
-            .nav-links .current-page {
-                padding: 0.42rem 0.72rem;
-                font-size: 0.92rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header class="site-header">
-        <div class="header-inner">
-            <div class="blog-topbar">
-                <h1 class="brand">CEE MCQ</h1>
-                <nav class="nav-links" aria-label="Main navigation">
-                    <a href="/">Home</a>
-                    <a href="/all-subjects/">All Subjects</a>
-                    <a href="/about/">About Us</a>
-                    <a href="/contact/">Contact</a>
-                    <a href="/privacy-policy/">Privacy Policy</a>
-                    <a href="/disclaimer/">Disclaimer</a>
-                    <span class="current-page" aria-current="page">Blog</span>
-                </nav>
-            </div>
-            <div class="blog-intro">
-                <p>Clear, practical CEE preparation notes written to feel like a real student guide. Each article focuses on one thing that actually helps in revision, timing, or test performance.</p>
-                <p>Use these posts as short study companions alongside chapter-wise MCQs and full tests.</p>
-            </div>
-        </div>
-    </header>
+        <p class="muted">
+            Use these posts alongside chapter-wise MCQs and full tests.
+        </p>
+    </div>
 
-    <main class="container">
-        <section class="blog-grid">
-            {% for post in posts %}
-            <article class="blog-card" style="--accent: {{ post.accent }}; --accent-soft: {{ post.accent_soft }}; --accent-border: {{ post.accent_border }};">
-                <span class="tag">{{ post.tag }}</span>
-                <h2>{{ post.title }}</h2>
-                <p>{{ post.excerpt }}</p>
-                <a href="{% url 'blog_post' post.slug %}">Read more</a>
-            </article>
-            {% endfor %}
-        </section>
 
-    </main>
+    <section class="blog-grid">
 
-    <footer>
-        <p>Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
-    </footer>
-</body>
-</html>
+        {% for post in posts %}
+        <article class="blog-card"
+            style="--accent: {{ post.accent }}; --accent-soft: {{ post.accent_soft }}; --accent-border: {{ post.accent_border }};">
+
+            <span class="tag">
+                {{ post.tag }}
+            </span>
+
+
+            <h2>
+                {{ post.title }}
+            </h2>
+
+
+            <p>
+                {{ post.excerpt }}
+            </p>
+
+
+            <a href="{% url 'blog_post' post.slug %}">
+                Read more →
+            </a>
+
+
+        </article>
+
+        {% empty %}
+
+        <p>No blog posts available.</p>
+
+        {% endfor %}
+
+    </section>
+
+
+</div>
+
+{% endblock %}

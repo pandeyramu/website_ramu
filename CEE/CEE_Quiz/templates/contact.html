@@ -1,33 +1,130 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ page_seo.meta_title|default:"Contact | CEE MCQ" }}{% endblock %}
-{% block meta_description %}{{ page_seo.meta_description|default:"Contact CEE MCQ for support, feedback, or website questions. Use the form or email provided on this page." }}{% endblock %}
-{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, Contact, support, feedback" }}{% endblock %}
-{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"Contact | CEE MCQ" }}{% endblock %}
-{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Contact CEE MCQ for support, feedback, or website questions." }}{% endblock %}
-{% block twitter_title %}Contact | CEE MCQ{% endblock %}
-{% block twitter_description %}Contact CEE MCQ for support, feedback, or website questions.{% endblock %}
+{% block title %}{{ page_seo.meta_title|default:"Contact CEE MCQ | Support, Feedback & Question Reports" }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:"Contact CEE MCQ to report an incorrect question, share feedback, or ask about chapter-wise practice and full mock tests for Nepal's Common Entrance Examination." }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, Contact, support, feedback, report question" }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"Contact CEE MCQ" }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Reach out to CEE MCQ for support, feedback, or to report an issue with a practice question." }}{% endblock %}
+{% block twitter_title %}Contact CEE MCQ{% endblock %}
+{% block twitter_description %}Reach out to CEE MCQ for support, feedback, or to report an issue with a practice question.{% endblock %}
+
+{% block extra_head %}
+<style>
+.contact-page { max-width: 720px; margin: 0 auto; }
+
+.contact-box {
+    margin-top: 1.5rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(20,88,166,.05) 100%);
+    border: 1px solid rgba(20,88,166,.18);
+    border-radius: 14px;
+    padding: 1.6rem;
+    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+}
+
+.contact-form { display: grid; gap: 1.1rem; margin-top: 1.4rem; }
+
+.contact-form label { display: block; font-weight: 600; color: #0f3a5b; margin-bottom: .35rem; font-size: .92rem; }
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: .8rem .95rem;
+    border: 1px solid rgba(20,88,166,.22);
+    border-radius: 10px;
+    font-size: .96rem;
+    font-family: inherit;
+    background: #fff;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #1458a6;
+    box-shadow: 0 0 0 3px rgba(20,88,166,.12);
+}
+
+.contact-form textarea { resize: vertical; min-height: 130px; }
+
+.contact-submit-btn {
+    display: inline-block;
+    background: #1458a6;
+    color: #fff;
+    border: none;
+    padding: .85rem 1.6rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: .96rem;
+    cursor: pointer;
+    transition: background .15s ease, transform .1s ease;
+    width: fit-content;
+}
+
+.contact-submit-btn:hover { background: #0f3a5b; }
+.contact-submit-btn:active { transform: translateY(1px); }
+
+.contact-alt {
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(20,88,166,.14);
+    font-size: .92rem;
+    color: #475569;
+}
+
+.contact-alt a { color: #1458a6; font-weight: 600; }
+
+.django-messages { margin-bottom: 1rem; }
+.django-messages li {
+    list-style: none;
+    padding: .75rem 1rem;
+    border-radius: 10px;
+    font-size: .92rem;
+    margin-bottom: .6rem;
+}
+.django-messages .success { background: rgba(31,138,76,.1); border: 1px solid rgba(31,138,76,.3); color: #1f8a4c; }
+.django-messages .error { background: rgba(192,75,98,.1); border: 1px solid rgba(192,75,98,.3); color: #c04b62; }
+
+@media (max-width: 600px) {
+    .contact-box { padding: 1.1rem; }
+}
+</style>
+{% endblock extra_head %}
 
 {% block content %}
-<h1>Contact</h1>
-<p>If you have questions about the practice MCQs, find an issue on the site, or want to share feedback, you can use the form below or email us directly. We try to keep the site simple and easy to use, so feedback is always welcome.</p>
+<article class="contact-page">
 
-<form method="post" style="display:grid; gap:0.9rem; max-width:640px;">
+<h1>Contact Us</h1>
+<p>CEE MCQ is maintained directly by its creator, so messages sent here are read personally rather than routed through a support team. If you spot an incorrect question, want to suggest a missing chapter, or have feedback on how the site could be more useful for your CEE preparation, this is the right place to reach out.</p>
+
+<div class="contact-box">
+
+{% if messages %}
+<ul class="django-messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<form method="post" class="contact-form">
     {% csrf_token %}
-    <label>
-        <span>Name</span><br>
-        <input type="text" name="name" required style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:10px;">
-    </label>
-    <label>
-        <span>Email</span><br>
-        <input type="email" name="email" required style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:10px;">
-    </label>
-    <label>
-        <span>Message</span><br>
-        <textarea name="message" rows="6" required style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:10px;"></textarea>
-    </label>
-    <button type="submit" class="cta-link" style="border:none;">Send Message</button>
+    <div>
+        <label for="contact-name">Name</label>
+        <input type="text" id="contact-name" name="name" required placeholder="Your full name">
+    </div>
+    <div>
+        <label for="contact-email">Email</label>
+        <input type="email" id="contact-email" name="email" required placeholder="you@example.com">
+    </div>
+    <div>
+        <label for="contact-message">Message</label>
+        <textarea id="contact-message" name="message" rows="6" required placeholder="What would you like to tell us?"></textarea>
+    </div>
+    <button type="submit" class="contact-submit-btn">Send Message</button>
 </form>
 
-<p style="margin-top:1.4rem;">You can also email us directly at <a href="mailto:pandeyramu57@gmail.com">pandeyramu57@gmail.com</a>.</p>
+<p class="contact-alt">You can also email directly at <a href="mailto:pandeyramu57@gmail.com">pandeyramu57@gmail.com</a>, or use the in-app report option on any question if you've found a specific error while practicing.</p>
+
+</div>
+</article>
 {% endblock %}

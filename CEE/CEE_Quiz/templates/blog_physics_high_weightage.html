@@ -1,218 +1,299 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>High Weightage Physics Topics for CEE Nepal | CEE MCQ</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-     crossorigin="anonymous"></script>
-    <meta name="description" content="Physics carries 50 marks in CEE Nepal. Learn the highest weightage topics - Mechanics, Current Electricity, Optics and more - with focused preparation tips.">
-    <meta name="keywords" content="CEE Physics topics, high weightage Physics CEE, Mechanics CEE Nepal, Current Electricity CEE, CEE Physics preparation">
-    <meta name="author" content="Ramu Pandey">
-    <link rel="canonical" href="https://pandeyramu.com.np/blog/physics-high-weightage-topics/">
-    <meta property="og:title" content="High Weightage Physics Topics for CEE Nepal | CEE MCQ">
-    <meta property="og:description" content="Physics carries 50 marks in CEE Nepal. Learn the highest weightage topics with focused preparation tips.">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://pandeyramu.com.np/blog/physics-high-weightage-topics/">
-    <meta property="og:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="High Weightage Physics Topics for CEE Nepal | CEE MCQ">
-    <meta name="twitter:description" content="Physics carries 50 marks in CEE Nepal. Learn the highest weightage topics with focused preparation tips.">
-    <meta name="twitter:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "High Weightage Physics Topics for CEE Nepal",
-      "description": "Physics carries 50 marks in CEE Nepal. Learn the highest weightage topics with focused preparation tips.",
-      "url": "https://pandeyramu.com.np/blog/physics-high-weightage-topics/",
-      "datePublished": "2026-03-21",
-      "dateModified": "2026-03-21",
-      "author": {
-        "@type": "Person",
-        "name": "Ramu Pandey",
-        "url": "https://pandeyramu.com.np"
-      },
-      "publisher": {
-        "@type": "Person",
-        "name": "Ramu Pandey"
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://pandeyramu.com.np/blog/physics-high-weightage-topics/"
-      }
-    }
-    </script>
+{% block title %}
+High Weightage Physics Topics for CEE Nepal | CEE MCQ
+{% endblock %}
 
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: sans-serif; color: #222; line-height: 1.8; background: #f9f9f9; overflow-x: hidden; width: 100%; }
-        header { background: #1a4a7a; color: white; padding: 2.5rem 1.5rem; text-align: center; }
-        header .tag { font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; display: inline-block; margin-bottom: 1rem; }
-        header h1 { font-size: 1.7rem; max-width: 700px; margin: 0 auto 0.8rem; line-height: 1.4; }
-        header .meta { font-size: 0.85rem; opacity: 0.85; }
-        .container { max-width: 780px; margin: 2.5rem auto; padding: 0 1.5rem; }
-        .article-body { background: white; border-radius: 10px; padding: 2.5rem; border: 1px solid #e0e0e0; }
-        h2 { font-size: 1.25rem; color: #1a4a7a; margin: 2rem 0 0.8rem; }
-        h3 { font-size: 1.05rem; color: #333; margin: 1.5rem 0 0.5rem; }
-        p { margin-bottom: 1rem; font-size: 1rem; }
-        ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
-        li { margin-bottom: 0.5rem; font-size: 1rem; }
-        .tip-box { background: #f0f5ff; border-left: 4px solid #1a4a7a; padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
-        .tip-box p { margin: 0; font-size: 0.95rem; color: #333; }
-        .tip-box strong { color: #1a4a7a; }
-        .topic-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
-        .topic-table th { background: #1a4a7a; color: white; padding: 0.7rem 1rem; text-align: left; }
-        .topic-table td { padding: 0.6rem 1rem; border-bottom: 1px solid #eee; }
-        .topic-table tr:nth-child(even) { background: #f0f5ff; }
-        .topic-table .high { font-weight: 500; background: #d4e4ff; }
-        .formula-box { background: #f0f5ff; border: 1px solid #b0c8f0; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1rem 0; }
-        .formula-box p { margin: 0 0 0.4rem; font-size: 0.95rem; }
-        .formula-box code { background: #ddeeff; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.9rem; }
-        .qna-block { background: #f8f8f8; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1rem 0; border: 1px solid #e8e8e8; }
-        .qna-block .question { font-weight: 500; color: #1a4a7a; margin-bottom: 0.5rem; font-size: 0.95rem; }
-        .qna-block .answer { font-size: 0.95rem; color: #444; margin: 0; }
-        .practice-cta { background: #1a4a7a; color: white; border-radius: 10px; padding: 1.5rem; text-align: center; margin: 2rem 0; }
-        .practice-cta p { color: rgba(255,255,255,0.9); margin-bottom: 1rem; }
-        .practice-cta a { background: white; color: #1a4a7a; padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.95rem; display: inline-block; max-width: 100%; }
-        .nav-links { display: flex; justify-content: space-between; margin-top: 2rem; flex-wrap: wrap; gap: 1rem; }
-        .nav-links a { color: #1a4a7a; text-decoration: none; font-size: 0.95rem; }
-        .nav-links a:hover { text-decoration: underline; }
-        footer { text-align: center; padding: 1.8rem 1rem 2rem; font-size: 0.92rem; color: #fff; border-top: 1px solid rgba(255,255,255,0.12); margin-top: 3rem; background: linear-gradient(135deg, #0c2f4a, #184f79); }
-        footer p { margin: 0.35rem 0; }
-        footer a { color: #ffd94d; margin: 0 0.35rem; text-decoration: none; font-weight: 600; }
-        footer a:hover { text-decoration: underline; }
-        img, video, iframe, table { max-width: 100%; }
-        .topic-table { display: block; overflow-x: auto; }
+{% block extra_head %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659" crossorigin="anonymous"></script>
 
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.3rem; }
-            .article-body { padding: 1.5rem; }
-            .container { padding: 0 0.7rem; }
-            .nav-links { flex-direction: column; align-items: flex-start; }
-            .practice-cta a { width: 100%; text-align: center; }
-        }
-    </style>
-</head>
-<body>
+<meta name="description" content="Physics carries 50 marks in CEE Nepal. Modern Physics alone is worth 12. Here is how I prepared each high-weightage chapter and what I would focus on first if I started again.">
+<meta name="keywords" content="CEE Physics topics, Physics weightage CEE Nepal, Modern Physics CEE, Mechanics CEE, Current Electricity CEE, Physics preparation CEE 2025">
+<meta name="author" content="Ramu Pandey">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
 
-    <header>
-        <span class="tag">Physics</span>
-        <h1>High Weightage Physics Topics for CEE Nepal</h1>
-        <p class="meta">March 21, 2026 | 10 min read</p>
-    </header>
+<meta property="og:title" content="High Weightage Physics Topics for CEE Nepal | CEE MCQ">
+<meta property="og:description" content="Physics carries 50 marks in CEE. Here is how I prepared each high-weightage chapter.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-cover.jpg' %}">
 
-    <main class="container">
-        <article class="article-body">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="High Weightage Physics Topics for CEE Nepal | CEE MCQ">
+<meta name="twitter:description" content="Physics carries 50 marks in CEE. Here is how I prepared each high-weightage chapter.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-cover.jpg' %}">
 
-            <p>Physics is worth <strong>50 marks</strong> in Nepal's Common Entrance Examination - a quarter of your entire score. Unlike Biology where success depends largely on memory, Physics rewards students who genuinely understand concepts and can apply formulas under time pressure. The good news is that CEE Physics is structured and predictable. The same topics, the same formula types, and the same conceptual questions appear year after year.</p>
+<style>
+.blog-content-box {
+    margin-top: 1.5rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(15,122,138,.05) 100%);
+    border: 1px solid rgba(15,122,138,.18);
+    border-radius: 14px;
+    padding: 1.3rem;
+    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+}
+.blog-category {
+    display: inline-block;
+    background: #0f7a8a;
+    color: white;
+    padding: .22rem .7rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    margin-bottom: .7rem;
+}
+.tip-box {
+    background: rgba(15,122,138,.06);
+    border-left: 4px solid #0f7a8a;
+    padding: 1rem 1.2rem;
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+}
+.tip-box strong { color: #0f7a8a; }
+.formula-box {
+    background: rgba(15,122,138,.06);
+    border: 1px solid rgba(15,122,138,.18);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+}
+.formula-box code {
+    background: white;
+    padding: .15rem .4rem;
+    border-radius: 5px;
+    color: #0f7a8a;
+    font-weight: 600;
+}
+.topic-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(15,122,138,.22);
+    background: white;
+}
+.topic-table th {
+    background: #0f7a8a;
+    color: white;
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+}
+.topic-table td { padding: .65rem 1rem; border-bottom: 1px solid #e5e7eb; }
+.topic-table tr:last-child td { border-bottom: none; }
+.topic-table tbody tr:nth-child(even) { background: rgba(15,122,138,.05); }
+.topic-table .high { background: rgba(15,122,138,.12); font-weight: 600; }
+.topic-table tbody tr:hover { background: rgba(15,122,138,.10); transition: .2s ease; }
+@media(max-width: 768px) {
+    .topic-table { display: block; overflow-x: auto; white-space: nowrap; }
+    .blog-content-box { padding: 1rem; }
+}
+.full-test-footer {
+    border-top: 1px solid rgba(255,255,255,.1);
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
+    margin-top: 2rem;
+    padding: 1.2rem 1rem 1.5rem;
+    color: rgba(255,255,255,.88);
+    text-align: center;
+}
+.footer-container { max-width: 880px; margin: auto; }
+.footer-copy { margin: .85rem 0 0; font-size: .9rem; }
+</style>
+{% endblock extra_head %}
 
-            <p>This guide breaks down every Physics topic by weightage, covers the most important subtopics and formulas in each, and gives you a clear preparation strategy to maximize your Physics score on exam day.</p>
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "High Weightage Physics Topics for CEE Nepal",
+  "description": "Physics carries 50 marks in CEE Nepal. Modern Physics alone is worth 12. Here is how I prepared each high-weightage chapter and what I would focus on first if I started again.",
+  "author": { "@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np" },
+  "publisher": { "@type": "Organization", "name": "CEE MCQ", "url": "https://pandeyramu.com.np" },
+  "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock structured_data %}
 
-            <h2>Physics Weightage Breakdown for CEE</h2>
+{% block content %}
+<main class="blog-wrap">
+<article class="article-card">
+<div class="blog-content-box">
 
-            <table class="topic-table">
-                <thead>
-                    <tr>
-                        <th>Topic</th>
-                        <th>Marks</th>
-                        <th>Priority</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="high"><td>Mechanics</td><td>10</td><td>Very High</td></tr>
-                    <tr class="high"><td>Current Electricity and Magnetism</td><td>9</td><td>Very High</td></tr>
-                    <tr><td>Heat and Thermodynamics</td><td>6</td><td>High</td></tr>
-                    <tr><td>Geometrical and Physical Optics</td><td>6</td><td>High</td></tr>
-                    <tr><td>Sound Waves, Electrostatics and Capacitors</td><td>6</td><td>High</td></tr>
-                    <tr><td>Modern Physics and Nuclear Physics</td><td>6</td><td>High</td></tr>
-                    <tr><td>Solid and Semiconductor Devices</td><td>4</td><td>Medium</td></tr>
-                    <tr><td>Particle Physics, Energy and Universe</td><td>3</td><td>Low</td></tr>
-                </tbody>
-            </table>
+<span class="blog-category">Physics</span>
 
-            <div class="tip-box"><p><strong>Key insight:</strong> Mechanics and Current Electricity together carry 19 out of 50 Physics marks - 38% of the entire Physics section. Master these two topics before anything else.</p></div>
+<h1>High Weightage Physics Topics for CEE Nepal</h1>
 
-            <h2>Topic 1 - Mechanics (10 Marks)</h2>
-            <p>Mechanics is the most heavily weighted single topic in Physics and covers everything from Newton's Laws to rotational motion and fluid mechanics.</p>
-            <ul>
-                <li>Newton's laws and friction</li>
-                <li>Work, energy, and power</li>
-                <li>Projectile motion and circular motion</li>
-                <li>Simple harmonic motion and gravitation</li>
-            </ul>
+<p class="excerpt">
+  Physics carries 50 marks in CEE and Modern Physics alone is worth 12,  more than any other single unit in the Physics section. Here is how I prioritized each chapter and what I would do differently if I started again.
+</p>
 
-            <div class="formula-box">
-                <p><strong>Key formulas:</strong></p>
-                <p><code>F = ma</code></p>
-                <p><code>KE = 1/2 mv^2</code></p>
-                <p><code>PE = mgh</code></p>
-                <p><code>R = u^2 sin(2theta) / g</code></p>
-            </div>
+<p class="muted">By Ramu Pandey · Published: March 21, 2026 · 10 min read</p>
 
-            <h2>Topic 2 - Current Electricity and Magnetism (9 Marks)</h2>
-            <p>This is the second highest-scoring Physics topic. Questions combine circuit analysis with magnetic field concepts.</p>
-            <ul>
-                <li>Ohm's law and equivalent resistance</li>
-                <li>Kirchhoff's laws and loop analysis</li>
-                <li>Power dissipation and Wheatstone bridge</li>
-                <li>Magnetic force and induction basics</li>
-            </ul>
+<section>
+  <p>
+    Physics was the subject I was most uncertain about going into CEE preparation. It felt formula-heavy and I had always been slower at numericals than at Biology recall. What changed my approach was realizing that most CEE Physics questions test a small set of formulas applied in predictable ways and that knowing which chapters to prioritize made a much bigger difference than trying to master everything equally.
+  </p>
+  <p>
+    The chapter that surprised me most was Modern Physics. It carries 12 marks , the single highest unit in Physics and yet many students underprepare it because it feels abstract. Once I focused on it properly, it became one of my more reliable scoring areas.
+  </p>
+</section>
 
-            <div class="formula-box">
-                <p><strong>Key formulas:</strong></p>
-                <p><code>V = IR</code></p>
-                <p><code>P = I^2 R = V^2 / R</code></p>
-                <p><code>F = BIL sin(theta)</code></p>
-                <p><code>EMF = -d(phi)/dt</code></p>
-            </div>
+<section>
+  <h2>Physics marks breakdown for CEE</h2>
 
-            <h2>Topic 3 - Remaining 6-mark blocks</h2>
-            <p>Heat/Thermodynamics, Optics, Electrostatics, and Modern Physics are all steady scoring areas once major chapters are covered.</p>
-            <ul>
-                <li>Thermodynamics laws and process equations</li>
-                <li>Mirror/lens formula and interference basics</li>
-                <li>Coulomb law, electric field, and capacitor combinations</li>
-                <li>Photoelectric effect, half-life, and nuclear basics</li>
-            </ul>
+  <table class="topic-table">
+    <thead>
+      <tr><th>Chapter</th><th>Marks</th><th>Priority</th></tr>
+    </thead>
+    <tbody>
+      <tr class="high"><td>Modern Physics</td><td>12</td><td>Start here</td></tr>
+      <tr class="high"><td>Mechanics</td><td>10</td><td>Very High</td></tr>
+      <tr class="high"><td>Current Electricity and Magnetism</td><td>9</td><td>Very High</td></tr>
+      <tr><td>Waves and Optics</td><td>8</td><td>High</td></tr>
+      <tr><td>Heat and Thermodynamics</td><td>7</td><td>High</td></tr>
+      <tr><td>Electrostatics and Capacitors</td><td>4</td><td>Medium</td></tr>
+    </tbody>
+  </table>
 
-            <div class="tip-box"><p><strong>Preparation tip:</strong> Solve numericals daily and keep one Physics formula sheet for quick morning revision.</p></div>
+  <p>
+    Modern Physics, Mechanics, and Current Electricity together account for 31 out of 50 Physics marks. These three chapters alone deserve the majority of your Physics preparation time.
+  </p>
+</section>
 
-            <h2>How to Prepare Physics for CEE</h2>
-            <ol>
-                <li>Complete Mechanics and Electricity first</li>
-                <li>Use chapter-wise MCQ drills after each concept block</li>
-                <li>Maintain an error log for repeated mistakes</li>
-                <li>Take one timed Physics section test weekly</li>
-                <li>Revise formulas and units every 2 days</li>
-            </ol>
+<section>
+  <h2>Modern Physics → 12 marks, highest in Physics</h2>
+  <p>
+    I avoided Modern Physics for too long because topics like photoelectric effect and Bohr's atomic model felt unfamiliar. The truth is that CEE tests Modern Physics in a very formulaic way, most questions are direct applications of a small set of equations. Once I memorized those equations and practiced the standard question types, this became one of the more predictable chapters.
+  </p>
+  <ul>
+    <li>Photoelectric effect → work function, threshold frequency, stopping potential</li>
+    <li>Bohr's model → energy levels, wavelength of emitted radiation, radius formula</li>
+    <li>Radioactivity → half-life calculations, decay law, types of radiation</li>
+    <li>Nuclear reactions → mass defect and binding energy</li>
+    <li>Semiconductor basics → p-type vs n-type, diode behavior</li>
+  </ul>
 
-            <div class="practice-cta">
-                <p>Test your Physics knowledge with chapter-wise MCQs on CEE MCQ</p>
-                <a href="/">Practice Physics Now</a>
-            </div>
+  <div class="formula-box">
+    <p><strong>Formulas to memorize:</strong></p>
+    <p><code>E = hf</code> → photon energy</p>
+    <p><code>KE = hf − φ</code> → photoelectric effect</p>
+    <p><code>N = N₀(½)^(t/T)</code> → radioactive decay</p>
+    <p><code>E = mc²</code> → mass-energy equivalence</p>
+  </div>
+</section>
 
-            <div class="nav-links">
-                <a href="/blog/organic-chemistry-cee-tips/">Previous: Organic Chemistry Tips</a>
-                <a href="/blog/mat-section-tips/">Next: How to Score Full Marks in MAT</a>
-            </div>
+<section>
+  <h2>Mechanics → 10 marks, the foundation chapter</h2>
+  <p>
+    Mechanics was actually one of my stronger areas because the concepts build on each other logically. Newton's laws lead naturally to work and energy, which leads to circular motion and gravitation. If you understand the logic rather than memorizing each formula in isolation, recall under time pressure becomes easier.
+  </p>
+  <p>
+    The question types I saw most in practice tests were projectile motion numericals, work-energy theorem applications, and circular motion problems. These three are worth drilling specifically.
+  </p>
 
-        </article>
-    </main>
+  <div class="formula-box">
+    <p><strong>Formulas to memorize:</strong></p>
+    <p><code>F = ma</code></p>
+    <p><code>KE = ½mv²</code></p>
+    <p><code>PE = mgh</code></p>
+    <p><code>R = u² sin(2θ) / g</code> → projectile range</p>
+    <p><code>v² = u² + 2as</code></p>
+  </div>
+</section>
 
-    <footer>
-            <p>Made with ❤️ by Ramu Pandey</p>
-            <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
-        <p>
-            <a href="/">Home</a> |
-            <a href="/blog/">Blog</a> |
-            <a href="/privacy-policy/">Privacy Policy</a> |
-            <a href="https://pandeyramu.com.np/">Portfolio</a>
-        </p>
-    </footer>
+<section>
+  <h2>Current Electricity and Magnetism → 9 marks</h2>
+  <p>
+    This chapter rewards formula practice more than any other in Physics. Circuit questions, Kirchhoff's laws, and electromagnetic induction are predictable question types, if you have practiced them with timed numericals, they feel routine in the exam.
+  </p>
+  <p>
+    The area where I kept making errors was sign conventions in Kirchhoff's voltage law. I added a specific note about this in my error log and reviewed it before every Physics test. A small fix but it stopped a recurring mistake.
+  </p>
 
-</body>
-</html>
+  <div class="formula-box">
+    <p><strong>Formulas to memorize:</strong></p>
+    <p><code>V = IR</code></p>
+    <p><code>P = I²R = V²/R</code></p>
+    <p><code>F = BIL sinθ</code> → force on current-carrying conductor</p>
+    <p><code>EMF = −dΦ/dt</code> → Faraday's law</p>
+  </div>
+</section>
+
+<section>
+  <h2>Waves and Optics → 8 marks</h2>
+  <p>
+    Waves and Optics combines conceptual questions (what happens when light passes from dense to rare medium) with formula-based numericals (mirror and lens calculations). I found the conceptual questions easier to secure quickly and the numericals more time-consuming, so I practiced the numericals specifically to reduce solve time.
+  </p>
+
+  <div class="formula-box">
+    <p><strong>Formulas to memorize:</strong></p>
+    <p><code>v = fλ</code></p>
+    <p><code>1/f = 1/v − 1/u</code> → mirror/lens formula</p>
+    <p><code>n = sin i / sin r</code> → Snell's law</p>
+  </div>
+</section>
+
+<section>
+  <h2>Heat and Thermodynamics → 7 marks</h2>
+  <p>
+    Thermodynamics is more conceptual than computational in CEE. Questions on the laws of thermodynamics, PV graphs, and kinetic theory are common. I prepared this chapter with a focus on understanding the processes (isothermal, adiabatic, isobaric, isochoric) and what each graph looks like graph-based questions appear regularly.
+  </p>
+
+  <div class="formula-box">
+    <p><strong>Formulas to memorize:</strong></p>
+    <p><code>Q = mcΔT</code></p>
+    <p><code>PV = nRT</code></p>
+    <p><code>ΔQ = ΔU + W</code> → first law of thermodynamics</p>
+  </div>
+</section>
+
+<section>
+  <h2>Electrostatics and Capacitors → 4 marks</h2>
+  <p>
+    Lower weightage but the questions are usually straightforward formula applications. I gave this chapter one focused day during consolidation phase ,enough to be comfortable with Coulomb's law, electric field and potential, and capacitor combinations. I did not spend a full week on a 4-mark chapter.
+  </p>
+
+  <div class="formula-box">
+    <p><strong>Formulas to memorize:</strong></p>
+    <p><code>F = kq₁q₂/r²</code> → Coulomb's law</p>
+    <p><code>C = Q/V</code> → capacitance</p>
+    <p><code>U = ½CV²</code> → energy stored in capacitor</p>
+  </div>
+</section>
+
+<div class="tip-box">
+  <p><strong>The one habit that improved my Physics score most:</strong> Keeping a formula notebook with every formula, its SI units, and the context in which it applies. I reviewed this notebook for 10 minutes before every Physics practice session. Forgetting a formula in a Physics numerical is a costly mistake — the notebook made it much rarer.</p>
+</div>
+
+<section>
+  <h2>How I structured Physics preparation week by week</h2>
+  <p>
+    I started with Modern Physics despite it feeling unfamiliar, because the marks-to-effort ratio is the best in the Physics section. Once that was stable, I moved to Mechanics, then Current Electricity. Waves and Optics and Thermodynamics came next, and Electrostatics last.
+  </p>
+  <ul>
+    <li>Two days concept revision per chapter, with formula memorization</li>
+    <li>Three days of chapter-wise MCQ drills , 30 questions minimum per session</li>
+    <li>One mixed Physics test per week under time pressure</li>
+    <li>Error log updated after every session, reviewed before the next</li>
+  </ul>
+  <p>
+    The weekly mixed test was what moved my Physics score the most. Drilling one chapter at a time builds knowledge but not speed across topics. Mixed tests build the kind of flexible recall that CEE actually requires.
+  </p>
+</section>
+
+</div>
+</article>
+</main>
+{% endblock content %}
+
+{% block footer %}
+<footer class="full-test-footer">
+  <div class="footer-container">
+    <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
+  </div>
+</footer>
+{% endblock footer %}

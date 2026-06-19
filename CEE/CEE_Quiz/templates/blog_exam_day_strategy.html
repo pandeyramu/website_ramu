@@ -1,171 +1,258 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEE Exam Day Strategy Do's and Don'ts | Ramu Pandey</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-     crossorigin="anonymous"></script>
-    <meta name="description" content="Your CEE preparation is only complete with a solid exam day strategy. Learn what to do and avoid on CEE exam day - time management, negative marking, and question order.">
-    <meta name="keywords" content="CEE exam day strategy, CEE Nepal tips, negative marking strategy CEE, CEE time management">
-    <meta name="author" content="Ramu Pandey">
-    <link rel="canonical" href="https://pandeyramu.com.np/blog/cee-exam-day-strategy/">
-    <meta property="og:title" content="CEE Exam Day Strategy Do's and Don'ts | Ramu Pandey">
-    <meta property="og:description" content="Learn what to do and avoid on CEE exam day - time management, negative marking, question order and more.">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://pandeyramu.com.np/blog/cee-exam-day-strategy/">
-    <meta property="og:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CEE Exam Day Strategy Do's and Don'ts | CEE MCQ">
-    <meta name="twitter:description" content="Learn what to do and avoid on CEE exam day - time management, negative marking, question order and more.">
-    <meta name="twitter:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "CEE Exam Day Strategy: Do's and Don'ts",
-      "description": "Learn what to do and avoid on CEE exam day - time management, negative marking, question order and more.",
-      "url": "https://pandeyramu.com.np/blog/cee-exam-day-strategy/",
-      "datePublished": "2026-03-21",
-      "dateModified": "2026-03-21",
-      "author": {
-        "@type": "Person",
-        "name": "Ramu Pandey",
-        "url": "https://pandeyramu.com.np"
-      },
-      "publisher": {
-        "@type": "Person",
-        "name": "Ramu Pandey"
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://pandeyramu.com.np/blog/cee-exam-day-strategy/"
-      }
-    }
-    </script>
+{% block title %}
+CEE Exam Day Strategy: Do's and Don'ts | CEE MCQ
+{% endblock %}
 
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: sans-serif; color: #222; line-height: 1.8; background: #f9f9f9; overflow-x: hidden; width: 100%; }
-        header { background: #1a5a1a; color: white; padding: 2.5rem 1.5rem; text-align: center; }
-        header .tag { font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; display: inline-block; margin-bottom: 1rem; }
-        header h1 { font-size: 1.7rem; max-width: 700px; margin: 0 auto 0.8rem; line-height: 1.4; }
-           header .meta { font-size: 0.85rem; opacity: 0.85; display: none; }
-        .container { max-width: 780px; margin: 2.5rem auto; padding: 0 1.5rem; }
-        .article-body { background: white; border-radius: 10px; padding: 2.5rem; border: 1px solid #e0e0e0; }
-        h2 { font-size: 1.25rem; color: #1a5a1a; margin: 2rem 0 0.8rem; }
-        p { margin-bottom: 1rem; font-size: 1rem; }
-        ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
-        li { margin-bottom: 0.5rem; font-size: 1rem; }
-        .tip-box { background: #f0fff0; border-left: 4px solid #1a5a1a; padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
-        .warning-box { background: #fff8f0; border-left: 4px solid #c05000; padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
-        .topic-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
-        .topic-table th { background: #1a5a1a; color: white; padding: 0.7rem 1rem; text-align: left; }
-        .topic-table td { padding: 0.6rem 1rem; border-bottom: 1px solid #eee; }
-        .topic-table tr:nth-child(even) { background: #f0fff0; }
-        .practice-cta { background: #1a5a1a; color: white; border-radius: 10px; padding: 1.5rem; text-align: center; margin: 2rem 0; }
-        .practice-cta a { background: white; color: #1a5a1a; padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block; max-width: 100%; }
-        .nav-links { display: flex; justify-content: space-between; margin-top: 2rem; flex-wrap: wrap; gap: 1rem; }
-        .nav-links a { color: #1a5a1a; text-decoration: none; }
-        footer { text-align: center; padding: 1.8rem 1rem 2rem; font-size: 0.92rem; color: #fff; border-top: 1px solid rgba(255,255,255,0.12); margin-top: 3rem; background: linear-gradient(135deg, #0f3a5b, #1f5f8f); }
-        footer p { margin: 0.35rem 0; }
-        footer a { color: #ffd94d; margin: 0 0.35rem; text-decoration: none; font-weight: 600; }
-        footer a:hover { text-decoration: underline; }
-        img, video, iframe, table { max-width: 100%; }
-        .topic-table { display: block; overflow-x: auto; }
+{% block extra_head %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659" crossorigin="anonymous"></script>
 
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.3rem; }
-            .article-body { padding: 1.5rem; }
-            .container { padding: 0 0.7rem; }
-            .nav-links { flex-direction: column; align-items: flex-start; }
-            .practice-cta a { width: 100%; text-align: center; }
-        }
-    </style>
-</head>
-<body>
+<meta name="description" content="Exam day strategy for CEE from someone who has been through it. How to manage 180 minutes, handle negative marking, and avoid the mistakes that cost prepared students marks.">
+<meta name="keywords" content="CEE exam day strategy, CEE Nepal tips, CEE time management, negative marking strategy CEE, CEE MCQ preparation">
+<meta name="author" content="Ramu Pandey">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
 
-<header>
-    <span class="tag">Strategy</span>
-    <h1>CEE Exam Day Strategy: Do's and Don'ts</h1>
-       <p class="meta">March 21, 2026 | 8 min read</p>
-</header>
+<meta property="og:title" content="CEE Exam Day Strategy: Do's and Don'ts | CEE MCQ">
+<meta property="og:description" content="How to manage 180 minutes, handle negative marking, and avoid the mistakes that cost prepared students marks on CEE exam day.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-cover.jpg' %}">
 
-<main class="container">
-    <article class="article-body">
-        <p>Months of preparation matter only if execution on exam day is sharp. A clear plan for timing, negative marking, and question order can protect your score under pressure.</p>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CEE Exam Day Strategy: Do's and Don'ts | CEE MCQ">
+<meta name="twitter:description" content="How to manage 180 minutes and avoid the mistakes that cost prepared students marks.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-cover.jpg' %}">
 
-        <h2>Night-before checklist</h2>
-        <ul>
-            <li>Do light revision only: formulas, key tables, and quick notes</li>
-            <li>Pack admit card and stationery at night, not in the morning</li>
-            <li>Sleep early to keep recall speed high on exam day</li>
-        </ul>
+<style>
+.blog-content-box {
+    margin-top: 1.5rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(192,75,98,.05) 100%);
+    border: 1px solid rgba(192,75,98,.18);
+    border-radius: 14px;
+    padding: 1.3rem;
+    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+}
+.blog-category {
+    display: inline-block;
+    background: #c04b62;
+    color: white;
+    padding: .22rem .7rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    margin-bottom: .7rem;
+}
+.tip-box {
+    background: rgba(192,75,98,.06);
+    border-left: 4px solid #c04b62;
+    padding: 1rem 1.2rem;
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+}
+.tip-box strong { color: #c04b62; }
+.warning-box {
+    background: #f8fafc;
+    border-left: 4px solid #64748b;
+    padding: 1rem 1.2rem;
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+}
+.warning-box strong { color: #c04b62; }
+.topic-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(192,75,98,.22);
+    background: white;
+}
+.topic-table th {
+    background: #c04b62;
+    color: white;
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+}
+.topic-table td { padding: .65rem 1rem; border-bottom: 1px solid #e5e7eb; }
+.topic-table tr:last-child td { border-bottom: none; }
+.topic-table tbody tr:nth-child(even) { background: rgba(192,75,98,.05); }
+.topic-table tbody tr:hover { background: rgba(192,75,98,.10); transition: .2s ease; }
+@media(max-width: 768px) {
+    .topic-table { display: block; overflow-x: auto; white-space: nowrap; }
+    .blog-content-box { padding: 1rem; }
+}
+.full-test-footer {
+    border-top: 1px solid rgba(255,255,255,.1);
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
+    margin-top: 2rem;
+    padding: 1.2rem 1rem 1.5rem;
+    color: rgba(255,255,255,.88);
+    text-align: center;
+}
+.footer-container { max-width: 880px; margin: auto; }
+.footer-copy { margin: .85rem 0 0; font-size: .9rem; }
+</style>
+{% endblock extra_head %}
 
-        <h2>Morning routine</h2>
-        <ul>
-            <li>Arrive early to avoid stress and rushed decisions</li>
-            <li>Avoid panic discussions with other candidates</li>
-            <li>Use one-minute breathing reset before starting</li>
-        </ul>
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "CEE Exam Day Strategy: Do's and Don'ts",
+  "description": "Exam day strategy for CEE from someone who has been through it. How to manage 180 minutes, handle negative marking, and avoid the mistakes that cost prepared students marks.",
+  "author": { "@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np" },
+  "publisher": { "@type": "Organization", "name": "CEE MCQ", "url": "https://pandeyramu.com.np" },
+  "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock structured_data %}
 
-        <h2>Time strategy inside the exam</h2>
-        <table class="topic-table">
-            <thead><tr><th>Window</th><th>Plan</th></tr></thead>
-            <tbody>
-                <tr><td>0-20 min</td><td>MAT and quick-confidence questions</td></tr>
-                <tr><td>20-90 min</td><td>Strongest subjects with two-pass approach</td></tr>
-                <tr><td>90-130 min</td><td>Calculation-heavy and moderate difficulty items</td></tr>
-                <tr><td>130-150 min</td><td>Marked questions and final review</td></tr>
-            </tbody>
-        </table>
+{% block content %}
+<main class="blog-wrap">
+<article class="article-card">
+<div class="blog-content-box">
 
-        <div class="tip-box"><p><strong>Two-pass rule:</strong> First solve confident questions, then return to uncertain ones with elimination.</p></div>
+<span class="blog-category">Strategy</span>
 
-        <h2>Negative marking strategy</h2>
-        <ul>
-            <li>Confident: attempt immediately</li>
-            <li>Partially sure (can eliminate): attempt with logic</li>
-            <li>No clue: skip instead of blind guess</li>
-        </ul>
+<h1>CEE Exam Day Strategy: Do's and Don'ts</h1>
 
-        <div class="warning-box"><p><strong>Common mistake:</strong> random last-minute guessing after panic can erase marks gained earlier.</p></div>
+<p class="excerpt">
+  Months of preparation can unravel in 180 minutes if you go in without a clear plan. Here is the exam-day system I built and the mistakes I learned to avoid.
+</p>
 
-        <h2>High-impact mistakes to avoid</h2>
-        <table class="topic-table">
-            <thead><tr><th>Mistake</th><th>Fix</th></tr></thead>
-            <tbody>
-                <tr><td>Spending too long on one question</td><td>Use strict time cap and move on</td></tr>
-                <tr><td>Changing answers without reason</td><td>Change only with clear logic</td></tr>
-                <tr><td>Skipping review time</td><td>Reserve final 10-20 minutes</td></tr>
-            </tbody>
-        </table>
+<p class="muted">By Ramu Pandey · Published: March 21, 2026 · 8 min read</p>
 
-        <div class="practice-cta">
-            <p>Build exam-day confidence with regular chapter practice and full-test simulation.</p>
-            <a href="/">Start Practicing Now</a>
-        </div>
+<section>
+  <p>
+    The night before CEE, I made the mistake of trying to revise one more chapter. I stayed up later than I should have, felt anxious, and walked into the exam hall the next morning already tired. The exam itself went worse than my mock tests not because I had studied less, but because I went in without a settled plan for how to spend 180 minutes.
+  </p>
+  <p>
+    What I know now is that exam day performance is a skill separate from preparation. You can know your content well and still lose marks through poor time allocation, panic decisions, and bad negative marking judgment. This guide is the system I wish I had followed.
+  </p>
+</section>
 
-        <div class="nav-links">
-            <a href="/blog/mat-section-tips/">Previous: MAT Strategy</a>
-            <a href="/blog/">Back to Blog</a>
-        </div>
-    </article>
+<section>
+  <h2>The night before: do less, not more</h2>
+  <p>
+    The evening before CEE is not revision time. Your brain needs consolidation, not new input. The most useful thing you can do the night before is a light review of your formula list, reaction map, and error log things you already know, not things you are trying to learn for the first time.
+  </p>
+  <ul>
+    <li>Revise only your formula sheet, reaction map, and error log : nothing new</li>
+    <li>Pack admit card, documents, and stationery before you sit down to revise</li>
+    <li>Sleep on time ,calculation speed and recall both drop significantly with poor sleep</li>
+    <li>Avoid discussing difficult topics with friends the night before</li>
+  </ul>
+  <p>
+    Sleep is not optional preparation. It is part of preparation.
+  </p>
+</section>
+
+<section>
+  <h2>Exam morning: arrive early, stay calm</h2>
+  <p>
+    Reach the examination center with at least 20–30 minutes to spare. Rushing to the exam on a tight timeline raises cortisol, reduces working memory, and makes the first few questions feel harder than they are. An early arrival gives you time to settle, breathe, and mentally run through your attempt strategy before the paper starts.
+  </p>
+  <p>
+    Avoid discussing questions or topics with other candidates outside the hall. Someone mentioning a topic you feel uncertain about is enough to shake confidence that took months to build. Stay in your own headspace.
+  </p>
+</section>
+
+<section>
+  <h2>How to use 180 minutes</h2>
+  <p>
+    The biggest time management mistake in CEE is spending too long on difficult questions early and then rushing through easy ones at the end. The two-pass system fixes this.
+  </p>
+
+  <table class="topic-table">
+    <thead>
+      <tr><th>Time Window</th><th>What to Do</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0–30 min</td><td>Attempt MAT and your strongest subject. Build rhythm with familiar questions. Do not stall on anything.</td></tr>
+      <tr><td>30–100 min</td><td>First pass through remaining subjects. Solve every question you can answer confidently and quickly. Mark anything that needs more thought.</td></tr>
+      <tr><td>100–150 min</td><td>Second pass. Return to marked questions. Use elimination. Attempt moderate-difficulty items you skipped.</td></tr>
+      <tr><td>150–170 min</td><td>Difficult questions only. Attempt the ones where you can eliminate at least two options. Skip true blind guesses.</td></tr>
+      <tr><td>170–180 min</td><td>Final check. Verify every answer is marked. Look for obvious errors in questions you answered quickly.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="tip-box">
+  <p><strong>The two-pass rule in practice:</strong> On your first pass, do not spend more than 30–40 seconds on any single question. If an answer does not come within that time, mark the question and move forward. You will return to it. This protects the easy marks that come later in the paper.</p>
+</div>
+
+<section>
+  <h2>Negative marking ,the rule I wish I had followed earlier</h2>
+  <p>
+    CEE deducts 0.25 marks for every wrong answer. This means four wrong answers cancel one correct answer. Random guessing is mathematically harmful unless you can eliminate options.
+  </p>
+  <p>
+    I use a simple three-level rule for uncertain questions:
+  </p>
+  <ul>
+    <li><strong>Fully confident:</strong> Attempt immediately on first pass.</li>
+    <li><strong>Can eliminate 2 options:</strong> Attempt on second pass after elimination. The remaining two options give you a 50% chance acceptable odds.</li>
+    <li><strong>No idea / cannot eliminate:</strong> Leave it. A blank costs nothing. A wrong answer costs 0.25.</li>
+  </ul>
+  <p>
+    The hardest part of this rule is following it under time pressure. When the clock is running down, the urge to fill every blank is strong. Resist it. A controlled paper with some blanks usually scores higher than a fully attempted paper with random guesses.
+  </p>
+</section>
+
+<section>
+  <h2>Mistakes that cost prepared students marks</h2>
+
+  <table class="topic-table">
+    <thead>
+      <tr><th>Mistake</th><th>What to Do Instead</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Spending 3–4 minutes on one difficult question in the first pass</td><td>Mark it and move. Return with a fresh perspective in the second pass.</td></tr>
+      <tr><td>Changing answers without a clear reason</td><td>Change an answer only when you find a specific logical error in your first choice.</td></tr>
+      <tr><td>Skipping the final 10-minute review</td><td>Reserve the last 10 minutes specifically for checking ,do not use this time to attempt new questions.</td></tr>
+      <tr><td>Getting rattled when a section feels hard</td><td>Move to your stronger subject immediately. Recover confidence, then return.</td></tr>
+      <tr><td>Attempting blind guesses in the final minutes</td><td>Only attempt questions where elimination is possible. Leave the rest blank.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="warning-box">
+  <p><strong>The panic guess trap:</strong> In the final 5 minutes, it feels like filling every blank will help. In reality, guessing randomly on 10 uncertain questions is likely to cost you 1–2 marks net, not gain them. Accuracy beats attempt count in a negatively marked exam.</p>
+</div>
+
+<section>
+  <h2>If one section goes badly ,recovery</h2>
+  <p>
+    Sometimes a section feels harder than expected. Maybe Biology questions are more terminology-heavy than your mock tests, or a Physics numerical is taking longer than it should. The wrong response is to keep pushing through that section until the time is gone.
+  </p>
+  <p>
+    The right response is to move. Switch to a subject where you are more confident, score those marks, and return to the difficult section later. Momentum and confidence affect recall, a few easy questions answered correctly can genuinely make the previously difficult questions feel more manageable when you return.
+  </p>
+</section>
+
+<section>
+  <h2>Final 10 minutes</h2>
+  <p>
+    This time is for checking, not for new attempts. Go through every marked question. Verify that your selected answers are actually marked not just decided mentally. Check for questions where you may have read too quickly in the first pass. Do not introduce new guesses at this stage unless you have a clear elimination reason.
+  </p>
+  <p>
+    A calm, structured final 10 minutes regularly adds 2–3 marks compared to a panicked last-minute rush. Those 2–3 marks can move your rank meaningfully in a competitive exam.
+  </p>
+</section>
+
+</div>
+</article>
 </main>
+{% endblock content %}
 
-<footer>
-       <p>Made with ❤️ by Ramu Pandey</p>
-       <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
-    <p>
-        <a href="/">Home</a> |
-        <a href="/blog/">Blog</a> |
-        <a href="/privacy-policy/">Privacy Policy</a> |
-        <a href="https://pandeyramu.com.np/">Portfolio</a>
-    </p>
+{% block footer %}
+<footer class="full-test-footer">
+  <div class="footer-container">
+    <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
+  </div>
 </footer>
-
-</body>
-</html>
+{% endblock footer %}

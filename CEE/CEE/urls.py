@@ -14,10 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
+
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import path
 from CEE_Quiz import views
+from django.views.static import serve
+from django.conf import settings
 from django.contrib.sitemaps.views import sitemap
 from CEE_Quiz.sitemaps import StaticViewSitemap, SubjectSitemap, BlogSitemap, ChapterSitemap, SubChapterSitemap
 
@@ -31,6 +35,10 @@ sitemaps = {
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('favicon.ico', serve, {
+        'path': 'images/favicon.ico',
+        'document_root': os.path.join(settings.BASE_DIR, 'static')
+    }),
     
     # Keepalive endpoint for Render free tier
     path('keepalive/', views.keepalive, name='keepalive'),

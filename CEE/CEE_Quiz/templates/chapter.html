@@ -1,176 +1,270 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ page_seo.meta_title|default:page_default_title }}</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-     crossorigin="anonymous"></script>
-    {% if subject.slug == 'physics' %}
-    <meta name="description" content="Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for Nepal CEE 2025.">
-    {% elif subject.slug == 'chemistry' %}
-    <meta name="description" content="Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for Nepal CEE 2025.">
-    {% elif subject.slug == 'zoology' %}
-    <meta name="description" content="Practice 10,000+ CEE Zoology MCQ questions chapter-wise. Human Physiology, Animal Diversity, Histology — all with answers. Best free Zoology practice for Nepal CEE 2025.">
-    {% elif subject.slug == 'botany' %}
-    <meta name="description" content="Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Genetics, Cell Biology, Biodiversity — all with answers. Best free Botany practice for Nepal CEE 2025.">
-    {% else %}
-    <meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
-    {% endif %}
-    <meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
 
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% block title %}
+{{ page_seo.meta_title|default:page_default_title }}
+{% endblock %}
 
-    <!-- Open Graph / Social -->
-    <meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
-    <meta property="og:description" content="{% if subject.slug == 'physics' %}Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for Nepal CEE 2025.{% elif subject.slug == 'chemistry' %}Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for Nepal CEE 2025.{% elif subject.slug == 'zoology' %}Practice 10,000+ CEE Zoology MCQ questions chapter-wise. Human Physiology, Animal Diversity, Histology — all with answers. Best free Zoology practice for Nepal CEE 2025.{% elif subject.slug == 'botany' %}Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Genetics, Cell Biology, Biodiversity — all with answers. Best free Botany practice for Nepal CEE 2025.{% else %}{{ page_seo.og_description|default:page_default_og_description }}{% endif %}">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ subject.name }} Chapters | CEE MCQ">
-    <meta name="twitter:description" content="{% if subject.slug == 'physics' %}Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for Nepal CEE 2025.{% elif subject.slug == 'chemistry' %}Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for Nepal CEE 2025.{% elif subject.slug == 'zoology' %}Practice 10,000+ CEE Zoology MCQ questions chapter-wise. Human Physiology, Animal Diversity, Histology — all with answers. Best free Zoology practice for Nepal CEE 2025.{% elif subject.slug == 'botany' %}Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Genetics, Cell Biology, Biodiversity — all with answers. Best free Botany practice for Nepal CEE 2025.{% else %}Practice chapter-wise MCQ questions for {{ subject.name }}. Prepare for Nepal's Common Entrance Examination.{% endif %}">
-    <meta name="twitter:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
+{% block meta_description %}
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
+{% if subject.slug == 'physics' %}
+Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for Nepal CEE 2025.
 
-    <!-- Favicon -->
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <style>
-        .seo-link-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1.2rem;
-        }
-        .seo-link-row a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.55rem 0.9rem;
-            border-radius: 999px;
-            border: 1px solid #d8e2ef;
-            background: #fff;
-            color: #1458a6;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .seo-link-row a:hover {
-            border-color: #1458a6;
-            background: #eef5ff;
-        }
-    </style>
-</head>
+{% elif subject.slug == 'chemistry' %}
+Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for Nepal CEE 2025.
 
-<body>
-    <header class="header-container">
-        <h1>Chapters for {{ subject.name }}</h1>
-        <p>Practice multiple-choice questions and exercises for better preparation!</p>
-    </header>
+{% elif subject.slug == 'zoology' %}
+Practice 10,000+ CEE Zoology MCQ questions chapter-wise. Human Physiology, Animal Diversity, Histology — all with answers.
 
-    <main class="container">
-        {% if chapters %}
-            {% if subject.name|lower == 'biology' %}
-                <section class="chapter-group botany-group">
-                    <div class="group-header">
-                        <h2>Botany</h2>
-                        <span class="group-marks">50 Marks</span>
-                    </div>
-                    <div class="chapter-list">
-                        {% for chap in chapters %}
-                            {% if forloop.counter <= 5 %}
-                                <article class="chapter-card botany-card">
-                                    {% if chap.has_subchapters %}
-                                        <a href="{% url 'subchapters' chap.slug %}" class="chapter-link">{{ chap.name }}</a>
-                                    {% else %}
-                                        <a href="{% url 'quiz' chap.slug %}" class="chapter-link">{{ chap.name }}</a>
-                                    {% endif %}
-                                </article>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </section>
+{% elif subject.slug == 'botany' %}
+Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Genetics, Cell Biology, Biodiversity — all with answers.
 
-                <section class="chapter-group zoology-group">
-                    <div class="group-header">
-                        <h2>Zoology</h2>
-                        <span class="group-marks">50 Marks</span>
-                    </div>
-                    <div class="chapter-list">
-                        {% for chap in chapters %}
-                            {% if forloop.counter > 5 %}
-                                <article class="chapter-card zoology-card">
-                                    {% if chap.has_subchapters %}
-                                        <a href="{% url 'subchapters' chap.slug %}" class="chapter-link">{{ chap.name }}</a>
-                                    {% else %}
-                                        <a href="{% url 'quiz' chap.slug %}" class="chapter-link">{{ chap.name }}</a>
-                                    {% endif %}
-                                </article>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </section>
-            {% else %}
-                <section class="chapter-list">
-                    {% for chap in chapters %}
-                        <article class="chapter-card">
-                            {% if chap.has_subchapters %}
-                                <a href="{% url 'subchapters' chap.slug %}" class="chapter-link">{{ chap.name }}</a>
-                            {% else %}
-                                <a href="{% url 'quiz' chap.slug %}" class="chapter-link">{{ chap.name }}</a>
-                            {% endif %}
-                        </article>
-                    {% endfor %}
-                </section>
-            {% endif %}
-        {% else %}
-            <p>No chapters available for this subject.</p>
-        {% endif %}
+{% else %}
+{{ page_seo.meta_description|default:page_default_description }}
 
-        <nav class="back-button">
-            <a href="{% url 'home' %}">← Back to Subjects</a>
-        </nav>
+{% endif %}
 
-        <nav class="seo-link-row" aria-label="Crawl navigation">
-            <a href="{{ all_subjects_url }}">All Subjects</a>
-            <a href="{{ subject_mcq_url }}">{{ subject.name }} MCQ</a>
-            {% if next_subject %}
-                <a href="{{ next_subject.mcq_url }}">Next: {{ next_subject.name }} MCQ</a>
-            {% endif %}
-            {% if previous_subject %}
-                <a href="{{ previous_subject.mcq_url }}">Previous: {{ previous_subject.name }} MCQ</a>
-            {% endif %}
-        </nav>
-    </main>
+{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/chapter.css' %}">
 
-    <footer class="footer" style="text-align:center; margin-top:2rem;">
-        <p>Made with ❤️ by Ramu Pandey</p>
-        <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
-    </footer>
+<style>
 
-    <!-- Structured Data for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "name": "{{ subject.name }} Chapters",
-      "itemListElement": [
-        {% for chap in chapters %}
-        {
-          "@type": "ListItem",
-          "position": {{ forloop.counter }},
-          "name": "{{ chap.name }}",
-          "url": "{% url 'quiz' chap.slug %}"
-        }{% if not forloop.last %},{% endif %}
-        {% endfor %}
-      ]
-    }
-    </script>
-</body>
-</html>
+.seo-link-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: .75rem;
+    margin-top: 1.2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: .35rem;
+}
+
+.seo-link-row a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .55rem .9rem;
+    border-radius: 999px;
+    border: 1px solid #d8e2ef;
+    background: white;
+    color: #1458a6;
+    text-decoration: none;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.seo-link-row a:hover {
+    border-color: #1458a6;
+    background: #eef5ff;
+}
+
+.seo-link-row::-webkit-scrollbar {
+    height: 4px;
+}
+
+.seo-link-row::-webkit-scrollbar-thumb {
+    background: #d8e2ef;
+    border-radius: 999px;
+}
+
+</style>
+
+{% endblock %}
+{% block content %}
+
+<header class="header-container">
+    <h1>Chapters for {{ subject.name }}</h1>
+    <p>
+        Practice multiple-choice questions and exercises for better preparation!
+    </p>
+</header>
+
+
+<main class="container">
+
+{% if chapters %}
+
+
+{% if subject.name|lower == 'biology' %}
+
+<section class="chapter-group botany-group">
+
+<div class="group-header">
+<h2>Botany</h2>
+<span class="group-marks">50 Marks</span>
+</div>
+
+
+<div class="chapter-list">
+
+{% for chap in chapters %}
+
+{% if forloop.counter <= 5 %}
+
+<article class="chapter-card botany-card">
+
+{% if chap.has_subchapters %}
+
+<a href="{% url 'subchapters' chap.slug %}" class="chapter-link">
+{{ chap.name }}
+</a>
+
+{% else %}
+
+<a href="{% url 'quiz' chap.slug %}" class="chapter-link">
+{{ chap.name }}
+</a>
+
+{% endif %}
+
+</article>
+
+{% endif %}
+
+{% endfor %}
+
+</div>
+
+</section>
+
+
+
+<section class="chapter-group zoology-group">
+
+<div class="group-header">
+<h2>Zoology</h2>
+<span class="group-marks">50 Marks</span>
+</div>
+
+
+<div class="chapter-list">
+
+
+{% for chap in chapters %}
+
+{% if forloop.counter > 5 %}
+
+<article class="chapter-card zoology-card">
+
+
+{% if chap.has_subchapters %}
+
+<a href="{% url 'subchapters' chap.slug %}" class="chapter-link">
+{{ chap.name }}
+</a>
+
+{% else %}
+
+<a href="{% url 'quiz' chap.slug %}" class="chapter-link">
+{{ chap.name }}
+</a>
+
+{% endif %}
+
+
+</article>
+
+
+{% endif %}
+
+{% endfor %}
+
+
+</div>
+
+</section>
+
+
+{% else %}
+
+
+<section class="chapter-list">
+
+{% for chap in chapters %}
+
+<article class="chapter-card">
+
+{% if chap.has_subchapters %}
+
+<a href="{% url 'subchapters' chap.slug %}" class="chapter-link">
+{{ chap.name }}
+</a>
+
+{% else %}
+
+<a href="{% url 'quiz' chap.slug %}" class="chapter-link">
+{{ chap.name }}
+</a>
+
+{% endif %}
+
+</article>
+
+{% endfor %}
+
+</section>
+
+
+{% endif %}
+
+
+{% else %}
+
+<p>No chapters available for this subject.</p>
+
+{% endif %}
+
+
+
+<nav class="back-button">
+
+<a href="{% url 'home' %}">
+← Back to Subjects
+</a>
+
+</nav>
+
+
+
+<nav class="seo-link-row">
+
+<a href="{{ all_subjects_url }}">
+All Subjects
+</a>
+
+
+<a href="{{ subject_mcq_url }}">
+{{ subject.name }} MCQ
+</a>
+
+
+{% if next_subject %}
+
+<a href="{{ next_subject.mcq_url }}">
+Next: {{ next_subject.name }} MCQ
+</a>
+
+{% endif %}
+
+
+{% if previous_subject %}
+
+<a href="{{ previous_subject.mcq_url }}">
+Previous: {{ previous_subject.name }} MCQ
+</a>
+
+{% endif %}
+
+
+</nav>
+
+
+</main>
+
+
+{% endblock %}

@@ -1,121 +1,264 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEE {{ chapter.name }} MCQ – {{ chapter.subject.name }} | CEE MCQ</title>
-    <meta name="description" content="Explore subchapters for {{ chapter.name }} and practice topic-wise MCQ questions to prepare for Nepal's Common Entrance Examination.">
-    <meta name="keywords" content="CEE MCQ, {{ chapter.name }}, Subchapters, Practice Questions">
 
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
-    <!-- Open Graph / Social -->
-    <meta property="og:title" content="{{ chapter.name }} Subchapters | CEE MCQ">
-    <meta property="og:description" content="Practice topic-wise MCQ questions for {{ chapter.name }} subchapters. Prepare for Nepal's Common Entrance Examination.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
+{% block title %}
+CEE {{ chapter.name }} MCQ – {{ chapter.subject.name }} | CEE MCQ
+{% endblock %}
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ chapter.name }} Subchapters | CEE MCQ">
-    <meta name="twitter:description" content="Practice topic-wise MCQs for {{ chapter.name }} subchapters. Prepare for Nepal's Common Entrance Examination.">
-    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/subchapter.css' %}">
+{% block meta_description %}
+Explore subchapters for {{ chapter.name }} and practice topic-wise MCQ questions to prepare for Nepal's Common Entrance Examination.
+{% endblock %}
 
-    <!-- Favicon -->
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <style>
-        .seo-link-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-        .seo-link-row a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem 0.85rem;
-            border-radius: 999px;
-            border: 1px solid #d8e2ef;
-            background: #fff;
-            color: #1458a6;
-            text-decoration: none;
-            font-weight: 600;
-        }
-    </style>
-</head>
 
-<body>
-    <header class="header-container">
-        <h1>{{ chapter.name }}</h1>
-        <p class="subtitle">Select a subchapter to start practicing!</p>
-        <p class="breadcrumb">
-            <a href="{% url 'home' %}">Home</a> &raquo;
-            <a href="{% url 'chapters' chapter.subject.slug %}">{{ chapter.subject.name }}</a> &raquo;
-            <span>{{ chapter.name }}</span>
-        </p>
-    </header>
+{% block meta_keywords %}
+CEE MCQ, {{ chapter.name }}, Subchapters, Practice Questions
+{% endblock %}
 
-    <main class="container">
-        <section class="subchapter-list">
-            {% if subchapters %}
-                {% for sub in subchapters %}
-                    <article class="subchapter-card">
-                        <div class="card-number">{{ forloop.counter }}</div>
-                        <a href="{% url 'subchapter_quiz' sub.slug %}" class="subchapter-link">
-                            <span class="subchapter-name">{{ sub.name }}</span>
-                        </a>
-                    </article>
-                {% endfor %}
-            {% else %}
-                <div class="empty-state">
-                    <p>No subchapters available yet. Check back soon!</p>
-                </div>
-            {% endif %}
-        </section>
 
-        <nav class="nav-buttons">
-            <a href="{% url 'chapters' chapter.subject.slug %}" class="btn btn-back">← Back to {{ chapter.subject.name }}</a>
-        </nav>
 
-        <nav class="seo-link-row" aria-label="Crawl navigation">
-            <a href="{{ all_subjects_url }}">All Subjects</a>
-            <a href="{{ subject_mcq_url }}">{{ chapter.subject.name }} MCQ</a>
-            {% if next_subject %}
-                <a href="{{ next_subject.mcq_url }}">Next: {{ next_subject.name }} MCQ</a>
-            {% endif %}
-        </nav>
-    </main>
+{% block extra_head %}
 
-    <footer class="footer" style="text-align:center; margin-top:2rem;">
-        <p>Made with ❤️ by Ramu Pandey</p>
-        <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
-    </footer>
+<link rel="stylesheet" href="{% static 'css/subchapter.css' %}">
 
-    <!-- Structured Data for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "name": "{{ chapter.name }} Subchapters",
-      "itemListElement": [
-        {% for sub in subchapters %}
-        {
-          "@type": "ListItem",
-          "position": {{ forloop.counter }},
-          "name": "{{ sub.name }}",
-          "url": "{% url 'subchapter_quiz' sub.slug %}"
-        }{% if not forloop.last %},{% endif %}
-        {% endfor %}
-      ]
-    }
-    </script>
-    <!-- Footer behavior handled by CSS flex layout; no JS needed -->
-</body>
-</html>
+
+<style>
+
+
+.seo-link-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: .75rem;
+    margin-top: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: .35rem;
+}
+
+.seo-link-row a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem .85rem;
+    border-radius: 999px;
+    border: 1px solid #d8e2ef;
+    background: #fff;
+    color: #1458a6;
+    text-decoration: none;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.seo-link-row a:hover {
+    background: #eef5ff;
+    border-color: #1458a6;
+}
+
+/* Optional: thin custom scrollbar for browsers that support it */
+.seo-link-row::-webkit-scrollbar {
+    height: 4px;
+}
+
+.seo-link-row::-webkit-scrollbar-thumb {
+    background: #d8e2ef;
+    border-radius: 999px;
+}
+
+</style>
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+<header class="header-container">
+
+<h1>{{ chapter.name }}</h1>
+
+<p class="subtitle">
+Select a subchapter to start practicing!
+</p>
+
+
+<p class="breadcrumb">
+
+<a href="{% url 'home' %}">
+Home
+</a>
+
+&raquo;
+
+
+<a href="{% url 'chapters' chapter.subject.slug %}">
+{{ chapter.subject.name }}
+</a>
+
+&raquo;
+
+
+<span>
+{{ chapter.name }}
+</span>
+
+
+</p>
+
+
+</header>
+
+
+
+
+<main class="container">
+
+
+<section class="subchapter-list">
+
+
+{% if subchapters %}
+
+
+{% for sub in subchapters %}
+
+
+<article class="subchapter-card">
+
+
+<div class="card-number">
+{{ forloop.counter }}
+</div>
+
+
+
+<a href="{% url 'subchapter_quiz' sub.slug %}" class="subchapter-link">
+
+
+<span class="subchapter-name">
+{{ sub.name }}
+</span>
+
+
+</a>
+
+
+</article>
+
+
+{% endfor %}
+
+
+
+{% else %}
+
+
+<div class="empty-state">
+
+<p>
+No subchapters available yet. Check back soon!
+</p>
+
+</div>
+
+
+{% endif %}
+
+
+
+</section>
+
+
+
+
+<nav class="nav-buttons">
+
+<a href="{% url 'chapters' chapter.subject.slug %}" class="btn btn-back">
+
+← Back to {{ chapter.subject.name }}
+
+</a>
+
+
+</nav>
+
+
+
+
+
+<nav class="seo-link-row" aria-label="Crawl navigation">
+
+
+<a href="{{ all_subjects_url }}">
+All Subjects
+</a>
+
+
+
+<a href="{{ subject_mcq_url }}">
+{{ chapter.subject.name }} MCQ
+</a>
+
+
+
+
+{% if next_subject %}
+
+<a href="{{ next_subject.mcq_url }}">
+Next: {{ next_subject.name }} MCQ
+</a>
+
+{% endif %}
+
+
+
+</nav>
+
+
+
+</main>
+
+
+{% endblock %}
+
+
+
+
+
+{% block structured_data %}
+
+<script type="application/ld+json">
+
+{
+"@context":"https://schema.org",
+"@type":"ItemList",
+"name":"{{ chapter.name }} Subchapters",
+
+"itemListElement":[
+
+{% for sub in subchapters %}
+
+{
+"@type":"ListItem",
+"position":{{ forloop.counter }},
+"name":"{{ sub.name }}",
+"url":"{% url 'subchapter_quiz' sub.slug %}"
+}
+
+{% if not forloop.last %},{% endif %}
+
+
+{% endfor %}
+
+]
+
+}
+
+</script>
+
+
+{% endblock %}

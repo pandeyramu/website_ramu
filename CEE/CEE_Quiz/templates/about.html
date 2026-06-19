@@ -1,16 +1,37 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ page_seo.meta_title|default:"About Us | CEE MCQ" }}{% endblock %}
-{% block meta_description %}{{ page_seo.meta_description|default:"Learn about CEE MCQ, a free Nepali CEE practice platform created for students who want chapter-wise MCQs, exam tips, and better revision habits." }}{% endblock %}
-{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, About Us, Nepal CEE practice, exam tips" }}{% endblock %}
-{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"About Us | CEE MCQ" }}{% endblock %}
-{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"CEE MCQ is a free CEE practice platform for Nepali students with chapter-wise MCQs, full tests, and study resources." }}{% endblock %}
-{% block twitter_title %}About Us | CEE MCQ{% endblock %}
-{% block twitter_description %}CEE MCQ is a free CEE practice platform for Nepali students with chapter-wise MCQs, full tests, and study resources.{% endblock %}
+{% block title %}{{ page_seo.meta_title|default:"About CEE MCQ | Free CEE Practice Platform for Nepali Students" }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:"CEE MCQ is a free chapter-wise practice platform for Nepal's Common Entrance Examination, built by Ramu Pandey to help students revise Biology, Chemistry, Physics, and MAT through structured MCQs and full-length mock tests." }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, About Us, Nepal CEE practice, CEE exam tips, CEE mock test" }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"About CEE MCQ | Free CEE Practice Platform for Nepali Students" }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Learn how CEE MCQ helps Nepali students prepare for the Common Entrance Examination with free chapter-wise MCQs and full mock tests." }}{% endblock %}
+{% block twitter_title %}About CEE MCQ | Free CEE Practice Platform{% endblock %}
+{% block twitter_description %}CEE MCQ helps Nepali students prepare for the Common Entrance Examination with free chapter-wise MCQs and full mock tests.{% endblock %}
 
 {% block content %}
-<h1>About Us</h1>
-<p>CEE MCQ is a free practice platform built for Nepali students who are preparing for the Common Entrance Examination. The goal of the site is simple: make revision easier, faster, and more structured by giving learners chapter-wise MCQs, topic-based practice, and full-test simulations in one place. Instead of scrolling through scattered notes or relying only on memorization, students can use the site to test what they know and identify where they need more revision.</p>
-<p>This project was created by Ramu Pandey with a practical focus on real exam preparation. The platform is designed to support students in Biology, Chemistry, Physics, and MAT by offering short practice sessions that can fit into a busy study schedule. Each quiz is intended to help students learn through repetition, recall, and timing, which are important for competitive exams.</p>
-<p>CEE MCQ is also built to be useful beyond question practice. It includes preparation tips, blog articles, and helpful pages that explain how to study more effectively. The aim is to create a student-friendly educational site that feels clear, useful, and focused on exam results. Over time, more original study resources and revision guides can be added to make the platform even more valuable for Nepali students.</p>
+<article class="about-page">
+
+<h1>About CEE MCQ</h1>
+
+<p>CEE MCQ started from a simple frustration. While preparing for Nepal's Common Entrance Examination, finding good chapter-wise practice questions online was harder than it should have been. Notes were scattered across PDFs, Facebook groups, and outdated blog posts, and there was no single place to actually test what you knew, chapter by chapter, the way the real exam would test you. This site was built to fix that gap.</p>
+
+<h2>What CEE MCQ Actually Does</h2>
+<p>CEE MCQ is a free practice platform for students preparing for the CEE in Biology, Chemistry, Physics, and MAT. Instead of long reading sessions, the site is built around active practice: chapter-wise quizzes, subchapter-level drills for topics that need closer attention, and full-length mock tests that simulate the real 180-question exam with negative marking and a timer. Every quiz tracks your score, accuracy, and time taken, so you can see exactly where you are improving and where you are not.</p>
+
+<h2>Why Chapter-Wise Practice Matters</h2>
+<p>Not every chapter in the CEE syllabus carries equal weight, and not every student has equal time. CEE MCQ is organized so students can drill specific weak chapters instead of re-reading entire subjects. This matters most in the final months before the exam, when targeted revision produces better results than broad, unfocused study. The platform's structure reflects that priority: subject pages break down into chapters, and chapters break down into subchapters where the syllabus calls for it.</p>
+
+<h2>Who Built This</h2>
+<p>CEE MCQ is built and maintained by Ramu Pandey, who created the platform after going through CEE preparation and noticing how disorganized the available practice resources were. The site is a solo, ongoing project rather than a large commercial product, which means it stays focused on what actually helps students revise rather than on unrelated features. Feedback from real students using the platform directly shapes what gets added or changed.</p>
+
+<h2>Beyond Practice Questions</h2>
+<p>Alongside the quizzes, the site includes a blog with practical study guides covering topics like chapter-wise marks distribution, organic chemistry reaction maps, MAT strategy, and exam-day planning. These are written from direct experience with CEE preparation, not generic study advice repeated across the internet. The intent is for a student to be able to land on the site, understand exactly where they stand in a chapter, and know what to do next.</p>
+
+<h2>Where This Is Going</h2>
+<p>CEE MCQ is actively maintained, and new chapters, subchapters, and blog content are added as the question bank grows. The long-term goal is to make this the most complete free chapter-wise CEE practice resource available to Nepali students, without paywalls or unnecessary sign-up barriers getting in the way of practice.</p>
+
+<h2>Questions or Feedback</h2>
+<p>If you spot an incorrect question, have a suggestion for a missing chapter, or just want to share how your preparation is going, you can reach out through the <a href="/contact/">contact page</a>. Most improvements to this platform have come directly from students pointing out what was missing.</p>
+
+</article>
 {% endblock %}

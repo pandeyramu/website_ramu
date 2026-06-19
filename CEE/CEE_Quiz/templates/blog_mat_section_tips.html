@@ -1,183 +1,214 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Score Full Marks in MAT Section CEE Nepal | CEE MCQ</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-     crossorigin="anonymous"></script>
-    <meta name="description" content="The MAT section carries 20 marks in CEE Nepal and is a major scoring opportunity. Learn practical strategy for verbal, numerical, logical, and abstract reasoning.">
-    <meta name="keywords" content="CEE MAT section, MAT CEE Nepal, mental agility test CEE, verbal reasoning CEE, numerical reasoning CEE">
-    <meta name="author" content="Ramu Pandey">
-    <link rel="canonical" href="https://pandeyramu.com.np/blog/mat-section-tips/">
-    <meta property="og:title" content="How to Score Full Marks in MAT Section CEE Nepal | CEE MCQ">
-    <meta property="og:description" content="The MAT section carries 20 marks in CEE Nepal. Learn strategies for all four subsections to maximize your score.">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://pandeyramu.com.np/blog/mat-section-tips/">
-    <meta property="og:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="How to Score Full Marks in MAT Section CEE Nepal | CEE MCQ">
-    <meta name="twitter:description" content="The MAT section carries 20 marks in CEE Nepal. Learn strategies for all four subsections to maximize your score.">
-    <meta name="twitter:image" content="https://pandeyramu.com.np/static/images/og-cover.jpg">
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "How to Score Full Marks in MAT Section CEE Nepal",
-      "description": "The MAT section carries 20 marks in CEE Nepal. Learn strategies for verbal reasoning, numerical reasoning, logical sequencing and abstract reasoning.",
-      "url": "https://pandeyramu.com.np/blog/mat-section-tips/",
-      "datePublished": "2026-03-21",
-      "dateModified": "2026-03-21",
-      "author": {
-        "@type": "Person",
-        "name": "Ramu Pandey",
-        "url": "https://pandeyramu.com.np"
-      },
-      "publisher": {
-        "@type": "Person",
-        "name": "Ramu Pandey"
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://pandeyramu.com.np/blog/mat-section-tips/"
-      }
-    }
-    </script>
+{% block title %}
+How to Score Full Marks in CEE MAT Section | CEE MCQ
+{% endblock %}
 
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: sans-serif; color: #222; line-height: 1.8; background: #f9f9f9; overflow-x: hidden; width: 100%; }
-        header { background: #5a1a7a; color: white; padding: 2.5rem 1.5rem; text-align: center; }
-        header .tag { font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; display: inline-block; margin-bottom: 1rem; }
-        header h1 { font-size: 1.7rem; max-width: 700px; margin: 0 auto 0.8rem; line-height: 1.4; }
-        header .meta { font-size: 0.85rem; opacity: 0.85; }
-        .container { max-width: 780px; margin: 2.5rem auto; padding: 0 1.5rem; }
-        .article-body { background: white; border-radius: 10px; padding: 2.5rem; border: 1px solid #e0e0e0; }
-        h2 { font-size: 1.25rem; color: #5a1a7a; margin: 2rem 0 0.8rem; }
-        h3 { font-size: 1.05rem; color: #333; margin: 1.5rem 0 0.5rem; }
-        p { margin-bottom: 1rem; font-size: 1rem; }
-        ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
-        li { margin-bottom: 0.5rem; font-size: 1rem; }
-        .tip-box { background: #f8f0ff; border-left: 4px solid #5a1a7a; padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
-        .topic-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
-        .topic-table th { background: #5a1a7a; color: white; padding: 0.7rem 1rem; text-align: left; }
-        .topic-table td { padding: 0.6rem 1rem; border-bottom: 1px solid #eee; }
-        .topic-table tr:nth-child(even) { background: #f8f0ff; }
-        .example-box { background: #f8f8f8; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1rem 0; border: 1px solid #e8e8e8; }
-        .example-box .question { font-weight: 600; color: #5a1a7a; margin-bottom: 0.6rem; }
-        .practice-cta { background: #5a1a7a; color: white; border-radius: 10px; padding: 1.5rem; text-align: center; margin: 2rem 0; }
-        .practice-cta a { background: white; color: #5a1a7a; padding: 0.6rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block; max-width: 100%; }
-        .nav-links { display: flex; justify-content: space-between; margin-top: 2rem; flex-wrap: wrap; gap: 1rem; }
-        .nav-links a { color: #5a1a7a; text-decoration: none; }
-        footer { text-align: center; padding: 1.8rem 1rem 2rem; font-size: 0.92rem; color: #fff; border-top: 1px solid rgba(255,255,255,0.12); margin-top: 3rem; background: linear-gradient(135deg, #3a1760, #7b3fb1); }
-        footer p { margin: 0.35rem 0; }
-        footer a { color: #ffd94d; margin: 0 0.35rem; text-decoration: none; font-weight: 600; }
-        footer a:hover { text-decoration: underline; }
-        img, video, iframe, table { max-width: 100%; }
-        .topic-table { display: block; overflow-x: auto; }
+{% block extra_head %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659" crossorigin="anonymous"></script>
 
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.3rem; }
-            .article-body { padding: 1.5rem; }
-            .container { padding: 0 0.7rem; }
-            .nav-links { flex-direction: column; align-items: flex-start; }
-            .practice-cta a { width: 100%; text-align: center; }
-        }
-    </style>
-</head>
-<body>
+<meta name="description" content="MAT is 20 marks in CEE Nepal and most students underprepare it. Here is the daily routine and exam strategy I used to make it a reliable scoring section.">
+<meta name="keywords" content="CEE MAT section Nepal, MAT tips CEE, mental agility test CEE Nepal, verbal reasoning CEE, numerical reasoning CEE MAT">
+<meta name="author" content="Ramu Pandey">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
 
-<header>
-    <span class="tag">MAT</span>
-    <h1>How to Score Full Marks in MAT Section</h1>
-    <p class="meta">March 21, 2026 | 8 min read</p>
-</header>
+<meta property="og:title" content="How to Score Full Marks in CEE MAT Section | CEE MCQ">
+<meta property="og:description" content="MAT is 20 marks in CEE. Here is the daily routine and exam strategy to make it a reliable scoring section.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-cover.jpg' %}">
 
-<main class="container">
-    <article class="article-body">
-        <p>The MAT section carries <strong>20 marks</strong> and is one of the most efficient scoring opportunities in CEE. It rewards daily practice, speed, and clear logic more than textbook memorization.</p>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Score Full Marks in CEE MAT Section | CEE MCQ">
+<meta name="twitter:description" content="The daily MAT routine that made it a reliable scoring section for CEE.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-cover.jpg' %}">
 
-        <h2>MAT Subsection Breakdown</h2>
-        <table class="topic-table">
-            <thead><tr><th>Subsection</th><th>Questions</th><th>Marks</th></tr></thead>
-            <tbody>
-                <tr><td>Verbal Reasoning</td><td>5</td><td>5</td></tr>
-                <tr><td>Numerical Reasoning</td><td>5</td><td>5</td></tr>
-                <tr><td>Logical Sequencing</td><td>5</td><td>5</td></tr>
-                <tr><td>Spatial / Abstract Reasoning</td><td>5</td><td>5</td></tr>
-            </tbody>
-        </table>
+<style>
+.blog-content-box {
+    margin-top: 1.5rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(122,77,199,.05) 100%);
+    border: 1px solid rgba(122,77,199,.18);
+    border-radius: 14px;
+    padding: 1.3rem;
+    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+}
+.blog-category {
+    display: inline-block;
+    background: #7a4dc7;
+    color: white;
+    padding: .22rem .7rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    margin-bottom: .7rem;
+}
+.tip-box {
+    background: rgba(122,77,199,.06);
+    border-left: 4px solid #7a4dc7;
+    padding: 1rem 1.2rem;
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+}
+.tip-box strong { color: #7a4dc7; }
+.topic-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(122,77,199,.22);
+    background: white;
+}
+.topic-table th {
+    background: #7a4dc7;
+    color: white;
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+}
+.topic-table td { padding: .65rem 1rem; border-bottom: 1px solid #e5e7eb; }
+.topic-table tr:last-child td { border-bottom: none; }
+.topic-table tbody tr:nth-child(even) { background: rgba(122,77,199,.05); }
+.topic-table tbody tr:hover { background: rgba(122,77,199,.10); transition: .2s ease; }
+@media(max-width: 768px) {
+    .topic-table { display: block; overflow-x: auto; white-space: nowrap; }
+    .blog-content-box { padding: 1rem; }
+}
+.full-test-footer {
+    border-top: 1px solid rgba(255,255,255,.1);
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
+    margin-top: 2rem;
+    padding: 1.2rem 1rem 1.5rem;
+    color: rgba(255,255,255,.88);
+    text-align: center;
+}
+.footer-container { max-width: 880px; margin: auto; }
+.footer-copy { margin: .85rem 0 0; font-size: .9rem; }
+</style>
+{% endblock extra_head %}
 
-        <div class="tip-box"><p><strong>Key insight:</strong> 30 minutes of daily MAT practice can move your score from average to excellent in a few weeks.</p></div>
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to Score Full Marks in CEE MAT Section",
+  "description": "MAT is 20 marks in CEE Nepal and most students underprepare it. Here is the daily routine and exam strategy I used to make it a reliable scoring section.",
+  "author": { "@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np" },
+  "publisher": { "@type": "Organization", "name": "CEE MCQ", "url": "https://pandeyramu.com.np" },
+  "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock structured_data %}
 
-        <h2>Section-wise strategy</h2>
-        <h3>1. Verbal reasoning</h3>
-        <ul>
-            <li>Practice analogies, odd-one-out, and syllogisms daily</li>
-            <li>Identify relation type before choosing options</li>
-        </ul>
+{% block content %}
+<main class="blog-wrap">
+<article class="article-card">
+<div class="blog-content-box">
 
-        <h3>2. Numerical reasoning</h3>
-        <ul>
-            <li>Train number-series, percentages, ratio, and quick arithmetic</li>
-            <li>Set 45-60 second cap per question during practice</li>
-        </ul>
+<span class="blog-category">MAT</span>
 
-        <h3>3. Logical sequencing</h3>
-        <ul>
-            <li>Use diagrams for direction and blood relation questions</li>
-            <li>Solve coding-decoding through pattern first, not guesswork</li>
-        </ul>
+<h1>How to Score Full Marks in CEE MAT Section</h1>
 
-        <h3>4. Spatial and abstract reasoning</h3>
-        <ul>
-            <li>Practice matrix patterns, mirror images, rotations, and paper folding</li>
-            <li>Track one distinguishing feature in each figure</li>
-        </ul>
+<p class="excerpt">
+  MAT is 20 marks in CEE and most students treat it as an afterthought. I used to do the same. Then I realized it was the easiest section to improve and I started preparing it daily from the beginning.
+</p>
 
-        <div class="example-box">
-            <p class="question">Example: If COLD is coded as DPME, how is HEAT coded?</p>
-            <p>Rule: each letter shifts one step forward. H->I, E->F, A->B, T->U. Answer: IFBU.</p>
-        </div>
+<p class="muted">By Ramu Pandey · Published: March 21, 2026 · 7 min read</p>
 
-        <h2>Daily 30-minute MAT routine</h2>
-        <table class="topic-table">
-            <thead><tr><th>Time</th><th>Task</th></tr></thead>
-            <tbody>
-                <tr><td>0-8 min</td><td>Verbal reasoning mini set</td></tr>
-                <tr><td>8-16 min</td><td>Numerical reasoning mini set</td></tr>
-                <tr><td>16-23 min</td><td>Logical sequencing mini set</td></tr>
-                <tr><td>23-30 min</td><td>Abstract reasoning mini set</td></tr>
-            </tbody>
-        </table>
+<section>
+  <p>
+    The Mental Agility Test section carries 20 marks in CEE, the same as an entire subject. But because it is not part of the Biology/Chemistry/Physics syllabus, most students push it to the last few weeks and end up underprepared. I made this mistake too in the first month of preparation.
+  </p>
+  <p>
+    What changed my approach was realizing that MAT is the section where consistent short practice gives the fastest improvement. You do not need to understand complex theory. You need to recognize patterns and build speed. Both of these come with repetition, not with intensive study sessions.
+  </p>
+</section>
 
-        <div class="tip-box"><p><strong>Exam rule:</strong> If no progress in 45-60 seconds, skip and return in second pass. MAT rewards flow, not stubbornness.</p></div>
+<section>
+  <h2>What MAT tests in CEE</h2>
 
-        <div class="practice-cta">
-            <p>Practice MAT with chapter-wise and full-test drills on CEE MCQ</p>
-            <a href="/">Start Practicing Now</a>
-        </div>
+  <table class="topic-table">
+    <thead>
+      <tr><th>Subsection</th><th>Questions</th><th>What It Tests</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Verbal Reasoning</td><td>5</td><td>Analogies, odd-one-out, syllogisms, word relationships</td></tr>
+      <tr><td>Numerical Reasoning</td><td>5</td><td>Number series, arithmetic patterns, percentage and ratio</td></tr>
+      <tr><td>Logical Sequencing</td><td>5</td><td>Direction sense, blood relations, coding-decoding</td></tr>
+      <tr><td>Spatial / Abstract Reasoning</td><td>5</td><td>Mirror images, rotations, paper folding, pattern matrices</td></tr>
+    </tbody>
+  </table>
 
-        <div class="nav-links">
-            <a href="/blog/physics-high-weightage-topics/">Previous: Physics Topics</a>
-            <a href="/blog/cee-exam-day-strategy/">Next: Exam Day Strategy</a>
-        </div>
-    </article>
+  <p>
+    Each subsection has 5 questions. That predictability is useful , you can structure your daily practice around exactly these four types and track your accuracy in each one separately.
+  </p>
+</section>
+
+<section>
+  <h2>My 30-minute daily MAT routine</h2>
+  <p>
+    I kept MAT practice short and daily rather than long and irregular. 30 minutes every morning, before the main study session. This built both speed and consistency without taking significant time away from Biology, Chemistry, and Physics.
+  </p>
+
+  <table class="topic-table">
+    <thead>
+      <tr><th>Time</th><th>Task</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0–8 min</td><td>Verbal reasoning → analogies and odd-one-out</td></tr>
+      <tr><td>8–16 min</td><td>Numerical reasoning → number series and arithmetic</td></tr>
+      <tr><td>16–23 min</td><td>Logical sequencing → direction and coding problems</td></tr>
+      <tr><td>23–30 min</td><td>Abstract reasoning → figure patterns and rotations</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    The time limits per subsection are deliberate. MAT rewards controlled speed, not rushing. If I could not solve a question within about 45 seconds, I marked it and moved on. Returning with fresh eyes in the last few minutes works better than stalling on one puzzle.
+  </p>
+</section>
+
+<div class="tip-box">
+  <p><strong>The pattern recognition effect:</strong> After three to four weeks of daily MAT practice, question types start feeling familiar even when the specific content changes. This is the real benefit , not that you have seen the answer before, but that you recognize the question structure and know where to look first.</p>
+</div>
+
+<section>
+  <h2>Common mistakes I made early on</h2>
+  <p>
+    <strong>Rushing without reading carefully.</strong> MAT questions often use words like "not," "except," "least," or "only" that completely change the answer. I missed several questions early on simply because I read too fast and missed the key qualifier. Slowing down for 3 seconds on each question costs less than the marks you lose from misreading.
+  </p>
+  <p>
+    <strong>Spending too long on abstract reasoning.</strong> Figure-based questions can feel time-consuming. If a pattern is not clear within 30 seconds, use elimination : rule out options that are obviously wrong  and move on. Stalling costs more marks than a considered elimination guess.
+  </p>
+  <p>
+    <strong>Skipping MAT entirely during Biology-heavy study weeks.</strong> Even 15 minutes of MAT practice is enough to maintain the pattern recognition you have built. Dropping it entirely for a week means the patterns feel less automatic, and speed drops.
+  </p>
+</section>
+
+<section>
+  <h2>Exam-day strategy for MAT</h2>
+  <p>
+    I attempted MAT early in the exam , usually in the first 30 minutes because the questions are typically faster to solve than Physics numericals or Biology diagram questions. Building momentum with MAT before the heavier sections helped me settle into the exam rhythm.
+  </p>
+  <ul>
+    <li>Start with whichever MAT subsection you are strongest at to build confidence</li>
+    <li>Set a personal 45-second limit per question , mark anything that exceeds it</li>
+    <li>Use elimination on abstract reasoning questions rather than attempting to solve every detail</li>
+    <li>Return to marked MAT questions after completing the other sections if time allows</li>
+  </ul>
+</section>
+
+</div>
+</article>
 </main>
+{% endblock content %}
 
-<footer>
-    <p>Made with ❤️ by Ramu Pandey</p>
-    <p>© 2026 Ramu Pandey. All Rights Reserved.</p>
-    <p>
-        <a href="/">Home</a> |
-        <a href="/blog/">Blog</a> |
-        <a href="/privacy-policy/">Privacy Policy</a> |
-        <a href="https://pandeyramu.com.np/">Portfolio</a>
-    </p>
+{% block footer %}
+<footer class="full-test-footer">
+  <div class="footer-container">
+    <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
+  </div>
 </footer>
-
-</body>
-</html>
+{% endblock footer %}

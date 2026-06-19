@@ -1,488 +1,237 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-     crossorigin="anonymous"></script>
-    <title>{{ page_seo.meta_title|default:page_default_title }}</title>
-    <meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
-    <meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
+{% block title %}{{ page_seo.meta_title|default:page_default_title }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:page_default_description }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:page_default_keywords }}{% endblock %}
 
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% block og_title %}{{ page_seo.og_title|default:page_default_og_title }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_default_og_description }}{% endblock %}
+{% block twitter_title %}CEE MCQ – Free CEE MCQ Questions{% endblock %}
+{% block twitter_description %}Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.{% endblock %}
 
-    <!-- Google Site Verification -->
-    <meta name="google-site-verification" content="UNpQRqXhbK41aS0c7qMpKu5zwnJ-GTT7sYdzb77BGGQ">
-
-    <!-- Open Graph / Social -->
-    <meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
-    <meta property="og:description" content="{{ page_seo.og_description|default:page_default_og_description }}">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CEE MCQ – Free CEE MCQ Questions">
-    <meta name="twitter:description" content="Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.">
-    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}">
-
-    <!-- Schema Markup -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-    "name": "CEE MCQ",
-    "url": "{{ request.build_absolute_uri }}",
-      "description": "Free CEE entrance exam practice by Ramu Pandey. Chapter-wise MCQs in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.",
-      "author": {
-        "@type": "Person",
-                "name": "Ramu Pandey",
-                "url": "https://pandeyramu.com.np"
-      }
+{% block extra_head %}
+<meta name="google-site-verification" content="UNpQRqXhbK41aS0c7qMpKu5zwnJ-GTT7sYdzb77BGGQ">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<style>
+    header {
+        background: linear-gradient(135deg, #0c2f4a, #184f79);
+        color: #fff;
+        padding: 1.2rem 1rem 1.4rem;
+        box-shadow: 0 10px 28px rgba(15, 58, 91, 0.18);
     }
-    </script>
+    .welcome-text { max-width: 1120px; margin: 0 auto; }
+    .home-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .home-brand {
+        margin: 0;
+        font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+        line-height: 1.05;
+        letter-spacing: 0.02em;
+        text-align: left;
+    }
+    .home-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 0.7rem;
+        margin: 0;
+    }
+    .home-nav a,
+    .home-nav .current-page {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.22);
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .home-nav a:hover {
+        background: #ffd94d;
+        color: #0f2742;
+        border-color: #ffd94d;
+        transform: translateY(-1px);
+    }
+    .home-nav .current-page {
+        background: #ffd94d;
+        color: #0f2742;
+        border-color: #ffd94d;
+    }
+    .home-copy {
+        max-width: 920px;
+        margin: 1rem 0 0;
+        color: rgba(255,255,255,0.96);
+        font-size: 1.02rem;
+        line-height: 1.75;
+    }
+    .home-contact-section { max-width: 640px; margin: 0 auto; text-align: center; }
+    .home-contact-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        justify-content: center;
+        margin-top: 0.9rem;
+    }
+    .home-contact-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.7rem 1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.18);
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .home-contact-links a:hover {
+        background: #ffd94d;
+        color: #0f2742;
+        border-color: #ffd94d;
+        transform: translateY(-1px);
+    }
+    .home-contact-copy { margin-top: 1rem; color: rgba(255,255,255,0.82); }
+</style>
+{% endblock %}
 
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {
-                    "@type": "Question",
-                    "name": "How many questions are in CEE Nepal?",
-                    "acceptedAnswer": {"@type": "Answer", "text": "CEE consists of 200 MCQ questions covering Physics (50), Chemistry (50), Biology (80), and MAT (20)."}
-                },
-                {
-                    "@type": "Question",
-                    "name": "What is the marking scheme for CEE?",
-                    "acceptedAnswer": {"@type": "Answer", "text": "+1 for correct answer, -0.25 for wrong answer. Maximum score is 200."}
-                },
-                {
-                    "@type": "Question",
-                    "name": "How long is the CEE exam?",
-                    "acceptedAnswer": {"@type": "Answer", "text": "CEE is 3 hours long."}
-                }
-            ]
-        }
-        </script>
-
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png">
-    <style>
-        header {
-            background: linear-gradient(135deg, #0c2f4a, #184f79);
-            color: #fff;
-            padding: 1.2rem 1rem 1.4rem;
-            box-shadow: 0 10px 28px rgba(15, 58, 91, 0.18);
-        }
-        .welcome-text {
-            max-width: 1120px;
-            margin: 0 auto;
-        }
-        .home-topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .home-brand {
-            margin: 0;
-            font-size: clamp(1.6rem, 2.6vw, 2.15rem);
-            line-height: 1.05;
-            letter-spacing: 0.02em;
-            text-align: left;
-        }
-        .home-nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            gap: 0.7rem;
-            margin: 0;
-        }
-        .home-nav a,
-        .home-nav .current-page {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.45rem 0.85rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.22);
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-        }
-        .home-nav a:hover {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-            transform: translateY(-1px);
-        }
-        .home-nav .current-page {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-        }
-        .home-copy {
-            max-width: 920px;
-            margin: 1rem 0 0;
-            color: rgba(255,255,255,0.96);
-            font-size: 1.02rem;
-            text-align: left;
-            line-height: 1.75;
-        }
-        .home-contact-section {
-            max-width: 640px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .home-contact-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.9rem;
-            justify-content: center;
-            margin-top: 0.9rem;
-        }
-        .home-contact-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.7rem 1rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.18);
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-        }
-        .home-contact-links a:hover {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-            transform: translateY(-1px);
-        }
-        .home-contact-copy {
-            margin-top: 1rem;
-            color: rgba(255,255,255,0.82);
-        }
-        .crawl-hub-section {
-            margin-top: 1.4rem;
-        }
-        .crawl-hub-note {
-            margin: 0.4rem 0 0;
-            color: #4b5563;
-        }
-        .crawl-hub-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 0.8rem;
-            margin-top: 1rem;
-        }
-        .crawl-hub-card {
-            display: block;
-            padding: 0.9rem 1rem;
-            border-radius: 16px;
-            border: 1px solid #d8e2ef;
-            background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
-            text-decoration: none;
-            color: #15324a;
-            box-shadow: 0 8px 20px rgba(15, 58, 91, 0.06);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-        }
-        .crawl-hub-card:hover {
-            transform: translateY(-2px);
-            border-color: #8fb4d8;
-            box-shadow: 0 12px 26px rgba(15, 58, 91, 0.1);
-        }
-        .crawl-hub-card strong {
-            display: block;
-            margin-bottom: 0.3rem;
-        }
-        .crawl-hub-card span {
-            color: #4b5563;
-            font-size: 0.95rem;
-        }
-    </style>
-</head>
-
-<body>
-    <header>
-        <div class="welcome-text" id="welcome">
-            <div class="home-topbar">
-                <h1 class="home-brand" data-text="CEE MCQ">CEE MCQ</h1>
-                <nav class="home-nav" aria-label="Main navigation">
-                    <span class="current-page" aria-current="page">Home</span>
-                    <a href="/all-subjects/">All Subjects</a>
-                    <a href="/about/">About Us</a>
-                    <a href="/contact/">Contact</a>
-                    <a href="/privacy-policy/">Privacy Policy</a>
-                    <a href="/disclaimer/">Disclaimer</a>
-                    <a href="/blog/">Blog</a>
-                </nav>
-            </div>
-            <p class="home-copy">Practice chapter-wise questions, strengthen concepts, and boost your confidence for Nepal's Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry, and Physics to enhance your preparation effectively.</p>
+{% block header %}
+<header>
+    <div class="welcome-text" id="welcome">
+        <div class="home-topbar">
+            <h1 class="home-brand" data-text="CEE MCQ">
+                <img src="{% static 'images/logo.png' %}" alt="CEE MCQ" height="42" style="border-radius:50%;vertical-align:middle;margin-right:0.5rem;">
+                CEE MCQ
+            </h1>
+            <nav class="home-nav" aria-label="Main navigation">
+                <span class="current-page" aria-current="page">Home</span>
+                <a href="/all-subjects/">All Subjects</a>
+                <a href="/about/">About Us</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/disclaimer/">Disclaimer</a>
+                <a href="/blog/">Blog</a>
+            </nav>
         </div>
-    </header>
+        <p class="home-copy">Practice chapter-wise questions, strengthen concepts, and boost your confidence for Nepal's Common Entrance Examination. Access a structured collection of questions across Biology, Chemistry, and Physics to enhance your preparation effectively.</p>
+    </div>
+</header>
+{% endblock %}
 
-    <main>
-        <!-- Test Configuration Section -->
-        <section class="config-section">
-            
-            <!-- CEE Exam Introduction -->
-            <div class="cee-intro">
-                <p>The Common Entrance Examination (CEE) is conducted by Nepal's Medical Education Commission (MEC) for admission into health science programs like MBBS, BDS, and B.Sc. Nursing across Nepal's medical colleges. It is held once a year, typically between July and September.</p>
-                
-                <p>The exam consists of 200 MCQ questions to be completed in 3 hours, covering Physics (50), Chemistry (50), Biology {Zoology + Botany} (80), and a Mental Agility Test (20). Each correct answer carries 1 mark, while an incorrect answer deducts 0.25 marks, making the maximum possible score 200.</p>
-            </div>
+{% block content %}
+<section class="config-section">
+    <div class="cee-intro">
+        <p>The Common Entrance Examination (CEE) is conducted by Nepal's Medical Education Commission (MEC) for admission into health science programs like MBBS, BDS, and B.Sc. Nursing across Nepal's medical colleges. It is held once a year, typically between July and September.</p>
+        <p>The exam consists of 200 MCQ questions to be completed in 3 hours, covering Physics (50), Chemistry (50), Biology {Zoology + Botany} (80), and a Mental Agility Test (20). Each correct answer carries 1 mark, while an incorrect answer deducts 0.25 marks, making the maximum possible score 200.</p>
+    </div>
+    <div class="table-wrapper">
+        <table class="config-table">
+            <thead>
+                <tr>
+                    <th>Unit</th>
+                    <th class="topic-col">Subject/Topic</th>
+                    <th class="qty-col">No. of Questions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="subject-header zoology-header"><td colspan="3">ZOOLOGY - 40 Questions</td></tr>
+                <tr class="topic-row"><td class="row-number">1.</td><td>Evolutionary Biology</td><td class="qty">3</td></tr>
+                <tr class="topic-row"><td class="row-number">2.</td><td>Animal Diversity and Classification</td><td class="qty">4</td></tr>
+                <tr class="topic-row"><td class="row-number">3.</td><td>Animal Tissues and Histology</td><td class="qty">4</td></tr>
+                <tr class="topic-row"><td class="row-number">4.</td><td>Study of Selected Animals</td><td class="qty">6</td></tr>
+                <tr class="topic-row highlight-high"><td class="row-number">5.</td><td>Human Biology and Physiology</td><td class="qty qty-high">15</td></tr>
+                <tr class="topic-row"><td class="row-number">6.</td><td>Microbial Diseases and Immunology</td><td class="qty">4</td></tr>
+                <tr class="topic-row"><td class="row-number">7.</td><td>Medical Technology and Applied Biology</td><td class="qty">2</td></tr>
+                <tr class="topic-row"><td class="row-number">8.</td><td>Biota, Environment and Conservation</td><td class="qty">2</td></tr>
 
-            <!-- Main Configuration Table -->
-            <div class="table-wrapper">
-                <table class="config-table">
-                    <thead>
-                        <tr>
-                            <th>Unit</th>
-                            <th class="topic-col">Subject/Topic</th>
-                            <th class="qty-col">No. of Questions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- ZOOLOGY -->
-                        <tr class="subject-header zoology-header">
-                            <td colspan="3">ZOOLOGY - 40 Questions</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">1.</td>
-                            <td>Evolutionary Biology</td>
-                            <td class="qty">3</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">2.</td>
-                            <td>Animal Diversity and Classification</td>
-                            <td class="qty">4</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">3.</td>
-                            <td>Animal Tissues and Histology</td>
-                            <td class="qty">4</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">4.</td>
-                            <td>Study of Selected Animals</td>
-                            <td class="qty">6</td>
-                        </tr>
-                        <tr class="topic-row highlight-high">
-                            <td class="row-number">5.</td>
-                            <td>Human Biology and Physiology</td>
-                            <td class="qty qty-high">15</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">6.</td>
-                            <td>Microbial Diseases and Immunology</td>
-                            <td class="qty">4</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">7.</td>
-                            <td>Medical Technology and Applied Biology</td>
-                            <td class="qty">2</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">8.</td>
-                            <td>Biota, Environment and Conservation</td>
-                            <td class="qty">2</td>
-                        </tr>
+                <tr class="subject-header botany-header"><td colspan="3">BOTANY - 40 Questions</td></tr>
+                <tr class="topic-row"><td class="row-number">1.</td><td>Basic Components of Life</td><td class="qty">2</td></tr>
+                <tr class="topic-row highlight-high"><td class="row-number">2.</td><td>Biodiversity</td><td class="qty qty-high">9</td></tr>
+                <tr class="topic-row"><td class="row-number">3.</td><td>Ecology and Vegetation</td><td class="qty">4</td></tr>
+                <tr class="topic-row"><td class="row-number">4.</td><td>Cell Biology</td><td class="qty">5</td></tr>
+                <tr class="topic-row"><td class="row-number">5.</td><td>Genetics</td><td class="qty">6</td></tr>
+                <tr class="topic-row"><td class="row-number">6.</td><td>Plant Anatomy</td><td class="qty">3</td></tr>
+                <tr class="topic-row"><td class="row-number">7.</td><td>Plant Physiology</td><td class="qty">6</td></tr>
+                <tr class="topic-row"><td class="row-number">8.</td><td>Developmental Botany</td><td class="qty">2</td></tr>
+                <tr class="topic-row"><td class="row-number">9.</td><td>Applied Botany</td><td class="qty">3</td></tr>
 
-                        <!-- BOTANY -->
-                        <tr class="subject-header botany-header">
-                            <td colspan="3">BOTANY - 40 Questions</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">1.</td>
-                            <td>Basic Components of Life</td>
-                            <td class="qty">2</td>
-                        </tr>
-                        <tr class="topic-row highlight-high">
-                            <td class="row-number">2.</td>
-                            <td>Biodiversity</td>
-                            <td class="qty qty-high">9</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">3.</td>
-                            <td>Ecology and Vegetation</td>
-                            <td class="qty">4</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">4.</td>
-                            <td>Cell Biology</td>
-                            <td class="qty">5</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">5.</td>
-                            <td>Genetics</td>
-                            <td class="qty">6</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">6.</td>
-                            <td>Plant Anatomy</td>
-                            <td class="qty">3</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">7.</td>
-                            <td>Plant Physiology</td>
-                            <td class="qty">6</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">8.</td>
-                            <td>Developmental Botany</td>
-                            <td class="qty">2</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">9.</td>
-                            <td>Applied Botany</td>
-                            <td class="qty">3</td>
-                        </tr>
+                <tr class="subject-header chemistry-header"><td colspan="3">CHEMISTRY - 50 Questions</td></tr>
+                <tr class="topic-row highlight-high"><td class="row-number">1.</td><td>Physical Chemistry</td><td class="qty qty-high">17</td></tr>
+                <tr class="topic-row"><td class="row-number">2.</td><td>Inorganic Chemistry</td><td class="qty">10</td></tr>
+                <tr class="topic-row highlight-high"><td class="row-number">3.</td><td>Organic Chemistry</td><td class="qty qty-high">17</td></tr>
+                <tr class="topic-row"><td class="row-number">4.</td><td>Applied Chemistry</td><td class="qty">3</td></tr>
+                <tr class="topic-row"><td class="row-number">5.</td><td>Analytical Chemistry</td><td class="qty">3</td></tr>
 
-                        <!-- CHEMISTRY -->
-                        <tr class="subject-header chemistry-header">
-                            <td colspan="3">CHEMISTRY - 50 Questions</td>
-                        </tr>
-                        <tr class="topic-row highlight-high">
-                            <td class="row-number">1.</td>
-                            <td>Physical Chemistry</td>
-                            <td class="qty qty-high">17</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">2.</td>
-                            <td>Inorganic Chemistry</td>
-                            <td class="qty">10</td>
-                        </tr>
-                        <tr class="topic-row highlight-high">
-                            <td class="row-number">3.</td>
-                            <td>Organic Chemistry</td>
-                            <td class="qty qty-high">17</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">4.</td>
-                            <td>Applied Chemistry</td>
-                            <td class="qty">3</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">5.</td>
-                            <td>Analytical Chemistry</td>
-                            <td class="qty">3</td>
-                        </tr>
+                <tr class="subject-header physics-header"><td colspan="3">PHYSICS - 50 Questions</td></tr>
+                <tr class="topic-row highlight-high"><td class="row-number">1.</td><td>Mechanics</td><td class="qty qty-high">10</td></tr>
+                <tr class="topic-row"><td class="row-number">2.</td><td>Heat and Thermodynamics</td><td class="qty">7</td></tr>
+                <tr class="topic-row"><td class="row-number">3.</td><td>Waves and Optics</td><td class="qty">8</td></tr>
+                <tr class="topic-row"><td class="row-number">4.</td><td>Current Electricity and Magnetism</td><td class="qty">9</td></tr>
+                <tr class="topic-row"><td class="row-number">5.</td><td>Electrostatics and Capacitors</td><td class="qty">4</td></tr>
+                <tr class="topic-row highlight-high"><td class="row-number">6.</td><td>Modern Physics</td><td class="qty qty-high">12</td></tr>
 
-                        <!-- PHYSICS -->
-                        <tr class="subject-header physics-header">
-                            <td colspan="3">PHYSICS - 50 Questions</td>
-                        </tr>
-                        <tr class="topic-row highlight-high">
-                            <td class="row-number">1.</td>
-                            <td>Mechanics</td>
-                            <td class="qty qty-high">10</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">2.</td>
-                            <td>Heat and Thermodynamics</td>
-                            <td class="qty">7</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">3.</td>
-                            <td>Waves and Optics</td>
-                            <td class="qty">8</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">4.</td>
-                            <td>Current Electricity and Magnetism</td>
-                            <td class="qty">9</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">5.</td>
-                            <td>Electrostatics and Capacitors</td>
-                            <td class="qty">4</td>
-                        </tr>
-                        <tr class="topic-row highlight-high">
-                            <td class="row-number">6.</td>
-                            <td>Modern Physics</td>
-                            <td class="qty qty-high">12</td>
-                        </tr>
+                <tr class="subject-header mat-header"><td colspan="3">MENTAL AGILITY TEST (MAT) - 20 Questions</td></tr>
+                <tr class="topic-row"><td class="row-number">1.</td><td>Verbal Reasoning</td><td class="qty">5</td></tr>
+                <tr class="topic-row"><td class="row-number">2.</td><td>Numerical Reasoning</td><td class="qty">5</td></tr>
+                <tr class="topic-row"><td class="row-number">3.</td><td>Logical Sequencing</td><td class="qty">5</td></tr>
+                <tr class="topic-row"><td class="row-number">4.</td><td>Spatial Relation / Abstract Reasoning</td><td class="qty">5</td></tr>
 
-                        <!-- MENTAL AGILITY TEST -->
-                        <tr class="subject-header mat-header">
-                            <td colspan="3">MENTAL AGILITY TEST (MAT) - 20 Questions</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">1.</td>
-                            <td>Verbal Reasoning</td>
-                            <td class="qty">5</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">2.</td>
-                            <td>Numerical Reasoning</td>
-                            <td class="qty">5</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">3.</td>
-                            <td>Logical Sequencing</td>
-                            <td class="qty">5</td>
-                        </tr>
-                        <tr class="topic-row">
-                            <td class="row-number">4.</td>
-                            <td>Spatial Relation / Abstract Reasoning</td>
-                            <td class="qty">5</td>
-                        </tr>
+                <tr class="total-row">
+                    <td colspan="2"><strong>TOTAL QUESTIONS</strong></td>
+                    <td><strong class="total-qty">200</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
 
-                        <!-- TOTAL -->
-                        <tr class="total-row">
-                            <td colspan="2"><strong>TOTAL QUESTIONS</strong></td>
-                            <td><strong class="total-qty">200</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+<section class="subjects">
+    <h2>Free CEE Chapter-wise MCQ Questions</h2>
+    <p>Select a subject and start practicing!</p>
+    <p class="total-question-count">Total questions available: {{ total_questions }}</p>
+    <div class="button-group">
+        {% for sub in subjects %}
+            <a href="{% url 'chapters' sub.slug %}" class="btn btn-subject">{{ sub.name }}</a>
+        {% empty %}
+            <p>No subjects available</p>
+        {% endfor %}
+    </div>
+    <div class="full-test-container">
+        <a href="{% url 'full_test' %}" class="btn btn-full-test">Start Full MCQ Test</a>
+    </div>
+</section>
+{% endblock %}
 
-        <section class="subjects">
-            <h2>Free CEE Chapter-wise MCQ Questions</h2>
-            <p>Select a subject and start practicing!</p>
-            <p class="total-question-count">Total questions available: {{ total_questions }}</p>
-
-            <div class="button-group">
-                {% for sub in subjects %}
-                    <a href="{% url 'chapters' sub.slug %}" class="btn btn-subject">{{ sub.name }}</a>
-                {% empty %}
-                    <p>No subjects available</p>
-                {% endfor %}
-            </div>
-
-            {# Direct crawl entry points removed per request: navigation simplified #}
-
-            <!-- Full Test Button -->
-            <div class="full-test-container">
-                <a href="{% url 'full_test' %}" class="btn btn-full-test">Start Full MCQ Test</a>
-            </div>
-        </section>
-    </main>
-
-    <footer id="site-footer" class="fade-in">
-        <div class="footer-container home-contact-section">
-            <h2>Contact Me</h2>
-            <p>Have questions or want to connect? Reach out via email or follow me on social platforms.</p>
-
-            <div class="home-contact-links">
-                <a href="https://mail.google.com/mail/?view=cm&to=pandeyramu57@gmail.com" target="_blank" rel="noopener noreferrer">Email</a>
-                <a href="https://github.com/pandeyramu" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener noreferrer">Facebook</a>
-            </div>
-
-            <p class="home-contact-copy">Made with ❤️ by Ramu Pandey</p>
-        </div>
-    </footer>
-
-</body>
-</html>
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "CEE MCQ",
+  "url": "{{ request.build_absolute_uri }}",
+  "description": "Free CEE entrance exam practice by Ramu Pandey.",
+  "author": {"@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How many questions are in CEE Nepal?", "acceptedAnswer": {"@type": "Answer", "text": "CEE consists of 200 MCQ questions covering Physics (50), Chemistry (50), Biology (80), and MAT (20)."}},
+    {"@type": "Question", "name": "What is the marking scheme for CEE?", "acceptedAnswer": {"@type": "Answer", "text": "+1 for correct answer, -0.25 for wrong answer. Maximum score is 200."}},
+    {"@type": "Question", "name": "How long is the CEE exam?", "acceptedAnswer": {"@type": "Answer", "text": "CEE is 3 hours long."}}
+  ]
+}
+</script>
+{% endblock %}

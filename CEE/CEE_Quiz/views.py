@@ -133,748 +133,19 @@ def _hub_page_context(*, page_slug, title, description, keywords, og_title, og_d
         'hub_items': hub_items,
     }
 
-
-BLOG_POSTS = {
-    'how-to-prepare-for-cee': {
-        'title': 'How to Prepare for CEE Effectively',
-        'tag': 'Study Tips',
-        'accent': '#1458a6',
-        'accent_soft': 'rgba(20, 88, 166, 0.08)',
-        'accent_border': 'rgba(20, 88, 166, 0.22)',
-        'description': 'A practical CEE preparation roadmap covering study planning, revision cycles, and mock test strategy for Biology, Chemistry, Physics, and MAT.',
-        'excerpt': 'Build a realistic routine, focus on high-weightage chapters, and use timed practice to steadily improve your CEE score.',
-        'sections': [
-            {
-                'heading': 'Start with a realistic 12-week plan',
-                'paragraphs': [
-                    'Most students fail not because they are weak in concepts but because they study without structure. Begin by splitting your preparation into three phases: foundation, consolidation, and test simulation.',
-                    'In the foundation phase, revise core theory and formulas. In consolidation, solve chapter-wise MCQs daily and track weak areas. In the simulation phase, shift heavily to timed mixed tests and error analysis.'
-                ],
-                'bullets': [
-                    'Weeks 1 to 4: concept revision and short chapter tests',
-                    'Weeks 5 to 8: mixed chapter drills and topic repair',
-                    'Weeks 9 to 12: full-length tests with strict timing'
-                ]
-            },
-            {
-                'heading': 'Use weightage to prioritize your effort',
-                'paragraphs': [
-                    'Not every chapter has equal impact on rank. Start with high-weightage units in Biology, Physics, and Chemistry so you build score quickly while confidence rises.',
-                    'This does not mean skipping low-weightage chapters. Cover them after core topics, but give revision frequency according to marks impact.'
-                ],
-                'bullets': [
-                    'Biology: Human biology, cell biology, genetics',
-                    'Physics: Mechanics, current electricity, magnetism',
-                    'Chemistry: General/physical plus organic core reactions',
-                    'MAT: daily short drills to build speed and pattern recognition'
-                ]
-            },
-            {
-                'heading': 'Turn mistakes into a score-improvement system',
-                'paragraphs': [
-                    'After every quiz, maintain an error log with three labels: concept gap, careless mistake, and time-pressure guess. Review this log before every weekend test.',
-                    'Your score improves fastest when you fix repeated errors, not when you keep solving random new questions without reflection.'
-                ],
-                'bullets': [
-                    'Write one-line reason for every wrong answer',
-                    'Re-attempt error-log questions after 3 days and 7 days',
-                    'Track accuracy by subject, then by chapter'
-                ]
-            },
-            {
-                'heading': 'Mock test strategy for exam day confidence',
-                'paragraphs': [
-                    'Practice full tests in exam-like conditions: same time slot, no phone, and fixed duration. This trains endurance and pacing, which directly improves final rank.',
-                    'Use a simple attempt rule: first secure easy marks, then medium questions, and finally return to difficult ones if time remains.'
-                ],
-                'bullets': [
-                    'Attempt easy and familiar questions in first pass',
-                    'Avoid long stalls on one question',
-                    'Reserve final 10 minutes for review and marked questions'
-                ]
-            }
-        ]
-    },
-    'physics-high-weightage-topics': {
-        'title': 'High Weightage Physics Topics for CEE',
-        'tag': 'Physics',
-        'accent': '#0f7a8a',
-        'accent_soft': 'rgba(15, 122, 138, 0.08)',
-        'accent_border': 'rgba(15, 122, 138, 0.22)',
-        'description': 'Focused guide to high-weightage Physics units for CEE with chapter priorities, question patterns, and smart practice methods.',
-        'excerpt': 'Prioritize Mechanics, Current Electricity, and Magnetism, then build accuracy through formula recall and timed mixed sets.',
-        'sections': [
-            {
-                'heading': 'Where most Physics marks come from',
-                'paragraphs': [
-                    'Physics can be scoring if preparation is selective and consistent. In many CEE patterns, Mechanics and Electricity-related chapters carry a large share of marks.',
-                    'The goal is to master recurring question types first, then expand to the rest of the syllabus.'
-                ],
-                'bullets': [
-                    'Mechanics: vectors, Newton laws, work-energy, circular motion',
-                    'Current electricity and magnetism: circuits, Ohm/Kirchhoff, force and field',
-                    'Electrostatics and capacitors: frequent conceptual numericals'
-                ]
-            },
-            {
-                'heading': 'Study method that improves both speed and accuracy',
-                'paragraphs': [
-                    'Many students know formulas but lose marks due to unit conversion, sign errors, or poor diagram interpretation. Make formula revision active, not passive.',
-                    'Use short 20-question sets and review every wrong answer immediately to lock learning while memory is fresh.'
-                ],
-                'bullets': [
-                    'Maintain one formula notebook with standard SI units',
-                    'Draw diagrams before solving field and motion problems',
-                    'Do daily 30 to 45 minutes of mixed numericals'
-                ]
-            },
-            {
-                'heading': 'Weekly Physics schedule that works',
-                'paragraphs': [
-                    'Split week by goal: two days concept, three days MCQ drills, one day mixed revision, one day timed section test. This rhythm prevents forgetting and improves exam stamina.',
-                    'Track chapter-wise accuracy so you know whether to increase revision or move ahead.'
-                ],
-                'bullets': [
-                    'Target 80%+ accuracy in top-weightage chapters',
-                    'Revisit weak chapters every week, not once a month',
-                    'Use chapter quizzes followed by one combined Physics mini-test'
-                ]
-            }
-        ]
-    },
-    'human-biology-cee-questions': {
-        'title': 'Human Biology: Most Important CEE Questions',
-        'tag': 'Biology',
-        'accent': '#1f8a4c',
-        'accent_soft': 'rgba(31, 138, 76, 0.08)',
-        'accent_border': 'rgba(31, 138, 76, 0.22)',
-        'description': 'High-yield Human Biology revision guide for CEE with commonly tested systems, diagrams, and MCQ preparation tactics.',
-        'excerpt': 'Human Biology is a major scoring area in CEE. Focus on repeated concepts, terminology precision, and diagram-based revision.',
-        'sections': [
-            {
-                'heading': 'Why Human Biology deserves priority',
-                'paragraphs': [
-                    'Human biology usually contributes significant marks and includes many predictable concept clusters. With focused revision, this section can become one of your strongest scoring blocks.',
-                    'The key is not reading everything repeatedly; instead, revise tested topics in cycles and solve targeted MCQs.'
-                ],
-                'bullets': [
-                    'Digestive, respiratory, circulatory, nervous, and endocrine systems',
-                    'Human diseases and prevention principles',
-                    'Homeostasis and organ-level integration'
-                ]
-            },
-            {
-                'heading': 'How to study for retention',
-                'paragraphs': [
-                    'Biology mistakes often come from confusing similar terms. Build memory anchors with concise comparison tables and flowcharts.',
-                    'After each chapter, answer at least 40 mixed MCQs and revisit mistakes after 48 hours.'
-                ],
-                'bullets': [
-                    'Use one-page summaries for each body system',
-                    'Practice statement-based and assertion-reason questions',
-                    'Revise medical vocabulary with short flashcards'
-                ]
-            },
-            {
-                'heading': 'Exam strategy for biology section',
-                'paragraphs': [
-                    'Start with direct factual questions, then move to conceptual integration questions. Avoid overthinking simple recall items; save time for interpretation-based MCQs.',
-                    'Use elimination method aggressively when two options seem close.'
-                ],
-                'bullets': [
-                    'Mark uncertain questions and revisit in final review',
-                    'Prioritize accuracy to protect score under negative marking',
-                    'Keep a final-day checklist of common confusion points'
-                ]
-            }
-        ]
-    },
-    'organic-chemistry-cee-tips': {
-        'title': 'Organic Chemistry Tips for CEE Nepal',
-        'tag': 'Chemistry',
-        'accent': '#b36a00',
-        'accent_soft': 'rgba(179, 106, 0, 0.08)',
-        'accent_border': 'rgba(179, 106, 0, 0.24)',
-        'description': 'Organic Chemistry preparation guide for CEE Nepal with high-weightage reactions, functional-group strategy, and exam-focused MCQ methods.',
-        'excerpt': 'Organic Chemistry carries major weight in CEE. Use reaction maps, functional-group logic, and repeated MCQ drills to convert it into a scoring section.',
-        'sections': [
-            {
-                'heading': 'Why Organic Chemistry can decide your Chemistry score',
-                'paragraphs': [
-                    'In many CEE patterns, Organic Chemistry contributes around 18 marks, equal to other major chemistry blocks. Students who prepare Organic selectively and systematically gain a large scoring advantage.',
-                    'Most losses in this section happen from poor reaction recall, confusion between similar reagents, and weak distinction tests. A structured method can fix all three in a few weeks.'
-                ],
-                'bullets': [
-                    'High-return topics: hydrocarbons, alcohols, carbonyl compounds, carboxylic acids, amines',
-                    'Frequently tested concepts: IUPAC naming, reaction conditions, identifying final products',
-                    'Scoring lever: master distinction tests and common conversions'
-                ]
-            },
-            {
-                'heading': 'Use functional-group clusters instead of chapter-by-chapter memorization',
-                'paragraphs': [
-                    'Instead of memorizing isolated reactions, build conversion chains by functional group. This helps you solve product prediction questions faster and reduces memory overload.',
-                    'For example, connect hydrocarbon to haloalkane to alcohol to aldehyde/ketone to acid. When the chain is clear, many MCQs become direct pattern matches.'
-                ],
-                'bullets': [
-                    'Maintain one reaction-map page and revise it every 2 days',
-                    'Tag reactions as oxidation, reduction, substitution, elimination, or addition',
-                    'Learn key reagents with conditions and expected product type'
-                ]
-            },
-            {
-                'heading': 'Most important reaction families for CEE',
-                'paragraphs': [
-                    'CEE often asks direct outcome and reagent-choice questions from recurring reaction families. Prepare these first before moving to low-frequency content.',
-                    'Focus especially on mechanisms and exception behavior, because options are usually designed to trap superficial memorization.'
-                ],
-                'bullets': [
-                    'Alkene addition and Markovnikov orientation',
-                    'Alcohol oxidation and dehydration behavior',
-                    'Aldehyde/ketone distinction via Tollens and Fehling tests',
-                    'Esterification and hydrolysis in acid/basic medium',
-                    'Amines classification and typical test reactions'
-                ]
-            },
-            {
-                'heading': 'A weekly routine that improves retention',
-                'paragraphs': [
-                    'Organic performance rises when reaction recall is frequent and timed. Use short daily mixed sets rather than long irregular sessions.',
-                    'End every week with a timed organic-only mini test and a focused error correction session.'
-                ],
-                'bullets': [
-                    'Day 1-2: concept and reaction-map revision',
-                    'Day 3-5: 30-40 MCQs daily from mixed organic topics',
-                    'Day 6: distinction tests and exception sheet revision',
-                    'Day 7: timed test + error log update'
-                ]
-            },
-            {
-                'heading': 'Quick FAQ for common exam traps',
-                'paragraphs': [
-                    'Q: Why do students lose easy marks in organic? A: They forget conditions and confuse similar reagents.',
-                    'Q: Is mechanism depth needed for CEE? A: Basic mechanism logic is enough to avoid most trap options.',
-                    'Q: What should be revised in the final week? A: Reaction map, exception sheet, and your personal error log.'
-                ],
-                'bullets': [
-                    'Do not rely only on passive reading of reaction charts',
-                    'Always practice product prediction with timed questions',
-                    'Re-attempt wrong MCQs after 48 hours'
-                ]
-            }
-        ]
-    },
-    'mat-section-tips': {
-        'title': 'How to Score Full Marks in MAT Section',
-        'tag': 'MAT',
-        'accent': '#7a4dc7',
-        'accent_soft': 'rgba(122, 77, 199, 0.08)',
-        'accent_border': 'rgba(122, 77, 199, 0.22)',
-        'description': 'High-scoring MAT strategy for CEE with daily drill design, speed-control techniques, and trap-avoidance methods.',
-        'excerpt': 'MAT is one of the fastest sections to improve. A disciplined daily routine can convert it into reliable marks with low preparation cost.',
-        'sections': [
-            {
-                'heading': 'Why MAT is a high-return scoring section',
-                'paragraphs': [
-                    'Many candidates ignore MAT until the last stage, but this section rewards routine pattern practice more than heavy theory. That makes it an efficient score booster.',
-                    'A short daily MAT plan improves both speed and confidence, and it also sharpens test temperament for other sections.'
-                ],
-                'bullets': [
-                    'Small daily effort often gives large mark gains',
-                    'MAT accuracy rises quickly with repetition and review',
-                    'Good MAT pacing helps overall time management in CEE'
-                ]
-            },
-            {
-                'heading': 'A practical 30-minute daily MAT routine',
-                'paragraphs': [
-                    'Use a fixed mini-routine every day: verbal reasoning, numerical patterns, sequence logic, and abstract pattern recognition. Keep each set timed.',
-                    'Your goal is to gradually reduce average solve time while preserving accuracy. Avoid uncontrolled speed; controlled speed is what wins marks.'
-                ],
-                'bullets': [
-                    '8 minutes: verbal and analogy questions',
-                    '8 minutes: numerical and arithmetic logic',
-                    '7 minutes: sequence and arrangement patterns',
-                    '7 minutes: abstract or figure-based reasoning'
-                ]
-            },
-            {
-                'heading': 'Common mistakes and how to avoid them',
-                'paragraphs': [
-                    'Most MAT errors are not from lack of ability but from avoidable habits: rushed reading, ignoring condition words, and spending too long on one puzzle.',
-                    'Build a simple rule: if progress is not visible quickly, mark and move. Return in the second pass with a fresh view.'
-                ],
-                'bullets': [
-                    'Watch for words like only, except, least, and not',
-                    'Set a time cap per question to prevent stalls',
-                    'Use elimination aggressively when options are close',
-                    'Maintain a weekly error log of recurring trap types'
-                ]
-            },
-            {
-                'heading': 'Exam-day MAT attempt strategy',
-                'paragraphs': [
-                    'Start with medium and direct items to build rhythm, then solve easier leftover questions, and finally attempt difficult puzzles if time remains.',
-                    'A stable attempt plan protects accuracy and avoids panic guessing under time pressure.'
-                ],
-                'bullets': [
-                    'Pass 1: solve confident medium questions quickly',
-                    'Pass 2: clear easy direct items you skipped',
-                    'Pass 3: attempt selected hard puzzles only',
-                    'Final review: recheck marked items with elimination'
-                ]
-            },
-            {
-                'heading': 'MAT micro-FAQ for fast improvement',
-                'paragraphs': [
-                    'Q: Can MAT improve in one month? A: Yes, with daily timed practice and review.',
-                    'Q: Should I memorize shortcuts only? A: No, combine shortcuts with logic accuracy.',
-                    'Q: What is the best revision style? A: Re-attempt previous wrong sets every 2 to 3 days.'
-                ],
-                'bullets': [
-                    'Consistency beats occasional long sessions',
-                    'Accuracy first, then speed',
-                    'Review mistakes immediately after each set'
-                ]
-            }
-        ]
-    },
-    'cee-exam-day-strategy': {
-        'title': "CEE Exam Day Strategy: Do's and Don'ts",
-        'tag': 'Strategy',
-        'accent': '#c04b62',
-        'accent_soft': 'rgba(192, 75, 98, 0.08)',
-        'accent_border': 'rgba(192, 75, 98, 0.22)',
-        'description': 'CEE exam-day strategy covering pre-exam checklist, section pacing, negative-marking control, and high-pressure decision making.',
-        'excerpt': 'A strong exam-day system can convert months of preparation into marks by protecting accuracy, pace, and confidence under pressure.',
-        'sections': [
-            {
-                'heading': 'Pre-exam day plan: protect focus and energy',
-                'paragraphs': [
-                    'The biggest exam-day losses usually begin the previous night through panic revision and poor sleep. Your final evening should be calm, organized, and predictable.',
-                    'Prepare all logistics early so exam morning remains stress-free. Cognitive clarity matters more than late-night extra reading.'
-                ],
-                'bullets': [
-                    'Revise only quick notes and formula lists',
-                    'Prepare all required documents in advance',
-                    'Sleep on time and avoid late-night heavy study'
-                ]
-            },
-            {
-                'heading': 'Morning of exam: create a steady start',
-                'paragraphs': [
-                    'Avoid rushing and information overload on exam morning. Keep your routine simple: light revision, stable meals, and timely arrival.',
-                    'When mind and body are stable, early questions feel easier and confidence builds naturally.'
-                ],
-                'bullets': [
-                    'Arrive early to avoid last-minute stress',
-                    'Avoid discussing difficult topics with other candidates',
-                    'Use a short breathing reset before starting'
-                ]
-            },
-            {
-                'heading': 'Time management during the paper',
-                'paragraphs': [
-                    'Use a three-pass approach: confident questions first, moderate questions second, difficult questions last. This prevents early time drain and protects accuracy.',
-                    'Watch section timing checkpoints so one subject does not consume the entire exam.'
-                ],
-                'bullets': [
-                    'Pass 1: quick confident solves',
-                    'Pass 2: moderate items with short calculation',
-                    'Pass 3: only selected difficult items'
-                ]
-            },
-            {
-                'heading': 'Handling negative marking safely',
-                'paragraphs': [
-                    'Negative marking punishes random attempts. Guess only when you can eliminate at least two options with logic.',
-                    'Protecting accuracy is often better than forcing maximum attempts.'
-                ],
-                'bullets': [
-                    'Avoid blind guesses',
-                    'Use elimination before marking uncertain answers',
-                    'Keep 8 to 10 minutes for final review'
-                ]
-            },
-            {
-                'heading': 'Section balancing and recovery rules',
-                'paragraphs': [
-                    'If one section feels difficult, do not force completion immediately. Move to a stronger section to recover tempo and marks, then return later.',
-                    'This strategy protects emotional stability and prevents one bad cluster from damaging total paper performance.'
-                ],
-                'bullets': [
-                    'Set mini checkpoints for each section',
-                    'If stalled, switch section and recover momentum',
-                    'Return with a calmer second-pass mindset'
-                ]
-            },
-            {
-                'heading': 'Final 10-minute finish strategy',
-                'paragraphs': [
-                    'The last 10 minutes are score-protection time. Focus on marked questions, careless-check scan, and only high-confidence corrections.',
-                    'Do not introduce chaotic last-minute guessing. Controlled finishing often adds reliable marks.'
-                ],
-                'bullets': [
-                    'Recheck marked questions with elimination',
-                    'Verify response bubbling/selection carefully',
-                    'Avoid changing answers without clear reason'
-                ]
-            },
-            {
-                'heading': 'Exam-day FAQ for confidence control',
-                'paragraphs': [
-                    'Q: What if the first questions are difficult? A: Skip and build rhythm with solvable items first.',
-                    'Q: Should I attempt every question? A: No. Accuracy with strategy beats random high attempts.',
-                    'Q: How to stay calm if time feels short? A: Use pass-based solving and commit to your checkpoints.'
-                ],
-                'bullets': [
-                    'Trust your preparation system',
-                    'Protect accuracy under negative marking',
-                    'Finish with structured review, not panic'
-                ]
-            }
-        ]
-    },
-    'biology-diagram-revision-cee': {
-        'title': 'Biology Diagram Revision That Actually Sticks',
-        'tag': 'Biology',
-        'accent': '#1f8a4c',
-        'accent_soft': 'rgba(31, 138, 76, 0.08)',
-        'accent_border': 'rgba(31, 138, 76, 0.22)',
-        'description': 'A practical Biology revision note focused on diagrams, labels, and recall tricks for CEE students.',
-        'excerpt': 'I stopped losing easy Biology marks when I began redrawing diagrams from memory and checking the labels against my own mistakes.',
-        'sections': [
-            {
-                'heading': 'Why diagrams matter so much',
-                'paragraphs': [
-                    'Biology becomes easier when you stop treating diagrams as decoration. In CEE, a labelled heart, kidney, neuron, or plant cell can represent marks that are simple to secure if you revise them the right way.',
-                    'I used to read diagrams passively and forget the labels after two days. What helped was drawing the same figure three times: once while studying, once from memory, and once in a quick revision notebook.'
-                ],
-                'bullets': [
-                    'Draw the diagram before reading the label list',
-                    'Use a blank sheet and check your own mistakes',
-                    'Repeat the same diagram after 2 days and 7 days'
-                ]
-            },
-            {
-                'heading': 'My simple recall method',
-                'paragraphs': [
-                    'I keep one page for each system and write only the labels that I commonly forget. That page is not a full note. It is a mistake log for things I always mix up during revision.',
-                    'Short recall practice works better than long reading sessions. Even ten minutes of active drawing can improve memory more than half an hour of scanning the textbook.'
-                ],
-                'bullets': [
-                    'Keep one page per system or organ',
-                    'Write the difficult labels in a different color',
-                    'Test yourself without looking at the reference image'
-                ]
-            },
-            {
-                'heading': 'What I focus on first',
-                'paragraphs': [
-                    'For CEE, I would start with human physiology diagrams, then move to cell structure and plant anatomy. These topics appear often enough that repeated recall gives a real return.',
-                    'The aim is not artistic perfection. The aim is accurate structure and the ability to remember the sequence of parts under exam pressure.'
-                ],
-                'bullets': [
-                    'Heart and blood flow',
-                    'Kidney and nephron',
-                    'Neuron and reflex arc',
-                    'Plant cell and tissue sections'
-                ]
-            }
-        ]
-    },
-    'chemistry-reaction-map-cee': {
-        'title': 'Chemistry Reaction Maps for Faster Recall',
-        'tag': 'Chemistry',
-        'accent': '#b36a00',
-        'accent_soft': 'rgba(179, 106, 0, 0.08)',
-        'accent_border': 'rgba(179, 106, 0, 0.24)',
-        'description': 'A CEE Chemistry study note on reaction maps, conversion chains, and quick recall for organic and inorganic revision.',
-        'excerpt': 'Instead of memorizing reactions in isolation, I built one map that linked every common conversion. That cut my confusion in half.',
-        'sections': [
-            {
-                'heading': 'Why reaction maps help',
-                'paragraphs': [
-                    'Organic Chemistry looks huge until you connect the reactions. Once I started drawing conversion maps, I could see how one functional group led to another and why options in MCQs were either obviously correct or obviously wrong.',
-                    'The map does not need to be pretty. It only needs to show the direction of change, reagent, and the kind of product you expect.'
-                ],
-                'bullets': [
-                    'Draw the starting compound in the center',
-                    'Use arrows for oxidation, reduction, addition, and substitution',
-                    'Add reagents and conditions beside each arrow'
-                ]
-            },
-            {
-                'heading': 'How I keep it practical',
-                'paragraphs': [
-                    'I keep one page for the reaction map and another page for exceptions. The exception sheet is important because CEE often tests the same reaction with one small twist.',
-                    'When I revise, I cover the product and try to recall the reagent, then I cover the reagent and try to recall the product. That double recall is what makes the map stick.'
-                ],
-                'bullets': [
-                    'One page for conversions',
-                    'One page for exceptions',
-                    'Revise both pages in short loops'
-                ]
-            },
-            {
-                'heading': 'What to prioritize first',
-                'paragraphs': [
-                    'I would start with the reactions that repeat most often in entrance questions: alcohols, carbonyl compounds, acids, amines, and hydrocarbon conversions. Once those are clear, the rest becomes easier to remember.',
-                    'This method is faster than trying to read the entire chapter again and again.'
-                ],
-                'bullets': [
-                    'Functional-group conversions',
-                    'Common tests and identification reactions',
-                    'Named reactions and their conditions'
-                ]
-            }
-        ]
-    },
-    'chapter-wise-marks-distribution': {
-        'title': 'Chapter-wise Marks Distribution for CEE: What to Prioritise',
-        'tag': 'Exam Strategy',
-        'accent': '#1458a6',
-        'accent_soft': 'rgba(20, 88, 166, 0.08)',
-        'accent_border': 'rgba(20, 88, 166, 0.22)',
-        'description': 'A practical chapter-wise marks distribution guide for CEE Nepal to prioritise study effort and improve score efficiently.',
-        'excerpt': 'Understand which chapters carry the most marks in CEE and how to allocate your study time for maximum impact.',
-        'sections': [
-            {
-                'heading': 'Why chapter-wise weightage matters',
-                'paragraphs': [
-                    'Not all chapters are equally important in the CEE pattern. Knowing which chapters routinely contribute more MCQs helps you prioritise revision and MCQ practice so that your study time converts to the largest possible score gains.',
-                    'This guide summarises typical chapter weightage across Biology, Chemistry, Physics and MAT and gives actionable advice on how to split revision hours for the maximum return.'
-                ],
-                'bullets': []
-            },
-            {
-                'heading': 'Biology (Botany + Zoology) — high yield chapters',
-                'paragraphs': [
-                    'Biology traditionally contributes the largest block of questions in CEE. Within Biology, Human Physiology, Genetics, Cell Biology and Biodiversity are frequent sources of straightforward MCQs. If you focus first on human physiology and genetics, you can secure many marks with relatively high accuracy.',
-                    'For practical study planning, aim to spend 35–40% of your Biology study time on these high-yield chapters during early revision phases.'
-                ],
-                'bullets': [
-                    'Human Physiology: diagrams and functional questions',
-                    'Genetics: inheritance patterns and simple calculations',
-                    'Cell Biology: organelles, structure and processes'
-                ]
-            },
-            {
-                'heading': 'Chemistry — divide by topic type',
-                'paragraphs': [
-                    'Chemistry weight often splits between Physical, Organic and Inorganic sub-sections. Physical and Organic together commonly carry the majority of Chemistry marks. Prioritise reaction mapping, stoichiometry, and core physical chemistry concepts first.',
-                    'Allocate roughly 40% of Chemistry revision time to Physical and Organic combined, and the rest to Inorganic and application questions.'
-                ],
-                'bullets': [
-                    'Physical Chemistry: equations and numericals',
-                    'Organic Chemistry: reaction types and mechanisms',
-                    'Inorganic Chemistry: important facts and periodic trends'
-                ]
-            },
-            {
-                'heading': 'Physics — target numericals and modern physics',
-                'paragraphs': [
-                    'Mechanics and Modern Physics often appear with numerical problems that favour structured problem solving. Current Electricity and Magnetism also carry consistent weight. Strengthen formula recall and common numerical strategies to convert practice into points.',
-                    'Dedicate timed problem sets to mechanics and electricity early in your plan; these are high-return chapters.'
-                ],
-                'bullets': [
-                    'Mechanics: vectors, motion, energy problems',
-                    'Modern Physics: direct concept application',
-                    'Electricity & Magnetism: circuits and field concepts'
-                ]
-            },
-            {
-                'heading': 'MAT — speed and pattern recognition',
-                'paragraphs': [
-                    'MAT is short but high impact: consistent daily practice yields fast gains. Treat MAT as a speed-building exercise, not a deep-concept subject. Use short timed drills and focus on accuracy under time pressure.',
-                    'Because MAT is quicker to improve, keep a small but regular allocation to MAT throughout your preparation cycle.'
-                ],
-                'bullets': []
-            },
-            {
-                'heading': 'Practical study allocation example',
-                'paragraphs': [
-                    'If you have 10 hours a week, a practical split might be: Biology 4 hours (focused on high-yield chapters), Chemistry 3 hours (physical + organic focus), Physics 2 hours (mechanics and electricity), MAT 1 hour (daily short drills). Adjust based on your personal strengths and weaknesses.',
-                    'Use chapter-wise MCQ trackers to validate whether more time on a subject yields better accuracy; move hours between subjects based on that feedback.'
-                ],
-                'bullets': [
-                    'Track accuracy per chapter and reassign study hours weekly',
-                    'Run weekly full-length mocks to test allocation efficiency'
-                ]
-            }
-        ]
-    },
-    'last-30-days-cee-prep-plan': {
-        'title': 'Last 30 Days CEE Preparation Plan: Time-sensitive, High-Impact',
-        'tag': 'Plan',
-        'accent': '#c04b62',
-        'accent_soft': 'rgba(192, 75, 98, 0.08)',
-        'accent_border': 'rgba(192, 75, 98, 0.22)',
-        'description': 'A focused 30-day plan to maximise CEE score before exam day with a mix of revision, MCQ practice and full mocks.',
-        'excerpt': 'Use this high-impact, 30-day checklist to polish topics, fix weak areas, and simulate exam conditions before your CEE.',
-        'sections': [
-            {
-                'heading': 'Overview and mindset for the last 30 days',
-                'paragraphs': [
-                    'The final 30 days before CEE are about consolidation, not new learning. Prioritise high-yield chapters, error correction, and realistic mock tests. Keep your routine steady and focus on exam temperament and pacing.',
-                    'This plan breaks the 30 days into three 10-day cycles: quick review, intensive MCQ practice, and mock-test simulation.'
-                ],
-                'bullets': []
-            },
-            {
-                'heading': 'Days 1–10: quick review and patching',
-                'paragraphs': [
-                    'Use the first 10 days to patch conceptual gaps and compile a short error-sheet of topics you repeatedly miss. Revisit formulas, reaction maps, and key diagrams. Avoid major new chapters at this stage.',
-                    'Schedule short daily timed quizzes (30–45 minutes) to stabilise recall under pressure.'
-                ],
-                'bullets': [
-                    'Daily checklist: 45 minutes revision + 30 minutes MCQs',
-                    'Maintain an error-tracking sheet for repeated mistakes'
-                ]
-            },
-            {
-                'heading': 'Days 11–20: intensive MCQ practice',
-                'paragraphs': [
-                    'Increase MCQ volume and mix chapters to simulate real exam unpredictability. Do targeted chapter sessions in the morning and mixed timed sets in the evening. Focus corrections on the error-sheet and re-test those questions.',
-                    'Gradually reduce reliance on notes and force retrieval from memory during these drills.'
-                ],
-                'bullets': [
-                    'Two daily MCQ sessions: focused chapter set + mixed timed set',
-                    'Correct and re-attempt error-sheet questions after 48 hours'
-                ]
-            },
-            {
-                'heading': 'Days 21–30: mock tests and exam simulation',
-                'paragraphs': [
-                    'Switch to full-length mock tests under exam-like conditions. Time yourself strictly and practice the three-pass strategy: easy first, moderate second, hard last. Use the final 48 hours for light revision and rest—avoid cramming.',
-                    'Simulate exam timing, breaks, and environment to build endurance and pacing.'
-                ],
-                'bullets': [
-                    'At least 3 full mocks in the final 10 days',
-                    'Review mocks thoroughly: identify why errors occurred and update the error-sheet'
-                ]
-            },
-            {
-                'heading': 'Final pre-exam checklist',
-                'paragraphs': [
-                    'In the last 48 hours confirm logistics, necessary documents, and a calm routine. Keep final revision selective—formula lists, reaction maps and quick fact checks only. Prioritise sleep and a consistent routine.',
-                    'Plan exam-day pacing: secure easy marks early, manage time per section, and reserve the final 10–12 minutes for review.'
-                ],
-                'bullets': [
-                    'Pack documents and test kit a day before',
-                    'Avoid new topics in the final 48 hours',
-                    'Get regular sleep and small, steady meals'
-                ]
-            }
-        ]
-    },
-    'how-to-remember-organic-reactions': {
-        'title': 'How to Remember Organic Chemistry Reactions: Practical Techniques',
-        'tag': 'Chemistry',
-        'accent': '#b36a00',
-        'accent_soft': 'rgba(179, 106, 0, 0.08)',
-        'accent_border': 'rgba(179, 106, 0, 0.24)',
-        'description': 'Memory techniques and practical strategies to retain organic chemistry reactions for exams like CEE.',
-        'excerpt': 'Use maps, categorization, reaction families and active recall to remember organic chemistry reactions more reliably and efficiently.',
-        'sections': [
-            {
-                'heading': 'Why reactions are hard to remember',
-                'paragraphs': [
-                    'Organic reactions can feel like an endless list of reagents and conditions. The trick is not rote memorisation but pattern recognition—grouping reactions by functional-group transformations and mechanistic similarity.',
-                    'This article provides practical memory strategies, example reaction clusters, and study routines that convert into better recall under test conditions.'
-                ],
-                'bullets': []
-            },
-            {
-                'heading': 'Build reaction maps and family trees',
-                'paragraphs': [
-                    'Instead of isolated notes, create reaction maps that connect starting materials to products through common transformations. For example, track conversions from alkanes → haloalkanes → alcohols → carbonyl compounds. This reduces memory load and creates logical hooks.',
-                    'Use a single-page reaction map for each functional group family and review it frequently.'
-                ],
-                'bullets': [
-                    'Create one-page maps for hydrocarbons, alcohols, carbonyls, and amines',
-                    'Highlight common reagents and typical outcomes'
-                ]
-            },
-            {
-                'heading': 'Use mechanistic logic as a mnemonic',
-                'paragraphs': [
-                    'Understanding the mechanism (even at a high level) helps you predict reaction outcomes and remember reagent behavior. When you know whether a reaction proceeds by nucleophilic substitution, electrophilic addition, or radical initiation, the products become more predictable and memorable.',
-                    'Convert mechanism steps into short phrases you can rehearse quickly.'
-                ],
-                'bullets': [
-                    'Label reactions as SN1/SN2, E1/E2, electrophilic addition, etc.',
-                    'Use brief mechanism notes to predict exceptions'
-                ]
-            },
-            {
-                'heading': 'Active recall and spaced repetition',
-                'paragraphs': [
-                    'Practice recall by writing reaction outcomes from memory and testing yourself after increasing intervals. Spaced repetition ensures longer retention than cramming. Convert your reaction maps into flashcards and review them daily for short intervals.',
-                    'Prioritise reactions that appear most frequently in previous CEE patterns.'
-                ],
-                'bullets': [
-                    'Use short daily flashcard sessions (10–15 minutes)',
-                    'Re-attempt incorrectly recalled reactions after 2, 5 and 10 days'
-                ]
-            },
-            {
-                'heading': 'Practical drilling and problem sets',
-                'paragraphs': [
-                    'Apply reactions in small timed problem sets rather than passive review. Doing product-prediction questions and mechanism-based MCQs helps cement reactions by use, not just recall. Over time, this practice builds recognition speed crucial for MCQ exams.',
-                    'Mix reaction recall with small applied problems and re-check using your reaction map to close knowledge gaps.'
-                ],
-                'bullets': []
-            }
-        ]
-    },
-    'past-papers-smart-practice-cee': {
-        'title': 'How I Use Past Papers to Study Smarter',
-        'tag': 'Study Tips',
-        'accent': '#7a4dc7',
-        'accent_soft': 'rgba(122, 77, 199, 0.08)',
-        'accent_border': 'rgba(122, 77, 199, 0.22)',
-        'description': 'A practical note on using CEE past papers to find patterns, build timing, and improve revision quality.',
-        'excerpt': 'Past papers are not just for checking yourself at the end. I use them as a map for what deserves more time now.',
-        'sections': [
-            {
-                'heading': 'What past papers tell you',
-                'paragraphs': [
-                    'Past papers show you what repeats, how questions are phrased, and where the easy marks usually hide. They also tell you which topics deserve serious time and which ones can be revised more lightly.',
-                    'The real value is pattern recognition. Once you solve enough papers, you begin to notice the same style of question returning with small changes.'
-                ],
-                'bullets': [
-                    'Repeated concepts become obvious quickly',
-                    'Question wording becomes less intimidating',
-                    'Timing improves because patterns feel familiar'
-                ]
-            },
-            {
-                'heading': 'How I actually review a paper',
-                'paragraphs': [
-                    'I solve the paper once under time pressure, then I review every wrong and skipped item. I do not stop at the answer. I write why I missed it and whether the issue was concept, speed, or carelessness.',
-                    'That second step is where the score improvement happens. Without review, a past paper is just another test.'
-                ],
-                'bullets': [
-                    'Solve once under exam timing',
-                    'Mark wrong answers in a separate notebook',
-                    'Re-attempt the same paper after a few days'
-                ]
-            },
-            {
-                'heading': 'The part I would never skip',
-                'paragraphs': [
-                    'I always keep a list of topics that keep returning across papers. That list is better than a huge stack of notes because it tells me exactly where to revise next.',
-                    'If you are short on time, use the papers to guide your next study session instead of reading chapters in order.'
-                ],
-                'bullets': [
-                    'Build a topic frequency list',
-                    'Focus revision on repeated themes first',
-                    'Use papers to plan the next week, not just the final week'
-                ]
-            }
-        ]
-    },
+BLOG_POST_TEMPLATES = {
+    'chapter-wise-marks-distribution': 'chapter-wise-marks-distribution.html',
+    'last-30-days-cee-prep-plan': 'last-30-days-cee-prep-plan.html',
+    'how-to-remember-organic-reactions': 'how-to-remember-organic-reactions.html',
+    'how-to-prepare-for-cee': 'how-to-prepare-for-cee.html',
+    'human-biology-cee-questions': 'human-biology-cee-questions.html',
+    'organic-chemistry-cee-tips': 'organic-chemistry-cee-tips.html',
+    'physics-high-weightage-topics': 'blog_physics_high_weightage.html',
+    'mat-section-tips': 'blog_mat_section_tips.html',
+    'cee-exam-day-strategy': 'blog_exam_day_strategy.html',
+    'biology-diagram-revision-cee': 'biology-diagram-revision-cee.html',
+    'chemistry-reaction-map-cee': 'chemistry-reaction-map-cee.html',
+    'past-papers-smart-practice-cee': 'past-papers-smart-practice-cee.html',
 }
 
 BLOG_POST_ORDER = [
@@ -892,54 +163,86 @@ BLOG_POST_ORDER = [
     'past-papers-smart-practice-cee',
 ]
 
-BLOG_THEMES = {
-    slug: {
-        'accent': post['accent'],
-        'accent_soft': post['accent_soft'],
-        'accent_border': post['accent_border'],
+BLOG_POST_META = {
+    'chapter-wise-marks-distribution': {
+        'title': 'Chapter-wise Marks Distribution for CEE: What to Prioritise',
+        'tag': 'Exam Strategy',
+        'excerpt': 'Understand which chapters carry the most marks in CEE and how to allocate your study time for maximum impact.',
+        'accent': '#1458a6', 'accent_soft': 'rgba(20, 88, 166, 0.08)', 'accent_border': 'rgba(20, 88, 166, 0.22)',
+    },
+    'last-30-days-cee-prep-plan': {
+        'title': 'Last 30 Days CEE Preparation Plan: Time-sensitive, High-Impact',
+        'tag': 'Plan',
+        'excerpt': 'Use this high-impact, 30-day checklist to polish topics, fix weak areas, and simulate exam conditions before your CEE.',
+        'accent': '#c04b62', 'accent_soft': 'rgba(192, 75, 98, 0.08)', 'accent_border': 'rgba(192, 75, 98, 0.22)',
+    },
+    'how-to-remember-organic-reactions': {
+        'title': 'How to Remember Organic Chemistry Reactions: Practical Techniques',
+        'tag': 'Chemistry',
+        'excerpt': 'Use maps, categorization, reaction families and active recall to remember organic chemistry reactions more reliably and efficiently.',
+        'accent': '#b36a00', 'accent_soft': 'rgba(179, 106, 0, 0.08)', 'accent_border': 'rgba(179, 106, 0, 0.24)',
+    },
+    'how-to-prepare-for-cee': {
+        'title': 'How to Prepare for CEE Effectively',
+        'tag': 'Study Tips',
+        'excerpt': 'Build a realistic routine, focus on high-weightage chapters, and use timed practice to steadily improve your CEE score.',
+        'accent': '#1458a6', 'accent_soft': 'rgba(20, 88, 166, 0.08)', 'accent_border': 'rgba(20, 88, 166, 0.22)',
+    },
+    'human-biology-cee-questions': {
+        'title': 'Human Biology: Most Important CEE Questions',
+        'tag': 'Biology',
+        'excerpt': 'Human Biology is a major scoring area in CEE. Focus on repeated concepts, terminology precision, and diagram-based revision.',
+        'accent': '#1f8a4c', 'accent_soft': 'rgba(31, 138, 76, 0.08)', 'accent_border': 'rgba(31, 138, 76, 0.22)',
+    },
+    'organic-chemistry-cee-tips': {
+        'title': 'Organic Chemistry Tips for CEE Nepal',
+        'tag': 'Chemistry',
+        'excerpt': 'Organic Chemistry carries major weight in CEE. Use reaction maps, functional-group logic, and repeated MCQ drills to convert it into a scoring section.',
+        'accent': '#b36a00', 'accent_soft': 'rgba(179, 106, 0, 0.08)', 'accent_border': 'rgba(179, 106, 0, 0.24)',
+    },
+    'physics-high-weightage-topics': {
+        'title': 'High Weightage Physics Topics for CEE',
+        'tag': 'Physics',
+        'excerpt': 'Prioritize Mechanics, Current Electricity, and Magnetism, then build accuracy through formula recall and timed mixed sets.',
+        'accent': '#0f7a8a', 'accent_soft': 'rgba(15, 122, 138, 0.08)', 'accent_border': 'rgba(15, 122, 138, 0.22)',
+    },
+    'mat-section-tips': {
+        'title': 'How to Score Full Marks in MAT Section',
+        'tag': 'MAT',
+        'excerpt': 'MAT is one of the fastest sections to improve. A disciplined daily routine can convert it into reliable marks with low preparation cost.',
+        'accent': '#7a4dc7', 'accent_soft': 'rgba(122, 77, 199, 0.08)', 'accent_border': 'rgba(122, 77, 199, 0.22)',
+    },
+    'cee-exam-day-strategy': {
+        'title': "CEE Exam Day Strategy: Do's and Don'ts",
+        'tag': 'Strategy',
+        'excerpt': 'A strong exam-day system can convert months of preparation into marks by protecting accuracy, pace, and confidence under pressure.',
+        'accent': '#c04b62', 'accent_soft': 'rgba(192, 75, 98, 0.08)', 'accent_border': 'rgba(192, 75, 98, 0.22)',
+    },
+    'biology-diagram-revision-cee': {
+        'title': 'Biology Diagram Revision That Actually Sticks',
+        'tag': 'Biology',
+        'excerpt': 'I stopped losing easy Biology marks when I began redrawing diagrams from memory and checking the labels against my own mistakes.',
+        'accent': '#1f8a4c', 'accent_soft': 'rgba(31, 138, 76, 0.08)', 'accent_border': 'rgba(31, 138, 76, 0.22)',
+    },
+    'chemistry-reaction-map-cee': {
+        'title': 'Chemistry Reaction Maps for Faster Recall',
+        'tag': 'Chemistry',
+        'excerpt': 'Instead of memorizing reactions in isolation, I built one map that linked every common conversion. That cut my confusion in half.',
+        'accent': '#b36a00', 'accent_soft': 'rgba(179, 106, 0, 0.08)', 'accent_border': 'rgba(179, 106, 0, 0.24)',
+    },
+    'past-papers-smart-practice-cee': {
+        'title': 'How I Use Past Papers to Study Smarter',
+        'tag': 'Study Tips',
+        'excerpt': 'Past papers are not just for checking yourself at the end. I use them as a map for what deserves more time now.',
+        'accent': '#7a4dc7', 'accent_soft': 'rgba(122, 77, 199, 0.08)', 'accent_border': 'rgba(122, 77, 199, 0.22)',
+    },
+    'organic-chemistry-cee-tips': {
+        'title': 'Organic Chemistry Tips for the CEE',
+        'tag': 'Chemistry',
+        'excerpt': 'Mastering Organic Chemistry for the CEE requires a strategic approach and consistent practice.',
+        'accent': '#2c75bb', 'accent_soft': 'rgba(44, 117, 187, 0.08)', 'accent_border': 'rgba(44, 117, 187, 0.22)',
     }
-    for slug, post in BLOG_POSTS.items()
 }
-
-BLOG_INTERNAL_LINKS = {
-    'how-to-prepare-for-cee': [
-        {'label': 'Chapter-wise Practice', 'url': '/'},
-        {'label': 'Full Test', 'url': '/full-test/'},
-        {'label': 'Privacy / Terms', 'url': '/privacy/'},
-    ],
-    'physics-high-weightage-topics': [
-        {'label': 'Physics Chapter Practice', 'url': '/subject/2/'},
-        {'label': 'Full Test', 'url': '/full-test/'},
-        {'label': 'All Subjects', 'url': '/'},
-    ],
-    'human-biology-cee-questions': [
-        {'label': 'Biology Chapter Practice', 'url': '/subject/1/'},
-        {'label': 'Full Test', 'url': '/full-test/'},
-        {'label': 'All Subjects', 'url': '/'},
-    ],
-    'organic-chemistry-cee-tips': [
-        {'label': 'Chemistry Chapter Practice', 'url': '/subject/3/'},
-        {'label': 'Full Test', 'url': '/full-test/'},
-        {'label': 'All Subjects', 'url': '/'},
-    ],
-    'mat-section-tips': [
-        {'label': 'MAT Practice', 'url': '/subject/1/'},
-        {'label': 'Full Test', 'url': '/full-test/'},
-        {'label': 'All Subjects', 'url': '/'},
-    ],
-    'cee-exam-day-strategy': [
-        {'label': 'Full Test Simulation', 'url': '/full-test/'},
-        {'label': 'Chapter-wise Practice', 'url': '/'},
-        {'label': 'Privacy / Terms', 'url': '/privacy/'},
-    ],
-}
-
-BLOG_CUSTOM_TEMPLATES = {
-    'physics-high-weightage-topics': 'blog_physics_high_weightage.html',
-    'mat-section-tips': 'blog_mat_section_tips.html',
-    'cee-exam-day-strategy': 'blog_exam_day_strategy.html',
-}
-
 
 def _pick_random_questions(base_queryset, limit=50):
     """Sample random questions efficiently by sampling IDs first."""
@@ -2120,10 +1423,21 @@ def contact(request):
         if not name or not email or not message:
             messages.error(request, 'Please fill in all contact fields.')
         else:
-            messages.success(request, 'Thanks for reaching out. Please email us if you need a faster reply.')
+            subject = f'Website contact from {name}'
+            body = f'From: {name} <{email}>\n\n{message}'
+            try:
+                send_mail(
+                    subject,
+                    body,
+                    getattr(settings, 'DEFAULT_FROM_EMAIL', email),
+                    ['pandeyramu57@gmail.com'],
+                )
+                messages.success(request, 'Thanks for reaching out. We will get back to you soon.')
+            except Exception:
+                logger.exception('Failed to send contact email from contact() view')
+                messages.error(request, 'Something went wrong sending your message. Please email us directly instead.')
 
     return render(request, 'contact.html')
-
 
 def ads_txt(request):
     try:
@@ -2151,86 +1465,21 @@ def sitemap_xml(request):
 def blog_index(request):
     posts = []
     for slug in BLOG_POST_ORDER:
-        post = BLOG_POSTS[slug]
+        meta = BLOG_POST_META[slug]
         posts.append({
             'slug': slug,
-            'title': post['title'],
-            'tag': post['tag'],
-            'excerpt': post['excerpt'],
-            'accent': post['accent'],
-            'accent_soft': post['accent_soft'],
-            'accent_border': post['accent_border'],
+            'title': meta['title'],
+            'tag': meta['tag'],
+            'excerpt': meta['excerpt'],
+            'accent': meta['accent'],
+            'accent_soft': meta['accent_soft'],
+            'accent_border': meta['accent_border'],
         })
     return render(request, 'blog.html', {'posts': posts})
 
-
 def blog_post(request, slug):
-    post = BLOG_POSTS.get(slug)
-    if not post:
+    template_name = BLOG_POST_TEMPLATES.get(slug)
+    if not template_name:
         raise Http404('Blog post not found')
 
-    custom_template = BLOG_CUSTOM_TEMPLATES.get(slug)
-    if custom_template:
-        return render(request, custom_template, {'theme': BLOG_THEMES.get(slug, BLOG_THEMES['how-to-prepare-for-cee'])})
-
-    expanded_sections = list(post['sections'])
-    expanded_sections.append({
-        'heading': '90-day preparation framework for consistent score growth',
-        'paragraphs': [
-            f'To get stable results in {post["title"]}, focus on consistency instead of intensity spikes. Use a rolling 90-day cycle with weekly checkpoints. Your objective each week should be measurable: chapter completion, accuracy target, and timed-practice target. This prevents random study and gives you clear signals about whether your plan is working.',
-            'A practical method is to combine concept revision, active recall, and timed MCQ solving in every week. For example, use two days for concept reinforcement, three days for question practice, and one day for review and retest. The final day can be used for mixed-set simulation under real exam timing. Repeat weak topics in the next cycle rather than postponing them for the final month.',
-            'Keep one progress sheet where you record attempts, accuracy, and average solving time. Over a few weeks, this data shows exactly where marks are leaking. Many students think they need more study hours, but often they only need better sequencing and better revision timing.'
-        ],
-        'bullets': [
-            'Set weekly targets for completion, accuracy, and speed',
-            'Review mistakes within 24 hours for stronger retention',
-            'Revisit weak topics every 5 to 7 days until accuracy stabilizes',
-            'Use one full-length simulation each week in the final phase'
-        ]
-    })
-    expanded_sections.append({
-        'heading': 'Mistakes that lower rank and how to avoid them',
-        'paragraphs': [
-            'A common error is over-investing time in favorite subjects while avoiding weak areas. In a competitive exam, rank depends on total score, so weak-section recovery is essential. Another frequent issue is passive reading without retrieval practice. If you cannot recall concepts under time pressure, reading alone will not convert into marks.',
-            'Students also lose marks due to poor test behavior: rushing early questions, ignoring negative marking impact, and failing to reserve review time. A controlled attempt strategy is more powerful than trying to attempt everything. Accuracy-first planning usually outperforms high-attempt guessing in scored competitive tests.',
-            'Finally, avoid last-week content panic. In the final stretch, prioritize revision quality and test rhythm. The goal is calm execution, strong recall, and disciplined decision-making under time constraints.'
-        ],
-        'bullets': [
-            'Do not skip weak chapters for more than one week',
-            'Use active recall and short self-tests, not passive rereading',
-            'Plan attempt order before each test to reduce panic',
-            'Keep final revision compact: formulas, reactions, and high-yield notes'
-        ]
-    })
-
-    post_with_depth = {
-        'title': post['title'],
-        'tag': post['tag'],
-        'description': post['description'],
-        'excerpt': post['excerpt'],
-        'sections': expanded_sections,
-    }
-
-    # Calculate reading time (approx. 200 wpm)
-    text_parts = [post_with_depth['title'], post_with_depth.get('excerpt', ''), post_with_depth.get('description', '')]
-    for sec in post_with_depth['sections']:
-        text_parts.append(sec.get('heading', ''))
-        for p in sec.get('paragraphs', []):
-            text_parts.append(p)
-        for b in sec.get('bullets', []):
-            text_parts.append(b)
-    all_text = ' '.join(text_parts)
-    words = len(re.findall(r"\w+", all_text))
-    reading_time = max(1, round(words / 200))
-
-    # Use a stable published date for these static posts
-    date_published = '2026-05-23'
-
-    return render(request, 'blog_post.html', {
-        'slug': slug,
-        'post': post_with_depth,
-        'theme': BLOG_THEMES.get(slug, BLOG_THEMES['how-to-prepare-for-cee']),
-        'related_links': BLOG_INTERNAL_LINKS.get(slug, []),
-        'reading_time': reading_time,
-        'date_published': date_published,
-    })
+    return render(request, template_name, {'slug': slug})

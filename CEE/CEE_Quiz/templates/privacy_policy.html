@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ page_seo.meta_title|default:"Privacy Policy | CEE MCQ" }}{% endblock %}
-{% block meta_description %}{{ page_seo.meta_description|default:"Read the privacy policy for CEE MCQ. Learn what minimal data may be collected, how cookies are used, and how AdSense or analytics may operate on the site." }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:"Read the privacy policy for CEE MCQ. Learn what minimal data is collected, how cookies are used, and how Google AdSense or analytics may operate on the site." }}{% endblock %}
 {% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, Privacy Policy, cookies, data handling, AdSense" }}{% endblock %}
 {% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"Privacy Policy | CEE MCQ" }}{% endblock %}
 {% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Privacy policy for CEE MCQ, including cookies, minimal data handling, and AdSense or analytics usage." }}{% endblock %}
@@ -9,11 +9,45 @@
 {% block twitter_description %}Privacy policy for CEE MCQ, including cookies, minimal data handling, and AdSense or analytics usage.{% endblock %}
 
 {% block content %}
+<article class="privacy-page">
+
 <h1>Privacy Policy</h1>
 <p class="muted">Last updated: May 18, 2026</p>
 
-<p>CEE MCQ is designed to be a lightweight educational website. We do not aim to collect large amounts of personal data. In normal browsing, most visitors can use the site without creating an account. If you submit a contact form, we may receive the name, email address, and message you enter so we can respond to your request.</p>
-<p>When you attempt MCQs or full tests, the site may store minimal quiz-related information such as your name, topic, score, and timing details. This helps display results, keep session progress, and make the learning experience smoother. We do not sell personal data, and we do not use collected information for anything unrelated to education, support, or basic site operation.</p>
-<p>The site may use cookies and browser storage for login-free session support, quiz progress, and preferences. Third-party services such as Google AdSense or analytics tools may also use cookies or similar identifiers to deliver ads, measure traffic, and understand usage patterns. These services operate under their own policies, and users can manage cookie settings from their browser or Google ad settings where available.</p>
-<p>We take reasonable steps to protect site data, but no online system is completely risk-free. If you want to request data correction or deletion, or if you have a privacy question, you can contact us through the Contact page or email support directly. By using this site, you agree to the practices described in this policy and any future updates published on this page.</p>
+<p>CEE MCQ is a lightweight educational website built for students preparing for Nepal's Common Entrance Examination. This policy explains what information the site collects, how it is used, and the choices available to you. By using CEE MCQ, you agree to the practices described here.</p>
+
+<h2>Information We Collect</h2>
+<p>Most visitors can browse chapters, attempt MCQs, and use the site without creating an account. We collect information only in two situations:</p>
+<ul>
+  <li><strong>Contact form submissions:</strong> if you reach out through the Contact page, we receive the name, email address, and message you provide so we can respond to your query.</li>
+  <li><strong>Quiz and test attempts:</strong> when you take an MCQ or full mock test, the site stores minimal quiz-related details such as your name, the topic attempted, your score, and timing information. This is used to display your results, support your test history, and keep your progress consistent during a session.</li>
+</ul>
+<p>We do not require account creation, and we do not collect sensitive personal information such as payment details, government identification, or location data.</p>
+
+<h2>How We Use Your Information</h2>
+<p>Information collected through this site is used only for educational, support, or basic site-operation purposes, such as responding to contact messages, displaying your quiz results, and improving the accuracy of the question bank over time. We do not sell personal data to third parties, and we do not use the information you provide for marketing unrelated to CEE MCQ.</p>
+
+<h2>Cookies and Third-Party Services</h2>
+<p>CEE MCQ may use cookies and browser storage to support login-free quiz sessions, remember your progress, and store basic preferences. In addition, third-party services such as Google AdSense and analytics tools may use cookies, pixel tags, or similar technologies to serve relevant ads, measure site traffic, and understand how the site is used.</p>
+<p>These third-party services operate under their own privacy policies, which we do not control. You can review and manage how Google uses data for ad personalization through <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>, and you can disable cookies generally through your browser settings at any time.</p>
+
+<h2>Children's Privacy</h2>
+<p>CEE MCQ is intended for students preparing for a secondary-level entrance examination and does not knowingly collect personal information from young children beyond what is voluntarily entered in the name field for quiz attempts or the contact form. If you believe a child has submitted personal information through this site and you would like it removed, please contact us using the details below.</p>
+
+<h2>Links to Other Websites</h2>
+<p>This site may contain links to external resources, including past-paper sources or reference material. CEE MCQ is not responsible for the privacy practices or content of external websites, and we encourage you to review the privacy policy of any site you visit through a link on CEE MCQ.</p>
+
+<h2>Data Security</h2>
+<p>We take reasonable technical steps to protect the data collected through this site. However, no online platform can guarantee complete security, and we cannot promise the absolute security of any information transmitted to or through CEE MCQ.</p>
+
+<h2>Your Choices</h2>
+<p>You may request correction or deletion of personal information you have submitted, such as a contact form entry, by reaching out through the Contact page. We will respond to reasonable requests within a reasonable timeframe.</p>
+
+<h2>Changes to This Policy</h2>
+<p>This privacy policy may be updated from time to time to reflect changes in the site, applicable law, or third-party service requirements. Any changes will be posted on this page with an updated "Last updated" date. Continued use of CEE MCQ after changes are posted constitutes acceptance of the revised policy.</p>
+
+<h2>Contact</h2>
+<p>If you have questions about this privacy policy or how your information is handled, please reach out through the <a href="/contact/">Contact page</a>.</p>
+
+</article>
 {% endblock %}
