@@ -1031,6 +1031,33 @@ body.review-modal-open .full-test-footer {
     cursor: not-allowed;
     opacity: 0.85;
 }
+.result-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.result-actions .btn {
+    color: #fff;
+    padding: .45rem .8rem;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+@media (max-width: 480px) {
+    .result-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .result-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {

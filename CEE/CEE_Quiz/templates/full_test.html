@@ -1124,54 +1124,17 @@ Back to Home
 {% if score is not None %}
 
 
-<div class="result-actions"
-     style="
-     position:absolute;
-     left:50%;
-     transform:translateX(-50%);
-     bottom:1.25rem;
-     display:flex;
-     gap:1.25rem;
-     align-items:center;
-     ">
+<div class="result-actions">
 
-
-
-<a href="{% url 'full_test' %}"
-   class="btn retry"
-   style="
-   color:#fff;
-   padding:.45rem .8rem;
-   border-radius:8px;
-   text-decoration:none;
-   ">
-
+<a href="{% url 'full_test' %}" class="btn retry">
 Retry MCQ Test
-
 </a>
 
-
-
-
-<a href="{% url 'home' %}"
-   class="btn home"
-   style="
-   color:#fff;
-   padding:.45rem .8rem;
-   border-radius:8px;
-   text-decoration:none;
-   ">
-
+<a href="{% url 'home' %}" class="btn home">
 Back to Home
-
 </a>
-
-
 
 </div>
-
-
-
 
 </div>
 

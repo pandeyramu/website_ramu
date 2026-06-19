@@ -773,47 +773,17 @@ selected
         {% if score is not None %}
 
 
-        <div class="result-actions"
-             style="
-             position:absolute;
-             left:50%;
-             transform:translateX(-50%);
-             bottom:1.25rem;
-             display:flex;
-             gap:1.25rem;
-             align-items:center;
-             ">
+        <div class="result-actions">
 
+<a href="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.slug %}{% else %}{% url 'quiz' chapter.slug %}{% endif %}" class="btn retry">
+Retry MCQ Test
+</a>
 
-            <a href="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.slug %}{% else %}{% url 'quiz' chapter.slug %}{% endif %}"
-                class="btn retry"
-                style="
-                color:#fff;
-                padding:.45rem .8rem;
-                border-radius:8px;
-                text-decoration:none;
-                ">
+<a href="{% url 'home' %}" class="btn home">
+Back to Home
+</a>
 
-                Retry MCQ Test
-
-            </a>
-
-
-
-            <a href="{% url 'home' %}" class="btn home"
-                style="
-                color:#fff;
-                padding:.45rem .8rem;
-                border-radius:8px;
-                text-decoration:none;
-                ">
-
-                Back to Home
-
-            </a>
-
-
-        </div>
+</div>
 
 
             </div>
