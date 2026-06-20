@@ -66,6 +66,17 @@
             line-height: 1.7;
         }
 
+        body,
+        main.page-wrap,
+        .page-card,
+        .container,
+        .chapter-list,
+        .chapter-card {
+            /* width: 100%; */
+            min-width: 0;
+            max-width: 100%;
+        }
+
         .site-header {
             background: linear-gradient(135deg, #0c2f4a, #184f79);
             color: #fff;
@@ -80,6 +91,12 @@
             margin: 0 auto;
         }
 
+        .site-header,
+        main.page-wrap,
+        .site-footer {
+            min-width: 0;
+        }
+
         .brand-row {
             display: flex;
             align-items: center;
@@ -89,22 +106,22 @@
         }
 
         .brand {
-    display:flex;
-    align-items:center;
-    gap:0.6rem;
-    color:#fff;
-    text-decoration:none;
-    font-weight:800;
-    letter-spacing:0.02em;
-    font-size:1.2rem;
-}
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            font-size: 1.2rem;
+        }
 
 
-.brand img {
-    width:45px;
-    height:45px;
-    object-fit:contain;
-}
+        .brand img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
 
         .nav-links {
             display: flex;
@@ -228,65 +245,79 @@
                 padding: 1.2rem;
             }
         }
+
+        @media (max-width: 768px) {
+            .seo-link-row {
+                flex-wrap: wrap;
+                overflow-x: visible;
+                max-width: 100%;
+            }
+
+            .seo-link-row a {
+                white-space: normal;
+                flex-shrink: 1;
+            }
+        }
     </style>
     {% block structured_data %}{% endblock %}
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
+        crossorigin="anonymous"></script>
     {% block extra_head %}{% endblock %}
 </head>
 
 <body>
     {% block header %}
-<header class="site-header">
-    <div class="site-header-inner brand-row">
-        <a class="brand" href="/">
-    <img src="{% static 'images/logo.png' %}" alt="CEE MCQ Logo">
-    <span>CEE MCQ</span>
-</a>
-        <nav class="nav-links" aria-label="Main navigation">
+    <header class="site-header">
+        <div class="site-header-inner brand-row">
+            <a class="brand" href="/">
+                <img src="{% static 'images/logo.png' %}" alt="CEE MCQ Logo">
+                <span>CEE MCQ</span>
+            </a>
+            <nav class="nav-links" aria-label="Main navigation">
 
-    {% if request.resolver_match.url_name == 'home' %}
-        <span class="current-page" aria-current="page">Home</span>
-    {% else %}
-        <a href="/">Home</a>
-    {% endif %}
+                {% if request.resolver_match.url_name == 'home' %}
+                <span class="current-page" aria-current="page">Home</span>
+                {% else %}
+                <a href="/">Home</a>
+                {% endif %}
 
-    {% if request.resolver_match.url_name == 'all_subjects' %}
-        <span class="current-page" aria-current="page">All Subjects</span>
-    {% else %}
-        <a href="/all-subjects/">All Subjects</a>
-    {% endif %}
+                {% if request.resolver_match.url_name == 'all_subjects' %}
+                <span class="current-page" aria-current="page">All Subjects</span>
+                {% else %}
+                <a href="/all-subjects/">All Subjects</a>
+                {% endif %}
 
-    {% if request.resolver_match.url_name == 'about' %}
-        <span class="current-page" aria-current="page">About Us</span>
-    {% else %}
-        <a href="/about/">About Us</a>
-    {% endif %}
+                {% if request.resolver_match.url_name == 'about' %}
+                <span class="current-page" aria-current="page">About Us</span>
+                {% else %}
+                <a href="/about/">About Us</a>
+                {% endif %}
 
-    {% if request.resolver_match.url_name == 'contact' %}
-        <span class="current-page" aria-current="page">Contact</span>
-    {% else %}
-        <a href="/contact/">Contact</a>
-    {% endif %}
+                {% if request.resolver_match.url_name == 'contact' %}
+                <span class="current-page" aria-current="page">Contact</span>
+                {% else %}
+                <a href="/contact/">Contact</a>
+                {% endif %}
 
-    {% if request.resolver_match.url_name == 'privacy_policy' %}
-        <span class="current-page" aria-current="page">Privacy Policy</span>
-    {% else %}
-        <a href="/privacy-policy/">Privacy Policy</a>
-    {% endif %}
+                {% if request.resolver_match.url_name == 'privacy_policy' %}
+                <span class="current-page" aria-current="page">Privacy Policy</span>
+                {% else %}
+                <a href="/privacy-policy/">Privacy Policy</a>
+                {% endif %}
 
-    {% if request.resolver_match.url_name == 'disclaimer' %}
-        <span class="current-page" aria-current="page">Disclaimer</span>
-    {% else %}
-        <a href="/disclaimer/">Disclaimer</a>
-    {% endif %}
+                {% if request.resolver_match.url_name == 'disclaimer' %}
+                <span class="current-page" aria-current="page">Disclaimer</span>
+                {% else %}
+                <a href="/disclaimer/">Disclaimer</a>
+                {% endif %}
 
-    {% if request.resolver_match.url_name == 'blog' %}
-        <span class="current-page" aria-current="page">Blog</span>
-    {% else %}
-        <a href="/blog/">Blog</a>
-    {% endif %}
+                {% if request.resolver_match.url_name == 'blog' %}
+                <span class="current-page" aria-current="page">Blog</span>
+                {% else %}
+                <a href="/blog/">Blog</a>
+                {% endif %}
 
-</nav>
+            </nav>
         </div>
     </header>
     {% endblock %}
@@ -305,12 +336,12 @@
     </main>
 
     {% block footer %}
-<footer class="site-footer">
-    <div class="site-footer-inner">
-        <p class="copyright">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
-    </div>
-</footer>
-{% endblock %}
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <p class="copyright">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
+        </div>
+    </footer>
+    {% endblock %}
 
     {% block extra_body %}{% endblock %}
     {% block extra_js %}{% endblock %}

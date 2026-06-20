@@ -139,7 +139,15 @@ header {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     overflow-x: auto;
 }
-
+.config-section,
+.cee-intro,
+.table-wrapper,
+.config-table,
+.subjects,
+.button-group,
+.footer-grid {
+    min-width: 0;
+}
 .config-table {
     width: 100%;
     border-collapse: collapse;
@@ -164,7 +172,6 @@ header {
 .config-table .topic-col {
     text-align: left;
 }
-
 .config-table .qty-col {
     text-align: center;
     vertical-align: middle;
@@ -260,6 +267,7 @@ header {
 /* Topic Rows */
 .topic-row {
     background: #ffffff;
+    align-items: center;
 }
 
 .topic-row td {
@@ -273,17 +281,22 @@ header {
 }
 
 .topic-row .qty {
-    text-align: center;
-    font-weight: 600;
-    color: #2c3e50;
-    background: #f0f2f5;
-    border-radius: 3px;
-    padding: 6px 12px;
-    display: block;
-    margin: 0 auto;
-    width: 45px;
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+    font-weight: 600;
+    color: #dfe6ed;
+    background: #3e434b;
+    border-radius: 3px;
+
+    width: 45px;
+    height: 32px;        
+
+    padding: 0; 
+    margin: auto;   
+    margin-top: 8px;   
+}
 /* Highlight High Question Count */
 .topic-row.highlight-high {
     background: #f0f8ff;
