@@ -48,14 +48,11 @@ class BlogSitemap(Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        from CEE_Quiz.views import BLOG_POSTS
-        class BlogPostMock:
-            def __init__(self, slug):
-                self.slug = slug
-        return [BlogPostMock(slug) for slug in BLOG_POSTS.keys()]
+        from CEE_Quiz.views import BLOG_POST_ORDER
+        return BLOG_POST_ORDER  
 
     def location(self, obj):
-        return f'/blog/{obj.slug}/'
+        return f'/blog/{obj}/'  
 
 sitemaps = {
     "static": StaticViewSitemap,
