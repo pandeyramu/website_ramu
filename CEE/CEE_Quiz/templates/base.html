@@ -229,6 +229,29 @@
             color: #ffd94d;
         }
 
+        .footer-social {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+
+        .footer-social-link {
+            color: #ffd94d;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 217, 77, 0.5);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .footer-social-link:hover {
+            background: #ffd94d;
+            color: #0c2f4a;
+        }
+
         .copyright {
             margin: 0;
             font-size: 0.92rem;
@@ -281,8 +304,73 @@
         }
     </style>
     {% block structured_data %}{% endblock %}
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
-        crossorigin="anonymous"></script>
+    <!-- Cookie Consent + Consent-gated Analytics & Ads -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        // Default all storage to denied until the user gives consent.
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+        });
+
+        function enableGA(){
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXXX';
+            document.head.appendChild(s);
+            gtag('js', new Date());
+            gtag('config', 'G-XXXXXXXXXXX');
+            gtag('consent', 'update', {
+                'analytics_storage': 'granted',
+                'ad_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted'
+            });
+        }
+
+        function enableAds(){
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659';
+            s.crossOrigin = 'anonymous';
+            document.head.appendChild(s);
+        }
+
+        function activateConsent(){
+            enableGA();
+            enableAds();
+        }
+
+        window.addEventListener('load', function(){
+            if (typeof window.cookieconsent === 'undefined') { return; }
+            window.cookieconsent.initialise({
+                "palette": {
+                    "popup": {"background": "#0c2f4a", "text": "#ffffff"},
+                    "button": {"background": "#ffd94d", "text": "#0c2f4a"}
+                },
+                "theme": "classic",
+                "position": "bottom",
+                "type": "opt-in",
+                "content": {
+                    "message": "We use cookies for analytics and to display personalized ads (Google AdSense). Click 'Accept' to allow cookies.",
+                    "allow": "Accept",
+                    "deny": "Decline",
+                    "link": "Learn more",
+                    "href": "/privacy-policy/"
+                },
+                onInitialise: function(){
+                    if (this.hasConsented()) { activateConsent(); }
+                },
+                onStatusChange: function(){
+                    if (this.hasConsented()) { activateConsent(); }
+                }
+            });
+        });
+    </script>
     {% block extra_head %}{% endblock %}
 </head>
 
@@ -367,6 +455,11 @@
                 <a href="/disclaimer/">Disclaimer</a>
                 <a href="/blog/">Blog</a>
             </nav>
+            <div class="footer-social" style="margin: 0.7rem 0;">
+                <a href="https://www.facebook.com/profile.php?id=61556597579403" target="_blank" rel="noopener" class="footer-social-link">Facebook</a>
+                <a href="https://www.instagram.com/ceemcq" target="_blank" rel="noopener" class="footer-social-link">Instagram</a>
+                <a href="https://www.youtube.com/@ceemcq" target="_blank" rel="noopener" class="footer-social-link">YouTube</a>
+            </div>
             <p class="copyright">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
         </div>
     </footer>
