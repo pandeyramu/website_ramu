@@ -3,7 +3,7 @@ import random
 from django.db import migrations
 
 
-def seed_solution_sets(apps, schema_editor):
+def refix_solution_sets(apps, schema_editor):
     Chapter = apps.get_model('CEE_Quiz', 'Chapter')
     Question = apps.get_model('CEE_Quiz', 'Question')
     SolutionSet = apps.get_model('CEE_Quiz', 'SolutionSet')
@@ -15,6 +15,7 @@ def seed_solution_sets(apps, schema_editor):
         qids = list(Question.objects.filter(chapter=chapter).values_list('id', flat=True))
         if not qids:
             continue
+        # Delete old sets that had too many questions
         SolutionSet.objects.filter(chapter=chapter).delete()
 
         indices = list(range(len(qids)))
@@ -27,8 +28,6 @@ def seed_solution_sets(apps, schema_editor):
                 continue
             ids_subset = [qids[idx] for idx in selected_indices]
 
-            start_label = start + 1
-            end_label = min(start + QUESTIONS_PER_SET, start + len(selected_indices))
             SolutionSet.objects.create(
                 chapter=chapter,
                 set_number=i + 1,
@@ -42,17 +41,12 @@ def seed_solution_sets(apps, schema_editor):
             )
 
 
-def delete_solution_sets(apps, schema_editor):
-    SolutionSet = apps.get_model('CEE_Quiz', 'SolutionSet')
-    SolutionSet.objects.all().delete()
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('CEE_Quiz', '0007_subchapter_intro_text'),
+        ('CEE_Quiz', '0009_seed_intro_texts'),
     ]
 
     operations = [
-        migrations.RunPython(seed_solution_sets, delete_solution_sets),
+        migrations.RunPython(refix_solution_sets),
     ]
