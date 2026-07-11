@@ -5,6 +5,7 @@ from django.utils.text import slugify
 class Subject(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
+    intro_text = models.TextField(blank=True, help_text='150-300 word intro for the subject page')
 
     def __str__(self):
         return self.name
@@ -25,6 +26,7 @@ class Chapter(models.Model):
     name = models.CharField(max_length=100)
     has_subchapters = models.BooleanField(default=False)
     slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
+    intro_text = models.TextField(blank=True, help_text='150-300 word intro for the chapter page')
 
     def __str__(self):
         return f"{self.subject.name} - {self.name}"
@@ -59,6 +61,7 @@ class SubChapter(models.Model):
     order = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
     seo_description = models.TextField(blank=True)
+    intro_text = models.TextField(blank=True, help_text='150-300 word intro for the subchapter page')
 
     class Meta:
         ordering = ['order']
@@ -106,6 +109,27 @@ class TestResult(models.Model):
 
     def __str__(self):
         return f"{self.name} -{self.topic} - {self.score}"
+class SolutionSet(models.Model):
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name='solution_sets')
+    set_number = models.PositiveIntegerField()
+    title = models.CharField(max_length=200, blank=True, default='')
+    intro_text = models.TextField(blank=True, help_text='3-5 sentence intro describing what topics this batch covers')
+    question_ids = models.TextField(help_text='Comma-separated list of question IDs in this set')
+
+    class Meta:
+        unique_together = ['chapter', 'set_number']
+        ordering = ['chapter', 'set_number']
+
+    def __str__(self):
+        return f"{self.chapter.name} - Set {self.set_number}"
+
+    def get_questions(self):
+        ids = [int(x.strip()) for x in self.question_ids.split(',') if x.strip().isdigit()]
+        questions = Question.objects.filter(id__in=ids).select_related('chapter', 'sub_chapter')
+        id_map = {q.id: q for q in questions}
+        return [id_map[qid] for qid in ids if qid in id_map]
+
+
 class QuestionReport(models.Model):
     question_id = models.IntegerField()
     user_name = models.CharField(max_length=100, blank=True)

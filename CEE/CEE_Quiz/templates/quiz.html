@@ -80,44 +80,57 @@
 .btn.home:hover {
     background:#0f4a86;
 }
+.page-intro {
+    background: #f0f7ff;
+    border-left: 4px solid #1458a6;
+    padding: 1rem 1.3rem;
+    border-radius: 8px;
+    margin: 1rem auto;
+    font-size: .95rem;
+    line-height: 1.7;
+    max-width: 700px;
+    text-align: left;
+}
 </style>
 
 
 
 <script>
     window.MathJax = {
-
         tex: {
-            inlineMath: [
-                ['\\(', '\\)'],
-                ['$', '$']
-            ],
-
-            displayMath: [
-                ['\\[', '\\]'],
-                ['$$', '$$']
-            ],
-
+            inlineMath: [['\\(', '\\)'], ['$', '$']],
+            displayMath: [['\\[', '\\]'], ['$$', '$$']],
             processEscapes: true
         },
-
-
         options: {
-            skipHtmlTags: [
-                'script',
-                'noscript',
-                'style',
-                'textarea',
-                'pre',
-                'code'
-            ]
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        startup: {
+            typeset: false
         }
-
     };
 </script>
 
 
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+    // Only load MathJax when quiz is active (questions are displayed)
+    (function() {
+        var qForm = document.getElementById('quiz-form');
+        var hasActiveQuiz = qForm && !qForm.classList.contains('submitted') && qForm.style.display !== 'none';
+        var hasResult = document.querySelector('.result-layout') !== null;
+        if (hasActiveQuiz || hasResult) {
+            var s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+            s.defer = true;
+            s.onload = function() {
+                if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+                    window.MathJax.typesetPromise();
+                }
+            };
+            document.head.appendChild(s);
+        }
+    })();
+</script>
 
 
 {% endblock %}
@@ -180,7 +193,6 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
 <header>
 
     <div class="container">
-
         <h1>
             {% if sub_chapter %}
             {{ sub_chapter.name }} MCQ
@@ -189,6 +201,32 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
             {% endif %}
         </h1>
 
+    </div>
+
+</header>
+
+
+
+
+
+
+
+
+<main class="container {% if score is not None %}result-page{% endif %}">
+
+
+
+    {% if not quiz_started and score is None %}
+
+        {% if sub_chapter and sub_chapter.intro_text %}
+        <div class="page-intro">
+            {{ sub_chapter.intro_text|linebreaks }}
+        </div>
+        {% elif chapter.intro_text %}
+        <div class="page-intro">
+            {{ chapter.intro_text|linebreaks }}
+        </div>
+        {% endif %}
 
         <p>
             {% if sub_chapter %}
@@ -205,23 +243,6 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
             {{ subchapter.seo_description }}
         </p>
         {% endif %}
-
-
-    </div>
-
-</header>
-
-
-
-
-
-<main class="container {% if score is not None %}result-page{% endif %}">
-
-
-
-    {% if not quiz_started and score is None %}
-
-
 
     <form method="get" class="start-form">
 

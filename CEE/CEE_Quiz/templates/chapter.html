@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load quiz_extra %}
 
 {% block title %}
 {{ page_seo.meta_title|default:page_default_title }}
@@ -10,10 +10,10 @@
 {% block meta_description %}
 
 {% if subject.slug == 'physics' %}
-Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for Nepal CEE 2025.
+Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for CEE.
 
 {% elif subject.slug == 'chemistry' %}
-Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for Nepal CEE 2025.
+Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for  CEE.
 
 {% elif subject.slug == 'zoology' %}
 Practice 10,000+ CEE Zoology MCQ questions chapter-wise. Human Physiology, Animal Diversity, Histology — all with answers.
@@ -31,6 +31,44 @@ Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Geneti
 <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
 
 <style>
+
+.subject-intro {
+    background: #f0f7ff;
+    border-left: 4px solid #1458a6;
+    padding: 1rem 1.3rem;
+    border-radius: 8px;
+    margin: 1rem auto;
+    font-size: .95rem;
+    line-height: 1.7;
+    width: 85%;
+    max-width: 600px;
+    text-align: left;
+}
+.sol-set-links {
+    margin: 1rem 0 1.5rem;
+}
+.sol-set-links h3 {
+    font-size: 1rem;
+    margin: .5rem 0 .3rem;
+}
+.sol-set-links a {
+    display: inline-block;
+    margin-right: .5rem;
+    margin-bottom: .4rem;
+    padding: .3rem .7rem;
+    border-radius: 999px;
+    background: #eef5ff;
+    color: #1458a6;
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: 600;
+    border: 1px solid #d8e2ef;
+    transition: background .2s;
+}
+.sol-set-links a:hover {
+    background: #1458a6;
+    color: #fff;
+}
 
 .seo-link-row {
     display: flex;
@@ -84,6 +122,11 @@ Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Geneti
     </p>
 </header>
 
+{% if subject.intro_text %}
+<div class="subject-intro">
+    {{ subject.intro_text|linebreaks }}
+</div>
+{% endif %}
 
 <main class="container">
 
@@ -219,6 +262,23 @@ Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Geneti
 
 {% endif %}
 
+
+{% if chapter_solution_sets %}
+<div class="sol-set-links">
+<h2>Solved MCQ Sets</h2>
+<p class="muted">Browse solved question sets with answers and explanations — no login required.</p>
+{% for chap in chapters %}
+{% with sets=chapter_solution_sets|dict_get:chap.slug %}
+{% if sets %}
+<h3>{{ chap.name }}</h3>
+{% for s in sets %}
+<a href="{% url 'solution_set' chap.slug s.set_number %}">Set {{ s.set_number }}{% if s.title %}: {{ s.title }}{% endif %}</a>
+{% endfor %}
+{% endif %}
+{% endwith %}
+{% endfor %}
+</div>
+{% endif %}
 
 
 <nav class="back-button">

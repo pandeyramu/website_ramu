@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% load static %}
 
 {% block title %}
@@ -86,6 +86,23 @@ Biology Diagram Revision That Actually Sticks | CEE MCQ
 }
 .footer-container { max-width: 880px; margin: auto; }
 .footer-copy { margin: .85rem 0 0; font-size: .9rem; }
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 0.7rem;
+}
+.footer-nav a {
+    color: rgba(255,255,255,.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color .2s;
+}
+.footer-nav a:hover {
+    color: #ffd94d;
+}
 </style>
 {% endblock extra_head %}
 
@@ -116,7 +133,7 @@ Biology Diagram Revision That Actually Sticks | CEE MCQ
   I stopped losing easy Biology marks when I began redrawing diagrams from memory and checking the labels against my own mistakes, not against the textbook.
 </p>
 
-<p class="muted">By Ramu Pandey · Published: March 21, 2026 · 6 min read</p>
+<p class="muted">By Ramu Pandey Â· Published: March 21, 2026 Â· 6 min read</p>
 
 <section>
   <p>
@@ -133,9 +150,9 @@ Biology Diagram Revision That Actually Sticks | CEE MCQ
     When I study a new Biology diagram now, I draw it three times before moving on:
   </p>
   <ol>
-    <li><strong>Draw 1 → while studying:</strong> Draw the diagram alongside the textbook. This is the learning draw. Pay attention to structure, not perfection.</li>
-    <li><strong>Draw 2 → from memory, same day:</strong> Close the book and redraw it on a blank sheet. Check your mistakes. These are the labels you will forget first.</li>
-    <li><strong>Draw 3 → after 2 days:</strong> Without looking at anything, draw it again. The labels you get wrong this time are your personal weak points. Write them separately.</li>
+    <li><strong>Draw 1 â†’ while studying:</strong> Draw the diagram alongside the textbook. This is the learning draw. Pay attention to structure, not perfection.</li>
+    <li><strong>Draw 2 â†’ from memory, same day:</strong> Close the book and redraw it on a blank sheet. Check your mistakes. These are the labels you will forget first.</li>
+    <li><strong>Draw 3 â†’ after 2 days:</strong> Without looking at anything, draw it again. The labels you get wrong this time are your personal weak points. Write them separately.</li>
   </ol>
   <p>
     This process takes maybe 10 extra minutes per diagram but the retention is vastly better than reading the same page five times.
@@ -168,8 +185,8 @@ Biology Diagram Revision That Actually Sticks | CEE MCQ
       <tr><td>Nephron structure</td><td>Frequently tested in direct MCQs</td><td>Tubule sequence order</td></tr>
       <tr><td>Neuron and synapse</td><td>Nervous system questions</td><td>Myelin sheath vs axon labels</td></tr>
       <tr><td>Reflex arc</td><td>Simple but easy to mix up</td><td>Receptor vs effector direction</td></tr>
-      <tr><td>Plant cell vs animal cell</td><td>Cell Biology → 5 marks</td><td>Cell wall, chloroplast presence</td></tr>
-      <tr><td>TS of dicot stem / root</td><td>Plant Anatomy → 3 marks</td><td>Endodermis and pericycle position</td></tr>
+      <tr><td>Plant cell vs animal cell</td><td>Cell Biology â†’ 5 marks</td><td>Cell wall, chloroplast presence</td></tr>
+      <tr><td>TS of dicot stem / root</td><td>Plant Anatomy â†’ 3 marks</td><td>Endodermis and pericycle position</td></tr>
     </tbody>
   </table>
 </section>
@@ -192,7 +209,16 @@ Biology Diagram Revision That Actually Sticks | CEE MCQ
 {% block footer %}
 <footer class="full-test-footer">
   <div class="footer-container">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/disclaimer/">Disclaimer</a>
+        <a href="/blog/">Blog</a>
+    </nav>
     <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
   </div>
 </footer>
 {% endblock footer %}
+

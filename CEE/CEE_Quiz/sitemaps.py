@@ -1,6 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from CEE_Quiz.models import Subject, Chapter, SubChapter
+from CEE_Quiz.models import Subject, Chapter, SubChapter, SolutionSet
 
 class StaticViewSitemap(Sitemap):
     priority = 1.0
@@ -43,6 +43,20 @@ class SubChapterSitemap(Sitemap):
     def location(self, obj):
         return f'/mcq/{obj.slug}/'
 
+class SolutionSetSitemap(Sitemap):
+    priority = 0.6
+    changefreq = 'monthly'
+
+    def items(self):
+        return SolutionSet.objects.select_related('chapter').all()
+
+    def location(self, obj):
+        return f'/chapter/{obj.chapter.slug}/solved-set/{obj.set_number}/'
+
+    def lastmod(self, obj):
+        return None
+
+
 class BlogSitemap(Sitemap):
     priority = 0.7
     changefreq = 'monthly'
@@ -53,11 +67,11 @@ class BlogSitemap(Sitemap):
 
     def location(self, obj):
         return f'/blog/{obj}/'  
-
 sitemaps = {
     "static": StaticViewSitemap,
     "subjects": SubjectSitemap,
     "chapters": ChapterSitemap,
     "subchapters": SubChapterSitemap,
+    "solution_sets": SolutionSetSitemap,
     "blog": BlogSitemap,
 }

@@ -1,10 +1,15 @@
 from django.contrib import admin
-from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO
+from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO, SolutionSet
 
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'slug')
+    list_display = ('id', 'name', 'slug', 'has_intro')
     prepopulated_fields = {'slug': ('name',)}
+    fields = ('name', 'slug', 'intro_text')
+
+    @admin.display(description='Has Intro', boolean=True)
+    def has_intro(self, obj):
+        return bool(obj.intro_text)
 
 
 class SubChapterInline(admin.TabularInline):
@@ -15,18 +20,28 @@ class SubChapterInline(admin.TabularInline):
 
 
 class ChapterAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'slug', 'subject', 'has_subchapters')
+    list_display = ('id', 'name', 'slug', 'subject', 'has_subchapters', 'has_intro')
     list_filter = ('subject', 'has_subchapters')
+    search_fields = ('name',)
     inlines = [SubChapterInline]
     prepopulated_fields = {'slug': ('name',)}
+    fields = ('subject', 'name', 'slug', 'has_subchapters', 'intro_text')
+
+    @admin.display(description='Has Intro', boolean=True)
+    def has_intro(self, obj):
+        return bool(obj.intro_text)
 
 
 class SubChapterAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'slug', 'chapter', 'order')
+    list_display = ('id', 'name', 'slug', 'chapter', 'order', 'has_intro')
     list_filter = ('chapter__subject', 'chapter')
     ordering = ['chapter', 'order']
     prepopulated_fields = {'slug': ('name',)}
-    fields = ('chapter', 'name', 'order', 'slug', 'seo_description')
+    fields = ('chapter', 'name', 'order', 'slug', 'seo_description', 'intro_text')
+
+    @admin.display(description='Has Intro', boolean=True)
+    def has_intro(self, obj):
+        return bool(obj.intro_text)
 
 
 class PageSEOAdmin(admin.ModelAdmin):
@@ -79,6 +94,18 @@ class QuestionAdmin(admin.ModelAdmin):
             return '-'
         return text[:160] + ('...' if len(text) > 160 else '')
 
+class SolutionSetAdmin(admin.ModelAdmin):
+    list_display = ('id', 'chapter', 'set_number', 'title', 'question_count')
+    list_filter = ('chapter__subject', 'chapter')
+    search_fields = ('title', 'chapter__name')
+    autocomplete_fields = ('chapter',)
+
+    @admin.display(description='Questions')
+    def question_count(self, obj):
+        ids = [x.strip() for x in obj.question_ids.split(',') if x.strip().isdigit()]
+        return len(ids)
+
+
 class UserAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'topic', 'score', 'total_attempted', 'total_correct', 'time_taken_seconds', 'created_at')
 
@@ -89,3 +116,4 @@ admin.site.register(SubChapter, SubChapterAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(TestResult, UserAdmin)
 admin.site.register(PageSEO, PageSEOAdmin)
+admin.site.register(SolutionSet, SolutionSetAdmin)

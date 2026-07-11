@@ -302,6 +302,23 @@
     font-size:.9rem;
 
 }
+.footer-nav {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:0.8rem;
+    margin-bottom:0.7rem;
+}
+.footer-nav a {
+    color:rgba(255,255,255,0.85);
+    text-decoration:none;
+    font-size:0.9rem;
+    font-weight:500;
+    transition:color .2s;
+}
+.footer-nav a:hover {
+    color:#ffd94d;
+}
 
 
 
@@ -507,9 +524,16 @@
 {% block footer %}
 {% block extra_js %}{% endblock %}
 <footer class="full-test-footer">
-    
-Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.
-    </div>
-
+  <div class="footer-container">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/disclaimer/">Disclaimer</a>
+        <a href="/blog/">Blog</a>
+    </nav>
+    <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
+  </div>
 </footer>
 {% endblock footer %}

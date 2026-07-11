@@ -18,7 +18,7 @@ from django.db import connection, IntegrityError
 from django.db.utils import DatabaseError
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO, QuestionReport
+from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO, QuestionReport, SolutionSet
 from .sitemaps import sitemaps
 from .seo_provider import get_supabase_page_seo
 
@@ -314,26 +314,28 @@ FULL_TEST_BLUEPRINT = {
 
 
 def _build_full_test_question_ids():
-    selected_ids = []
+    """Collect random question IDs per chapter in 2 queries instead of 23."""
+    from collections import defaultdict
 
+    # 1 query: load all question IDs grouped by (subject_name, chapter_name)
+    qs = Question.objects.values_list(
+        'chapter__subject__name', 'chapter__name', 'id'
+    )
+    chapter_buckets = defaultdict(list)
+    for subj, chap, qid in qs:
+        chapter_buckets[(subj, chap)].append(qid)
+
+    selected_ids = []
     for subject_name, chapters_config in FULL_TEST_BLUEPRINT.items():
         for chapter_name, question_count in chapters_config.items():
-            chapter_questions = Question.objects.filter(
-                chapter__subject__name=subject_name,
-                chapter__name=chapter_name,
-            )
-            selected_ids.extend(_sample_question_ids(chapter_questions, question_count))
+            bucket = chapter_buckets.get((subject_name, chapter_name), [])
+            if bucket:
+                selected_ids.extend(
+                    random.sample(bucket, min(question_count, len(bucket)))
+                )
 
     random.shuffle(selected_ids)
     return selected_ids
-
-
-def _sample_question_ids(base_queryset, limit):
-    """Return a random sample of question IDs without loading full model rows."""
-    question_ids = list(base_queryset.values_list('id', flat=True))
-    if not question_ids or limit <= 0:
-        return []
-    return random.sample(question_ids, min(limit, len(question_ids)))
 
 
 def _attempt_reference(session, key_prefix, force_new=False):
@@ -702,9 +704,17 @@ def chapters(request, slug):
     page_default_description = f"Explore all {subject.name} chapters and practice chapter-wise MCQ questions to prepare for Nepal's Common Entrance Examination."
     page_default_keywords = f'CEE MCQ, {subject.name}, CEE Nepal, Chapters, Practice Questions'
     request.page_slug = slug
+
+    chapter_ids = [c.id for c in chapters_list]
+    chapter_solution_sets = {}
+    for sol_set in SolutionSet.objects.filter(chapter_id__in=chapter_ids).select_related('chapter'):
+        chap_slug = sol_set.chapter.slug
+        chapter_solution_sets.setdefault(chap_slug, []).append(sol_set)
+
     return render(request, 'chapter.html', {
         'subject': subject,
         'chapters': chapters_list,
+        'chapter_solution_sets': chapter_solution_sets,
         **_crawl_navigation_links(subject.slug),
         'page_slug': slug,
         'page_default_title': page_default_title,
@@ -740,12 +750,20 @@ def dynamic_page(request, page_slug):
         subject = Subject.objects.filter(slug=candidate).first()
         if subject:
             chapters_list = Chapter.objects.filter(subject=subject).order_by('id')
+            chapter_ids = [c.id for c in chapters_list]
+
+            chapter_solution_sets = {}
+            for sol_set in SolutionSet.objects.filter(chapter_id__in=chapter_ids).select_related('chapter'):
+                chap_slug = sol_set.chapter.slug
+                chapter_solution_sets.setdefault(chap_slug, []).append(sol_set)
+
             page_default_title = f'CEE {subject.name} MCQ Questions – Chapter Wise | CEE MCQ'
             page_default_description = f"Explore all {subject.name} chapters and practice chapter-wise MCQ questions to prepare for Nepal's Common Entrance Examination."
             page_default_keywords = f'CEE MCQ, {subject.name}, CEE Nepal, Chapters, Practice Questions'
             return render(request, 'chapter.html', {
                 'subject': subject,
                 'chapters': chapters_list,
+                'chapter_solution_sets': chapter_solution_sets,
                 **_crawl_navigation_links(subject.slug),
                 'page_slug': page_slug,
                 'page_default_title': page_default_title,
@@ -754,25 +772,6 @@ def dynamic_page(request, page_slug):
                 'page_default_og_title': f'{subject.name} Chapters | CEE MCQ',
                 'page_default_og_description': f"Practice chapter-wise MCQ questions for {subject.name}. Prepare for Nepal's Common Entrance Examination.",
             })
-
-        chapter = Chapter.objects.filter(slug=candidate).first()
-        if chapter:
-            if chapter.has_subchapters:
-                return redirect('subchapters', slug=chapter.slug)
-            return redirect('quiz', slug=chapter.slug)
-
-        subchapter = SubChapter.objects.filter(slug=candidate).first()
-        if subchapter:
-            return redirect('subchapter_quiz', slug=subchapter.slug)
-
-    # If SEO exists but content route is not mapped yet, show a soft landing page.
-    seo_entry = PageSEO.objects.filter(page_slug=page_slug).first()
-    supabase_entry = get_supabase_page_seo(page_slug)
-    if seo_entry or supabase_entry:
-        return render(request, 'dynamic_page.html', {'page_slug': page_slug})
-
-    raise Http404('Page not found')
-
 
 def quiz_redirect(request, chapter_id):
     chapter = get_object_or_404(Chapter, id=chapter_id)
@@ -793,9 +792,11 @@ def subchapters(request, slug):
     """View to list subchapters for a chapter that has them (lookup by slug)."""
     chapter = get_object_or_404(Chapter, slug=slug)
     subchapter_list = SubChapter.objects.filter(chapter=chapter).order_by('order')
+    solution_sets = SolutionSet.objects.filter(chapter=chapter)
     return render(request, 'subchapter.html', {
         'chapter': chapter,
         'subchapters': subchapter_list,
+        'solution_sets': solution_sets,
         **_crawl_navigation_links(chapter.subject.slug),
     })
 
@@ -803,6 +804,42 @@ def subchapters(request, slug):
 def subchapters_redirect(request, chapter_id):
     chapter = get_object_or_404(Chapter, id=chapter_id)
     return redirect('subchapters', slug=chapter.slug, permanent=True)
+
+
+def solution_set(request, slug, set_number):
+    chapter = get_object_or_404(Chapter, slug=slug)
+    sol_set = get_object_or_404(SolutionSet, chapter=chapter, set_number=set_number)
+    questions = sol_set.get_questions()
+    previous_set = SolutionSet.objects.filter(chapter=chapter, set_number=set_number - 1).first()
+    next_set = SolutionSet.objects.filter(chapter=chapter, set_number=set_number + 1).first()
+    page_default_title = f'{chapter.name} Solved MCQs – Set {set_number} | CEE MCQ'
+    page_default_description = f'Solved MCQs for {chapter.name} – Set {set_number}. Practice with answers and explanations for CEE preparation.'
+    page_default_keywords = f'CEE MCQ, {chapter.name}, Solved MCQs, Set {set_number}, Practice Questions'
+    request.page_slug = f'{slug}-solved-set-{set_number}'
+    return render(request, 'solution_set.html', {
+        'chapter': chapter,
+        'sol_set': sol_set,
+        'questions': questions,
+        'previous_set': previous_set,
+        'next_set': next_set,
+        'page_slug': request.page_slug,
+        'page_default_title': page_default_title,
+        'page_default_description': page_default_description,
+        'page_default_keywords': page_default_keywords,
+        'page_default_og_title': page_default_title,
+        'page_default_og_description': page_default_description,
+        **_crawl_navigation_links(chapter.subject.slug),
+    })
+
+
+# def _sample_questions_for_display(queryset, count=5):
+#     question_ids = list(queryset.values_list('id', flat=True))
+#     if not question_ids:
+#         return []
+#     selected_ids = random.sample(question_ids, min(count, len(question_ids)))
+#     questions = Question.objects.filter(id__in=selected_ids).select_related('chapter', 'sub_chapter')
+#     id_map = {q.id: q for q in questions}
+#     return [id_map[qid] for qid in selected_ids if qid in id_map]
 
 
 def quiz(request, slug):
@@ -1446,20 +1483,6 @@ def ads_txt(request):
     except FileNotFoundError:
         content = 'google.com, pub-3880021540956659, DIRECT, f08c47fec0942fa0'
     return HttpResponse(content, content_type='text/plain')
-
-
-def sitemap_xml(request):
-    req_site = RequestSite(request)
-    req_protocol = request.scheme
-    urls = []
-
-    for sitemap in sitemaps.values():
-        if callable(sitemap):
-            sitemap = sitemap()
-        for page_number in range(1, sitemap.paginator.num_pages + 1):
-            urls.extend(sitemap.get_urls(page=page_number, site=req_site, protocol=req_protocol))
-
-    return render(request, 'sitemap.xml', {'urls': urls}, content_type='application/xml')
 
 
 def blog_index(request):

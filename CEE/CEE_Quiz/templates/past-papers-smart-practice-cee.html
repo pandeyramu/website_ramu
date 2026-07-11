@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% load static %}
 
 {% block title %}
@@ -86,6 +86,23 @@ How I Use Past Papers to Study Smarter for CEE | CEE MCQ
 }
 .footer-container { max-width: 880px; margin: auto; }
 .footer-copy { margin: .85rem 0 0; font-size: .9rem; }
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 0.7rem;
+}
+.footer-nav a {
+    color: rgba(255,255,255,.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color .2s;
+}
+.footer-nav a:hover {
+    color: #ffd94d;
+}
 </style>
 {% endblock extra_head %}
 
@@ -116,7 +133,7 @@ How I Use Past Papers to Study Smarter for CEE | CEE MCQ
   Past papers are not just for checking yourself at the end. I use them as a map for what deserves more time right now and the difference in how efficiently I prepared was significant.
 </p>
 
-<p class="muted">By Ramu Pandey · Published: March 21, 2026 · 6 min read</p>
+<p class="muted">By Ramu Pandey Â· Published: March 21, 2026 Â· 6 min read</p>
 
 <section>
   <p>
@@ -130,7 +147,7 @@ How I Use Past Papers to Study Smarter for CEE | CEE MCQ
 <section>
   <h2>What past papers actually tell you</h2>
   <p>
-    When you look at 3–4 years of CEE past papers together, patterns become obvious. Certain topics appear every single year Human Physiology, Organic Chemistry product prediction, Modern Physics numerical questions. Other topics appear once every few years. This distinction tells you exactly where to invest time.
+    When you look at 3â€“4 years of CEE past papers together, patterns become obvious. Certain topics appear every single year Human Physiology, Organic Chemistry product prediction, Modern Physics numerical questions. Other topics appear once every few years. This distinction tells you exactly where to invest time.
   </p>
   <p>
     Past papers also show you how questions are phrased. CEE tends to test the same concepts in similar ways. Once you recognize the phrasing pattern, options that are designed to confuse you become easier to identify.
@@ -158,9 +175,9 @@ How I Use Past Papers to Study Smarter for CEE | CEE MCQ
     After the test, I do not just mark it and move on. I go through every wrong answer and every skipped question and ask: why did I get this wrong? The answer goes into one of three categories:
   </p>
   <ol>
-    <li><strong>Concept gap</strong> → I did not actually know this. I need to revise the chapter.</li>
-    <li><strong>Careless mistake</strong> → I knew it but made an error. I need to slow down on this question type.</li>
-    <li><strong>Time pressure guess</strong> → I ran out of time and guessed. I need to review my pacing strategy.</li>
+    <li><strong>Concept gap</strong> â†’ I did not actually know this. I need to revise the chapter.</li>
+    <li><strong>Careless mistake</strong> â†’ I knew it but made an error. I need to slow down on this question type.</li>
+    <li><strong>Time pressure guess</strong> â†’ I ran out of time and guessed. I need to review my pacing strategy.</li>
   </ol>
   <p>
     Each category has a different fix. Treating them all as "need more revision" misses the point and wastes time.
@@ -168,35 +185,35 @@ How I Use Past Papers to Study Smarter for CEE | CEE MCQ
 </section>
 
 <div class="tip-box">
-  <p><strong>The part I would never skip:</strong> Re-attempting wrong questions after 5–7 days without looking at the answer first. If I still get it wrong, the concept is not fixed. If I get it right, the revision worked. This second attempt is the clearest feedback you can get on whether your revision is actually landing.</p>
+  <p><strong>The part I would never skip:</strong> Re-attempting wrong questions after 5â€“7 days without looking at the answer first. If I still get it wrong, the concept is not fixed. If I get it right, the revision worked. This second attempt is the clearest feedback you can get on whether your revision is actually landing.</p>
 </div>
 
 <section>
   <h2>Building a topic frequency list</h2>
   <p>
-    After going through 3–4 years of papers, I made a simple list: every topic that appeared, and how many times across the papers. This became my study priority list. Topics at the top got the most chapter-wise MCQ practice. Topics at the bottom got a quick review and nothing more.
+    After going through 3â€“4 years of papers, I made a simple list: every topic that appeared, and how many times across the papers. This became my study priority list. Topics at the top got the most chapter-wise MCQ practice. Topics at the bottom got a quick review and nothing more.
   </p>
   <p>
     This is a one-time exercise that takes about two hours but shapes your entire preparation. It stops you from treating every chapter equally when they clearly are not.
   </p>
   <ul>
-    <li>Go through 3–4 years of CEE papers</li>
+    <li>Go through 3â€“4 years of CEE papers</li>
     <li>List every topic and mark each appearance</li>
     <li>Sort by frequency, this is your priority list</li>
-    <li>Revisit the list every 3–4 weeks to check your progress against it</li>
+    <li>Revisit the list every 3â€“4 weeks to check your progress against it</li>
   </ul>
 </section>
 
 <section>
   <h2>When to start using past papers</h2>
   <p>
-    Pattern analysis →from week one. Sit with old papers before you start studying to understand what CEE actually tests.
+    Pattern analysis â†’from week one. Sit with old papers before you start studying to understand what CEE actually tests.
   </p>
   <p>
-    Timed simulation → from month two onward, once you have basic concept coverage. Not before, because attempting a full paper when you have covered very little just discourages you without giving useful data.
+    Timed simulation â†’ from month two onward, once you have basic concept coverage. Not before, because attempting a full paper when you have covered very little just discourages you without giving useful data.
   </p>
   <p>
-    Final month → at least three full timed papers, with deep review after each one. By this point the papers should feel familiar in structure even if individual questions are new.
+    Final month â†’ at least three full timed papers, with deep review after each one. By this point the papers should feel familiar in structure even if individual questions are new.
   </p>
 </section>
 
@@ -208,7 +225,16 @@ How I Use Past Papers to Study Smarter for CEE | CEE MCQ
 {% block footer %}
 <footer class="full-test-footer">
   <div class="footer-container">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/disclaimer/">Disclaimer</a>
+        <a href="/blog/">Blog</a>
+    </nav>
     <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
   </div>
 </footer>
 {% endblock footer %}
+

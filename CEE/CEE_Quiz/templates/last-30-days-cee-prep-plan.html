@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% load static %}
 
 {% block title %}
@@ -86,6 +86,23 @@ Last 30 Days CEE Preparation Plan | CEE MCQ
 }
 .footer-container { max-width: 880px; margin: auto; }
 .footer-copy { margin: .85rem 0 0; font-size: .9rem; }
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 0.7rem;
+}
+.footer-nav a {
+    color: rgba(255,255,255,.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color .2s;
+}
+.footer-nav a:hover {
+    color: #ffd94d;
+}
 </style>
 {% endblock extra_head %}
 
@@ -116,7 +133,7 @@ Last 30 Days CEE Preparation Plan | CEE MCQ
   The final 30 days are not about learning new things. They are about converting what you already know into exam marks. Here is exactly how to use that time.
 </p>
 
-<p class="muted">By Ramu Pandey · Published: March 21, 2026 · 7 min read</p>
+<p class="muted">By Ramu Pandey Â· Published: March 21, 2026 Â· 7 min read</p>
 
 <section>
   <p>
@@ -128,7 +145,7 @@ Last 30 Days CEE Preparation Plan | CEE MCQ
 </section>
 
 <section>
-  <h2>Days 1–10: Patch your gaps, not your confidence</h2>
+  <h2>Days 1â€“10: Patch your gaps, not your confidence</h2>
   <p>
     Use the first 10 days to identify and fix the topics you keep getting wrong, not to re-read everything. Build a short error sheet: a list of concepts, formulas, and chapter areas where you lose marks repeatedly. Revise those specifically. Avoid picking up new chapters you skipped entirely; if you have not touched them in months, this is not the time.
   </p>
@@ -150,7 +167,7 @@ Last 30 Days CEE Preparation Plan | CEE MCQ
 </section>
 
 <section>
-  <h2>Days 11–20: Stop reading, start drilling</h2>
+  <h2>Days 11â€“20: Stop reading, start drilling</h2>
   <p>
     In this phase, close the textbooks. Every hour should go toward MCQ practice , first chapter-wise in the morning, then mixed timed sets in the evening. The goal is to stop relying on recognition ("I think I know this") and build actual recall under time pressure.
   </p>
@@ -172,18 +189,18 @@ Last 30 Days CEE Preparation Plan | CEE MCQ
 </section>
 
 <div class="tip-box">
-  <p><strong>Key rule for days 11–20:</strong> If you catch yourself reading a chapter instead of solving questions, stop. Reading feels productive but MCQ drilling is what actually moves your score in this phase.</p>
+  <p><strong>Key rule for days 11â€“20:</strong> If you catch yourself reading a chapter instead of solving questions, stop. Reading feels productive but MCQ drilling is what actually moves your score in this phase.</p>
 </div>
 
 <section>
-  <h2>Days 21–30: Simulate the real exam</h2>
+  <h2>Days 21â€“30: Simulate the real exam</h2>
   <p>
     At least three full-length mock tests in the final 10 days. Same time of day as your CEE slot. No phone. Strict 180-minute limit. After each test, spend as long reviewing wrong answers as you spent taking the test, this is not optional. The review is where improvement actually happens.
   </p>
   <ul>
-    <li>Test 1 (Day 21) → identify pacing problems and weak sections</li>
-    <li>Test 2 (Day 25) → focus on accuracy improvements from Test 1 review</li>
-    <li>Test 3 (Day 28 or 29) → simulate complete exam conditions, final calibration</li>
+    <li>Test 1 (Day 21) â†’ identify pacing problems and weak sections</li>
+    <li>Test 2 (Day 25) â†’ focus on accuracy improvements from Test 1 review</li>
+    <li>Test 3 (Day 28 or 29) â†’ simulate complete exam conditions, final calibration</li>
   </ul>
 </section>
 
@@ -207,7 +224,16 @@ Last 30 Days CEE Preparation Plan | CEE MCQ
 {% block footer %}
 <footer class="full-test-footer">
   <div class="footer-container">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/disclaimer/">Disclaimer</a>
+        <a href="/blog/">Blog</a>
+    </nav>
     <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
   </div>
 </footer>
 {% endblock footer %}
+

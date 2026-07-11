@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% load static %}
 
 {% block title %}
@@ -96,6 +96,23 @@ Chemistry Reaction Maps for Faster Recall | CEE MCQ
 }
 .footer-container { max-width: 880px; margin: auto; }
 .footer-copy { margin: .85rem 0 0; font-size: .9rem; }
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 0.7rem;
+}
+.footer-nav a {
+    color: rgba(255,255,255,.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color .2s;
+}
+.footer-nav a:hover {
+    color: #ffd94d;
+}
 </style>
 {% endblock extra_head %}
 
@@ -126,7 +143,7 @@ Chemistry Reaction Maps for Faster Recall | CEE MCQ
   Instead of memorizing reactions in isolation, I built one map that linked every common conversion. That single page cut my confusion in half and made product-prediction questions feel obvious.
 </p>
 
-<p class="muted">By Ramu Pandey · Published: March 21, 2026 · 6 min read</p>
+<p class="muted">By Ramu Pandey Â· Published: March 21, 2026 Â· 6 min read</p>
 
 <section>
   <p>
@@ -144,26 +161,26 @@ Chemistry Reaction Maps for Faster Recall | CEE MCQ
   </p>
 
   <div class="formula-box">
-    Alkane  →(halogenation, UV)→  Haloalkane<br>
-    Haloalkane  →(NaOH/H₂O, hydrolysis)→  Alcohol<br>
-    Alcohol  →(PCC, mild oxidation)→  Aldehyde<br>
-    Aldehyde  →(KMnO₄, strong oxidation)→  Carboxylic Acid<br>
-    Carboxylic Acid  →(alcohol + H⁺, esterification)→  Ester<br>
-    Alkene  →(H₂O + H⁺, Markovnikov)→  Alcohol
+    Alkane  â†’(halogenation, UV)â†’  Haloalkane<br>
+    Haloalkane  â†’(NaOH/Hâ‚‚O, hydrolysis)â†’  Alcohol<br>
+    Alcohol  â†’(PCC, mild oxidation)â†’  Aldehyde<br>
+    Aldehyde  â†’(KMnOâ‚„, strong oxidation)â†’  Carboxylic Acid<br>
+    Carboxylic Acid  â†’(alcohol + Hâº, esterification)â†’  Ester<br>
+    Alkene  â†’(Hâ‚‚O + Hâº, Markovnikov)â†’  Alcohol
   </div>
 
   <p>
-    When I first drew this, I immediately saw why I was mixing up PCC and KMnO₄ ,I had been thinking of them as "oxidizing agents" rather than as "mild" vs "strong" oxidation with different products. The map made that distinction visible.
+    When I first drew this, I immediately saw why I was mixing up PCC and KMnOâ‚„ ,I had been thinking of them as "oxidizing agents" rather than as "mild" vs "strong" oxidation with different products. The map made that distinction visible.
   </p>
 </section>
 
 <section>
   <h2>The two pages I kept</h2>
   <p>
-    <strong>Page 1 → The reaction map:</strong> Full conversion chain for all main functional groups. I redrew this from memory every two days. If I could not reproduce an arrow, I had identified a gap.
+    <strong>Page 1 â†’ The reaction map:</strong> Full conversion chain for all main functional groups. I redrew this from memory every two days. If I could not reproduce an arrow, I had identified a gap.
   </p>
   <p>
-    <strong>Page 2 → The exception sheet:</strong> Reactions that break the general pattern. Markovnikov exceptions with peroxides. The fact that secondary alcohols oxidize to ketones, not aldehydes. The conditions where dehydration gives an alkene versus an ether. CEE regularly tests these edge cases because they are exactly the things students get wrong.
+    <strong>Page 2 â†’ The exception sheet:</strong> Reactions that break the general pattern. Markovnikov exceptions with peroxides. The fact that secondary alcohols oxidize to ketones, not aldehydes. The conditions where dehydration gives an alkene versus an ether. CEE regularly tests these edge cases because they are exactly the things students get wrong.
   </p>
   <p>
     I reviewed both pages before every Chemistry test. Together they took about 8 minutes and covered the most likely traps.
@@ -182,12 +199,12 @@ Chemistry Reaction Maps for Faster Recall | CEE MCQ
       <tr><th>Functional Group Family</th><th>Key Conversions to Include</th></tr>
     </thead>
     <tbody>
-      <tr><td>Alcohols</td><td>Oxidation (mild → aldehyde/ketone, strong → acid), dehydration → alkene</td></tr>
-      <tr><td>Aldehydes & Ketones</td><td>Tollens vs Fehling distinction, reduction → alcohol, oxidation of aldehyde only</td></tr>
-      <tr><td>Carboxylic Acids</td><td>Esterification, reduction → alcohol, salt formation</td></tr>
-      <tr><td>Alkenes</td><td>Addition (H₂, HX, H₂O, X₂), Markovnikov rule, ozonolysis products</td></tr>
+      <tr><td>Alcohols</td><td>Oxidation (mild â†’ aldehyde/ketone, strong â†’ acid), dehydration â†’ alkene</td></tr>
+      <tr><td>Aldehydes & Ketones</td><td>Tollens vs Fehling distinction, reduction â†’ alcohol, oxidation of aldehyde only</td></tr>
+      <tr><td>Carboxylic Acids</td><td>Esterification, reduction â†’ alcohol, salt formation</td></tr>
+      <tr><td>Alkenes</td><td>Addition (Hâ‚‚, HX, Hâ‚‚O, Xâ‚‚), Markovnikov rule, ozonolysis products</td></tr>
       <tr><td>Haloalkanes</td><td>Hydrolysis, elimination, nucleophilic substitution</td></tr>
-      <tr><td>Amines</td><td>Classification, basicity trend, reaction with HNO₂</td></tr>
+      <tr><td>Amines</td><td>Classification, basicity trend, reaction with HNOâ‚‚</td></tr>
     </tbody>
   </table>
 </section>
@@ -195,7 +212,7 @@ Chemistry Reaction Maps for Faster Recall | CEE MCQ
 <section>
   <h2>This is faster than re-reading chapters</h2>
   <p>
-    I used to spend 2–3 hours re-reading the Organic Chemistry chapters during revision. After building the map, I could do a complete, active revision of all major reactions in about 20 minutes and the recall was better because it was active, not passive.
+    I used to spend 2â€“3 hours re-reading the Organic Chemistry chapters during revision. After building the map, I could do a complete, active revision of all major reactions in about 20 minutes and the recall was better because it was active, not passive.
   </p>
   <p>
     If you have not built a reaction map yet, spend one evening doing it. Draw it badly the first time, it does not matter. The act of constructing the map is itself a revision session, and what you produce is a revision tool you will use every week until the exam.
@@ -210,7 +227,16 @@ Chemistry Reaction Maps for Faster Recall | CEE MCQ
 {% block footer %}
 <footer class="full-test-footer">
   <div class="footer-container">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/disclaimer/">Disclaimer</a>
+        <a href="/blog/">Blog</a>
+    </nav>
     <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
   </div>
 </footer>
 {% endblock footer %}
+

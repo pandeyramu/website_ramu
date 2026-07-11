@@ -12,7 +12,7 @@
 
 {% block extra_head %}
 <meta name="google-site-verification" content="UNpQRqXhbK41aS0c7qMpKu5zwnJ-GTT7sYdzb77BGGQ">
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}?v=2">
 <style>
     header {
         background: linear-gradient(135deg, #0c2f4a, #184f79);
@@ -196,6 +196,33 @@
     </div>
 </section>
 
+<section class="features">
+    <h2>How CEE MCQ Helps You Prepare</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>Chapter-wise Practice</h3>
+            <p>Study one topic at a time with focused MCQ tests organised by subject and subchapter. Each test includes a timer and full solutions after submission.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Full-Length Mock Tests</h3>
+            <p>Simulate the real CEE with a 180-question mock test covering all 4 subjects. The timer and negative marking mirror the actual exam conditions.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Detailed Solutions</h3>
+            <p>Every question includes a step-by-step solution so you can understand the reasoning behind the correct answer and learn from your mistakes.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Track Your Progress</h3>
+            <p>Review your score, accuracy, and time per question after each test. View your last 5 attempts to monitor improvement over time.</p>
+        </div>
+    </div>
+</section>
+
+<section class="prep-tips">
+    <h2>Tips for CEE Preparation</h2>
+    <p>Start your preparation early and focus on high-weightage chapters like Modern Physics (12 questions), Physical Chemistry (17 questions), Organic Chemistry (17 questions), and Human Biology (15 questions). Regular practice with topic-wise MCQs helps build both speed and accuracy. Use the full-length mock test to simulate exam pressure and improve time management. Review solutions carefully after each test to strengthen weak areas.</p>
+</section>
+
 <section class="subjects">
     <h2>Free CEE Chapter-wise MCQ Questions</h2>
     <p>Select a subject and start practicing!</p>
@@ -208,7 +235,7 @@
         {% endfor %}
     </div>
     <div class="full-test-container">
-        <a href="{% url 'full_test' %}" class="btn btn-full-test">Start Full MCQ Test</a>
+        <a href="{% url 'full_test' %}" class="btn btn-full-test">Start Full Test</a>
     </div>
 </section>
 {% endblock %}

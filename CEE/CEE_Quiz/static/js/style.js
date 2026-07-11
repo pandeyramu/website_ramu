@@ -737,10 +737,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUserName = buildUserStorageKey(rawName);
     }
 
-    if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
-        window.MathJax.typesetPromise();
-    }
-
     if (quizForm && quizForm.classList.contains('submitted') && timerDisplay) {
         timerDisplay.remove();
     }

@@ -57,6 +57,49 @@ CEE MCQ, {{ chapter.name }}, Subchapters, Practice Questions
     border-color: #1458a6;
 }
 
+.subject-intro {
+    background: #f0f7ff;
+    border-left: 4px solid #1458a6;
+    padding: .8rem 1.2rem;
+    border-radius: 8px;
+    margin: .75rem auto;
+    font-size: .9rem;
+    line-height: 1.6;
+    width: 90%;
+    max-width: 650px;
+    text-align: left;
+}
+
+.sol-set-links {
+    margin: 1.5rem 0;
+}
+.sol-set-links h2 {
+    font-size: 1.15rem;
+    margin-bottom: .2rem;
+}
+.sol-set-links h3 {
+    font-size: 1rem;
+    margin: .5rem 0 .3rem;
+}
+.sol-set-links a {
+    display: inline-block;
+    margin-right: .5rem;
+    margin-bottom: .4rem;
+    padding: .3rem .7rem;
+    border-radius: 999px;
+    background: #eef5ff;
+    color: #1458a6;
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: 600;
+    border: 1px solid #d8e2ef;
+    transition: background .2s;
+}
+.sol-set-links a:hover {
+    background: #1458a6;
+    color: #fff;
+}
+
 /* Optional: thin custom scrollbar for browsers that support it */
 .seo-link-row::-webkit-scrollbar {
     height: 4px;
@@ -118,6 +161,13 @@ Home
 <main class="container">
 
 
+{% if chapter.intro_text %}
+<div class="subject-intro">
+    {{ chapter.intro_text|linebreaks }}
+</div>
+{% endif %}
+
+
 <section class="subchapter-list">
 
 
@@ -164,14 +214,23 @@ No subchapters available yet. Check back soon!
 </p>
 
 </div>
-
-
 {% endif %}
+
 
 
 
 </section>
 
+
+{% if solution_sets %}
+<div class="sol-set-links">
+<h2>Solved MCQ Sets for {{ chapter.name }}</h2>
+<p class="muted">Browse solved question sets with answers and explanations — no login required.</p>
+{% for s in solution_sets %}
+<a href="{% url 'solution_set' chapter.slug s.set_number %}">Set {{ s.set_number }}{% if s.title %}: {{ s.title }}{% endif %}</a>
+{% endfor %}
+</div>
+{% endif %}
 
 
 

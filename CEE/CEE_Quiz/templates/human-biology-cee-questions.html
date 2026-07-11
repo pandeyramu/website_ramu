@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% load static %}
 
 {% block title %}
@@ -86,6 +86,23 @@ Human Biology for CEE: What to Focus On and Why | CEE MCQ
 }
 .footer-container { max-width: 880px; margin: auto; }
 .footer-copy { margin: .85rem 0 0; font-size: .9rem; }
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 0.7rem;
+}
+.footer-nav a {
+    color: rgba(255,255,255,.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color .2s;
+}
+.footer-nav a:hover {
+    color: #ffd94d;
+}
 </style>
 {% endblock extra_head %}
 
@@ -116,7 +133,7 @@ Human Biology for CEE: What to Focus On and Why | CEE MCQ
   Human Biology is the single largest unit in Zoology, 15 marks from one chapter cluster. If you study it right, it becomes one of your most reliable scoring areas. If you study it wrong, you lose easy marks to terminology confusion and diagram mistakes.
 </p>
 
-<p class="muted">By Ramu Pandey · Published: March 21, 2026 · 8 min read</p>
+<p class="muted">By Ramu Pandey Â· Published: March 21, 2026 Â· 8 min read</p>
 
 <section>
   <p>
@@ -163,7 +180,7 @@ Human Biology for CEE: What to Focus On and Why | CEE MCQ
 
   <h3>Nervous System</h3>
   <p>
-    Neuron structure and the reflex arc are reliable marks. Know the difference between sensory, motor, and interneurons. For the reflex arc, know the sequence: receptor → sensory neuron → spinal cord → motor neuron → effector. Simple but easy to reverse under pressure.
+    Neuron structure and the reflex arc are reliable marks. Know the difference between sensory, motor, and interneurons. For the reflex arc, know the sequence: receptor â†’ sensory neuron â†’ spinal cord â†’ motor neuron â†’ effector. Simple but easy to reverse under pressure.
   </p>
 
   <h3>Digestive System</h3>
@@ -201,7 +218,16 @@ Human Biology for CEE: What to Focus On and Why | CEE MCQ
 {% block footer %}
 <footer class="full-test-footer">
   <div class="footer-container">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/disclaimer/">Disclaimer</a>
+        <a href="/blog/">Blog</a>
+    </nav>
     <p class="footer-copy">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
   </div>
 </footer>
 {% endblock footer %}
+

@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load static %}
+{% load quiz_extra %}
+
+{% block title %}{{ page_seo.meta_title|default:page_default_title }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:page_default_description }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:page_default_keywords }}{% endblock %}
+
+{% block extra_head %}
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)'], ['$', '$']],
+            displayMath: [['\\[', '\\]'], ['$$', '$$']],
+            processEscapes: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+    .solution-set-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .solution-set-header h1 {
+        margin-bottom: .3rem;
+    }
+    .solution-set-intro {
+        background: #f0f7ff;
+        border-left: 4px solid #1458a6;
+        padding: 1rem 1.3rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    .solved-block {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.3rem 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 8px rgba(15, 58, 91, 0.05);
+    }
+    .solved-block .question-text {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: .8rem;
+    }
+    .solved-block .options {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 .8rem 0;
+    }
+    .solved-block .options li {
+        padding: .4rem .6rem;
+        border-radius: 6px;
+        margin-bottom: .3rem;
+        display: flex;
+        align-items: baseline;
+        gap: .5rem;
+    }
+    .solved-block .options li.correct {
+        background: #ecfdf5;
+        color: #065f46;
+        font-weight: 600;
+    }
+    .solved-block .options li .opt-label {
+        font-weight: 700;
+        min-width: 1.5rem;
+    }
+    .solved-block .answer-badge {
+        display: inline-block;
+        background: #059669;
+        color: #fff;
+        padding: .15rem .6rem;
+        border-radius: 999px;
+        font-size: .8rem;
+        font-weight: 600;
+        margin-left: .3rem;
+    }
+    .solved-block .solution-box {
+        border-top: 1px solid #e5e7eb;
+        margin-top: .6rem;
+        padding-top: .8rem;
+    }
+    .solved-block .solution-title {
+        font-weight: 700;
+        color: #1458a6;
+        margin: 0 0 .3rem 0;
+    }
+    .solved-block .solution-text {
+        margin: 0;
+        line-height: 1.7;
+    }
+    .sol-set-nav {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: .6rem;
+        margin-top: 1.5rem;
+    }
+    .sol-set-nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .55rem 1rem;
+        border-radius: 999px;
+        border: 1px solid #d8e2ef;
+        background: #fff;
+        color: #1458a6;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: .92rem;
+        transition: background .2s ease, border-color .2s ease;
+    }
+    .sol-set-nav a:hover {
+        background: #eef5ff;
+        border-color: #1458a6;
+    }
+    .sol-set-nav a.disabled {
+        opacity: .4;
+        pointer-events: none;
+    }
+    @media (max-width: 600px) {
+        .solved-block { padding: 1rem; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="solution-set-header">
+    <h1>{{ chapter.name }} – Solved MCQs (Set {{ sol_set.set_number }})</h1>
+    <p class="muted">{{ sol_set.title }}</p>
+</div>
+
+{% if sol_set.intro_text %}
+<div class="solution-set-intro">
+    {{ sol_set.intro_text|linebreaks }}
+</div>
+{% endif %}
+
+{% if questions %}
+    {% for q in questions %}
+    <article class="solved-block">
+        <p class="question-text">{{ forloop.counter }}. {{ q.question_text }}</p>
+        <ul class="options">
+            {% for opt in "ABCD" %}
+            {% with option_text=q|get_option_text:opt %}
+            <li{% if opt == q.correct_option %} class="correct"{% endif %}>
+                <span class="opt-label">{{ opt }}.</span>
+                <span>{{ option_text }}</span>
+                {% if opt == q.correct_option %}
+                <span class="answer-badge">Correct Answer</span>
+                {% endif %}
+            </li>
+            {% endwith %}
+            {% endfor %}
+        </ul>
+        <div class="solution-box">
+            <p class="solution-title">Solution:</p>
+            {% if q.solution %}
+            <p class="solution-text">{{ q.solution|linebreaksbr }}</p>
+            {% else %}
+            <p class="solution-text muted">No solution available for this question.</p>
+            {% endif %}
+        </div>
+    </article>
+    {% endfor %}
+{% else %}
+    <p class="muted">No questions in this set yet.</p>
+{% endif %}
+
+<nav class="sol-set-nav">
+    {% if previous_set %}
+    <a href="{% url 'solution_set' chapter.slug previous_set.set_number %}">&larr; Set {{ previous_set.set_number }}</a>
+    {% else %}
+    <span class="disabled">&larr; Previous</span>
+    {% endif %}
+
+    <a href="{% url 'chapters' chapter.subject.slug %}">Back to {{ chapter.subject.name }}</a>
+
+    {% if next_set %}
+    <a href="{% url 'solution_set' chapter.slug next_set.set_number %}">Set {{ next_set.set_number }} &rarr;</a>
+    {% else %}
+    <span class="disabled">Next &rarr;</span>
+    {% endif %}
+</nav>
+{% endblock %}

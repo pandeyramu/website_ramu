@@ -144,8 +144,7 @@ header {
 .table-wrapper,
 .config-table,
 .subjects,
-.button-group,
-.footer-grid {
+.button-group {
     min-width: 0;
 }
 .config-table {
@@ -348,7 +347,7 @@ header {
 
 .subjects h2 {
     font-size: 28px;
-    color: #FFD700;
+    color: #0073ff;
     margin: 0 0 15px 0;
 }
 
@@ -357,7 +356,7 @@ header {
 }
 
 .subjects p {
-    color: #555;
+    color: #3b76ff;
     font-size: 16px;
     margin: 15px 0;
 }
@@ -429,6 +428,76 @@ header {
     transform: translateY(-4px);
 }
 
+/* Features section */
+.features {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 26px;
+    color: #1a237e;
+    margin-bottom: 30px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.feature-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #1458a6;
+    border-radius: 10px;
+    padding: 24px 20px;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.feature-card h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+    color: #1a237e;
+}
+
+.feature-card p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Prep tips section */
+.prep-tips {
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.prep-tips h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    color: #1a237e;
+}
+
+.prep-tips p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #333;
+}
+
 /* Responsive buttons for smaller screens */
 @media (max-width: 768px) {
     .button-group {
@@ -445,126 +514,6 @@ header {
     }
 }
 
-/* ==============================
-   FOOTER
-   ============================== */
-
-#site-footer {
-    background: #001a4d;
-    color: #fff;
-    padding: 40px 15px;
-    margin-top: 60px;
-}
-
-#site-footer .footer-container {
-    width: 90%;
-    max-width: 980px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-#site-footer h2 {
-    margin-bottom: 8px;
-    font-size: 28px;
-    color: #FFD700;
-}
-
-#site-footer h3 {
-    margin: 0 0 14px;
-    font-size: 20px;
-    color: #FFD700;
-}
-
-#site-footer p {
-    margin: 0 0 16px;
-    font-size: 16px;
-    color: #b0bec5;
-    line-height: 1.5;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(280px, 1fr));
-    gap: 18px;
-    margin-top: 22px;
-}
-
-.footer-section {
-    margin: 0;
-    padding: 20px;
-    border-radius: 4px;
-    text-align: left;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.02);
-}
-
-.footer-links-section {
-    background-color: transparent;
-}
-
-.footer-links {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-top: 6px;
-}
-
-.footer-links a {
-    padding: 10px 12px;
-    background: transparent;
-    color: #b0bec5;
-    text-decoration: none;
-    border-radius: 3px;
-    transition: color 0.2s ease, background-color 0.2s ease;
-    font-weight: 500;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-links a:last-child {
-    border-bottom: none;
-}
-
-.footer-links a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #FFD700;
-}
-
-.footer-nav-section {
-    background-color: transparent;
-}
-
-.footer-nav {
-    display: grid;
-    gap: 10px;
-    margin-top: 6px;
-}
-
-.footer-nav a {
-    display: block;
-    padding: 10px 12px;
-    border-radius: 3px;
-    background: transparent;
-    color: #b0bec5;
-    text-decoration: none;
-    transition: color 0.2s ease, background-color 0.2s ease;
-    font-weight: 500;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-nav a:last-child {
-    border-bottom: none;
-}
-
-.footer-nav a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #FFD700;
-}
-
-#site-footer .copyright {
-    margin-top: 22px;
-    font-size: 14px;
-    color: #b7c0ff;
-}
 
 img, video, iframe, table {
     max-width: 100%;
@@ -629,10 +578,6 @@ img, video, iframe, table {
         padding: 12px 20px;
         font-size: 14px;
         min-width: 120px;
-    }
-
-    .footer-grid {
-        grid-template-columns: 1fr;
     }
 }
 
@@ -729,9 +674,5 @@ img, video, iframe, table {
 
     #site-footer {
         padding: 30px 15px;
-    }
-
-    .footer-grid {
-        margin-top: 15px;
     }
 }

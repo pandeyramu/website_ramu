@@ -23,15 +23,7 @@ from CEE_Quiz import views
 from django.views.static import serve
 from django.conf import settings
 from django.contrib.sitemaps.views import sitemap
-from CEE_Quiz.sitemaps import StaticViewSitemap, SubjectSitemap, BlogSitemap, ChapterSitemap, SubChapterSitemap
-
-sitemaps = {
-    'static': StaticViewSitemap,
-    'subjects': SubjectSitemap,
-    'chapters': ChapterSitemap,
-    'subchapters': SubChapterSitemap,
-    'blog': BlogSitemap,
-}
+from CEE_Quiz.sitemaps import sitemaps
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -48,6 +40,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     # Slug-based SEO-friendly URLs
     path('subject/<slug:slug>/', views.chapters, name='chapters'),
+    path('chapter/<slug:slug>/solved-set/<int:set_number>/', views.solution_set, name='solution_set'),
     path('chapter/<slug:slug>/', views.quiz, name='quiz'),
     path('chapter/<slug:slug>/subchapters/', views.subchapters, name='subchapters'),
     path('mcq/<slug:slug>/', views.subchapter_quiz, name='subchapter_quiz'),
