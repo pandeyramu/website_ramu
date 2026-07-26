@@ -310,15 +310,18 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
 
     {% if not quiz_started and score is None %}
 
-        {% if sub_chapter and sub_chapter.intro_text %}
-        <div class="page-intro">
-            {{ sub_chapter.intro_text|linebreaks }}
+    {% if chapter.intro_text %}
+    <section class="chapter-topics">
+        <h2>{% if sub_chapter %}About {{ sub_chapter.name }}{% else %}What This Chapter Covers{% endif %}</h2>
+        <div class="topic-content">
+            {% if sub_chapter and sub_chapter.intro_text %}
+                {{ sub_chapter.intro_text|linebreaks }}
+            {% else %}
+                {{ chapter.intro_text|linebreaks }}
+            {% endif %}
         </div>
-        {% elif chapter.intro_text %}
-        <div class="page-intro">
-            {{ chapter.intro_text|linebreaks }}
-        </div>
-        {% endif %}
+    </section>
+    {% endif %}
 
     <form method="get" class="start-form">
 

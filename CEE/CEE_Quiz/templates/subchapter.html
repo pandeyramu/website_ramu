@@ -197,6 +197,7 @@ Home
 {{ forloop.counter }}
 </div>
 
+<div class="card-body">
 <a href="{% url 'subchapter_quiz' sub.slug %}" class="subchapter-link">
 <span class="subchapter-name">
 {{ sub.name }}
@@ -208,6 +209,7 @@ Home
 {% elif sub.intro_text %}
 <p class="subchapter-brief">{{ sub.intro_text|truncatewords:20 }}</p>
 {% endif %}
+</div>
 
 <a href="{% url 'subchapter_quiz' sub.slug %}" class="card-overlay-link" aria-label="{{ sub.name }}"></a>
 

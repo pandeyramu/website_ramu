@@ -97,7 +97,6 @@
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            flex-wrap: wrap;
         }
 
         .brand {
@@ -109,6 +108,7 @@
             font-weight: 800;
             letter-spacing: 0.02em;
             font-size: 1.2rem;
+            white-space: nowrap;
         }
 
 
@@ -120,8 +120,10 @@
 
         .nav-links {
             display: flex;
-            gap: 0.9rem;
-            flex-wrap: wrap;
+            flex: 1;
+            min-width: 0;
+            gap: 0.5rem;
+            flex-wrap: nowrap;
             justify-content: flex-end;
         }
 
@@ -132,11 +134,12 @@
             justify-content: center;
             color: rgba(255, 255, 255, 0.98);
             text-decoration: none;
-            font-size: 0.95rem;
-            padding: 0.48rem 0.9rem;
+            font-size: .85rem;
+            padding: 0.42rem 0.75rem;
             border-radius: 999px;
             border: 1px solid rgba(255, 255, 255, 0.22);
             background: rgba(255, 255, 255, 0.08);
+            white-space: nowrap;
             transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
         }
 
@@ -282,6 +285,25 @@
 
             .page-card {
                 padding: 1.2rem;
+            }
+
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.6rem;
+            }
+
+            .nav-links {
+                width: 100%;
+                flex: none;
+                gap: 0.4rem;
+                flex-wrap: wrap;
+            }
+
+            .nav-links a,
+            .nav-links .current-page {
+                font-size: 0.82rem;
+                padding: 0.35rem 0.6rem;
             }
         }
 
