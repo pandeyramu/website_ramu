@@ -185,6 +185,7 @@ STORAGES = {
 
 # Avoid 500 errors if a static manifest entry is missing after deployment.
 WHITENOISE_MANIFEST_STRICT = False
+WHITENOISE_MAX_AGE = 31536000  # 1 year - WhiteNoise handles cache-busting via hashed filenames
 
 # Email configuration for question review reports
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')

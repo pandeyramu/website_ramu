@@ -38,7 +38,7 @@
 
 
 
-<!-- MathJax -->
+<!-- MathJax config (deferred load) -->
 <script>
 window.MathJax = {
     tex: {
@@ -47,19 +47,33 @@ window.MathJax = {
         processEscapes: true
     },
     options: {
-        skipHtmlTags: [
-            'script',
-            'noscript',
-            'style',
-            'textarea',
-            'pre',
-            'code'
-        ]
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+        typeset: false
     }
 };
 </script>
 
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+    // Only load MathJax when quiz is active or results are shown
+    (function() {
+        var qForm = document.getElementById('full-test-form');
+        var hasActiveQuiz = qForm && !qForm.classList.contains('submitted') && qForm.style.display !== 'none';
+        var hasResult = document.querySelector('.result-layout') !== null;
+        if (hasActiveQuiz || hasResult) {
+            var s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+            s.defer = true;
+            s.onload = function() {
+                if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+                    window.MathJax.typesetPromise();
+                }
+            };
+            document.head.appendChild(s);
+        }
+    })();
+</script>
 
 
 
