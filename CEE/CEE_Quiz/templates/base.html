@@ -306,7 +306,6 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        // Default all storage to denied until the user gives consent.
         gtag('consent', 'default', {
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
@@ -314,23 +313,31 @@
             'analytics_storage': 'denied'
         });
 
+        var _gaLoaded = false;
+        var _adsLoaded = false;
+
         function enableGA(){
+            if (_gaLoaded) return;
+            _gaLoaded = true;
             var s = document.createElement('script');
             s.async = true;
             s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XMLQP5RBKJ';
             document.head.appendChild(s);
             gtag('js', new Date());
-            gtag('config', 'G-XMLQP5RBKJ');
+            gtag('config', 'G-XMLQP5RBKJ', { 'send_page_view': false });
             gtag('consent', 'update', {
                 'analytics_storage': 'granted',
                 'ad_storage': 'granted',
                 'ad_user_data': 'granted',
                 'ad_personalization': 'granted'
             });
+            // Send page_view after page has fully rendered
+            setTimeout(function(){ gtag('event', 'page_view'); }, 1500);
         }
 
         function enableAds(){
-            if (document.getElementById('adsbygoogle-script')) { return; }
+            if (_adsLoaded) return;
+            _adsLoaded = true;
             var s = document.createElement('script');
             s.async = true;
             s.id = 'adsbygoogle-script';
@@ -340,8 +347,10 @@
         }
 
         function activateConsent(){
+            // GA loads immediately (lightweight, ~45KB)
             enableGA();
-            enableAds();
+            // AdSense deferred 3s so page renders first (saves ~300KB + ad requests)
+            setTimeout(enableAds, 3000);
         }
 
         function getCookie(name){
