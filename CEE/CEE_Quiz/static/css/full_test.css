@@ -990,8 +990,17 @@ table {
     color: #b7c0ff;
 }
 
-body.review-modal-open .full-test-footer {
-    display: none;
+body.review-modal-open .full-test-footer,
+body.review-modal-open footer.site-footer {
+    display: none !important;
+}
+
+body.review-modal-open #cookie-banner {
+    display: none !important;
+}
+
+body.review-modal-open {
+    overflow: hidden;
 }
 .reported-btn {
     background: #8e44ad;

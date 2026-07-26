@@ -34,6 +34,7 @@ CEE preparation tips, CEE Nepal blog, CEE study guide, Biology Chemistry Physics
         --accent-soft: rgba(20, 88, 166, 0.08);
         --accent-border: rgba(20, 88, 166, 0.22);
 
+        position: relative;
         background: linear-gradient(180deg,
                 #ffffff 0%,
                 var(--accent-soft) 100%);
@@ -43,6 +44,12 @@ CEE preparation tips, CEE Nepal blog, CEE study guide, Biology Chemistry Physics
         padding: 1.05rem;
         box-shadow: 0 10px 24px rgba(15, 58, 91, .08);
         transition: .2s;
+    }
+
+    .blog-card .card-overlay-link {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
     }
 
     .blog-card:hover {
@@ -134,21 +141,19 @@ CEE preparation tips, CEE Nepal blog, CEE study guide, Biology Chemistry Physics
                 {{ post.tag }}
             </span>
 
-
             <h2>
                 {{ post.title }}
             </h2>
-
 
             <p>
                 {{ post.excerpt }}
             </p>
 
-
             <a href="{% url 'blog_post' post.slug %}">
                 Read more →
             </a>
 
+            <a href="{% url 'blog_post' post.slug %}" class="card-overlay-link" aria-label="{{ post.title }}"></a>
 
         </article>
 

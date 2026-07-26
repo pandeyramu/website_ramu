@@ -91,6 +91,95 @@
     max-width: 700px;
     text-align: left;
 }
+
+.chapter-topics {
+    max-width: 700px;
+    margin: 1.5rem auto;
+    text-align: left;
+}
+.chapter-topics h2 {
+    font-size: 1.15rem;
+    color: #1458a6;
+    margin-bottom: .5rem;
+}
+.topic-content {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.3rem;
+    font-size: .93rem;
+    line-height: 1.7;
+}
+
+.preview-questions {
+    max-width: 700px;
+    margin: 2rem auto;
+    text-align: left;
+}
+.preview-questions h2 {
+    font-size: 1.2rem;
+    color: #1458a6;
+    margin-bottom: .3rem;
+}
+.preview-subtitle {
+    color: #64748b;
+    font-size: .9rem;
+    margin-bottom: 1.2rem;
+}
+.preview-question-block {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+}
+.preview-q-number {
+    font-weight: 700;
+    color: #1458a6;
+    font-size: .85rem;
+    margin-bottom: .3rem;
+}
+.preview-q-text {
+    font-size: .95rem;
+    line-height: 1.6;
+    margin-bottom: .5rem;
+}
+.preview-options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 .5rem;
+}
+.preview-options li {
+    padding: .25rem 0;
+    font-size: .9rem;
+    color: #334155;
+}
+.preview-solution {
+    background: #f0fdf4;
+    border-left: 3px solid #22c55e;
+    padding: .6rem .9rem;
+    border-radius: 6px;
+    margin-top: .5rem;
+}
+.solution-label {
+    font-weight: 700;
+    color: #16a34a;
+    font-size: .88rem;
+    margin-bottom: .2rem;
+}
+.solution-text {
+    font-size: .88rem;
+    line-height: 1.6;
+    color: #334155;
+    margin: 0;
+}
+.preview-cta {
+    text-align: center;
+    font-size: .9rem;
+    color: #64748b;
+    margin-top: 1rem;
+    font-style: italic;
+}
 </style>
 
 
@@ -113,12 +202,13 @@
 
 
 <script>
-    // Only load MathJax when quiz is active (questions are displayed)
+    // Only load MathJax when quiz is active or preview questions exist
     (function() {
         var qForm = document.getElementById('quiz-form');
         var hasActiveQuiz = qForm && !qForm.classList.contains('submitted') && qForm.style.display !== 'none';
         var hasResult = document.querySelector('.result-layout') !== null;
-        if (hasActiveQuiz || hasResult) {
+        var hasPreview = document.querySelector('.preview-questions') !== null;
+        if (hasActiveQuiz || hasResult || hasPreview) {
             var s = document.createElement('script');
             s.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
             s.defer = true;
@@ -261,6 +351,48 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
 
     <div id="timer" style="display:none;"></div>
 
+
+    {% if chapter.intro_text %}
+    <section class="chapter-topics">
+        <h2>{% if sub_chapter %}About {{ sub_chapter.name }}{% else %}What This Chapter Covers{% endif %}</h2>
+        <div class="topic-content">
+            {% if sub_chapter and sub_chapter.intro_text %}
+                {{ sub_chapter.intro_text|linebreaks }}
+            {% else %}
+                {{ chapter.intro_text|linebreaks }}
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
+
+    {% if preview_questions %}
+    <section class="preview-questions">
+        <h2>Sample MCQ Questions</h2>
+        <p class="preview-subtitle">Here are a few practice questions to help you get started. Take the full test to see your score and detailed solutions for every question.</p>
+
+        {% for q in preview_questions %}
+        <article class="preview-question-block">
+            <p class="preview-q-number">Question {{ forloop.counter }}</p>
+            <p class="preview-q-text">{{ q.question_text }}</p>
+            <ul class="preview-options">
+                {% if q.option_a %}<li><strong>A.</strong> {{ q.option_a }}</li>{% endif %}
+                {% if q.option_b %}<li><strong>B.</strong> {{ q.option_b }}</li>{% endif %}
+                {% if q.option_c %}<li><strong>C.</strong> {{ q.option_c }}</li>{% endif %}
+                {% if q.option_d %}<li><strong>D.</strong> {{ q.option_d }}</li>{% endif %}
+            </ul>
+            {% if q.solution %}
+            <div class="preview-solution">
+                <p class="solution-label">Answer: {{ q.correct_option }}</p>
+                <p class="solution-text">{{ q.solution }}</p>
+            </div>
+            {% endif %}
+        </article>
+        {% endfor %}
+
+        <p class="preview-cta">Ready to test yourself? Enter your name above and start the full MCQ test with detailed solutions for every question.</p>
+    </section>
+    {% endif %}
 
 
     {% elif questions %}

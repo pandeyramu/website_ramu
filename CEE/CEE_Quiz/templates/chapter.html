@@ -29,6 +29,7 @@ Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Geneti
 {% endblock %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
+<meta name="robots" content="noindex, follow">
 
 <style>
 
@@ -152,18 +153,16 @@ Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Geneti
 <article class="chapter-card botany-card">
 
 {% if chap.has_subchapters %}
-
 <a href="{% url 'subchapters' chap.slug %}" class="chapter-link">
 {{ chap.name }}
 </a>
-
 {% else %}
-
 <a href="{% url 'quiz' chap.slug %}" class="chapter-link">
 {{ chap.name }}
 </a>
-
 {% endif %}
+
+<a href="{% if chap.has_subchapters %}{% url 'subchapters' chap.slug %}{% else %}{% url 'quiz' chap.slug %}{% endif %}" class="card-overlay-link" aria-label="{{ chap.name }}"></a>
 
 </article>
 
@@ -194,21 +193,17 @@ Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Geneti
 
 <article class="chapter-card zoology-card">
 
-
 {% if chap.has_subchapters %}
-
 <a href="{% url 'subchapters' chap.slug %}" class="chapter-link">
 {{ chap.name }}
 </a>
-
 {% else %}
-
 <a href="{% url 'quiz' chap.slug %}" class="chapter-link">
 {{ chap.name }}
 </a>
-
 {% endif %}
 
+<a href="{% if chap.has_subchapters %}{% url 'subchapters' chap.slug %}{% else %}{% url 'quiz' chap.slug %}{% endif %}" class="card-overlay-link" aria-label="{{ chap.name }}"></a>
 
 </article>
 
@@ -233,18 +228,16 @@ Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Geneti
 <article class="chapter-card">
 
 {% if chap.has_subchapters %}
-
 <a href="{% url 'subchapters' chap.slug %}" class="chapter-link">
 {{ chap.name }}
 </a>
-
 {% else %}
-
 <a href="{% url 'quiz' chap.slug %}" class="chapter-link">
 {{ chap.name }}
 </a>
-
 {% endif %}
+
+<a href="{% if chap.has_subchapters %}{% url 'subchapters' chap.slug %}{% else %}{% url 'quiz' chap.slug %}{% endif %}" class="card-overlay-link" aria-label="{{ chap.name }}"></a>
 
 </article>
 

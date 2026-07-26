@@ -3,4 +3,4 @@ Allow: /
 Sitemap: https://pandeyramu.com.np/sitemap.xml
 
 Disallow: /admin/
-Disallow: /full-test/result/
+Disallow: /full-test/results/

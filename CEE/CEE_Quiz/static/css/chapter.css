@@ -139,6 +139,16 @@ table {
     background: #e3eaff;
 }
 
+.chapter-card {
+    position: relative;
+}
+
+.chapter-card .card-overlay-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
 /* Biology grouped sections */
 .chapter-group {
     width: 100%;

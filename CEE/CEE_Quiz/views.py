@@ -13,7 +13,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import Http404, HttpResponse, JsonResponse
 from django.views.decorators.cache import cache_page
-from django.views.decorators.csrf import csrf_exempt
 from django.db import connection, IntegrityError
 from django.db.utils import DatabaseError
 from django.core.mail import send_mail
@@ -93,7 +92,6 @@ def _crawl_hubs():
     return hubs
 
 
-@csrf_exempt
 def contact_submit(request):
     """Receive contact form POSTs and send email to site owner.
     Expects: name, email, message in POST body.
@@ -146,6 +144,14 @@ BLOG_POST_TEMPLATES = {
     'biology-diagram-revision-cee': 'biology-diagram-revision-cee.html',
     'chemistry-reaction-map-cee': 'chemistry-reaction-map-cee.html',
     'past-papers-smart-practice-cee': 'past-papers-smart-practice-cee.html',
+    'negative-marking-strategy-cee': 'negative-marking-strategy-cee.html',
+    'cee-study-schedule-that-works': 'cee-study-schedule-that-works.html',
+    'botany-key-topics-cee': 'botany-key-topics-cee.html',
+    'inorganic-chemistry-memorise-cee': 'inorganic-chemistry-memorise-cee.html',
+    'night-before-cee-preparation': 'night-before-cee-preparation.html',
+    'improving-cee-score-practical-guide': 'improving-cee-score-practical-guide.html',
+    'time-management-200-questions-cee': 'time-management-200-questions-cee.html',
+    'common-mistakes-cee-biology': 'common-mistakes-cee-biology.html',
 }
 
 BLOG_POST_ORDER = [
@@ -161,6 +167,14 @@ BLOG_POST_ORDER = [
     'biology-diagram-revision-cee',
     'chemistry-reaction-map-cee',
     'past-papers-smart-practice-cee',
+    'negative-marking-strategy-cee',
+    'cee-study-schedule-that-works',
+    'botany-key-topics-cee',
+    'inorganic-chemistry-memorise-cee',
+    'night-before-cee-preparation',
+    'improving-cee-score-practical-guide',
+    'time-management-200-questions-cee',
+    'common-mistakes-cee-biology',
 ]
 
 BLOG_POST_META = {
@@ -241,7 +255,55 @@ BLOG_POST_META = {
         'tag': 'Chemistry',
         'excerpt': 'Mastering Organic Chemistry for the CEE requires a strategic approach and consistent practice.',
         'accent': '#2c75bb', 'accent_soft': 'rgba(44, 117, 187, 0.08)', 'accent_border': 'rgba(44, 117, 187, 0.22)',
-    }
+    },
+    'negative-marking-strategy-cee': {
+        'title': 'CEE Negative Marking Strategy: When to Skip a Question',
+        'tag': 'Strategy',
+        'excerpt': 'Learn when to attempt, when to skip, and how 0.25 negative marking should shape your CEE exam strategy.',
+        'accent': '#c04b62', 'accent_soft': 'rgba(192, 75, 98, 0.08)', 'accent_border': 'rgba(192, 75, 98, 0.22)',
+    },
+    'cee-study-schedule-that-works': {
+        'title': 'How to Build a CEE Study Schedule That Actually Works',
+        'tag': 'Study Tips',
+        'excerpt': 'Most study schedules fail because they are too rigid. Build a flexible plan with buffer days and revision cycles.',
+        'accent': '#1458a6', 'accent_soft': 'rgba(20, 88, 166, 0.08)', 'accent_border': 'rgba(20, 88, 166, 0.22)',
+    },
+    'botany-key-topics-cee': {
+        'title': 'Botany for CEE: Key Topics You Cannot Skip',
+        'tag': 'Biology',
+        'excerpt': 'Botany carries 40 marks in CEE. Focus on Biodiversity, Genetics, and Plant Physiology to maximise your score.',
+        'accent': '#1f8a4c', 'accent_soft': 'rgba(31, 138, 76, 0.08)', 'accent_border': 'rgba(31, 138, 76, 0.22)',
+    },
+    'inorganic-chemistry-memorise-cee': {
+        'title': 'Chemistry Inorganic Section: What to Memorise for CEE',
+        'tag': 'Chemistry',
+        'excerpt': 'Inorganic Chemistry feels vast but only 10 marks are tested. Here is exactly what to memorise and what to skip.',
+        'accent': '#b36a00', 'accent_soft': 'rgba(179, 106, 0, 0.08)', 'accent_border': 'rgba(179, 106, 0, 0.24)',
+    },
+    'night-before-cee-preparation': {
+        'title': 'The Night Before CEE: What to Do and What to Avoid',
+        'tag': 'Strategy',
+        'excerpt': 'The night before CEE can make or break your performance. Here is the ideal routine based on my experience.',
+        'accent': '#c04b62', 'accent_soft': 'rgba(192, 75, 98, 0.08)', 'accent_border': 'rgba(192, 75, 98, 0.22)',
+    },
+    'improving-cee-score-practical-guide': {
+        'title': 'How I Improved My CEE Score: A Practical Guide',
+        'tag': 'Study Tips',
+        'excerpt': 'From my first mock test to the final CEE, here are the specific changes that moved my score from 110 to 155.',
+        'accent': '#1458a6', 'accent_soft': 'rgba(20, 88, 166, 0.08)', 'accent_border': 'rgba(20, 88, 166, 0.22)',
+    },
+    'time-management-200-questions-cee': {
+        'title': 'Time Management During CEE: 200 Questions in 3 Hours',
+        'tag': 'Strategy',
+        'excerpt': 'You get 54 seconds per question. Here is how to manage that time without sacrificing accuracy.',
+        'accent': '#c04b62', 'accent_soft': 'rgba(192, 75, 98, 0.08)', 'accent_border': 'rgba(192, 75, 98, 0.22)',
+    },
+    'common-mistakes-cee-biology': {
+        'title': 'Common Mistakes in CEE Biology and How to Avoid Them',
+        'tag': 'Biology',
+        'excerpt': 'The 5 most common Biology mistakes in CEE cost students easy marks. Learn to avoid them with specific examples.',
+        'accent': '#1f8a4c', 'accent_soft': 'rgba(31, 138, 76, 0.08)', 'accent_border': 'rgba(31, 138, 76, 0.22)',
+    },
 }
 
 def _pick_random_questions(base_queryset, limit=50):
@@ -532,7 +594,8 @@ def keepalive(request):
             cursor.execute("SELECT 1")
         return HttpResponse("OK", status=200)
     except Exception as e:
-        return HttpResponse(f"Error: {str(e)}", status=500)
+        logger.exception('keepalive probe failed')
+        return HttpResponse('Service Unavailable', status=503)
 def report_question(request):
     try:
         if request.method != 'POST':
@@ -632,11 +695,13 @@ def report_question(request):
     except json.JSONDecodeError:
         return JsonResponse({'ok': False, 'message': 'Invalid JSON payload.'}, status=400)
 
-    except requests.RequestException as exc:
-        return JsonResponse({'ok': False, 'message': f'Email API error: {exc}'}, status=500)
+    except requests.RequestException:
+        logger.exception('report_question email failed')
+        return JsonResponse({'ok': False, 'message': 'Failed to submit report. Please try again later.'}, status=500)
 
-    except Exception as exc:
-        return JsonResponse({'ok': False, 'message': f'Unexpected error: {exc}'}, status=500)
+    except Exception:
+        logger.exception('Unexpected error in report_question')
+        return JsonResponse({'ok': False, 'message': 'An unexpected error occurred. Please try again later.'}, status=500)
 @cache_page(0)  # Disable caching for development
 def home(request):
     subject_list = _ordered_subjects()
@@ -793,6 +858,7 @@ def subchapters(request, slug):
     chapter = get_object_or_404(Chapter, slug=slug)
     subchapter_list = SubChapter.objects.filter(chapter=chapter).order_by('order')
     solution_sets = SolutionSet.objects.filter(chapter=chapter)
+    request.page_slug = slug
     return render(request, 'subchapter.html', {
         'chapter': chapter,
         'subchapters': subchapter_list,
@@ -935,8 +1001,8 @@ def quiz(request, slug):
                     time_taken_seconds=time_taken_seconds,
                 )
             except Exception as db_error:
+                logger.error('DB save failed for chapter quiz', exc_info=True)
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
-                print(f"DB Error: {db_error}")
 
             history_entries = _get_test_history(user_name=user_name)
             user_answers = _stringify_answer_keys(user_answers)
@@ -971,13 +1037,15 @@ def quiz(request, slug):
             })
 
         except Exception as e:
-            messages.error(request, f'Error processing submission: {str(e)}. Please try again.')
+            logger.exception('Quiz submission failed for chapter %s', chapter.slug)
+            messages.error(request, 'An error occurred while processing your submission. Please try again.')
             return redirect('quiz', slug=chapter.slug)
 
     else:
         user_name = _normalize_exact_name(request.GET.get('name', ''))
         quiz_started = request.GET.get('start') == '1' and bool(user_name)
         questions = []
+        preview_questions = []
 
         if quiz_started:
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
@@ -986,10 +1054,14 @@ def quiz(request, slug):
             request.session[f'quiz_questions_{chapter_id}'] = [q.id for q in questions]
         else:
             request.session.pop(f'quiz_questions_{chapter_id}', None)
+            preview_questions = list(
+                Question.objects.filter(chapter=chapter, solution__gt='').order_by('id')[:5]
+            )
         
         return render(request, 'quiz.html', {
             'chapter': chapter,
             'questions': questions,
+            'preview_questions': preview_questions,
             'score': None,
             'user_answers': {},
             'quiz_started': quiz_started,
@@ -1103,8 +1175,8 @@ def subchapter_quiz(request, slug):
                     time_taken_seconds=time_taken_seconds,
                 )
             except Exception as db_error:
+                logger.error('DB save failed for subchapter quiz', exc_info=True)
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
-                print(f"DB Error: {db_error}")
 
             history_entries = _get_test_history(user_name=user_name)
             user_answers = _stringify_answer_keys(user_answers)
@@ -1142,13 +1214,15 @@ def subchapter_quiz(request, slug):
             })
 
         except Exception as e:
-            messages.error(request, f'Error processing submission: {str(e)}. Please try again.')
+            logger.exception('Subchapter quiz submission failed for %s', sub_chapter.slug)
+            messages.error(request, 'An error occurred while processing your submission. Please try again.')
             return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
     else:
         user_name = _normalize_exact_name(request.GET.get('name', ''))
         quiz_started = request.GET.get('start') == '1' and bool(user_name)
         questions = []
+        preview_questions = []
 
         if quiz_started:
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
@@ -1157,12 +1231,16 @@ def subchapter_quiz(request, slug):
             request.session[session_key] = [q.id for q in questions]
         else:
             request.session.pop(session_key, None)
+            preview_questions = list(
+                Question.objects.filter(sub_chapter=sub_chapter, solution__gt='').order_by('id')[:5]
+            )
 
         return render(request, 'quiz.html', {
             'chapter': chapter,
             'sub_chapter': sub_chapter,
             'subchapter': sub_chapter,
             'questions': questions,
+            'preview_questions': preview_questions,
             'score': None,
             'user_answers': {},
             'quiz_started': quiz_started,
@@ -1274,8 +1352,8 @@ def full_test(request):
                     time_taken_seconds=time_taken_seconds,
                 )
             except Exception as db_error:
+                logger.error('DB save failed for full test', exc_info=True)
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
-                print(f"DB Error: {db_error}")
 
             user_answers = _stringify_answer_keys(user_answers)
             request.session.pop('full_test_questions', None)
@@ -1299,7 +1377,7 @@ def full_test(request):
             
         except Exception as e:
             logger.exception('Full test submission failed for user %s', user_name)
-            messages.error(request, f'Error processing submission: {str(e)}. Please try again.')
+            messages.error(request, 'An error occurred while processing your submission. Please try again.')
             return redirect('full_test')
 
     else:
@@ -1382,7 +1460,8 @@ def full_test_results(request):
         id_to_question = {q.id: q for q in questions_qs}
         questions = [id_to_question[qid] for qid in question_ids if qid in id_to_question]
     except Exception as error:
-        messages.error(request, f'Unable to load test results: {error}')
+        logger.exception('Failed to load test results')
+        messages.error(request, 'Unable to load test results. Please retake the test.')
         return redirect('full_test')
 
     if not questions:
@@ -1451,6 +1530,10 @@ def disclaimer(request):
     return render(request, 'disclaimer.html')
 
 
+def terms_of_service(request):
+    return render(request, 'terms-of-service.html')
+
+
 def contact(request):
     if request.method == 'POST':
         name = (request.POST.get('name') or '').strip()
@@ -1486,6 +1569,7 @@ def ads_txt(request):
 
 
 def blog_index(request):
+    request.page_slug = 'blog'
     posts = []
     for slug in BLOG_POST_ORDER:
         meta = BLOG_POST_META[slug]
@@ -1501,6 +1585,7 @@ def blog_index(request):
     return render(request, 'blog.html', {'posts': posts})
 
 def blog_post(request, slug):
+    request.page_slug = f'blog/{slug}'
     template_name = BLOG_POST_TEMPLATES.get(slug)
     if not template_name:
         raise Http404('Blog post not found')

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page_seo.meta_title|default:"Terms of Service | CEE MCQ" }}{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:"Read the terms of service for CEE MCQ. Rules for using this free CEE exam preparation platform." }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, Terms of Service, terms and conditions, CEE preparation" }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"Terms of Service | CEE MCQ" }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Terms of service for CEE MCQ, a free CEE exam preparation platform." }}{% endblock %}
+{% block twitter_title %}Terms of Service | CEE MCQ{% endblock %}
+{% block twitter_description %}Terms of service for CEE MCQ, a free CEE exam preparation platform.{% endblock %}
+
+{% block content %}
+<article class="disclaimer-page">
+
+<h1>Terms of Service</h1>
+<p class="muted">Last updated: July 26, 2026</p>
+
+<p>Welcome to CEE MCQ. By accessing or using this website, you agree to the following terms. Please read them carefully before continuing to use the platform.</p>
+
+<h2>1. About CEE MCQ</h2>
+<p>CEE MCQ is a free educational platform built to help students prepare for Nepal's Common Entrance Examination (CEE). It provides chapter-wise MCQ practice, solved question sets, mock tests, and study guides. The platform is built and maintained by Ramu Pandey as an independent project and is not affiliated with the Medical Education Commission or any official body that conducts the CEE.</p>
+
+<h2>2. Use of the Platform</h2>
+<p>CEE MCQ is provided for personal, non-commercial educational use. You may use the platform to practise questions, take mock tests, review solutions, and read blog content for your own study purposes. You may not:</p>
+<ul>
+  <li>Copy, redistribute, or republish question content, solutions, or blog articles without permission</li>
+  <li>Use automated tools or scripts to extract questions, solutions, or other content from the platform</li>
+  <li>Attempt to access other users' quiz results, session data, or personal information</li>
+  <li>Use the platform for any purpose that violates applicable laws or regulations</li>
+</ul>
+
+<h2>3. User Content</h2>
+<p>When you enter your name to take a quiz or submit a contact form, you provide basic information. We do not collect email addresses, phone numbers, or other personal identifiers through the quiz feature. Contact form submissions are used only to respond to your message and are not shared with third parties.</p>
+
+<h2>4. Quiz Results and Scores</h2>
+<p>Quiz scores and results are stored temporarily to display your performance and history within a session. We do not guarantee the long-term storage of quiz results. You are responsible for saving or noting your results if you wish to keep them. Quiz results are not official academic records and should not be treated as such.</p>
+
+<h2>5. Content Accuracy and Disclaimer</h2>
+<p>We strive to keep questions, solutions, and blog content accurate and up to date. For full details on content accuracy, educational purpose, and limitation of liability, please see our <a href="/disclaimer/">Disclaimer</a>.</p>
+
+<h2>6. Intellectual Property</h2>
+<p>All content on CEE MCQ, including questions, solutions, blog articles, site design, and code, is the property of CEE MCQ or its content contributors. Blog articles are written by Ramu Pandey and are protected by copyright. You may not reproduce, distribute, or create derivative works from any content on this site without explicit permission.</p>
+
+<h2>7. Third-Party Services</h2>
+<p>CEE MCQ uses third-party services for analytics and advertising, including Google Analytics and Google AdSense. These services may collect anonymous usage data and display advertisements based on your browsing context. Your interaction with advertisements is governed by the respective third-party privacy policies. You can manage ad personalisation through your Google account settings.</p>
+
+<h2>8. Availability and Uptime</h2>
+<p>We aim to keep CEE MCQ available and functioning at all times, but we do not guarantee uninterrupted access. The platform may be temporarily unavailable due to maintenance, updates, or technical issues. We are not liable for any inconvenience or loss resulting from downtime.</p>
+
+<h2>9. Limitation of Liability</h2>
+<p>CEE MCQ is provided "as is" without warranties of any kind. For the full limitation of liability, please see our <a href="/disclaimer/">Disclaimer</a>.</p>
+
+<h2>10. Changes to These Terms</h2>
+<p>We may update these terms from time to time. Any changes will be reflected on this page with an updated date. Continued use of the platform after changes are posted constitutes your acceptance of the revised terms.</p>
+
+<h2>11. Contact</h2>
+<p>If you have questions about these terms, please reach out through the <a href="/contact/">Contact page</a>.</p>
+
+</article>
+{% endblock %}

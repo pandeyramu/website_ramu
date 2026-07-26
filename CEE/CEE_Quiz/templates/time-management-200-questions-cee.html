@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Time Management During CEE: 200 Questions in 3 Hours | CEE MCQ
+{% endblock %}
+
+{% block extra_head %}
+
+<meta name="description" content="Master time management for CEE with 200 questions in 180 minutes. Learn the two-pass system, subject-order strategy, time checkpoints, and how to handle difficult questions without losing time.">
+<meta name="keywords" content="CEE time management, CEE 200 questions, CEE time strategy, two-pass system CEE, CEE MCQ speed accuracy">
+<meta name="author" content="Ramu Pandey">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+<meta property="og:title" content="Time Management During CEE: 200 Questions in 3 Hours | CEE MCQ">
+<meta property="og:description" content="200 questions in 180 minutes means 54 seconds per question. Here is the two-pass system, time checkpoints, and subject-order strategy that helped me attempt more questions accurately.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Time Management During CEE: 200 Questions in 3 Hours | CEE MCQ">
+<meta name="twitter:description" content="The two-pass system and time checkpoints for managing 200 CEE questions in 180 minutes.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
+
+<style>
+.blog-content-box {
+    margin-top: 1.5rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(192,75,98,.05) 100%);
+    border: 1px solid rgba(192,75,98,.18);
+    border-radius: 14px;
+    padding: 1.3rem;
+    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+}
+.blog-category {
+    display: inline-block;
+    background: #c04b62;
+    color: white;
+    padding: .22rem .7rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    margin-bottom: .7rem;
+}
+.tip-box {
+    background: rgba(192,75,98,.06);
+    border-left: 4px solid #c04b62;
+    padding: 1rem 1.2rem;
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+}
+.tip-box strong { color: #c04b62; }
+.topic-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(192,75,98,.22);
+    background: white;
+}
+.topic-table th {
+    background: #c04b62;
+    color: white;
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+}
+.topic-table td { padding: .65rem 1rem; border-bottom: 1px solid #e5e7eb; }
+.topic-table tr:last-child td { border-bottom: none; }
+.topic-table tbody tr:nth-child(even) { background: rgba(192,75,98,.05); }
+.topic-table tbody tr:hover { background: rgba(192,75,98,.10); transition: .2s ease; }
+@media(max-width: 768px) {
+    .topic-table { display: block; overflow-x: auto; white-space: nowrap; }
+    .blog-content-box { padding: 1rem; }
+}
+</style>
+{% endblock extra_head %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Time Management During CEE: 200 Questions in 3 Hours",
+  "description": "Master time management for CEE with 200 questions in 180 minutes. Learn the two-pass system, subject-order strategy, time checkpoints, and how to handle difficult questions without losing time.",
+  "author": { "@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np" },
+  "publisher": { "@type": "Organization", "name": "CEE MCQ", "url": "https://pandeyramu.com.np" },
+  "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock structured_data %}
+
+{% block content %}
+<main class="blog-wrap">
+<article class="article-card">
+<div class="blog-content-box">
+
+<span class="blog-category">Strategy</span>
+
+<h1>Time Management During CEE: 200 Questions in 3 Hours</h1>
+
+<p class="excerpt">
+  Two hundred questions in 180 minutes gives you 54 seconds per question on paper. In practice, the math is different because some questions take 10 seconds and others take three minutes. Here is the system I used to manage every one of those seconds.
+</p>
+
+<p class="muted">By Ramu Pandey · Published: July 26, 2026 · 9 min read</p>
+
+<section>
+  <p>
+    During my first CEE attempt, I treated time management as something that would take care of itself if I just worked fast. I started with the first question and tried to solve every question in order. When I hit a Physics numerical that required three minutes of calculation, I spent those three minutes and then panicked when I realised I was behind. The remaining 40 minutes of the exam were a rushed blur where I barely read questions before marking answers. My score reflected it.
+  </p>
+  <p>
+    The problem was not speed. It was strategy. Speed without accuracy is useless in a negatively marked exam. You need a system that protects your easy marks, allocates time proportionally, and prevents difficult questions from eating into time meant for easier ones. The system I eventually developed is what I teach every CEE aspirant I work with.
+  </p>
+</section>
+
+<section>
+  <h2>The real math: 54 seconds is a myth</h2>
+  <p>
+    The simple calculation is 180 minutes divided by 200 questions equals 54 seconds per question. But this number is misleading because not all questions are equal. A Biology recall question can be answered in 15 seconds if you know the material. A Physics numerical with two calculations might take two to three minutes even if you know the method. A MAT puzzle might require 90 seconds of careful thinking.
+  </p>
+  <p>
+    The correct approach is not to spend 54 seconds on every question. It is to spend 15 to 20 seconds on easy questions, 40 to 50 seconds on moderate questions, and 90 to 120 seconds on difficult questions. The key is identifying which category a question falls into within the first 10 seconds of reading it and making a quick decision about whether to attempt it now, attempt it later, or skip it entirely.
+  </p>
+</section>
+
+<div class="tip-box">
+  <p><strong>The 10-second scan:</strong> For every question, read it once quickly. If the answer comes to you immediately, mark it and move on. If you need to think about it, mark it for the second pass. If you have no idea, skip it. This initial scan takes 10 seconds and saves you from getting trapped in difficult questions early.</p>
+</div>
+
+<section>
+  <h2>The two-pass system in detail</h2>
+  <p>
+    The two-pass system is the foundation of CEE time management. It divides the exam into two distinct phases, each with a different objective. The first pass is about speed and coverage. The second pass is about depth and accuracy.
+  </p>
+  <p>
+    During the first pass, you go through every question in order. For each question, you spend no more than 30 to 40 seconds. If the answer is obvious, you mark it. If you need to calculate or think carefully, you mark the question for the second pass and move to the next one. You do not stall. You do not spend two minutes on a single question. You keep moving until you have seen every question in the paper.
+  </p>
+  <p>
+    The first pass typically takes 90 to 100 minutes. By the end of it, you have attempted 120 to 140 questions, most of which you answered confidently. The remaining 60 to 80 questions are marked for the second pass, which begins immediately after the first pass is complete.
+  </p>
+  <p>
+    During the second pass, you return to every marked question. You now have more time per question because you have already cleared the easy ones. You can afford to spend two to three minutes on a Physics numerical or a Genetics cross because the rest of the paper is done. The second pass typically takes 60 to 70 minutes.
+  </p>
+</section>
+
+<section>
+  <h2>Subject-order strategy: start with your strength</h2>
+  <p>
+    The order in which you attempt subjects matters more than most students realise. Starting with a subject you are strong in builds momentum and confidence. Starting with a subject you find difficult creates anxiety that affects your performance on subsequent subjects.
+  </p>
+  <p>
+    I recommend starting with MAT or your strongest science subject. MAT questions are generally self-contained and do not require formula recall, making them a good warm-up. After MAT, move to your strongest science subject, then your second strongest, and finish with your weakest subject. This order ensures that you secure marks in your strong areas before tackling the areas where you are less confident.
+  </p>
+  <p>
+    Here is the order I used and the time I allocated to each section.
+  </p>
+
+  <table class="topic-table">
+    <thead>
+      <tr><th>Order</th><th>Subject</th><th>Questions</th><th>Time Allocation (First Pass)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1st</td><td>MAT</td><td>40</td><td>25 minutes</td></tr>
+      <tr><td>2nd</td><td>Biology</td><td>80</td><td>35 minutes</td></tr>
+      <tr><td>3rd</td><td>Physics</td><td>50</td><td>25 minutes</td></tr>
+      <tr><td>4th</td><td>Chemistry</td><td>30</td><td>15 minutes</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    Note that the first-pass time for Biology is 35 minutes for 80 questions, which averages 26 seconds per question. This works because many Biology questions are recall-based and can be answered in 15 to 20 seconds. Physics gets 25 minutes for 50 questions, which is 30 seconds per question on average. Difficult Physics numericals will take longer, but easy conceptual questions will take less, and the average balances out.
+  </p>
+</section>
+
+<section>
+  <h2>Time checkpoints: where you should be at each stage</h2>
+  <p>
+    Without checkpoints, it is easy to lose track of time and realise too late that you are behind. I used four specific checkpoints during the exam to verify I was on track.
+  </p>
+
+  <table class="topic-table">
+    <thead>
+      <tr><th>Checkpoint</th><th>Target</th><th>If Behind</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>45 minutes elapsed</td><td>50 questions attempted</td><td>Increase speed, skip difficult questions immediately</td></tr>
+      <tr><td>90 minutes elapsed (halfway)</td><td>100 questions attempted</td><td>Switch to a stronger subject, reduce time per question</td></tr>
+      <tr><td>135 minutes elapsed</td><td>First pass complete, second pass started</td><td>Prioritise moderate-difficulty marked questions only</td></tr>
+      <tr><td>170 minutes elapsed</td><td>All decisions made, begin final check</td><td>Stop attempting new questions, verify marked answers</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="tip-box">
+  <p><strong>The watch rule:</strong> Check the time only at the four checkpoints, not after every question. Constantly watching the clock creates anxiety and breaks your concentration. Trust the checkpoints. If you are on track at each checkpoint, you will finish on time.</p>
+</div>
+
+<section>
+  <h2>Handling difficult questions without losing time</h2>
+  <p>
+    The biggest time waster in CEE is getting stuck on a difficult question. Every minute spent on a question you eventually get wrong is a minute stolen from three questions you could have gotten right. The key is recognising early when a question is going to take too long and making a conscious decision to defer it.
+  </p>
+  <p>
+    Here are the specific signals I learned to recognise that told me to move on from a question.
+  </p>
+  <ul>
+    <li><strong>The question requires a diagram you cannot draw quickly:</strong> Mark it and return in the second pass when you have dedicated time.</li>
+    <li><strong>The calculation has more than two steps:</strong> These questions are valid but slow. Attempt them only in the second pass.</li>
+    <li><strong>You have read the question twice and still do not understand what is being asked:</strong> Move on. Returning later with fresh eyes often clarifies the question.</li>
+    <li><strong>The question is in a topic you know is weak:</strong> Attempt it only if you can eliminate at least two options. Otherwise, skip it entirely.</li>
+  </ul>
+  <p>
+    The discipline of deferring difficult questions is what separates students who finish the paper from students who run out of time. Every deferred question is a choice to protect easier marks that come later.
+  </p>
+</section>
+
+<section>
+  <h2>The final 10 minutes: what to do and what not to do</h2>
+  <p>
+    The last 10 minutes of CEE are the most valuable minutes of the exam. This is when you verify that every answer is actually marked on the answer sheet, revisit the most promising marked questions from your second pass, and make final decisions on any remaining uncertain questions.
+  </p>
+  <p>
+    What you should not do in the final 10 minutes is attempt new difficult questions. The probability of getting a complex Physics numerical right in three rushed minutes is very low, and the negative marking makes wrong guesses costly. Instead, focus on questions where you have already done partial work or where you can eliminate options with confidence.
+  </p>
+  <p>
+    On my successful CEE attempt, I used the final 10 minutes to change two answers I had marked incorrectly on my first read, attempt three moderate questions I had deferred, and verify that all 200 answer slots were properly filled. Those 10 minutes added approximately 4 marks to my score. In a competitive exam, 4 marks can shift your rank by hundreds of positions.
+  </p>
+</section>
+
+<section>
+  <h2>Practising time management before exam day</h2>
+  <p>
+    Time management is a skill that can be practised and improved. During my preparation, I timed every full-length mock test and tracked my progress through the checkpoints. I knew that at the 45-minute mark I should have attempted 50 questions, and I could immediately tell if I was falling behind. This practice made the actual exam feel familiar instead of overwhelming.
+  </p>
+  <p>
+    If you are not practising with a timer during your preparation, start now. Take a full-length mock test this week with a stopwatch running. Track your checkpoint progress. Identify where you lose time. Adjust your approach for the next test. By the time you sit for CEE, time management will be a habit, not a concern. And a student who does not worry about time is a student who can focus entirely on answering correctly.
+  </p>
+</section>
+
+</div>
+</article>
+</main>
+{% endblock content %}

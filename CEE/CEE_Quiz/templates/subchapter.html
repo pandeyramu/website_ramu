@@ -17,8 +17,14 @@ CEE MCQ, {{ chapter.name }}, Subchapters, Practice Questions
 {% endblock %}
 
 
+{% block og_title %}{{ chapter.name }} Subchapters – CEE MCQ{% endblock %}
+{% block og_description %}Explore subchapters for {{ chapter.name }} and practice topic-wise MCQ questions for CEE.{% endblock %}
+{% block twitter_title %}{{ chapter.name }} Subchapters – CEE MCQ{% endblock %}
+{% block twitter_description %}Practice topic-wise MCQ questions for {{ chapter.name }} in CEE preparation.{% endblock %}
+
 
 {% block extra_head %}
+<meta name="robots" content="noindex, follow">
 
 <link rel="stylesheet" href="{% static 'css/subchapter.css' %}">
 
@@ -110,6 +116,14 @@ CEE MCQ, {{ chapter.name }}, Subchapters, Practice Questions
     border-radius: 999px;
 }
 
+.subchapter-brief {
+    font-size: .82rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin: .3rem 0 0;
+    padding-left: 2.5rem;
+}
+
 </style>
 
 {% endblock %}
@@ -179,23 +193,23 @@ Home
 
 <article class="subchapter-card">
 
-
 <div class="card-number">
 {{ forloop.counter }}
 </div>
 
-
-
 <a href="{% url 'subchapter_quiz' sub.slug %}" class="subchapter-link">
-
-
 <span class="subchapter-name">
 {{ sub.name }}
 </span>
-
-
 </a>
 
+{% if sub.seo_description %}
+<p class="subchapter-brief">{{ sub.seo_description|truncatewords:20 }}</p>
+{% elif sub.intro_text %}
+<p class="subchapter-brief">{{ sub.intro_text|truncatewords:20 }}</p>
+{% endif %}
+
+<a href="{% url 'subchapter_quiz' sub.slug %}" class="card-overlay-link" aria-label="{{ sub.name }}"></a>
 
 </article>
 

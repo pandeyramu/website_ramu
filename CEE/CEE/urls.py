@@ -59,6 +59,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('contact/submit/', views.contact_submit, name='contact_submit'),
     path('disclaimer/', views.disclaimer, name='disclaimer'),
+    path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
     path('blog/', views.blog_index, name='blog'),
     path('all-subjects/', views.all_subjects, name='all_subjects'),
     path('all-mcq/', views.all_mcq, name='all_mcq'),

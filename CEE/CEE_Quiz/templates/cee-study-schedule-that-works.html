@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+How to Build a CEE Study Schedule That Actually Works | CEE MCQ
+{% endblock %}
+
+{% block extra_head %}
+
+<meta name="description" content="Build a flexible CEE study schedule that avoids burnout and covers all subjects. A practical weekly template with buffer days, revision cycles, and marks-based time allocation.">
+<meta name="keywords" content="CEE study schedule, CEE study plan, CEE preparation timetable, how to study for CEE Nepal, CEE MCQ preparation schedule">
+<meta name="author" content="Ramu Pandey">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+<meta property="og:title" content="How to Build a CEE Study Schedule That Actually Works | CEE MCQ">
+<meta property="og:description" content="Most CEE study schedules fail because they are too rigid. Here is the flexible weekly template with buffer days and revision cycles that worked for me.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Build a CEE Study Schedule That Actually Works | CEE MCQ">
+<meta name="twitter:description" content="A flexible CEE study schedule with buffer days, revision cycles, and marks-based subject allocation.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
+
+<style>
+.blog-content-box {
+    margin-top: 1.5rem;
+    background: linear-gradient(180deg, #ffffff 0%, rgba(192,75,98,.05) 100%);
+    border: 1px solid rgba(192,75,98,.18);
+    border-radius: 14px;
+    padding: 1.3rem;
+    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+}
+.blog-category {
+    display: inline-block;
+    background: #c04b62;
+    color: white;
+    padding: .22rem .7rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    margin-bottom: .7rem;
+}
+.tip-box {
+    background: rgba(192,75,98,.06);
+    border-left: 4px solid #c04b62;
+    padding: 1rem 1.2rem;
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+}
+.tip-box strong { color: #c04b62; }
+.topic-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(192,75,98,.22);
+    background: white;
+}
+.topic-table th {
+    background: #c04b62;
+    color: white;
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+}
+.topic-table td { padding: .65rem 1rem; border-bottom: 1px solid #e5e7eb; }
+.topic-table tr:last-child td { border-bottom: none; }
+.topic-table tbody tr:nth-child(even) { background: rgba(192,75,98,.05); }
+.topic-table tbody tr:hover { background: rgba(192,75,98,.10); transition: .2s ease; }
+@media(max-width: 768px) {
+    .topic-table { display: block; overflow-x: auto; white-space: nowrap; }
+    .blog-content-box { padding: 1rem; }
+}
+</style>
+{% endblock extra_head %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to Build a CEE Study Schedule That Actually Works",
+  "description": "Build a flexible CEE study schedule that avoids burnout and covers all subjects. A practical weekly template with buffer days, revision cycles, and marks-based time allocation.",
+  "author": { "@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np" },
+  "publisher": { "@type": "Organization", "name": "CEE MCQ", "url": "https://pandeyramu.com.np" },
+  "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock structured_data %}
+
+{% block content %}
+<main class="blog-wrap">
+<article class="article-card">
+<div class="blog-content-box">
+
+<span class="blog-category">Study Tips</span>
+
+<h1>How to Build a CEE Study Schedule That Actually Works</h1>
+
+<p class="excerpt">
+  Most CEE study schedules fail within two weeks because they leave no room for life. Here is the flexible template I used with buffer days, revision cycles, and time allocation based on actual marks distribution.
+</p>
+
+<p class="muted">By Ramu Pandey · Published: July 26, 2026 · 9 min read</p>
+
+<section>
+  <p>
+    In the first month of my CEE preparation, I created a study timetable that was colour-coded, hour-by-hour, and covered every topic across Physics, Chemistry, Biology, and MAT. It looked impressive on paper. It lasted eleven days. By the second week I had missed two sessions because of a family function, fallen behind on Physics because a topic took longer than expected, and felt guilty about the entire schedule. I scrapped it and started over with a completely different approach.
+  </p>
+  <p>
+    The problem was not that I was lazy or undisciplined. The problem was that the schedule assumed every day would go exactly as planned, that every topic would take exactly the time I allocated, and that I would never need a break. Real life does not work that way. The schedule I eventually used for the rest of my preparation was simpler, more flexible, and far more effective.
+  </p>
+</section>
+
+<section>
+  <h2>Why most CEE study schedules fail</h2>
+  <p>
+    I have talked to dozens of CEE aspirants over the past two years, and the pattern of failed schedules is remarkably consistent. Here are the three most common reasons a study plan collapses.
+  </p>
+  <ul>
+    <li><strong>Too rigid:</strong> Hour-by-hour plans break the moment something unexpected happens. A single disruption creates guilt, and guilt leads to abandoning the entire plan.</li>
+    <li><strong>No buffer days:</strong> If every day is scheduled at full intensity, there is no capacity to catch up on missed material or spend extra time on difficult topics.</li>
+    <li><strong>No revision cycles:</strong> Many schedules focus entirely on covering new material. By the time the exam approaches, students have forgotten 60 percent of what they studied in the first month.</li>
+  </ul>
+  <p>
+    A good CEE schedule is not about packing the most hours into every day. It is about creating a sustainable rhythm that covers the syllabus, builds in revision, and survives contact with real life.
+  </p>
+</section>
+
+<div class="tip-box">
+  <p><strong>The 80 percent rule:</strong> Never schedule more than 80 percent of your available study time. If you have 6 hours available on a given day, schedule only 4.8 hours of actual study. The remaining time absorbs unexpected delays, difficult topics that need extra time, and the mental rest that prevents burnout.</p>
+</div>
+
+<section>
+  <h2>Allocating time based on marks distribution</h2>
+  <p>
+    One of the most useful things I did was calculate how many marks each subject carried and then allocate my weekly study time proportionally. CEE is not a exam where every subject deserves equal time. Physics carries 50 marks, Chemistry carries 30, Biology carries 80, and MAT carries 40. A student who spends equal time on all four subjects is under-investing in Biology and over-investing in Chemistry.
+  </p>
+
+  <table class="topic-table">
+    <thead>
+      <tr><th>Subject</th><th>Marks</th><th>Percentage</th><th>Weekly Hours (out of 35)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Biology (Zoology + Botany)</td><td>80</td><td>40%</td><td>14 hours</td></tr>
+      <tr><td>Physics</td><td>50</td><td>25%</td><td>9 hours</td></tr>
+      <tr><td>MAT</td><td>40</td><td>20%</td><td>7 hours</td></tr>
+      <tr><td>Chemistry</td><td>30</td><td>15%</td><td>5 hours</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    This allocation does not mean you ignore your weak subjects. It means you give proportionally more time to the subjects that carry more marks. If Biology is your weakest subject despite carrying the most marks, that is exactly where your extra hours should go.
+  </p>
+</section>
+
+<section>
+  <h2>The flexible weekly template</h2>
+  <p>
+    After several failed attempts at rigid timetables, I settled on a weekly template that looked like this. The key features are the buffer day on Saturday and the dedicated revision session on Sunday morning.
+  </p>
+
+  <table class="topic-table">
+    <thead>
+      <tr><th>Day</th><th>Morning (2-3 hrs)</th><th>Afternoon (2-3 hrs)</th><th>Evening (1-2 hrs)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Monday</td><td>Biology - new topic</td><td>Physics - new topic</td><td>MCQ practice (mixed)</td></tr>
+      <tr><td>Tuesday</td><td>Biology - new topic</td><td>MAT - practice sets</td><td>Error log review</td></tr>
+      <tr><td>Wednesday</td><td>Chemistry - new topic</td><td>Physics - numericals</td><td>MCQ practice (Biology)</td></tr>
+      <tr><td>Thursday</td><td>Biology - revision of Monday</td><td>MAT - new patterns</td><td>Chemistry MCQ practice</td></tr>
+      <tr><td>Friday</td><td>Physics - revision of Tuesday</td><td>Biology - weak topics</td><td>Full subject quiz</td></tr>
+      <tr><td>Saturday</td><td>Buffer day - catch up or rest</td><td>Buffer day - catch up or rest</td><td>Light review only</td></tr>
+      <tr><td>Sunday</td><td>Weekly revision - all subjects</td><td>Mock test or practice paper</td><td>Error analysis and planning</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    The buffer day on Saturday was the most important part of this schedule. Some weeks I used it to catch up on a Physics topic that took longer than planned. Other weeks I used it to rest. Both uses were valuable. Rest is not wasted time. It is consolidation time.
+  </p>
+</section>
+
+<section>
+  <h2>The revision cycle that stuck</h2>
+  <p>
+    The biggest change in my preparation came when I started scheduling revision explicitly. My rule was simple: every topic I studied on Monday had to be revised on Thursday and then again the following Sunday. This three-cycle revision pattern meant that by the time I moved to a new topic, I had already encountered the previous one three times.
+  </p>
+  <p>
+    I tracked this with a simple spreadsheet. Each row was a topic. Each column was a date. I marked the date I first studied it, the date I revised it once, and the date I revised it twice. Topics without three marks by the end of the month were flagged for extra revision in the buffer day. This system was not complicated, but it ensured that nothing fell through the cracks.
+  </p>
+</section>
+
+<div class="tip-box">
+  <p><strong>Revision is not re-reading:</strong> Re-reading your notes feels productive but does little for long-term retention. Active revision means solving MCQs on the topic, teaching it to someone else, or testing yourself from memory. If you can solve 80 percent of MCQs on a topic without looking at notes, you have revised it successfully.</p>
+</div>
+
+<section>
+  <h2>Adjusting the schedule when life happens</h2>
+  <p>
+    During my preparation, I had a week where I was sick for three days. Under my old rigid schedule, this would have meant falling behind by three days and feeling like the entire plan was ruined. Under the flexible schedule, I used the buffer day and one Sunday afternoon to recover most of the lost time. The topics I missed were not lost. They were delayed by a few days, and the buffer absorbed the delay.
+  </p>
+  <p>
+    The lesson is that a good schedule survives disruptions because it expects them. If you find yourself consistently missing sessions or falling behind, the answer is not more discipline. It is a better schedule. Reduce the daily targets. Add more buffer time. Prioritise high-weightage topics over completing every sub-topic.
+  </p>
+</section>
+
+<section>
+  <h2>The last two weeks: switching to revision mode</h2>
+  <p>
+    Two weeks before CEE, I stopped studying new material entirely. The last fourteen days were purely revision, mock tests, and error analysis. This transition is critical and most students leave it too late. If you are still learning new topics three days before the exam, you are not preparing. You are panicking.
+  </p>
+  <p>
+    In my final two weeks, I took one full-length mock test every two days. On the days between tests, I reviewed every question I got wrong, revisited the underlying topics, and updated my error log. My score on mock tests improved by 22 marks in those final fourteen days, not because I learned new material but because I stopped making repeated mistakes on material I already knew.
+  </p>
+</section>
+
+<section>
+  <h2>What I wish I had known from the start</h2>
+  <p>
+    Looking back, the most important lesson about CEE study schedules is that consistency beats intensity. Studying for four focused hours every day for four months produces far better results than studying for twelve hours a day for six weeks and then burning out. The students who score well in CEE are not the ones who studied the most hours. They are the ones who studied the most consistently, revised the most thoroughly, and rested enough to perform well on exam day.
+  </p>
+  <p>
+    Build a schedule you can maintain for months, not one that looks impressive for a week. Include buffer days. Schedule revision explicitly. Allocate time based on marks, not preference. And when the schedule breaks, because it will, adjust it without guilt and move forward. The exam does not care about your timetable. It cares about what you remember and how well you apply it under pressure.
+  </p>
+</section>
+
+</div>
+</article>
+</main>
+{% endblock content %}

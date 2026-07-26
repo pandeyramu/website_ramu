@@ -1,5 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
+from django.utils import timezone
 from CEE_Quiz.models import Subject, Chapter, SubChapter, SolutionSet
 
 class StaticViewSitemap(Sitemap):
@@ -8,7 +9,7 @@ class StaticViewSitemap(Sitemap):
 
     def items(self):
         return ['home', 'about', 'contact', 
-                'privacy_policy', 'disclaimer', 'blog']
+                'privacy_policy', 'disclaimer', 'terms_of_service', 'blog']
 
     def location(self, item):
         return reverse(item)
@@ -66,7 +67,10 @@ class BlogSitemap(Sitemap):
         return BLOG_POST_ORDER  
 
     def location(self, obj):
-        return f'/blog/{obj}/'  
+        return f'/blog/{obj}/'
+
+    def lastmod(self, obj):
+        return timezone.now().date()
 sitemaps = {
     "static": StaticViewSitemap,
     "subjects": SubjectSitemap,
