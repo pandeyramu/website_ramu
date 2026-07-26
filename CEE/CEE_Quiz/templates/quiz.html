@@ -320,22 +320,6 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
         </div>
         {% endif %}
 
-        <p>
-            {% if sub_chapter %}
-            Test your knowledge of {{ sub_chapter.name }} from {{ chapter.name }} with topic-wise MCQ questions and
-            track your score.
-            {% else %}
-            Test your knowledge of {{ chapter.name }} with chapter-wise MCQ questions and track your score.
-            {% endif %}
-        </p>
-
-
-        {% if subchapter and subchapter.seo_description %}
-        <p class="subchapter-description">
-            {{ subchapter.seo_description }}
-        </p>
-        {% endif %}
-
     <form method="get" class="start-form">
 
         <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
@@ -352,20 +336,6 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
 
 
     <div id="timer" style="display:none;"></div>
-
-
-    {% if chapter.intro_text %}
-    <section class="chapter-topics">
-        <h2>{% if sub_chapter %}About {{ sub_chapter.name }}{% else %}What This Chapter Covers{% endif %}</h2>
-        <div class="topic-content">
-            {% if sub_chapter and sub_chapter.intro_text %}
-                {{ sub_chapter.intro_text|linebreaks }}
-            {% else %}
-                {{ chapter.intro_text|linebreaks }}
-            {% endif %}
-        </div>
-    </section>
-    {% endif %}
 
 
     {% if preview_questions %}
