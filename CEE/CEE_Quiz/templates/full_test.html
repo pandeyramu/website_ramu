@@ -6,22 +6,20 @@
 {{ page_seo.meta_title|default:page_default_title }}
 {% endblock %}
 
+{% block meta_description %}{{ page_seo.meta_description|default:page_default_description }}{% endblock %}
+{% block meta_keywords %}{{ page_seo.meta_keywords|default:page_default_keywords }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_default_og_title }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_default_og_description }}{% endblock %}
+
 
 {% block extra_head %}
 
 
 
 <!-- SEO -->
-<meta name="description" content="{{ page_seo.meta_description|default:page_default_description }}">
-<meta name="keywords" content="{{ page_seo.meta_keywords|default:page_default_keywords }}">
 <meta name="author" content="Ramu Pandey">
 
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
-
-
-<!-- Open Graph -->
-<meta property="og:title" content="{{ page_seo.og_title|default:page_default_og_title }}">
-<meta property="og:description" content="{{ page_seo.og_description|default:page_default_og_description }}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
 <meta property="og:image"
@@ -35,7 +33,6 @@
       content="Take the full CEE MCQ test online with 180 questions and detailed scoring.">
 <meta name="twitter:image"
       content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.ico' %}">
-
 
 
 <!-- MathJax config (deferred load) -->

@@ -5,6 +5,8 @@
 {% block title %}{{ page_seo.meta_title|default:page_default_title }}{% endblock %}
 {% block meta_description %}{{ page_seo.meta_description|default:page_default_description }}{% endblock %}
 {% block meta_keywords %}{{ page_seo.meta_keywords|default:page_default_keywords }}{% endblock %}
+{% block og_title %}{{ page_seo.og_title|default:page_default_og_title }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_default_og_description }}{% endblock %}
 
 {% block extra_head %}
 <script>

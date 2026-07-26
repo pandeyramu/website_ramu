@@ -27,6 +27,10 @@ Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Geneti
 {% endif %}
 
 {% endblock %}
+
+{% block og_title %}{{ page_seo.og_title|default:page_default_og_title }}{% endblock %}
+{% block og_description %}{{ page_seo.og_description|default:page_default_og_description }}{% endblock %}
+
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
 <meta name="robots" content="noindex, follow">
