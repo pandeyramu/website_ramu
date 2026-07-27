@@ -29,7 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('favicon.ico', serve, {
         'path': 'images/favicon.ico',
-        'document_root': os.path.join(settings.BASE_DIR, 'static')
+        'document_root': settings.STATIC_ROOT
     }),
     
     # Keepalive endpoint for Render free tier
