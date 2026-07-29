@@ -19,6 +19,7 @@ import os
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import path
+from django.http import HttpResponsePermanentRedirect
 from CEE_Quiz import views
 from django.views.static import serve
 from django.conf import settings
@@ -31,6 +32,7 @@ urlpatterns = [
         'path': 'images/favicon.ico',
         'document_root': settings.STATIC_ROOT
     }),
+    path('index.html', lambda r, **_: HttpResponsePermanentRedirect('/')),
     
     # Keepalive endpoint for Render free tier
     path('keepalive/', views.keepalive, name='keepalive'),
