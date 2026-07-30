@@ -25,6 +25,16 @@
     <meta name="twitter:image" content="https://pandeyramu.com.np/static/images/banner.png">
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <script type="application/ld+json">
     {
@@ -384,13 +394,15 @@
             document.cookie = name + '=' + value + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax' + secure;
         }
 
-        window.addEventListener('load', function(){
+        (function(){
             var existing = getCookie('cookie_consent');
             if (existing === 'accepted') { activateConsent(); return; }
             if (existing === 'declined') { return; }
-            var banner = document.getElementById('cookie-banner');
-            if (banner) { banner.style.display = 'flex'; }
-        });
+            document.addEventListener('DOMContentLoaded', function(){
+                var banner = document.getElementById('cookie-banner');
+                if (banner) { banner.style.display = 'flex'; }
+            });
+        })();
 
         window.acceptCookies = function(){
             setCookie('cookie_consent', 'accepted', 365);

@@ -26,6 +26,7 @@ logger = logging.getLogger(__name__)
 TEST_HISTORY_LIMIT = 5
 
 
+@lru_cache(maxsize=1)
 def _ordered_subjects():
     return list(Subject.objects.only('id', 'name', 'slug').order_by('id'))
 
@@ -855,7 +856,7 @@ def subchapter_quiz_legacy_redirect(request, slug):
 
 def subchapters(request, slug):
     """View to list subchapters for a chapter that has them (lookup by slug)."""
-    chapter = get_object_or_404(Chapter, slug=slug)
+    chapter = get_object_or_404(Chapter.objects.select_related('subject'), slug=slug)
     subchapter_list = SubChapter.objects.filter(chapter=chapter).order_by('order')
     solution_sets = SolutionSet.objects.filter(chapter=chapter)
     request.page_slug = slug
@@ -872,8 +873,9 @@ def subchapters_redirect(request, chapter_id):
     return redirect('subchapters', slug=chapter.slug, permanent=True)
 
 
+@cache_page(3600)
 def solution_set(request, slug, set_number):
-    chapter = get_object_or_404(Chapter, slug=slug)
+    chapter = get_object_or_404(Chapter.objects.select_related('subject'), slug=slug)
     sol_set = get_object_or_404(SolutionSet, chapter=chapter, set_number=set_number)
     questions = sol_set.get_questions()
     previous_set = SolutionSet.objects.filter(chapter=chapter, set_number=set_number - 1).first()
@@ -909,7 +911,7 @@ def solution_set(request, slug, set_number):
 
 
 def quiz(request, slug):
-    chapter = get_object_or_404(Chapter, slug=slug)
+    chapter = get_object_or_404(Chapter.objects.select_related('subject'), slug=slug)
     chapter_id = chapter.id
     user_name = _normalize_exact_name(request.GET.get('name') or request.POST.get('name'))
     quiz_started = (request.GET.get('start') == '1' and user_name)
