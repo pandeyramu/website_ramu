@@ -133,12 +133,6 @@ body {
     position: relative;
 }
 
-.subchapter-card .card-overlay-link {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-}
-
 /* Card Number */
 .card-number {
     background: linear-gradient(135deg, #1a237e, #3949ab);

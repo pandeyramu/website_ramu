@@ -131,6 +131,13 @@ table {
     text-decoration: none;
     font-weight: 600;
     font-size: 20px;
+    position: relative;
+    z-index: 1;
+}
+.chapter-card a.chapter-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
 }
 
 .chapter-card:hover {
@@ -143,11 +150,6 @@ table {
     position: relative;
 }
 
-.chapter-card .card-overlay-link {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-}
 
 /* Biology grouped sections */
 .chapter-group {

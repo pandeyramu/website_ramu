@@ -46,12 +46,6 @@ CEE preparation tips, CEE Nepal blog, CEE study guide, Biology Chemistry Physics
         transition: .2s;
     }
 
-    .blog-card .card-overlay-link {
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-    }
-
     .blog-card:hover {
         transform: translateY(-3px);
         box-shadow: 0 16px 28px rgba(15, 58, 91, .12);
@@ -152,8 +146,6 @@ CEE preparation tips, CEE Nepal blog, CEE study guide, Biology Chemistry Physics
             <a href="{% url 'blog_post' post.slug %}">
                 Read more →
             </a>
-
-            <a href="{% url 'blog_post' post.slug %}" class="card-overlay-link" aria-label="{{ post.title }}"></a>
 
         </article>
 

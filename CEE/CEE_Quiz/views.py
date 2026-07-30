@@ -382,7 +382,7 @@ def _build_full_test_question_ids():
     from collections import defaultdict
 
     # 1 query: load all question IDs grouped by (subject_name, chapter_name)
-    qs = Question.objects.values_list(
+    qs = Question.objects.filter(verified=True).values_list(
         'chapter__subject__name', 'chapter__name', 'id'
     )
     chapter_buckets = defaultdict(list)
@@ -876,7 +876,6 @@ def subchapters_redirect(request, chapter_id):
     return redirect('subchapters', slug=chapter.slug, permanent=True)
 
 
-@cache_page(3600)
 def solution_set(request, slug, set_number):
     chapter = get_object_or_404(Chapter.objects.select_related('subject'), slug=slug)
     sol_set = get_object_or_404(SolutionSet, chapter=chapter, set_number=set_number)
@@ -956,7 +955,7 @@ def quiz(request, slug):
                 messages.error(request, 'Session expired. Please restart the quiz.')
                 return redirect('quiz', slug=chapter.slug)
 
-            questions_qs = Question.objects.filter(id__in=questions_ids).select_related('chapter', 'sub_chapter')
+            questions_qs = Question.objects.filter(id__in=questions_ids, verified=True).select_related('chapter', 'sub_chapter')
             id_to_question = {q.id: q for q in questions_qs}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
 
@@ -1054,13 +1053,13 @@ def quiz(request, slug):
 
         if quiz_started:
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
-            questions_qs = Question.objects.filter(chapter=chapter)
+            questions_qs = Question.objects.filter(chapter=chapter, verified=True)
             questions = _pick_random_questions(questions_qs, limit=50)
             request.session[f'quiz_questions_{chapter_id}'] = [q.id for q in questions]
         else:
             request.session.pop(f'quiz_questions_{chapter_id}', None)
             preview_questions = list(
-                Question.objects.filter(chapter=chapter, solution__gt='').order_by('id')[:5]
+                Question.objects.filter(chapter=chapter, verified=True, solution__gt='').order_by('id')[:5]
             )
         
         return render(request, 'quiz.html', {
@@ -1130,7 +1129,7 @@ def subchapter_quiz(request, slug):
                 messages.error(request, 'Session expired. Please restart the quiz.')
                 return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
-            questions_qs = Question.objects.filter(id__in=questions_ids).select_related('chapter', 'sub_chapter')
+            questions_qs = Question.objects.filter(id__in=questions_ids, verified=True).select_related('chapter', 'sub_chapter')
             id_to_question = {q.id: q for q in questions_qs}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
 
@@ -1231,13 +1230,13 @@ def subchapter_quiz(request, slug):
 
         if quiz_started:
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
-            questions_qs = Question.objects.filter(sub_chapter=sub_chapter)
+            questions_qs = Question.objects.filter(sub_chapter=sub_chapter, verified=True)
             questions = _pick_random_questions(questions_qs, limit=50)
             request.session[session_key] = [q.id for q in questions]
         else:
             request.session.pop(session_key, None)
             preview_questions = list(
-                Question.objects.filter(sub_chapter=sub_chapter, solution__gt='').order_by('id')[:5]
+                Question.objects.filter(sub_chapter=sub_chapter, verified=True, solution__gt='').order_by('id')[:5]
             )
 
         return render(request, 'quiz.html', {
@@ -1305,7 +1304,7 @@ def full_test(request):
                 messages.error(request, 'Session expired. Please restart the test.')
                 return redirect('full_test')
 
-            questions_qs = Question.objects.filter(id__in=questions_ids).select_related('chapter', 'sub_chapter')
+            questions_qs = Question.objects.filter(id__in=questions_ids, verified=True).select_related('chapter', 'sub_chapter')
             questions = list(questions_qs)
             id_to_question = {q.id: q for q in questions}
             questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
@@ -1414,7 +1413,7 @@ def full_test(request):
         attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
         selected_ids = _build_full_test_question_ids()
 
-        questions_qs = Question.objects.filter(id__in=selected_ids).select_related('chapter', 'sub_chapter')
+        questions_qs = Question.objects.filter(id__in=selected_ids, verified=True).select_related('chapter', 'sub_chapter')
         id_to_question = {q.id: q for q in questions_qs}
         questions = [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
 
@@ -1461,7 +1460,7 @@ def full_test_results(request):
 
     try:
         connection.ensure_connection()
-        questions_qs = Question.objects.filter(id__in=question_ids).select_related('chapter', 'sub_chapter')
+        questions_qs = Question.objects.filter(id__in=question_ids, verified=True).select_related('chapter', 'sub_chapter')
         id_to_question = {q.id: q for q in questions_qs}
         questions = [id_to_question[qid] for qid in question_ids if qid in id_to_question]
     except Exception as error:

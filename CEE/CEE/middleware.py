@@ -46,6 +46,11 @@ class SecurityHeadersMiddleware:
         )
 
     def __call__(self, request):
+        host = request.get_host().lower()
+        if host == 'ceemcq.pandeyramu.com.np' or host == 'www.ceemcq.pandeyramu.com.np':
+            from django.shortcuts import redirect
+            return redirect(f'https://pandeyramu.com.np{request.path}', permanent=True)
+
         response = self.get_response(request)
         response['Content-Security-Policy'] = self.csp
         response['X-Content-Type-Options'] = 'nosniff'

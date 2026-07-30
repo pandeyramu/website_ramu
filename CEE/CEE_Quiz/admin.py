@@ -50,8 +50,8 @@ class PageSEOAdmin(admin.ModelAdmin):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'subject_name', 'chapter', 'sub_chapter', 'question_preview', 'correct_option')
-    list_filter = ('chapter__subject', 'chapter', 'sub_chapter', 'correct_option')
+    list_display = ('id', 'subject_name', 'chapter', 'sub_chapter', 'question_preview', 'correct_option', 'verified')
+    list_filter = ('chapter__subject', 'chapter', 'sub_chapter', 'correct_option', 'verified')
     search_fields = ('question_text', 'id')
     list_select_related = ('chapter', 'sub_chapter', 'chapter__subject')
     show_full_result_count = False
@@ -69,7 +69,12 @@ class QuestionAdmin(admin.ModelAdmin):
         ('Classification', {
             'fields': ('chapter', 'sub_chapter')
         }),
+        ('Verification', {
+            'fields': ('verified',),
+            'classes': ('collapse',),
+        }),
     )
+    actions = ('mark_verified', 'mark_unverified')
 
     def get_queryset(self, request):
         # Keep changelist queries lightweight for large question tables.
@@ -78,6 +83,7 @@ class QuestionAdmin(admin.ModelAdmin):
             'id',
             'correct_option',
             'question_text',
+            'verified',
             'chapter__name',
             'chapter__subject__name',
             'sub_chapter__name',
@@ -93,6 +99,16 @@ class QuestionAdmin(admin.ModelAdmin):
         if not text:
             return '-'
         return text[:160] + ('...' if len(text) > 160 else '')
+
+    @admin.action(description='Mark selected questions as verified')
+    def mark_verified(self, request, queryset):
+        updated = queryset.update(verified=True)
+        self.message_user(request, f'{updated} question(s) marked as verified.')
+
+    @admin.action(description='Mark selected questions as unverified')
+    def mark_unverified(self, request, queryset):
+        updated = queryset.update(verified=False)
+        self.message_user(request, f'{updated} question(s) marked as unverified.')
 
 class SolutionSetAdmin(admin.ModelAdmin):
     list_display = ('id', 'chapter', 'set_number', 'title', 'question_count')

@@ -91,6 +91,7 @@ class Question(models.Model):
     option_c = models.CharField(max_length=255)
     option_d = models.CharField(max_length=255)
     correct_option = models.CharField(max_length=255, choices=[('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')])
+    verified = models.BooleanField(default=False, help_text='Mark as verified after manually confirming correctness')
 
     def __str__(self):
         if self.sub_chapter:
@@ -125,7 +126,7 @@ class SolutionSet(models.Model):
 
     def get_questions(self):
         ids = [int(x.strip()) for x in self.question_ids.split(',') if x.strip().isdigit()]
-        questions = Question.objects.filter(id__in=ids).select_related('chapter', 'sub_chapter')
+        questions = Question.objects.filter(id__in=ids, verified=True).select_related('chapter', 'sub_chapter')
         id_map = {q.id: q for q in questions}
         return [id_map[qid] for qid in ids if qid in id_map]
 
