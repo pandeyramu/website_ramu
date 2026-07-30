@@ -8,9 +8,7 @@
 {% endblock %}
 
 
-{% block meta_description %}
-{{ page_seo.meta_description|default:page_default_description }}
-{% endblock %}
+{% block meta_description %}{{ page_seo.meta_description|default:page_default_description }}{% endblock %}
 
 
 {% block meta_keywords %}
