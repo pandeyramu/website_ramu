@@ -20,6 +20,7 @@ from django.conf import settings
 from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO, QuestionReport, SolutionSet
 from .sitemaps import sitemaps
 from .seo_provider import get_supabase_page_seo
+from .context_processors import _subject_defaults
 
 
 logger = logging.getLogger(__name__)
@@ -783,6 +784,7 @@ def chapters(request, slug):
         'chapter_solution_sets': chapter_solution_sets,
         **_crawl_navigation_links(subject.slug),
         'page_slug': slug,
+        'page_seo': _subject_defaults(subject.name),
         'page_default_title': page_default_title,
         'page_default_description': page_default_description,
         'page_default_keywords': page_default_keywords,
@@ -832,6 +834,7 @@ def dynamic_page(request, page_slug):
                 'chapter_solution_sets': chapter_solution_sets,
                 **_crawl_navigation_links(subject.slug),
                 'page_slug': page_slug,
+                'page_seo': _subject_defaults(subject.name),
                 'page_default_title': page_default_title,
                 'page_default_description': page_default_description,
                 'page_default_keywords': page_default_keywords,

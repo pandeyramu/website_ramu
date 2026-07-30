@@ -192,13 +192,9 @@ def _safe_lookup(request):
             return _privacy_defaults()
 
     except Exception:
-        pass
+        return None
 
-    return _defaults(
-        title=SITE_NAME,
-        description='Practice free CEE MCQ questions for Nepal\'s Common Entrance Examination.',
-        keywords='CEE MCQ, CEE Nepal, practice test, MCQ questions',
-    )
+    return None
 
 
 def page_seo(request):
