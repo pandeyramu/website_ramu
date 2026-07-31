@@ -129,6 +129,16 @@ def _privacy_defaults():
     )
 
 
+def _terms_defaults():
+    return _defaults(
+        title='Terms of Service | CEE MCQ',
+        description='Read the terms of service for CEE MCQ. Rules for using this free CEE exam preparation platform.',
+        keywords='CEE MCQ, Terms of Service, terms and conditions, CEE preparation',
+        og_title='Terms of Service | CEE MCQ',
+        og_description='Terms of service for CEE MCQ, a free CEE exam preparation platform.',
+    )
+
+
 def _safe_lookup(request):
     resolver = getattr(request, 'resolver_match', None)
     route_name = getattr(resolver, 'url_name', '') or ''
@@ -190,6 +200,9 @@ def _safe_lookup(request):
 
         if route_name == 'privacy_policy':
             return _privacy_defaults()
+
+        if route_name == 'terms_of_service':
+            return _terms_defaults()
 
     except Exception:
         return None

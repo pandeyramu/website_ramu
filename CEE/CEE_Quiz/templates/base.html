@@ -12,9 +12,9 @@
     <meta name="theme-color" content="#1458a6">
     <link rel="canonical" href="https://pandeyramu.com.np{{ request.path }}">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"CEE MCQ" }}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{% if page_seo %}{{ page_seo.og_title|default:page_seo.meta_title }}{% else %}CEE MCQ{% endif %}{% endblock %}">
     <meta property="og:description"
-        content="{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Free CEE practice MCQs and preparation resources for Nepali students." }}{% endblock %}">
+        content="{% block og_description %}{% if page_seo %}{{ page_seo.og_description|default:page_seo.meta_description }}{% else %}Free CEE practice MCQs and preparation resources for Nepali students.{% endif %}{% endblock %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="https://pandeyramu.com.np/static/images/banner.png">
     <meta name="twitter:card" content="summary_large_image">

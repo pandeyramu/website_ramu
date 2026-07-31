@@ -45,6 +45,8 @@ urlpatterns = [
     path('chapter/<slug:slug>/solved-set/<int:set_number>/', views.solution_set, name='solution_set'),
     path('chapter/<slug:slug>/', views.quiz, name='quiz'),
     path('chapter/<slug:slug>/subchapters/', views.subchapters, name='subchapters'),
+    # Legacy URL for the Cell Biology chapter (subchapter pages renamed to 3 cells subchapters)
+    path('mcq/cell-biology/', lambda r, **_: HttpResponsePermanentRedirect('/chapter/cell-biology/')),
     path('mcq/<slug:slug>/', views.subchapter_quiz, name='subchapter_quiz'),
     # Backwards-compatible redirects for old numeric URLs (301)
     path('subject/<int:subject_id>/', views.chapters_redirect),

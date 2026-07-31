@@ -3,8 +3,8 @@
 {% block title %}{{ page_seo.meta_title|default:"Terms of Service | CEE MCQ" }}{% endblock %}
 {% block meta_description %}{{ page_seo.meta_description|default:"Read the terms of service for CEE MCQ. Rules for using this free CEE exam preparation platform." }}{% endblock %}
 {% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, Terms of Service, terms and conditions, CEE preparation" }}{% endblock %}
-{% block og_title %}{{ page_seo.og_title|default:page_seo.meta_title|default:"Terms of Service | CEE MCQ" }}{% endblock %}
-{% block og_description %}{{ page_seo.og_description|default:page_seo.meta_description|default:"Terms of service for CEE MCQ, a free CEE exam preparation platform." }}{% endblock %}
+{% block og_title %}{% if page_seo %}{{ page_seo.og_title|default:page_seo.meta_title }}{% else %}Terms of Service | CEE MCQ{% endif %}{% endblock %}
+{% block og_description %}{% if page_seo %}{{ page_seo.og_description|default:page_seo.meta_description }}{% else %}Terms of service for CEE MCQ, a free CEE exam preparation platform.{% endif %}{% endblock %}
 {% block twitter_title %}Terms of Service | CEE MCQ{% endblock %}
 {% block twitter_description %}Terms of service for CEE MCQ, a free CEE exam preparation platform.{% endblock %}
 
