@@ -66,7 +66,6 @@ urlpatterns = [
     path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
     path('blog/', views.blog_index, name='blog'),
     path('all-subjects/', views.all_subjects, name='all_subjects'),
-    path('all-mcq/', views.all_mcq, name='all_mcq'),
     path('blog/how-to-prepare-for-cee/', views.blog_post, {'slug': 'how-to-prepare-for-cee'}, name='blog_how_to_prepare_for_cee'),
     path('blog/human-biology-cee-questions/', views.blog_post, {'slug': 'human-biology-cee-questions'}, name='blog_human_biology_cee_questions'),
     path('blog/organic-chemistry-cee-tips/', views.blog_post, {'slug': 'organic-chemistry-cee-tips'}, name='blog_organic_chemistry_cee_tips'),

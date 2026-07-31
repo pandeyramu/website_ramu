@@ -79,16 +79,6 @@ def _all_subjects_defaults():
     )
 
 
-def _all_mcq_defaults():
-    return _defaults(
-        title='All MCQ Pages | CEE MCQ',
-        description='Open the direct MCQ landing pages, full test, and crawl hub pages from one place.',
-        keywords='CEE MCQ, All MCQ, Biology MCQ, Chemistry MCQ, Physics MCQ, Full Test',
-        og_title='All MCQ Pages | CEE MCQ',
-        og_description='Open the direct MCQ landing pages, full test, and crawl hub pages from one place.',
-    )
-
-
 def _about_defaults():
     return _defaults(
         title='About Us | CEE MCQ',
@@ -185,9 +175,6 @@ def _safe_lookup(request):
 
         if route_name == 'all_subjects':
             return _all_subjects_defaults()
-
-        if route_name == 'all_mcq':
-            return _all_mcq_defaults()
 
         if route_name == 'about':
             return _about_defaults()

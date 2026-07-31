@@ -237,7 +237,9 @@ No subchapters available yet. Check back soon!
 <h2>Solved MCQ Sets for {{ chapter.name }}</h2>
 <p class="muted">Browse solved question sets with answers and explanations — no login required.</p>
 {% for s in solution_sets %}
-<a href="{% url 'solution_set' chapter.slug s.set_number %}">Set {{ s.set_number }}{% if s.title %}: {{ s.title }}{% endif %}</a>
+{% with set_label=s.set_number|stringformat:"d" %}
+<a href="{% url 'solution_set' chapter.slug s.set_number %}">Set {{ s.set_number }}{% if s.title and s.title != "Set "|add:set_label %}: {{ s.title }}{% endif %}</a>
+{% endwith %}
 {% endfor %}
 </div>
 {% endif %}

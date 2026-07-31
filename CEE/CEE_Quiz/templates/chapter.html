@@ -243,7 +243,9 @@
 {% if sets %}
 <h3>{{ chap.name }}</h3>
 {% for s in sets %}
-<a href="{% url 'solution_set' chap.slug s.set_number %}">Set {{ s.set_number }}{% if s.title %}: {{ s.title }}{% endif %}</a>
+{% with set_label=s.set_number|stringformat:"d" %}
+<a href="{% url 'solution_set' chap.slug s.set_number %}">Set {{ s.set_number }}{% if s.title and s.title != "Set "|add:set_label %}: {{ s.title }}{% endif %}</a>
+{% endwith %}
 {% endfor %}
 {% endif %}
 {% endwith %}

@@ -39,7 +39,6 @@ def _subject_alias_url(subject_slug):
 def _crawl_navigation_links(subject_slug=None):
     links = {
         'all_subjects_url': reverse('all_subjects'),
-        'all_mcq_url': reverse('all_mcq'),
     }
 
     if subject_slug:
@@ -80,11 +79,6 @@ def _crawl_hubs():
         'name': 'All Subjects',
         'url': reverse('all_subjects'),
         'description': 'Browse every subject landing page from one hub.',
-    })
-    hubs.append({
-        'name': 'All MCQ',
-        'url': reverse('all_mcq'),
-        'description': 'Open the direct MCQ landing pages and keep crawl paths short.',
     })
     hubs.append({
         'name': 'Full Test',
@@ -758,11 +752,6 @@ def all_subjects(request):
     return render(request, 'seo_hub.html', context)
 
 
-def all_mcq(request):
-    # Route disabled: redirect to home to avoid exposing a separate "All MCQ" hub.
-    return redirect('home')
-
-
 def chapters(request, slug):
     """Subject page looked up by slug."""
     subject = get_object_or_404(Subject, slug=slug)
@@ -841,6 +830,8 @@ def dynamic_page(request, page_slug):
                 'page_default_og_title': f'{subject.name} Chapters | CEE MCQ',
                 'page_default_og_description': f"Practice chapter-wise MCQ questions for {subject.name}. Prepare for Nepal's Common Entrance Examination.",
             })
+
+    raise Http404('Page not found')
 
 def quiz_redirect(request, chapter_id):
     chapter = get_object_or_404(Chapter, id=chapter_id)
