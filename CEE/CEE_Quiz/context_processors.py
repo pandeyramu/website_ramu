@@ -21,51 +21,51 @@ def _defaults(*, title, description, keywords, og_title='', og_description=''):
 
 def _home_defaults():
     return _defaults(
-        title=f'{SITE_NAME} – Free Practice Questions | {SITE_NAME}',
+        title=f'{SITE_NAME} | Free Practice Questions | {SITE_NAME}',
         description='Free CEE MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal\'s Common Entrance Examination.',
-        keywords='CEE MCQ, CEE Nepal, Chapter-wise MCQ Questions, Biology, Chemistry, Physics, MAT',
-        og_title=f'{SITE_NAME} – Free CEE MCQ Questions',
+        keywords='CEE MCQ, CEE Nepal, Chapter wise MCQ Questions, Biology, Chemistry, Physics, MAT',
+        og_title=f'{SITE_NAME} | Free CEE MCQ Questions',
         og_description='Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal\'s Common Entrance Examination.',
     )
 
 
 def _subject_defaults(subject_name):
     return _defaults(
-        title=f'CEE {subject_name} MCQ Questions – Chapter Wise | {SITE_NAME}',
-        description=f'Practice chapter-wise CEE {subject_name} MCQ questions and prepare for Nepal\'s Common Entrance Examination.',
-        keywords=f'CEE {subject_name} MCQ, {subject_name} MCQ Nepal, CEE Nepal, Chapter-wise Questions',
+        title=f'CEE {subject_name} MCQ Questions | Chapter Wise | {SITE_NAME}',
+        description=f'Practice chapter wise CEE {subject_name} MCQ questions and prepare for Nepal\'s Common Entrance Examination.',
+        keywords=f'CEE {subject_name} MCQ, {subject_name} MCQ Nepal, CEE Nepal, Chapter wise Questions',
         og_title=f'{subject_name} Chapters | {SITE_NAME}',
-        og_description=f'Practice chapter-wise MCQ questions for {subject_name}. Prepare for Nepal\'s Common Entrance Examination.',
+        og_description=f'Practice chapter wise MCQ questions for {subject_name}. Prepare for Nepal\'s Common Entrance Examination.',
     )
 
 
 def _chapter_quiz_defaults(chapter_name, subject_name):
     return _defaults(
-        title=f'{chapter_name} MCQ – {subject_name} | {SITE_NAME}',
+        title=f'{chapter_name} MCQ | {subject_name} | {SITE_NAME}',
         description=f'Practice the {chapter_name} MCQ for the Common Entrance Examination. Track your performance with detailed results.',
-        keywords=f'CEE MCQ, {chapter_name} MCQ, {subject_name}, Chapter-wise Questions, Online Practice',
-        og_title=f'{chapter_name} MCQ – {subject_name} | {SITE_NAME}',
+        keywords=f'CEE MCQ, {chapter_name} MCQ, {subject_name}, Chapter wise Questions, Online Practice',
+        og_title=f'{chapter_name} MCQ | {subject_name} | {SITE_NAME}',
         og_description=f'Practice the {chapter_name} MCQ for the Common Entrance Examination. Track your performance with detailed results.',
     )
 
 
 def _subchapter_quiz_defaults(subchapter_name, chapter_name):
     return _defaults(
-        title=f'{subchapter_name} MCQ – {chapter_name} | {SITE_NAME}',
+        title=f'{subchapter_name} MCQ | {chapter_name} | {SITE_NAME}',
         description=f'Practice the {subchapter_name} MCQ from {chapter_name} for the Common Entrance Examination. Track your performance with detailed results.',
-        keywords=f'CEE MCQ, {subchapter_name} MCQ, {chapter_name} MCQ, Chapter-wise Questions, Online Practice',
-        og_title=f'{subchapter_name} MCQ – {chapter_name} | {SITE_NAME}',
+        keywords=f'CEE MCQ, {subchapter_name} MCQ, {chapter_name} MCQ, Chapter wise Questions, Online Practice',
+        og_title=f'{subchapter_name} MCQ | {chapter_name} | {SITE_NAME}',
         og_description=f'Practice the {subchapter_name} MCQ from {chapter_name} for the Common Entrance Examination. Track your performance with detailed results.',
     )
 
 
 def _full_test_defaults():
     return _defaults(
-        title='CEE Full Mock Test – 180 Questions Online | CEE MCQ',
-        description='Take a full CEE mock test online with 180 questions, negative marking, and a 2.5-hour timer. Simulate the real MEC entrance exam experience.',
+        title='CEE Full Mock Test | 180 Questions Online | CEE MCQ',
+        description='Take a full CEE mock test online with 180 questions, negative marking, and a 2.5 hour timer. Simulate the real MEC entrance exam experience.',
         keywords='CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 180 questions, CEE practice exam',
-        og_title='CEE Full Mock Test – 180 Questions Online | CEE MCQ',
-        og_description='Take a full CEE mock test online with 180 questions, negative marking, and a 2.5-hour timer.',
+        og_title='CEE Full Mock Test | 180 Questions Online | CEE MCQ',
+        og_description='Take a full CEE mock test online with 180 questions, negative marking, and a 2.5 hour timer.',
     )
 
 
@@ -82,10 +82,10 @@ def _all_subjects_defaults():
 def _about_defaults():
     return _defaults(
         title='About Us | CEE MCQ',
-        description='Learn about CEE MCQ, a free Nepali CEE practice platform created for students who want chapter-wise MCQs, exam tips, and better revision habits.',
+        description='Learn about CEE MCQ, a free Nepali CEE practice platform created for students who want chapter wise MCQs, exam tips, and better revision habits.',
         keywords='CEE MCQ, About Us, Nepal CEE practice, exam tips',
         og_title='About Us | CEE MCQ',
-        og_description='CEE MCQ is a free CEE practice platform for Nepali students with chapter-wise MCQs, full tests, and study resources.',
+        og_description='CEE MCQ is a free CEE practice platform for Nepali students with chapter wise MCQs, full tests, and study resources.',
     )
 
 

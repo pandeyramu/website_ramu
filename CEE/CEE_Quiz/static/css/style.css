@@ -180,10 +180,10 @@ h3 {
 .quiz-watermark {
     position: fixed;
     inset: 0;
-    z-index: 0;
+    z-index: 50;
     pointer-events: none;
     overflow: hidden;
-    opacity: 0.11;
+    opacity: 0.2;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: minmax(120px, 1fr);

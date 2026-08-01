@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ page_seo.meta_title|default:"CEE MCQ" }}{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{{ page_seo.meta_description|default:"CEE MCQ Nepal - free practice MCQs, exam tips, and study resources for Nepali students." }}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{{ page_seo.meta_description|default:"CEE MCQ Nepal: free practice MCQs, exam tips, and study resources for Nepali students." }}{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}{{ page_seo.meta_keywords|default:"CEE MCQ, CEE Nepal, CEE entrance exam, chapter wise MCQ, free practice questions" }}{% endblock %}">
     <meta name="author" content="Ramu Pandey">
     <meta name="theme-color" content="#1458a6">
@@ -41,7 +41,7 @@
       "@type": "EducationalOrganization",
       "name": "CEE MCQ",
       "url": "https://pandeyramu.com.np",
-      "description": "Free CEE MCQ practice platform for Nepal with 47,000+ chapter-wise questions in Physics, Chemistry, Biology and MAT",
+      "description": "Free CEE MCQ practice platform for Nepal with 47,000+ chapter wise questions in Physics, Chemistry, Biology and MAT",
       "foundingDate": "2025",
       "founder": {
         "@type": "Person",
@@ -182,6 +182,66 @@
         .page-card h1 {
             margin-top: 0;
             line-height: 1.25;
+        }
+
+        .legal-page {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .legal-page h1 {
+            font-size: 1.75rem;
+            color: #15324a;
+            line-height: 1.3;
+            margin: 0 0 0.3rem;
+        }
+
+        .legal-page h2 {
+            font-size: 1.2rem;
+            color: #15324a;
+            margin: 1.9rem 0 0.55rem;
+            line-height: 1.35;
+            padding-bottom: 0.35rem;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .legal-page h3 {
+            font-size: 1.05rem;
+            color: #1f3a57;
+            margin: 1.5rem 0 0.45rem;
+        }
+
+        .legal-page p {
+            margin: 0.7rem 0;
+            color: #3f4d5e;
+            line-height: 1.7;
+        }
+
+        .legal-page ul,
+        .legal-page ol {
+            margin: 0.6rem 0 0.9rem;
+            padding-left: 1.35rem;
+            color: #3f4d5e;
+            line-height: 1.7;
+        }
+
+        .legal-page li {
+            margin-bottom: 0.4rem;
+        }
+
+        .legal-page .muted {
+            color: #7b8794;
+            font-size: 0.9rem;
+        }
+
+        .legal-page a {
+            color: #1458a6;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .legal-page a:hover {
+            text-decoration: underline;
         }
 
         .muted {
@@ -470,7 +530,7 @@
     {% block extra_head %}{% endblock %}
 </head>
 
-<body>
+<body {% block body_attributes %}{% endblock %}>
     {% block header %}
     <header class="site-header">
         <div class="site-header-inner brand-row">

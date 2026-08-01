@@ -135,7 +135,7 @@
 
 {% block content %}
 <div class="solution-set-header">
-    <h1>{{ chapter.name }} – Solved MCQs (Set {{ sol_set.set_number }})</h1>
+    <h1>{{ chapter.name }} Solved MCQs (Set {{ sol_set.set_number }})</h1>
     {% with set_label=sol_set.set_number|stringformat:"d" %}
     {% if sol_set.title and sol_set.title != "Set "|add:set_label %}
     <p class="muted">{{ sol_set.title }}</p>

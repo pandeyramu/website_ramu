@@ -131,8 +131,6 @@ table {
     text-decoration: none;
     font-weight: 600;
     font-size: 20px;
-    position: relative;
-    z-index: 1;
 }
 .chapter-card a.chapter-link::after {
     content: '';
@@ -149,6 +147,15 @@ table {
 .chapter-card {
     position: relative;
 }
+
+.chapter-brief {
+    margin: 0 30px 18px;
+    font-size: .9rem;
+    color: #666;
+    line-height: 1.5;
+    text-align: left;
+}
+
 
 
 /* Biology grouped sections */

@@ -21,7 +21,7 @@
 
 {% block extra_head %}
 
-<link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260518-1">
+<link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260801-1">
 
 
 <style>
@@ -222,6 +222,10 @@
     })();
 </script>
 
+{% if quiz_started %}
+<meta name="robots" content="noindex, follow">
+{% endif %}
+
 
 {% endblock %}
 
@@ -239,7 +243,7 @@ data-attempt-reference="{{ attempt_reference|default:'' }}"
 
 data-topic="{% if sub_chapter %}{{ chapter.name }} - {{ sub_chapter.name }}{% else %}{{ chapter.name }}{% endif %}"
 
-data-exit-url="{% url 'chapters' chapter.subject.slug %}"
+data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slug %}{% else %}{% url 'quiz_exit' chapter.slug %}{% endif %}"
 
 {% endblock %}
 
@@ -291,6 +295,20 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
             {% endif %}
         </h1>
 
+        {% if not quiz_started and score is None %}
+
+        {% if sub_chapter and sub_chapter.intro_text %}
+        <div class="page-intro">
+            {{ sub_chapter.intro_text|linebreaks }}
+        </div>
+        {% elif chapter.intro_text %}
+        <div class="page-intro">
+            {{ chapter.intro_text|linebreaks }}
+        </div>
+        {% endif %}
+
+        {% endif %}
+
     </div>
 
 </header>
@@ -308,20 +326,17 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
 
     {% if not quiz_started and score is None %}
 
-    {% if chapter.intro_text %}
     <section class="chapter-topics">
-        <h2>{% if sub_chapter %}About {{ sub_chapter.name }}{% else %}What This Chapter Covers{% endif %}</h2>
+        <h2>What You Will Practice</h2>
         <div class="topic-content">
-            {% if sub_chapter and sub_chapter.intro_text %}
-                {{ sub_chapter.intro_text|linebreaks }}
-            {% else %}
-                {{ chapter.intro_text|linebreaks }}
-            {% endif %}
+            <p>This practice test is built from the verified {{ chapter.name }} question bank for Nepal's Common Entrance Examination (CEE). Each attempt selects a fresh set of up to 50 questions, and the test mirrors the real exam's negative marking: <strong>+1 for a correct answer, −0.25 for a wrong one</strong>.</p>
+            <p>When you submit the test you instantly get your score, accuracy, speed, and a full review where every question shows its correct answer and a step by step solution. The solved sample questions below show the level of detail you get in every explanation.</p>
         </div>
     </section>
-    {% endif %}
 
-    <form method="get" class="start-form">
+    <form method="post" class="start-form">
+
+        {% csrf_token %}
 
         <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
 
@@ -341,8 +356,8 @@ data-exit-url="{% url 'chapters' chapter.subject.slug %}"
 
     {% if preview_questions %}
     <section class="preview-questions">
-        <h2>Sample MCQ Questions</h2>
-        <p class="preview-subtitle">Here are a few practice questions to help you get started. Take the full test to see your score and detailed solutions for every question.</p>
+        <h2>Solved Sample Questions</h2>
+        <p class="preview-subtitle">Here are solved practice questions with step by step explanations. Take the full test to see your score and detailed solutions for every question.</p>
 
         {% for q in preview_questions %}
         <article class="preview-question-block">
@@ -981,6 +996,6 @@ Back to Home
 
 {% block extra_body %}
 
-<script src="{% static 'js/style.js' %}"></script>
+<script src="{% static 'js/style.js' %}?v=20260801-1"></script>
 
 {% endblock %}

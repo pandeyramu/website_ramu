@@ -58,6 +58,7 @@ function redirectIfSubmittedAttempt() {
     }
 
     window.location.replace(exitUrl);
+    clearAttemptStorage();
     return true;
 }
 
@@ -103,11 +104,24 @@ function storagePrefix() {
 }
 
 function answerStorageKey() {
-    return `${storagePrefix()}_${currentUserName}_answers`;
+    return `${storagePrefix()}_${currentUserName}_${attemptReference}_answers`;
 }
 
 function timerStorageKey() {
-    return `${storagePrefix()}_${currentUserName}_end_time`;
+    return `${storagePrefix()}_${currentUserName}_${attemptReference}_end_time`;
+}
+
+function saveTimeStorageKey() {
+    return `${storagePrefix()}_${currentUserName}_${attemptReference}_save_time`;
+}
+
+function clearAttemptStorage() {
+    if (!currentUserName) {
+        return;
+    }
+    localStorage.removeItem(answerStorageKey());
+    localStorage.removeItem(timerStorageKey());
+    localStorage.removeItem(saveTimeStorageKey());
 }
 
 function reportStorageKey() {
@@ -311,6 +325,7 @@ function setupBackNavigationHandling() {
     if (quizForm.classList.contains('submitted')) {
         history.pushState({ resultGuard: true }, '', window.location.href);
         window.addEventListener('popstate', () => {
+            clearAttemptStorage();
             window.location.replace(exitUrl);
         });
         return;
@@ -320,6 +335,7 @@ function setupBackNavigationHandling() {
     window.addEventListener('popstate', () => {
         const shouldLeave = window.confirm('Are you sure you want to leave this full test? Your attempt in progress will be lost.');
         if (shouldLeave) {
+            clearAttemptStorage();
             window.location.replace(exitUrl);
             return;
         }
@@ -428,7 +444,7 @@ function saveAnswers() {
     });
 
     localStorage.setItem(answerStorageKey(), JSON.stringify(answers));
-    localStorage.setItem(`${storagePrefix()}_${currentUserName}_save_time`, new Date().toISOString());
+    localStorage.setItem(saveTimeStorageKey(), new Date().toISOString());
     return Object.keys(answers).length;
 }
 

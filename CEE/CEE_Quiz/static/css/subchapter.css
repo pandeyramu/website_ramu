@@ -163,6 +163,12 @@ body {
     margin: 0 0 4px;
 }
 
+.subchapter-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+}
+
 .subchapter-name {
     font-weight: 600;
     font-size: 17px;

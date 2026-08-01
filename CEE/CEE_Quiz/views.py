@@ -33,7 +33,7 @@ def _ordered_subjects():
 
 
 def _subject_alias_url(subject_slug):
-    return f'/{subject_slug}-mcq/' if subject_slug else '/'
+    return reverse('chapters', args=[subject_slug]) if subject_slug else '/'
 
 
 def _crawl_navigation_links(subject_slug=None):
@@ -73,7 +73,7 @@ def _crawl_hubs():
         hubs.append({
             'name': f'{subject.name} MCQ',
             'url': _subject_alias_url(subject.slug),
-            'description': f'Go straight to {subject.name} chapter-wise practice and crawl the full {subject.name} topic tree.',
+            'description': f'Go straight to {subject.name} chapter wise practice and crawl the full {subject.name} topic tree.',
         })
     hubs.append({
         'name': 'All Subjects',
@@ -175,7 +175,7 @@ BLOG_POST_ORDER = [
 
 BLOG_POST_META = {
     'chapter-wise-marks-distribution': {
-        'title': 'Chapter-wise Marks Distribution for CEE: What to Prioritise',
+        'title': 'Chapter wise Marks Distribution for CEE: What to Prioritise',
         'tag': 'Exam Strategy',
         'excerpt': 'Understand which chapters carry the most marks in CEE and how to allocate your study time for maximum impact.',
         'accent': '#1458a6', 'accent_soft': 'rgba(20, 88, 166, 0.08)', 'accent_border': 'rgba(20, 88, 166, 0.22)',
@@ -195,7 +195,7 @@ BLOG_POST_META = {
     'how-to-prepare-for-cee': {
         'title': 'How to Prepare for CEE Effectively',
         'tag': 'Study Tips',
-        'excerpt': 'Build a realistic routine, focus on high-weightage chapters, and use timed practice to steadily improve your CEE score.',
+        'excerpt': 'Build a realistic routine, focus on high weightage chapters, and use timed practice to steadily improve your CEE score.',
         'accent': '#1458a6', 'accent_soft': 'rgba(20, 88, 166, 0.08)', 'accent_border': 'rgba(20, 88, 166, 0.22)',
     },
     'human-biology-cee-questions': {
@@ -702,9 +702,9 @@ def report_question(request):
 def home(request):
     subject_list = _ordered_subjects()
     total_questions = Question.objects.count()
-    page_default_title = 'CEE MCQ – Free Practice Questions | CEE MCQ'
-    page_default_description = "Free CEE MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination."
-    page_default_keywords = 'CEE MCQ, CEE Nepal, Chapter-wise MCQ Questions, Biology, Chemistry, Physics, MAT'
+    page_default_title = 'CEE MCQ | Free Practice Questions | CEE MCQ'
+    page_default_description = "Free CEE MCQ practice. Chapter wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination."
+    page_default_keywords = 'CEE MCQ, CEE Nepal, Chapter wise MCQ Questions, Biology, Chemistry, Physics, MAT'
     request.page_slug = 'home'
     return render(request, 'home.html', {
         'subjects': subject_list,
@@ -714,8 +714,8 @@ def home(request):
         'page_default_title': page_default_title,
         'page_default_description': page_default_description,
         'page_default_keywords': page_default_keywords,
-        'page_default_og_title': 'CEE MCQ – Free CEE MCQ Questions',
-        'page_default_og_description': "Free CEE entrance MCQ practice. Chapter-wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.",
+        'page_default_og_title': 'CEE MCQ | Free CEE MCQ Questions',
+        'page_default_og_description': "Free CEE entrance MCQ practice. Chapter wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.",
     })
 
 
@@ -723,15 +723,16 @@ def all_subjects(request):
     subjects = _ordered_subjects()
     hub_items = []
     for subject in subjects:
-        chapter_total = Chapter.objects.filter(subject=subject).count()
+        chapters = list(Chapter.objects.filter(subject=subject).order_by('id'))
         hub_items.append({
-        'name': f'{subject.name} MCQ',
-        'url': _subject_alias_url(subject.slug),
-        'description': (
-            f"Practice {subject.name} MCQs with structured chapter-wise questions. "
-            f"Includes {chapter_total} chapters for focused revision and exam preparation."
-        ),
-    })
+            'name': f'{subject.name} MCQ',
+            'url': _subject_alias_url(subject.slug),
+            'description': (
+                f"Practice {subject.name} MCQs with structured questions, organised chapter by chapter. "
+                f"Includes {len(chapters)} chapters for focused revision and exam preparation."
+            ),
+            'chapters': [c.name for c in chapters],
+        })
 
     request.page_slug = 'all-subjects'
     context = _hub_page_context(
@@ -743,9 +744,11 @@ def all_subjects(request):
         og_description='Browse every CEE subject landing page and move quickly between Biology, Chemistry, Physics, and MAT.',
         hub_heading='All Subject Entry Points',
         hub_intro=(
-    "This page provides quick access to all major CEE subjects, "
-    "including Biology, Chemistry, Physics, and MAT, "
-    "making navigation simple and structured."
+    "This page gives you a single place to jump into every CEE subject: Physics, Chemistry, "
+    "Botany, and Zoology. Each subject is broken into chapters, and chapters with many topics "
+    "are split into subchapters, so you can drill down to exactly the area you want to practise. "
+    "Every MCQ comes with an answer and a step by step solution, and every test applies the real "
+    "exam's negative marking."
 ),
         hub_items=hub_items,
     )
@@ -756,8 +759,8 @@ def chapters(request, slug):
     """Subject page looked up by slug."""
     subject = get_object_or_404(Subject, slug=slug)
     chapters_list = Chapter.objects.filter(subject=subject).order_by('id')
-    page_default_title = f'CEE {subject.name} MCQ Questions – Chapter Wise | CEE MCQ'
-    page_default_description = f"Explore all {subject.name} chapters and practice chapter-wise MCQ questions to prepare for Nepal's Common Entrance Examination."
+    page_default_title = f'CEE {subject.name} MCQ Questions | Chapter Wise | CEE MCQ'
+    page_default_description = f"Explore all {subject.name} chapters and practice chapter wise MCQ questions to prepare for Nepal's Common Entrance Examination."
     page_default_keywords = f'CEE MCQ, {subject.name}, CEE Nepal, Chapters, Practice Questions'
     request.page_slug = slug
 
@@ -778,7 +781,7 @@ def chapters(request, slug):
         'page_default_description': page_default_description,
         'page_default_keywords': page_default_keywords,
         'page_default_og_title': f'{subject.name} Chapters | CEE MCQ',
-        'page_default_og_description': f"Practice chapter-wise MCQ questions for {subject.name}. Prepare for Nepal's Common Entrance Examination.",
+        'page_default_og_description': f"Practice chapter wise MCQ questions for {subject.name}. Prepare for Nepal's Common Entrance Examination.",
     })
 
 
@@ -799,37 +802,14 @@ def _slug_aliases(page_slug):
 
 
 def dynamic_page(request, page_slug):
-    """Resolve SEO slugs such as /physics-mcq/ without defining separate URL patterns."""
+    """Redirect SEO alias slugs such as /physics-mcq/ to the canonical subject page (301)."""
     request.page_slug = page_slug
     slug_options = _slug_aliases(page_slug)
 
     for candidate in slug_options:
         subject = Subject.objects.filter(slug=candidate).first()
         if subject:
-            chapters_list = Chapter.objects.filter(subject=subject).order_by('id')
-            chapter_ids = [c.id for c in chapters_list]
-
-            chapter_solution_sets = {}
-            for sol_set in SolutionSet.objects.filter(chapter_id__in=chapter_ids).select_related('chapter'):
-                chap_slug = sol_set.chapter.slug
-                chapter_solution_sets.setdefault(chap_slug, []).append(sol_set)
-
-            page_default_title = f'CEE {subject.name} MCQ Questions – Chapter Wise | CEE MCQ'
-            page_default_description = f"Explore all {subject.name} chapters and practice chapter-wise MCQ questions to prepare for Nepal's Common Entrance Examination."
-            page_default_keywords = f'CEE MCQ, {subject.name}, CEE Nepal, Chapters, Practice Questions'
-            return render(request, 'chapter.html', {
-                'subject': subject,
-                'chapters': chapters_list,
-                'chapter_solution_sets': chapter_solution_sets,
-                **_crawl_navigation_links(subject.slug),
-                'page_slug': page_slug,
-                'page_seo': _subject_defaults(subject.name),
-                'page_default_title': page_default_title,
-                'page_default_description': page_default_description,
-                'page_default_keywords': page_default_keywords,
-                'page_default_og_title': f'{subject.name} Chapters | CEE MCQ',
-                'page_default_og_description': f"Practice chapter-wise MCQ questions for {subject.name}. Prepare for Nepal's Common Entrance Examination.",
-            })
+            return redirect('chapters', slug=subject.slug, permanent=True)
 
     raise Http404('Page not found')
 
@@ -873,8 +853,8 @@ def solution_set(request, slug, set_number):
     questions = sol_set.get_questions()
     previous_set = SolutionSet.objects.filter(chapter=chapter, set_number=set_number - 1).first()
     next_set = SolutionSet.objects.filter(chapter=chapter, set_number=set_number + 1).first()
-    page_default_title = f'{chapter.name} Solved MCQs – Set {set_number} | CEE MCQ'
-    page_default_description = f'Solved MCQs for {chapter.name} – Set {set_number}. Practice with answers and explanations for CEE preparation.'
+    page_default_title = f'{chapter.name} Solved MCQs | Set {set_number} | CEE MCQ'
+    page_default_description = f'Solved MCQs for {chapter.name} | Set {set_number}. Practice with answers and explanations for CEE preparation.'
     page_default_keywords = f'CEE MCQ, {chapter.name}, Solved MCQs, Set {set_number}, Practice Questions'
     request.page_slug = f'{slug}-solved-set-{set_number}'
     return render(request, 'solution_set.html', {
@@ -906,16 +886,31 @@ def solution_set(request, slug, set_number):
 def quiz(request, slug):
     chapter = get_object_or_404(Chapter.objects.select_related('subject'), slug=slug)
     chapter_id = chapter.id
-    user_name = _normalize_exact_name(request.GET.get('name') or request.POST.get('name'))
-    quiz_started = (request.GET.get('start') == '1' and user_name)
     attempt_key_prefix = f'quiz_{chapter_id}'
     attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
     request.page_slug = slug
-    page_default_title = f'{chapter.name} MCQ – {chapter.subject.name} | CEE MCQ'
+    page_default_title = f'{chapter.name} MCQ | {chapter.subject.name} | CEE MCQ'
     page_default_description = f'Practice the {chapter.name} MCQ for the Common Entrance Examination. Track your performance with detailed results.'
-    page_default_keywords = f'CEE MCQ, {chapter.name} MCQ, {chapter.subject.name}, Chapter-wise Questions, Online Practice'
+    page_default_keywords = f'CEE MCQ, {chapter.name} MCQ, {chapter.subject.name}, Chapter wise Questions, Online Practice'
 
     if request.method == 'POST':
+        if request.POST.get('start') == '1':
+            user_name = _normalize_exact_name(request.POST.get('name', ''))
+            if not user_name:
+                messages.error(request, 'Name is required to start the test.')
+                return redirect('quiz', slug=chapter.slug)
+
+            attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
+            questions_qs = Question.objects.filter(chapter=chapter, verified=True)
+            questions = _pick_random_questions(questions_qs, limit=50)
+            if not questions:
+                messages.error(request, 'No questions are available for this chapter yet. Please try again later.')
+                return redirect('quiz', slug=chapter.slug)
+
+            request.session[f'quiz_questions_{chapter_id}'] = [q.id for q in questions]
+            request.session[f'quiz_name_{chapter_id}'] = user_name
+            return redirect('quiz', slug=chapter.slug)
+
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the quiz.')
@@ -1037,20 +1032,28 @@ def quiz(request, slug):
             return redirect('quiz', slug=chapter.slug)
 
     else:
-        user_name = _normalize_exact_name(request.GET.get('name', ''))
-        quiz_started = request.GET.get('start') == '1' and bool(user_name)
+        if request.GET.get('new') == '1':
+            request.session.pop(f'quiz_questions_{chapter_id}', None)
+            request.session.pop(f'quiz_name_{chapter_id}', None)
+            return redirect('quiz', slug=chapter.slug)
+
+        stored_ids = request.session.get(f'quiz_questions_{chapter_id}', [])
+        quiz_started = bool(stored_ids)
+        user_name = request.session.get(f'quiz_name_{chapter_id}', '') if quiz_started else ''
         questions = []
         preview_questions = []
 
         if quiz_started:
-            attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
-            questions_qs = Question.objects.filter(chapter=chapter, verified=True)
-            questions = _pick_random_questions(questions_qs, limit=50)
-            request.session[f'quiz_questions_{chapter_id}'] = [q.id for q in questions]
+            questions_qs = Question.objects.filter(id__in=stored_ids, verified=True).select_related('chapter', 'sub_chapter')
+            id_to_question = {q.id: q for q in questions_qs}
+            questions = [id_to_question[qid] for qid in stored_ids if qid in id_to_question]
+            if not questions:
+                request.session.pop(f'quiz_questions_{chapter_id}', None)
+                request.session.pop(f'quiz_name_{chapter_id}', None)
+                quiz_started = False
         else:
-            request.session.pop(f'quiz_questions_{chapter_id}', None)
             preview_questions = list(
-                Question.objects.filter(chapter=chapter, verified=True, solution__gt='').order_by('id')[:5]
+                Question.objects.filter(chapter=chapter, verified=True, solution__gt='').order_by('id')[:10]
             )
         
         return render(request, 'quiz.html', {
@@ -1085,11 +1088,28 @@ def subchapter_quiz(request, slug):
     attempt_key_prefix = f'subchapter_{subchapter_id}'
     attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
     request.page_slug = slug
-    page_default_title = f'{sub_chapter.name} MCQ – {chapter.name} | CEE MCQ'
+    page_default_title = f'{sub_chapter.name} MCQ | {chapter.name} | CEE MCQ'
     page_default_description = f'Practice the {sub_chapter.name} MCQ from {chapter.name} for the Common Entrance Examination. Track your performance with detailed results.'
-    page_default_keywords = f'CEE MCQ, {sub_chapter.name} MCQ, {chapter.name} MCQ, Chapter-wise Questions, Online Practice'
+    page_default_keywords = f'CEE MCQ, {sub_chapter.name} MCQ, {chapter.name} MCQ, Chapter wise Questions, Online Practice'
 
     if request.method == 'POST':
+        if request.POST.get('start') == '1':
+            user_name = _normalize_exact_name(request.POST.get('name', ''))
+            if not user_name:
+                messages.error(request, 'Name is required to start the test.')
+                return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
+            attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
+            questions_qs = Question.objects.filter(sub_chapter=sub_chapter, verified=True)
+            questions = _pick_random_questions(questions_qs, limit=50)
+            if not questions:
+                messages.error(request, 'No questions are available for this subchapter yet. Please try again later.')
+                return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
+            request.session[session_key] = [q.id for q in questions]
+            request.session[f'quiz_name_sub_{subchapter_id}'] = user_name
+            return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the quiz.')
@@ -1214,20 +1234,28 @@ def subchapter_quiz(request, slug):
             return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
     else:
-        user_name = _normalize_exact_name(request.GET.get('name', ''))
-        quiz_started = request.GET.get('start') == '1' and bool(user_name)
+        if request.GET.get('new') == '1':
+            request.session.pop(session_key, None)
+            request.session.pop(f'quiz_name_sub_{subchapter_id}', None)
+            return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
+        stored_ids = request.session.get(session_key, [])
+        quiz_started = bool(stored_ids)
+        user_name = request.session.get(f'quiz_name_sub_{subchapter_id}', '') if quiz_started else ''
         questions = []
         preview_questions = []
 
         if quiz_started:
-            attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
-            questions_qs = Question.objects.filter(sub_chapter=sub_chapter, verified=True)
-            questions = _pick_random_questions(questions_qs, limit=50)
-            request.session[session_key] = [q.id for q in questions]
+            questions_qs = Question.objects.filter(id__in=stored_ids, verified=True).select_related('chapter', 'sub_chapter')
+            id_to_question = {q.id: q for q in questions_qs}
+            questions = [id_to_question[qid] for qid in stored_ids if qid in id_to_question]
+            if not questions:
+                request.session.pop(session_key, None)
+                request.session.pop(f'quiz_name_sub_{subchapter_id}', None)
+                quiz_started = False
         else:
-            request.session.pop(session_key, None)
             preview_questions = list(
-                Question.objects.filter(sub_chapter=sub_chapter, verified=True, solution__gt='').order_by('id')[:5]
+                Question.objects.filter(sub_chapter=sub_chapter, verified=True, solution__gt='').order_by('id')[:10]
             )
 
         return render(request, 'quiz.html', {
@@ -1259,10 +1287,27 @@ def full_test(request):
     attempt_key_prefix = 'full_test'
     attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
     request.page_slug = 'full-test'
-    page_default_title = 'CEE Full Mock Test – 180 Questions Online | CEE MCQ'
-    page_default_description = 'Take a full CEE mock test online with 180 questions, negative marking, and a 2.5-hour timer. Simulate the real MEC entrance exam experience.'
+    page_default_title = 'CEE Full Mock Test | 180 Questions Online | CEE MCQ'
+    page_default_description = 'Take a full CEE mock test online with 180 questions, negative marking, and a 2.5 hour timer. Simulate the real MEC entrance exam experience.'
     page_default_keywords = 'CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 180 questions, CEE practice exam'
     if request.method == "POST":
+        if request.POST.get('start') == '1':
+            user_name = _normalize_exact_name(request.POST.get('name', ''))
+            if not user_name:
+                messages.error(request, 'Name is required to start the test.')
+                return redirect('full_test')
+
+            attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
+            selected_ids = _build_full_test_question_ids()
+            questions_qs = Question.objects.filter(id__in=selected_ids, verified=True).select_related('chapter', 'sub_chapter')
+            id_to_question = {q.id: q for q in questions_qs}
+            questions = [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
+
+            request.session['full_test_questions'] = [q.id for q in questions]
+            request.session['full_test_user_name'] = user_name
+            request.session.pop(result_session_key, None)
+            return redirect('full_test')
+
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the test.')
@@ -1376,11 +1421,17 @@ def full_test(request):
             return redirect('full_test')
 
     else:
-        user_name = _normalize_exact_name(request.GET.get('name', ''))
-        quiz_started = request.GET.get('start') == '1' and bool(user_name)
+        if request.GET.get('new') == '1':
+            request.session.pop('full_test_questions', None)
+            request.session.pop('full_test_user_name', None)
+            request.session.pop(result_session_key, None)
+            return redirect('full_test')
+
+        stored_ids = request.session.get('full_test_questions', [])
+        quiz_started = bool(stored_ids)
+        user_name = request.session.get('full_test_user_name', '') if quiz_started else ''
 
         if not quiz_started:
-            request.session.pop('full_test_questions', None)
             request.session.pop(result_session_key, None)
             return render(request, 'full_test.html', {
                 'questions': [],
@@ -1401,15 +1452,15 @@ def full_test(request):
                 **_crawl_navigation_links(),
             })
 
-        attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
-        selected_ids = _build_full_test_question_ids()
-
-        questions_qs = Question.objects.filter(id__in=selected_ids, verified=True).select_related('chapter', 'sub_chapter')
+        questions_qs = Question.objects.filter(id__in=stored_ids, verified=True).select_related('chapter', 'sub_chapter')
         id_to_question = {q.id: q for q in questions_qs}
-        questions = [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
+        questions = [id_to_question[qid] for qid in stored_ids if qid in id_to_question]
 
-        request.session['full_test_questions'] = [q.id for q in questions]
-        request.session.pop(result_session_key, None)
+        if not questions:
+            request.session.pop('full_test_questions', None)
+            request.session.pop('full_test_user_name', None)
+            request.session.pop(result_session_key, None)
+            return redirect('full_test')
 
         return render(request, 'full_test.html', {
             'questions': questions,
@@ -1432,11 +1483,32 @@ def full_test(request):
         })
 
 
+def full_test_exit(request):
+    request.session.pop('full_test_questions', None)
+    request.session.pop('full_test_user_name', None)
+    request.session.pop('full_test_result_data', None)
+    return redirect('home')
+
+
+def quiz_exit(request, slug):
+    chapter = get_object_or_404(Chapter, slug=slug)
+    request.session.pop(f'quiz_questions_{chapter.id}', None)
+    request.session.pop(f'quiz_name_{chapter.id}', None)
+    return redirect('chapters', slug=chapter.subject.slug)
+
+
+def subchapter_quiz_exit(request, slug):
+    sub_chapter = get_object_or_404(SubChapter, slug=slug)
+    request.session.pop(f'quiz_questions_sub_{sub_chapter.id}', None)
+    request.session.pop(f'quiz_name_sub_{sub_chapter.id}', None)
+    return redirect('chapters', slug=sub_chapter.chapter.subject.slug)
+
+
 def full_test_results(request):
     request.page_slug = 'full-test'
     # Default page metadata for full test results
-    page_default_title = 'CEE Full Mock Test – 180 Questions Online | CEE MCQ'
-    page_default_description = 'Take a full CEE mock test online with 180 questions, negative marking, and a 2.5-hour timer. Simulate the real MEC entrance exam experience.'
+    page_default_title = 'CEE Full Mock Test | 180 Questions Online | CEE MCQ'
+    page_default_description = 'Take a full CEE mock test online with 180 questions, negative marking, and a 2.5 hour timer. Simulate the real MEC entrance exam experience.'
     page_default_keywords = 'CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 180 questions, CEE practice exam'
     # Consume the stored result data so visiting the results URL directly won't re-show old results.
     result_payload = request.session.pop('full_test_result_data', None)

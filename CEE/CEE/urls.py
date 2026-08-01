@@ -44,10 +44,12 @@ urlpatterns = [
     path('subject/<slug:slug>/', views.chapters, name='chapters'),
     path('chapter/<slug:slug>/solved-set/<int:set_number>/', views.solution_set, name='solution_set'),
     path('chapter/<slug:slug>/', views.quiz, name='quiz'),
+    path('chapter/<slug:slug>/exit/', views.quiz_exit, name='quiz_exit'),
     path('chapter/<slug:slug>/subchapters/', views.subchapters, name='subchapters'),
     # Legacy URL for the Cell Biology chapter (subchapter pages renamed to 3 cells subchapters)
     path('mcq/cell-biology/', lambda r, **_: HttpResponsePermanentRedirect('/chapter/cell-biology/')),
     path('mcq/<slug:slug>/', views.subchapter_quiz, name='subchapter_quiz'),
+    path('mcq/<slug:slug>/exit/', views.subchapter_quiz_exit, name='subchapter_quiz_exit'),
     # Backwards-compatible redirects for old numeric URLs (301)
     path('subject/<int:subject_id>/', views.chapters_redirect),
     path('chapter/<int:chapter_id>/', views.quiz_redirect),
@@ -55,6 +57,7 @@ urlpatterns = [
     path('subchapter/<int:subchapter_id>/quiz/', views.subchapter_quiz_redirect),
     path('quiz/<slug:slug>/', views.subchapter_quiz_legacy_redirect),
     path('full-test/', views.full_test, name='full_test'),
+    path('full-test/exit/', views.full_test_exit, name='full_test_exit'),
     path('full-test/results/', views.full_test_results, name='full_test_results'),
     path('privacy/', views.privacy_policy_redirect, name='privacy'),
     path('privacy-policy/', views.privacy_policy_page, name='privacy_policy'),

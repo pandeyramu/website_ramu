@@ -3,7 +3,7 @@
 
 
 {% block title %}
-CEE {{ chapter.name }} MCQ – {{ chapter.subject.name }} | CEE MCQ
+CEE {{ chapter.name }} MCQ | {{ chapter.subject.name }} | CEE MCQ
 {% endblock %}
 
 
@@ -15,15 +15,15 @@ CEE MCQ, {{ chapter.name }}, Subchapters, Practice Questions
 {% endblock %}
 
 
-{% block og_title %}{{ chapter.name }} Subchapters – CEE MCQ{% endblock %}
+{% block og_title %}{{ chapter.name }} Subchapters | CEE MCQ{% endblock %}
 {% block og_description %}Explore subchapters for {{ chapter.name }} and practice topic-wise MCQ questions for CEE.{% endblock %}
-{% block twitter_title %}{{ chapter.name }} Subchapters – CEE MCQ{% endblock %}
+{% block twitter_title %}{{ chapter.name }} Subchapters | CEE MCQ{% endblock %}
 {% block twitter_description %}Practice topic-wise MCQ questions for {{ chapter.name }} in CEE preparation.{% endblock %}
 
 
 {% block extra_head %}
 
-<link rel="stylesheet" href="{% static 'css/subchapter.css' %}">
+<link rel="stylesheet" href="{% static 'css/subchapter.css' %}?v=20260801-1">
 
 
 <style>
@@ -195,7 +195,7 @@ Home
 </div>
 
 <div class="card-body">
-<a href="{% url 'subchapter_quiz' sub.slug %}" class="subchapter-link">
+<a href="{% url 'subchapter_quiz' sub.slug %}?new=1" class="subchapter-link">
 <span class="subchapter-name">
 {{ sub.name }}
 </span>
@@ -235,7 +235,7 @@ No subchapters available yet. Check back soon!
 {% if solution_sets %}
 <div class="sol-set-links">
 <h2>Solved MCQ Sets for {{ chapter.name }}</h2>
-<p class="muted">Browse solved question sets with answers and explanations — no login required.</p>
+<p class="muted">Browse solved question sets with answers and explanations, no login required.</p>
 {% for s in solution_sets %}
 {% with set_label=s.set_number|stringformat:"d" %}
 <a href="{% url 'solution_set' chapter.slug s.set_number %}">Set {{ s.set_number }}{% if s.title and s.title != "Set "|add:set_label %}: {{ s.title }}{% endif %}</a>

@@ -7,13 +7,13 @@
 {% endblock %}
 
 
-{% block meta_description %}{% if subject.slug == 'physics' %}Practice 10,000+ CEE Physics MCQ questions chapter-wise. Mechanics, Optics, Modern Physics, Electricity — all with answers. Best free Physics practice for CEE.{% elif subject.slug == 'chemistry' %}Practice 10,000+ CEE Chemistry MCQ questions chapter-wise. Physical, Organic, Inorganic, Applied Chemistry — all with answers. Best free Chemistry practice for CEE.{% elif subject.slug == 'zoology' %}Practice 10,000+ CEE Zoology MCQ questions chapter-wise. Human Physiology, Animal Diversity, Histology — all with answers.{% elif subject.slug == 'botany' %}Practice 10,000+ CEE Botany MCQ questions chapter-wise. Plant Physiology, Genetics, Cell Biology, Biodiversity — all with answers.{% else %}{{ page_seo.meta_description|default:page_default_description }}{% endif %}{% endblock %}
+{% block meta_description %}{% if subject.slug == 'physics' %}Practice 10,000+ CEE Physics MCQ questions chapter wise. Mechanics, Optics, Modern Physics, Electricity, all with answers. Best free Physics practice for CEE.{% elif subject.slug == 'chemistry' %}Practice 10,000+ CEE Chemistry MCQ questions chapter wise. Physical, Organic, Inorganic, Applied Chemistry, all with answers. Best free Chemistry practice for CEE.{% elif subject.slug == 'zoology' %}Practice 10,000+ CEE Zoology MCQ questions chapter wise. Human Physiology, Animal Diversity, Histology, all with answers.{% elif subject.slug == 'botany' %}Practice 10,000+ CEE Botany MCQ questions chapter wise. Plant Physiology, Genetics, Cell Biology, Biodiversity, all with answers.{% else %}{{ page_seo.meta_description|default:page_default_description }}{% endif %}{% endblock %}
 
 {% block og_title %}{{ page_seo.og_title|default:page_default_og_title }}{% endblock %}
 {% block og_description %}{{ page_seo.og_description|default:page_default_og_description }}{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/chapter.css' %}">
+<link rel="stylesheet" href="{% static 'css/chapter.css' %}?v=20260801-2">
 
 <style>
 
@@ -103,7 +103,7 @@
 <header class="header-container">
     <h1>Chapters for {{ subject.name }}</h1>
     <p>
-        Practice multiple-choice questions and exercises for better preparation!
+        Practice multiple choice questions and exercises for better preparation!
     </p>
 </header>
 
@@ -141,9 +141,13 @@
 {{ chap.name }}
 </a>
 {% else %}
-<a href="{% url 'quiz' chap.slug %}" class="chapter-link">
+<a href="{% url 'quiz' chap.slug %}?new=1" class="chapter-link">
 {{ chap.name }}
 </a>
+{% endif %}
+
+{% if chap.intro_text %}
+<p class="chapter-brief">{{ chap.intro_text|truncatewords:20 }}</p>
 {% endif %}
 
 </article>
@@ -180,9 +184,13 @@
 {{ chap.name }}
 </a>
 {% else %}
-<a href="{% url 'quiz' chap.slug %}" class="chapter-link">
+<a href="{% url 'quiz' chap.slug %}?new=1" class="chapter-link">
 {{ chap.name }}
 </a>
+{% endif %}
+
+{% if chap.intro_text %}
+<p class="chapter-brief">{{ chap.intro_text|truncatewords:20 }}</p>
 {% endif %}
 
 </article>
@@ -212,9 +220,13 @@
 {{ chap.name }}
 </a>
 {% else %}
-<a href="{% url 'quiz' chap.slug %}" class="chapter-link">
+<a href="{% url 'quiz' chap.slug %}?new=1" class="chapter-link">
 {{ chap.name }}
 </a>
+{% endif %}
+
+{% if chap.intro_text %}
+<p class="chapter-brief">{{ chap.intro_text|truncatewords:20 }}</p>
 {% endif %}
 
 </article>
@@ -237,7 +249,7 @@
 {% if chapter_solution_sets %}
 <div class="sol-set-links">
 <h2>Solved MCQ Sets</h2>
-<p class="muted">Browse solved question sets with answers and explanations — no login required.</p>
+<p class="muted">Browse solved question sets with answers and explanations, no login required.</p>
 {% for chap in chapters %}
 {% with sets=chapter_solution_sets|dict_get:chap.slug %}
 {% if sets %}
