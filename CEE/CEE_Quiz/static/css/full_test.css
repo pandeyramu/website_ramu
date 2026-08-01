@@ -120,7 +120,7 @@ body {
 .quiz-watermark {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: -1;
     pointer-events: none;
     overflow: hidden;
     opacity: 0.2;
