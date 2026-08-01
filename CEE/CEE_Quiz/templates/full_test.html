@@ -96,7 +96,7 @@ window.MathJax = {
 
 
 
-<link rel="stylesheet" href="{% static 'css/full_test.css' %}?v=20260801-1">
+<link rel="stylesheet" href="{% static 'css/full_test.css' %}?v=20260801-2">
 
 
 <style>
@@ -234,10 +234,9 @@ data-exit-url="{% url 'full_test_exit' %}"
 
 {% block content %}
 
-<div class="container {% if score is not None %}result-page{% endif %}">
-
-
 <div class="quiz-watermark" id="quiz-watermark"></div>
+
+<div class="container {% if score is not None %}result-page{% endif %}">
 
 
 
