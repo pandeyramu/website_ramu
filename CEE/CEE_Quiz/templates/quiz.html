@@ -354,6 +354,11 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
     <div id="timer" style="display:none;"></div>
 
 
+    <div class="ad-slot ad-native" style="margin: 24px 0;">
+        <script async="async" data-cfasync="false" src="https://pl30821229.effectivecpmnetwork.com/adc88700d9882d5a0a0c17db1b1131df/invoke.js"></script>
+        <div id="container-adc88700d9882d5a0a0c17db1b1131df"></div>
+    </div>
+
     {% if preview_questions %}
     <section class="preview-questions">
         <h2>Solved Sample Questions</h2>
@@ -376,6 +381,20 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
             </div>
             {% endif %}
         </article>
+        {% if forloop.counter == 5 %}
+        <div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
+            <script>
+                atOptions = {
+                    'key' : 'df9cb8b660db27eb9c3f41733b195570',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
+        </div>
+        {% endif %}
         {% endfor %}
 
         <p class="preview-cta">Ready to test yourself? Enter your name above and start the full MCQ test with detailed solutions for every question.</p>
