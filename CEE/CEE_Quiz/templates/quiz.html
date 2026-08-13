@@ -2,14 +2,11 @@
 {% load static %}
 {% load quiz_extra %}
 
-
 {% block title %}
 {{ page_seo.meta_title|default:page_default_title }}
 {% endblock %}
 
-
 {% block meta_description %}{{ page_seo.meta_description|default:page_default_description }}{% endblock %}
-
 
 {% block meta_keywords %}
 {{ page_seo.meta_keywords|default:page_default_keywords }}
@@ -18,11 +15,9 @@
 {% block og_title %}{{ page_seo.og_title|default:page_default_og_title }}{% endblock %}
 {% block og_description %}{{ page_seo.og_description|default:page_default_og_description }}{% endblock %}
 
-
 {% block extra_head %}
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260801-3">
-
 
 <style>
    .btn {
@@ -52,16 +47,13 @@
     background:#6b7280;
 }
 
-
 .result-actions .btn.home {
     background:#1458a6;
 }
 
-
 .result-actions .btn.retry:hover {
     background:#51545a;
 }
-
 
 .result-actions .btn.home:hover {
     background:#0f4a86;
@@ -75,7 +67,6 @@
     text-decoration:none;
     display:inline-block;
 }
-
 
 .btn.home:hover {
     background:#0f4a86;
@@ -182,8 +173,6 @@
 }
 </style>
 
-
-
 <script>
     window.MathJax = {
         tex: {
@@ -199,7 +188,6 @@
         }
     };
 </script>
-
 
 <script>
     // Only load MathJax when quiz is active or preview questions exist
@@ -226,12 +214,7 @@
 <meta name="robots" content="noindex, follow">
 {% endif %}
 
-
 {% endblock %}
-
-
-
-
 
 {% block body_attributes %}
 
@@ -247,11 +230,6 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
 {% endblock %}
 
-
-
-
-
-
 {% block structured_data %}
 
 <script type="application/ld+json">
@@ -263,9 +241,7 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
  "name":
  "{% if sub_chapter %}{{ sub_chapter.name }}{% else %}{{ chapter.name }}{% endif %}",
 
-
  "educationalLevel":"HighSchool",
-
 
  "about":{
     "@type":"Thing",
@@ -279,10 +255,7 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 {% endblock %}
 {% block content %}
 
-
 <div class="quiz-watermark" id="quiz-watermark" aria-hidden="true"></div>
-
-
 
 <header>
 
@@ -313,16 +286,7 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
 </header>
 
-
-
-
-
-
-
-
 <main class="container {% if score is not None %}result-page{% endif %}">
-
-
 
     {% if not quiz_started and score is None %}
 
@@ -340,24 +304,15 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
         <input type="text" name="name" class="name_place" placeholder="Enter your name" required>
 
-
         <button type="submit" name="start" value="1" id="start_btn" class="start_test">
 
             Start MCQ Test
 
         </button>
 
-
     </form>
 
-
     <div id="timer" style="display:none;"></div>
-
-
-    <div class="ad-slot ad-native" style="margin: 24px 0;">
-        <script async="async" data-cfasync="false" src="https://pl30821229.effectivecpmnetwork.com/adc88700d9882d5a0a0c17db1b1131df/invoke.js"></script>
-        <div id="container-adc88700d9882d5a0a0c17db1b1131df"></div>
-    </div>
 
     {% if preview_questions %}
     <section class="preview-questions">
@@ -397,39 +352,38 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
         {% endif %}
         {% endfor %}
 
+        <div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
+            <script>
+                atOptions = {
+                    'key' : 'df9cb8b660db27eb9c3f41733b195570',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
+        </div>
+
         <p class="preview-cta">Ready to test yourself? Enter your name above and start the full MCQ test with detailed solutions for every question.</p>
     </section>
     {% endif %}
 
-
     {% elif questions %}
 
-
-
     <div id="timer" style="display:block;"></div>
-
-
 
     <form method="POST" class="quiz-form {% if score is not None %}submitted{% endif %}"
         action="{% if sub_chapter %}{% url 'subchapter_quiz' sub_chapter.slug %}{% else %}{% url 'quiz' chapter.slug %}{% endif %}"
         id="quiz-form">
 
-
         {% csrf_token %}
-
-
 
         <input type="hidden" name="name" id="hidden-name" value="{{ user_name|default:history_user_name|default:'' }}">
 
-
-
         <input type="hidden" name="attempt_reference" value="{{ attempt_reference|default:'' }}">
 
-
-
         <input type="hidden" name="time_taken_seconds" id="time-taken-seconds" value="0">
-
-
 
         {% if question_ids_csv %}
 
@@ -437,29 +391,18 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
         {% endif %}
 
-
-
-
-
-
         {% if score is None %}
 
-
         <section id="submit-review-panel" class="submit-review-modal" hidden aria-hidden="true">
-
 
             <div class="submit-review-backdrop" id="submit-review-backdrop">
             </div>
 
-
-
             <div class="submit-review-panel" role="dialog" aria-modal="true">
-
 
                 <h2>
                     Test
                 </h2>
-
 
                 <p class="submit-review-meta">
 
@@ -479,23 +422,17 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
                 </p>
 
-
-
                 <p id="review-time-left" class="submit-review-time">
 
                     Time Left: --:--
 
                 </p>
 
-
-
                 <h3 class="submit-review-subtitle">
 
                     Before Final Submit
 
                 </h3>
-
-
 
                 <p class="submit-review-summary">
 
@@ -514,12 +451,8 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
                 </p>
 
-
-
                 <div id="question-number-links" class="question-number-links">
                 </div>
-
-
 
                 <div class="submit-review-actions">
 
@@ -529,47 +462,30 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
                     </button>
 
-
                     <button type="button" id="close-review-btn" class="close-review-btn">
 
                         Continue Solving
 
                     </button>
 
-
                 </div>
-
-
 
             </div>
 
-
         </section>
-
 
         {% endif %}
 
-
-
-
-
-
         <section id="flag-review-panel" class="submit-review-modal" hidden aria-hidden="true">
-
 
             <div class="submit-review-backdrop" id="flag-review-backdrop">
             </div>
 
-
-
             <div class="submit-review-panel">
-
 
                 <h2>
                     Flag Question for Review
                 </h2>
-
-
 
                 <p class="submit-review-meta">
 
@@ -580,47 +496,33 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
                 </p>
 
-
-
                 <p id="flag-question-preview" class="submit-review-summary">
 
                     Choose why this question should be reviewed.
 
                 </p>
 
-
-
-
                 <select id="flag-reason" class="name_place">
-
 
                     <option value="wrong">
                         Wrong
                     </option>
 
-
                     <option value="question out of syllabus">
                         Question out of syllabus
                     </option>
-
 
                     <option value="solution wrong">
                         Solution wrong
                     </option>
 
-
                     <option value="all of the above">
                         All of the above
                     </option>
 
-
                 </select>
 
-
-
-
                 <div class="submit-review-actions">
-
 
                     <button type="button" id="send-flag-btn" class="submit-now-btn">
 
@@ -628,20 +530,15 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
                     </button>
 
-
-
                     <button type="button" id="close-flag-btn" class="close-review-btn">
 
                         Cancel
 
                     </button>
 
-
                 </div>
 
-
             </div>
-
 
        </section>
 
@@ -767,8 +664,6 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
         <article class="question-block" id="question-{{ forloop.counter }}" data-question-number="{{ forloop.counter }}"
             data-question-id="{{ q.id }}" data-question-text="{{ q.question_text|escape }}">
 
-
-
             <div class="question-tools">
 
                 <button type="button" class="flag-question-btn" data-question-number="{{ forloop.counter }}">
@@ -779,10 +674,6 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
             </div>
 
-
-
-
-
             <p>
 
                 <strong>
@@ -791,20 +682,11 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
             </p>
 
-
-
-
-
-
             {% for opt in "ABCD" %}
-
-
 
             {% with option_text=q|get_option_text:opt %}
 
             {% with user_choice=user_answers|dict_get:q.id %}
-
-
 
             <label class="option
 
@@ -814,28 +696,18 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 correct
 {% endif %}
 
-
 {% if user_choice|default:'' == opt and opt != q.correct_option %}
 wrong
 {% endif %}
 
-
 {% endif %}
-
-
 
 {% if user_choice|default:'' == opt %}
 selected
 {% endif %}">
 
-
-
-
-
                 <input type="radio" name="q{{ q.id }}" value="{{ opt }}" {% if score is not None %} disabled {% endif %}
 {% if user_choice|default:'' == opt %} checked {% endif %}>
-
-
 
                 <span class="option-text">
 
@@ -844,30 +716,17 @@ selected
 
                 </span>
 
-
-
             </label>
 
-
-
             {% endwith %}
 
             {% endwith %}
-
-
 
             {% endfor %}
 
-
-
-
-
-
             {% if score is not None %}
 
-
             <div class="solution-box">
-
 
                 <p class="solution-title">
 
@@ -875,10 +734,7 @@ selected
 
                 </p>
 
-
-
                 <p class="solution-text">
-
 
                     {% if q.solution %}
 
@@ -890,31 +746,17 @@ selected
 
                     {% endif %}
 
-
-
                 </p>
-
 
             </div>
 
-
             {% endif %}
-
-
 
         </article>
 
-
-
         {% endfor %}
 
-
-
-
-
-
         {% if score is None %}
-
 
         <button type="submit" class="submit-btn" id="submit-quiz-btn">
 
@@ -922,16 +764,9 @@ selected
 
         </button>
 
-
-
         {% endif %}
 
-
-
-
-
         {% if score is not None %}
-
 
         <div class="result-actions">
 
@@ -945,25 +780,15 @@ Back to Home
 
 </div>
 
-
             </div>
 
         </div>
 
-
         {% endif %}
-
-
-
 
     </form>
 
-
-
-
-
     {% else %}
-
 
     <p class="no-questions">
 
@@ -976,19 +801,11 @@ Back to Home
 
     </p>
 
-
-
     {% endif %}
-
-
-
-
 
     {% if score is None %}
 
-
     <nav class="links">
-
 
         <a href="{% url 'chapters' chapter.subject.slug %}" class="back-chapters">
 
@@ -996,15 +813,11 @@ Back to Home
 
         </a>
 
-
-
         <a href="{% url 'home' %}" class="back-subjects">
 
             Back to Subjects
 
         </a>
-
-
 
     </nav>
 

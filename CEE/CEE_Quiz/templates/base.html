@@ -24,12 +24,10 @@
     <meta name="twitter:image" content="https://pandeyramu.com.np/static/images/banner.png">
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}">
-    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -395,7 +393,7 @@
         }
     </style>
     {% block structured_data %}{% endblock %}
-    <!-- Cookie Consent + Consent-gated Analytics & Ads (self-contained, no CDN) -->
+    <!-- Cookie Consent + Consent-gated Analytics (self-contained, no CDN) -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -407,7 +405,6 @@
         });
 
         var _gaLoaded = false;
-        var _adsLoaded = false;
 
         function enableGA(){
             if (_gaLoaded) return;
@@ -428,22 +425,9 @@
             setTimeout(function(){ gtag('event', 'page_view'); }, 1500);
         }
 
-        function enableAds(){
-            if (_adsLoaded) return;
-            _adsLoaded = true;
-            var s = document.createElement('script');
-            s.async = true;
-            s.id = 'adsbygoogle-script';
-            s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659';
-            s.crossOrigin = 'anonymous';
-            document.head.appendChild(s);
-        }
-
         function activateConsent(){
             // GA loads immediately (lightweight, ~45KB)
             enableGA();
-            // AdSense deferred 3s so page renders first (saves ~300KB + ad requests)
-            setTimeout(enableAds, 3000);
         }
 
         function getCookie(name){
@@ -635,7 +619,7 @@
 
     <div id="cookie-banner" role="dialog" aria-label="Cookie consent">
         <div class="cb-text">
-            We use cookies for analytics and to display personalized ads (Google AdSense). By clicking “Accept”, you consent to our use of cookies. See our <a href="/privacy-policy/">Privacy Policy</a> for details.
+            We use cookies for analytics to improve our site. By clicking “Accept”, you consent to our use of cookies. See our <a href="/privacy-policy/">Privacy Policy</a> for details.
         </div>
         <div class="cb-buttons">
             <button type="button" class="cb-btn cb-decline" onclick="declineCookies()">Decline</button>
