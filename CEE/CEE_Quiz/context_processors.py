@@ -168,7 +168,14 @@ def _safe_lookup(request):
             subchapter_slug = (resolver.kwargs or {}).get('slug') if resolver else ''
             subchapter = SubChapter.objects.select_related('chapter__subject').filter(slug=subchapter_slug).first()
             if subchapter and subchapter.chapter and subchapter.chapter.subject:
-                return _subchapter_quiz_defaults(subchapter.name, subchapter.chapter.name)
+                defaults = _subchapter_quiz_defaults(subchapter.name, subchapter.chapter.name)
+                if subchapter.seo_description:
+                    desc = subchapter.seo_description.strip()
+                    if len(desc) > 158:
+                        desc = desc[:158].rsplit(' ', 1)[0]
+                    defaults.meta_description = desc
+                    defaults.og_description = desc
+                return defaults
 
         if route_name == 'full_test':
             return _full_test_defaults()

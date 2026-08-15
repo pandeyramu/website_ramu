@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block title %}
@@ -24,13 +24,17 @@ How to Remember Organic Chemistry Reactions for CEE | CEE MCQ
 <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
 
 <style>
+.blog-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+}
 .blog-content-box {
-    margin-top: 1.5rem;
-    background: linear-gradient(180deg, #ffffff 0%, rgba(179,106,0,.05) 100%);
-    border: 1px solid rgba(179,106,0,.20);
-    border-radius: 14px;
-    padding: 1.3rem;
-    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+    margin-top: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
 }
 .blog-category {
     display: inline-block;
@@ -86,36 +90,17 @@ How to Remember Organic Chemistry Reactions for CEE | CEE MCQ
 .topic-table tbody tr:nth-child(even) { background: rgba(179,106,0,.05); }
 .topic-table tbody tr:hover { background: rgba(179,106,0,.10); transition: .2s ease; }
 @media(max-width: 768px) {
-    .topic-table { display: block; overflow-x: auto; white-space: nowrap; }
-    .blog-content-box { padding: 1rem; }
+    .topic-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        max-width: 100%;
+    }
+    .topic-table th, .topic-table td { white-space: nowrap; }
+    .blog-content-box { padding: 0; }
 }
-.full-test-footer {
-    border-top: 1px solid rgba(255,255,255,.1);
-    background: linear-gradient(135deg, #0c2f4a, #184f79);
-    margin-top: 2rem;
-    padding: 1.2rem 1rem 1.5rem;
-    color: rgba(255,255,255,.88);
-    text-align: center;
-}
-.footer-container { max-width: 880px; margin: auto; }
-.footer-copy { margin: .85rem 0 0; font-size: .9rem; }
-.footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.8rem;
-    margin-bottom: 0.7rem;
-}
-.footer-nav a {
-    color: rgba(255,255,255,.85);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color .2s;
-}
-.footer-nav a:hover {
-    color: #ffd94d;
-}
+
 .ad-slot {
     max-width: 100%;
     overflow: hidden;
@@ -175,6 +160,19 @@ How to Remember Organic Chemistry Reactions for CEE | CEE MCQ
     When you instead think in conversion chains hydrocarbon → haloalkane → alcohol → aldehyde/ketone → carboxylic acid the direction of change becomes logical, not arbitrary. You are not memorizing a fact; you are understanding a direction.
   </p>
 </section>
+
+<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
+    <script>
+        atOptions = {
+            'key' : 'df9cb8b660db27eb9c3f41733b195570',
+            'format' : 'iframe',
+            'height' : 250,
+            'width' : 300,
+            'params' : {}
+        };
+    </script>
+    <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
+</div>
 
 <section>
   <h2>Build a reaction map on one page</h2>
@@ -286,18 +284,7 @@ How to Remember Organic Chemistry Reactions for CEE | CEE MCQ
 </section>
 
 </div>
-<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
-    <script>
-        atOptions = {
-            'key' : 'df9cb8b660db27eb9c3f41733b195570',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-        };
-    </script>
-    <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
-</div>
+
 
 </article>
 </main>

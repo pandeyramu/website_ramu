@@ -157,7 +157,10 @@ body {
 
 /* Subchapter Link */
 .subchapter-link {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     text-decoration: none;
     color: #1a237e;
     margin: 0 0 4px;
@@ -172,6 +175,18 @@ body {
 .subchapter-name {
     font-weight: 600;
     font-size: 17px;
+}
+
+.subchapter-arrow {
+    flex: none;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a237e;
+    transition: transform 0.2s;
+}
+
+.subchapter-card:hover .subchapter-arrow {
+    transform: translateX(4px);
 }
 
 .subchapter-brief {

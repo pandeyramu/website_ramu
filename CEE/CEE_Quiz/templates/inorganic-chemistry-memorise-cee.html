@@ -24,13 +24,17 @@ Chemistry Inorganic Section: What to Memorise for CEE | CEE MCQ
 <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
 
 <style>
+.blog-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+}
 .blog-content-box {
-    margin-top: 1.5rem;
-    background: linear-gradient(180deg, #ffffff 0%, rgba(192,75,98,.05) 100%);
-    border: 1px solid rgba(192,75,98,.18);
-    border-radius: 14px;
-    padding: 1.3rem;
-    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+    margin-top: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
 }
 .blog-category {
     display: inline-block;
@@ -72,8 +76,15 @@ Chemistry Inorganic Section: What to Memorise for CEE | CEE MCQ
 .topic-table tbody tr:nth-child(even) { background: rgba(192,75,98,.05); }
 .topic-table tbody tr:hover { background: rgba(192,75,98,.10); transition: .2s ease; }
 @media(max-width: 768px) {
-    .topic-table { display: block; overflow-x: auto; white-space: nowrap; }
-    .blog-content-box { padding: 1rem; }
+    .topic-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        max-width: 100%;
+    }
+    .topic-table th, .topic-table td { white-space: nowrap; }
+    .blog-content-box { padding: 0; }
 }
 .ad-slot {
     max-width: 100%;
@@ -134,6 +145,19 @@ Chemistry Inorganic Section: What to Memorise for CEE | CEE MCQ
     The key is accepting that you do not need to master Inorganic Chemistry. You need to score 7 or 8 out of 10 marks on Inorganic questions, and that requires knowing specific topics well rather than everything superficially.
   </p>
 </section>
+
+<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
+    <script>
+        atOptions = {
+            'key' : 'df9cb8b660db27eb9c3f41733b195570',
+            'format' : 'iframe',
+            'height' : 250,
+            'width' : 300,
+            'params' : {}
+        };
+    </script>
+    <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
+</div>
 
 <section>
   <h2>The topics worth memorising</h2>
@@ -227,18 +251,7 @@ Chemistry Inorganic Section: What to Memorise for CEE | CEE MCQ
 </section>
 
 </div>
-<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
-    <script>
-        atOptions = {
-            'key' : 'df9cb8b660db27eb9c3f41733b195570',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-        };
-    </script>
-    <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
-</div>
+
 
 </article>
 </main>

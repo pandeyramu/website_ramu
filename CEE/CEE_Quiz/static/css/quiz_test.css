@@ -1,4 +1,4 @@
-* {
+﻿* {
     box-sizing: border-box;
 }
 
@@ -61,7 +61,7 @@ body {
     color: #999;
     font-style: italic;
 }
-#start_full_test {
+#start_btn {
     display: flex;
     justify-self: center;
     width: 100%;
@@ -82,7 +82,7 @@ body {
     justify-content: center;
 }
 
-#start_full_test:hover {
+#start_btn:hover {
     background: #ffc61a;
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(208, 132, 0, 0.45);
@@ -130,7 +130,7 @@ body {
     color: #9db6cf;
 }
 
-#full_test_timer {
+#quiz_timer {
     font-size: 22px;
     font-weight: 800;
     letter-spacing: 0.04em;
@@ -141,21 +141,21 @@ body {
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
-#full_test_timer.timer-safe {
+#quiz_timer.timer-safe {
     color: #ffd94d;
 }
 
-#full_test_timer.timer-warning {
+#quiz_timer.timer-warning {
     color: #ffcf6e;
     animation: timer-countdown-warning 1.3s ease-in-out infinite;
 }
 
-#full_test_timer.timer-critical {
+#quiz_timer.timer-critical {
     color: #ffffff;
     animation: timer-countdown-critical 0.9s ease-in-out infinite;
 }
 
-#full_test_timer.timer-done {
+#quiz_timer.timer-done {
     color: #ffffff;
     animation: none;
 }
@@ -211,7 +211,7 @@ body {
     display: none;
 }
 
-.quiz-topbar--compact #full_test_timer {
+.quiz-topbar--compact #quiz_timer {
     font-size: 17px;
 }
 
@@ -988,8 +988,41 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
     width: 100%;
     margin-top: 20px;
+}
+
+.links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 8px 15px;
+    background: #6c757d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.links a:hover {
+    background: #0c2f4a;
+    color: #ffd94d;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+    .links {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .links a {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 .home-btn {
@@ -1181,7 +1214,7 @@ body.review-modal-open {
         padding: 8px 8px;
     }
 
-    #full_test_timer {
+    #quiz_timer {
         font-size: 16px;
         letter-spacing: 0.02em;
     }
@@ -1247,7 +1280,7 @@ body.review-modal-open {
 }
 
 @media (max-width: 480px) {
-    #start_full_test,
+    #start_btn,
     .submit-btn,
     .submit-now-btn,
     .close-review-btn,
@@ -1261,3 +1294,4 @@ body.review-modal-open {
         align-items: stretch;
     }
 }
+

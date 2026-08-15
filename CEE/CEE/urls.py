@@ -40,6 +40,12 @@ urlpatterns = [
     
     # Main app URLs
     path('', views.home, name='home'),
+    # Backwards-compatible redirects for old numeric URLs (301) - must precede slug routes
+    # so numeric IDs resolve here instead of matching the slug converter (which also accepts digits)
+    path('subject/<int:subject_id>/', views.chapters_redirect),
+    path('chapter/<int:chapter_id>/', views.quiz_redirect),
+    path('chapter/<int:chapter_id>/subchapters/', views.subchapters_redirect),
+    path('subchapter/<int:subchapter_id>/quiz/', views.subchapter_quiz_redirect),
     # Slug-based SEO-friendly URLs
     path('subject/<slug:slug>/', views.chapters, name='chapters'),
     path('chapter/<slug:slug>/solved-set/<int:set_number>/', views.solution_set, name='solution_set'),
@@ -50,11 +56,6 @@ urlpatterns = [
     path('mcq/cell-biology/', lambda r, **_: HttpResponsePermanentRedirect('/chapter/cell-biology/')),
     path('mcq/<slug:slug>/', views.subchapter_quiz, name='subchapter_quiz'),
     path('mcq/<slug:slug>/exit/', views.subchapter_quiz_exit, name='subchapter_quiz_exit'),
-    # Backwards-compatible redirects for old numeric URLs (301)
-    path('subject/<int:subject_id>/', views.chapters_redirect),
-    path('chapter/<int:chapter_id>/', views.quiz_redirect),
-    path('chapter/<int:chapter_id>/subchapters/', views.subchapters_redirect),
-    path('subchapter/<int:subchapter_id>/quiz/', views.subchapter_quiz_redirect),
     path('quiz/<slug:slug>/', views.subchapter_quiz_legacy_redirect),
     path('full-test/', views.full_test, name='full_test'),
     path('full-test/exit/', views.full_test_exit, name='full_test_exit'),
@@ -87,6 +88,7 @@ urlpatterns = [
     )),
     path("sitemap.xml", sitemap, {'sitemaps': sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
     path("ads.txt", views.ads_txt, name="ads_txt"),
+    path("llms.txt", views.llms_txt, name="llms_txt"),
     # Catch-all SEO slug route (must stay last)
     path('<slug:page_slug>/', views.dynamic_page, name='dynamic_page'),
 ]

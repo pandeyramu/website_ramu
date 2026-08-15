@@ -16,7 +16,7 @@ html, body {
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f5f7fa;
-    color: #333;
+    color: #2d3436;
     min-height: 100vh;
 }
 
@@ -63,7 +63,7 @@ header {
 }
 
 .welcome-text {
-    max-width: 70%;
+    max-width: 1120px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -71,7 +71,7 @@ header {
 .welcome-text h1 {
     margin: 0 0 15px 0;
     font-size: 32px;
-    font-weight: 700;
+    font-weight: 800;
     color: #FFD700;
 }
 
@@ -110,14 +110,14 @@ header {
     padding: 25px 30px;
     background: white;
     border-left: 4px solid #0066FF;
-    border-radius: 4px;
-    text-align: justify;
+    border-radius: 12px;
+    text-align: left;
     line-height: 1.8;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .cee-intro p {
-    color: #2c3e50;
+    color: #2d3436;
     font-size: 16px;
     font-weight: 500;
     margin: 0 0 18px 0;
@@ -149,7 +149,8 @@ header {
 }
 .config-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0 9px;
     font-size: 15px;
 }
 
@@ -158,8 +159,16 @@ header {
     color: white;
 }
 
+.config-table thead th:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.config-table thead th:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
 .config-table th {
-    padding: 16px;
+    padding: 12px 14px;
     text-align: left;
     font-weight: 600;
     text-transform: uppercase;
@@ -176,30 +185,49 @@ header {
     vertical-align: middle;
 }
 
-.config-table tbody tr {
-    border-bottom: 1px solid #ecf0f1;
-    transition: background 0.2s ease;
+/* Topic rows become separate rounded blocks with breathing room */
+.config-table tbody tr.topic-row td {
+    background: #f5f7fa;
+    border-top: 1.5px solid #cfd9e4;
+    border-bottom: 1.5px solid #cfd9e4;
+    padding: 13px 12px;
 }
 
-.config-table tbody tr.topic-row:hover {
-    /* Apply hover only to topic rows so headers/total remain unchanged */
-    background: #f8f9fa;
+.config-table tbody tr.topic-row td:first-child {
+    border-left: 1.5px solid #cfd9e4;
+    border-radius: 10px 0 0 10px;
 }
 
-/* Ensure subject header and total row never change on hover */
+.config-table tbody tr.topic-row td:last-child {
+    border-right: 1.5px solid #cfd9e4;
+    border-radius: 0 10px 10px 0;
+}
+
+/* Uniform background for every topic row (no zebra striping) */
+.config-table tbody tr.topic-row td {
+    background: #f5f7fa;
+}
+
+/* Hover: highlight the whole row only, text colour stays unchanged */
+.config-table tbody tr.topic-row:hover td {
+    background: #edf3fa;
+}
+
+/* Subject header and total row are not interactive */
 .config-table tr.subject-header,
 .config-table tr.total-row {
-    transition: none;
-}
-.config-table tr.subject-header:hover,
-.config-table tr.total-row:hover {
-    /* Preserve original background and text color on hover */
     cursor: default;
+    transition: none;
 }
 
 .config-table td {
-    padding: 14px 16px;
+    padding: 13px 14px;
     vertical-align: middle;
+    line-height: 1.6;
+}
+
+.config-table tbody tr.topic-row td {
+    line-height: 1.55;
 }
 
 /* ==============================
@@ -210,67 +238,58 @@ header {
 .subject-header {
     font-weight: 700;
     font-size: 16px;
-    color: white !important;
-    padding: 20px 16px !important;
+    color: white;
+    text-align: left;
+}
+
+.subject-header td {
+    padding: 16px 14px !important;
+    border-style: solid;
+    border-width: 1px 0;
+    border-color: transparent;
+}
+
+.subject-header td:first-child {
+    border-left-width: 1px;
+    border-radius: 10px 0 0 10px;
+}
+
+.subject-header td:last-child {
+    border-right-width: 1px;
+    border-radius: 0 10px 10px 0;
+}
+
+.subject-header .sh-unit {
+    width: 40px;
+    padding-right: 0 !important;
+}
+
+.subject-header .sh-name {
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.subject-header .sh-qty {
     text-align: center;
-    border-top: 3px solid rgba(0, 0, 0, 0.3);
+    font-size: 1.1rem;
+    font-weight: 800;
+    white-space: nowrap;
 }
 
-.zoology-header {
-    background: #5b7d9e;
-}
-
-.botany-header {
-    background: #52a885;
-}
-
-.chemistry-header {
-    background: #d97d3c;
-}
-
-.physics-header {
-    background: #4a7ba7;
-}
-
-.mat-header {
-    background: #9b59b6;
-}
-
-/* Force header backgrounds and text color to remain unchanged on hover */
-.zoology-header:hover td,
-.zoology-header td {
-    background: #5b7d9e !important;
-    color: #ffffff !important;
-}
-.botany-header:hover td,
-.botany-header td {
-    background: #52a885 !important;
-    color: #ffffff !important;
-}
-.chemistry-header:hover td,
-.chemistry-header td {
-    background: #d97d3c !important;
-    color: #ffffff !important;
-}
-.physics-header:hover td,
-.physics-header td {
-    background: #4a7ba7 !important;
-    color: #ffffff !important;
-}
-.mat-header:hover td,
-.mat-header td {
-    background: #9b59b6 !important;
-    color: #ffffff !important;
-}
+.zoology-header td { background: #5b7d9e; color: #ffffff; border-color: #48617c; }
+.botany-header td { background: #52a885; color: #ffffff; border-color: #3f876c; }
+.chemistry-header td { background: #d97d3c; color: #ffffff; border-color: #b3622c; }
+.physics-header td { background: #4a7ba7; color: #ffffff; border-color: #3b6387; }
+.mat-header td { background: #9b59b6; color: #ffffff; border-color: #7e4699; }
 
 /* Topic Rows */
 .topic-row {
-    background: #ffffff;
+    background: #f5f7fa;
     align-items: center;
 }
 
 .topic-row td {
-    padding: 12px 16px;
+    padding: 12px;
 }
 
 .topic-row .row-number {
@@ -279,56 +298,56 @@ header {
     width: 40px;
 }
 
-.topic-row .qty {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-weight: 600;
-    color: #dfe6ed;
-    background: #3e434b;
-    border-radius: 3px;
-
-    width: 45px;
-    height: 32px;        
-
-    padding: 0; 
-    margin: auto;   
-    margin-top: 8px;   
+.config-table tbody tr.topic-row td.qty {
+    text-align: center;
+    font-weight: 700;
+    color: #3e434b;
 }
 /* Highlight High Question Count */
-.topic-row.highlight-high {
-    background: #f0f8ff;
-}
-
-.topic-row.highlight-high .qty-high {
-    background: #f5576c;
-    color: white;
-    font-weight: 600;
+.config-table tbody tr.topic-row.highlight-high td.qty-high {
+    background: #fde8eb;
+    color: #d61f3d;
+    font-weight: 700;
 }
 
 /* Total Row */
 .total-row {
-    background: #2c3e50;
     color: white;
     font-weight: 600;
     font-size: 16px;
 }
 
-.total-row td {
-    padding: 18px 16px;
+.config-table tr.total-row td {
+    background: #2c3e50;
+    color: #ffffff;
+    padding: 16px 14px;
+    border: 1px solid #1f2e3d;
+    border-width: 1px 0;
+}
+
+.config-table tr.total-row td:first-child {
+    border-left-width: 1px;
+    border-radius: 10px 0 0 10px;
+}
+
+.config-table tr.total-row td:last-child {
+    border-right-width: 1px;
+    border-radius: 0 10px 10px 0;
+    text-align: center;
 }
 
 .total-qty {
-    background: #3d5a80;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 3px;
-    display: block;
-    margin: 0 auto;
-    width: 50px;
+    display: inline-block;
+    min-width: 46px;
+    padding: 6px 16px;
+    background: #ffd94d;
+    color: #0c2f4a;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 1.3;
     text-align: center;
-    font-weight: 600;
+    margin: 0 auto;
 }
 
 /* ==============================
@@ -339,24 +358,25 @@ header {
     max-width: 900px;
     margin: 60px auto;
     padding: 40px;
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(15, 58, 91, 0.16);
     text-align: center;
+    color: #fff;
 }
 
 .subjects h2 {
     font-size: 28px;
-    color: #0073ff;
+    color: #ffd94d;
     margin: 0 0 15px 0;
 }
 
 .subjects h3 {
-    color: #34495e;
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .subjects p {
-    color: #3b76ff;
+    color: rgba(255, 255, 255, 0.92);
     font-size: 16px;
     margin: 15px 0;
 }
@@ -365,11 +385,12 @@ header {
     display: inline-block;
     margin: 20px 0;
     padding: 12px 24px;
-    border-radius: 4px;
-    background: #0066FF;
-    color: white;
+    border-radius: 999px;
+    background: #ffd94d;
+    color: #0c2f4a;
     font-size: 16px;
     font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 /* ==============================
@@ -386,21 +407,23 @@ header {
 .btn {
     display: inline-block;
     padding: 14px 28px;
-    background: #0066FF;
-    color: white;
+    background: transparent;
+    color: #ffd94d;
     font-weight: 600;
-    border-radius: 4px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(255, 217, 77, 0.6);
     text-decoration: none;
     transition: all 0.2s ease;
     text-align: center;
-    border: none;
     cursor: pointer;
     font-size: 15px;
 }
 
 .btn:hover {
-    background: #28a745;
-    transform: translateY(-4px);
+    background: #ffd94d;
+    color: #0c2f4a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255, 217, 77, 0.3);
 }
 
 .btn-subject {
@@ -418,14 +441,19 @@ header {
     width: 100%;
     max-width: 400px;
     padding: 16px 40px;
-    background: #0066FF;
+    background: #ffd94d;
+    color: #0c2f4a;
     font-size: 16px;
     font-weight: 600;
+    border: none;
+    box-shadow: 0 2px 8px rgba(15, 58, 91, 0.14);
 }
 
 .btn-full-test:hover {
-    background: #28a745;
-    transform: translateY(-4px);
+    background: #ffc61a;
+    color: #0c2f4a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(15, 58, 91, 0.18);
 }
 
 /* Features section */
@@ -452,11 +480,11 @@ header {
     background: #fff;
     border: 1px solid #e0e0e0;
     border-left: 4px solid #1458a6;
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 24px 20px;
     text-align: left;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .feature-card:hover {
@@ -475,6 +503,41 @@ header {
     font-size: 14px;
     line-height: 1.6;
     color: #555;
+}
+
+/* Author bio */
+.author-bio {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 24px 28px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-left: 5px solid #1458a6;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.author-bio h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    color: #1a237e;
+}
+
+.author-bio p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #2d3436;
+}
+
+.author-bio a {
+    color: #1458a6;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.author-bio a:hover {
+    text-decoration: underline;
 }
 
 /* Prep tips section */
@@ -565,6 +628,14 @@ img, video, iframe, table {
         padding: 10px 12px;
     }
 
+    .config-table .subject-header .sh-name {
+        font-size: 13px;
+    }
+
+    .config-table .subject-header .sh-qty {
+        font-size: 0.95rem;
+    }
+
     .subjects {
         margin: 40px auto;
         padding: 25px;
@@ -588,6 +659,11 @@ img, video, iframe, table {
 
     .welcome-text {
         padding: 15px;
+    }
+
+    .home-brand img {
+        width: 48px !important;
+        height: 48px !important;
     }
 
     .welcome-text h1 {
@@ -625,29 +701,74 @@ img, video, iframe, table {
     }
 
     .table-wrapper {
-        padding: 15px;
+        padding: 10px;
         margin: 0;
+        overflow-x: hidden;
     }
 
     .config-table {
         font-size: 12px;
+        border-spacing: 0 6px;
+        table-layout: fixed;
     }
 
-    .config-table th {
-        padding: 10px 8px;
+    .config-table col.unit-col,
+    .config-table .sh-unit,
+    .config-table .row-number {
+        width: 24px;
+    }
+
+    .config-table th:first-child,
+    .config-table td:first-child {
+        width: 24px;
+        padding-left: 5px;
+        padding-right: 3px;
+    }
+
+    .config-table .qty-col,
+    .config-table td.qty {
+        width: 56px;
+    }
+
+    .config-table th,
+    .config-table td {
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .config-table thead th {
+        padding: 8px 6px;
+        font-size: 11px;
+        line-height: 1.35;
+        white-space: normal;
     }
 
     .config-table td {
-        padding: 8px;
+        padding: 10px 8px;
+        line-height: 1.5;
     }
 
-    .subject-header {
+    .config-table .subject-header {
         font-size: 14px;
-        padding: 15px 8px !important;
     }
 
-    .topics-row .row-number {
-        width: 30px;
+    .config-table .subject-header td {
+        padding: 14px 10px !important;
+    }
+
+    .config-table tr.total-row td {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+
+    .config-table tr.total-row td:first-child {
+        padding-left: 12px;
+    }
+
+    .config-table .total-qty {
+        min-width: 0;
+        padding: 4px 10px;
+        font-size: 15px;
     }
 
     .subjects {
@@ -664,7 +785,7 @@ img, video, iframe, table {
     }
 
     .button-group {
-        flex-direction: column;
+        grid-template-columns: 1fr;
     }
 
     .btn {

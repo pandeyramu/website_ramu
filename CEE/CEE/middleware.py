@@ -24,7 +24,7 @@ class SecurityHeadersMiddleware:
             "http://thedirecthor.com http://*.thedirecthor.com "
             "https://infolinks.com https://*.infolinks.com; "
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-            "font-src 'self' https://fonts.gstatic.com; "
+            "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; "
             "img-src 'self' data: https:; "
             "connect-src 'self' https: data:; "
             "frame-src 'self' "

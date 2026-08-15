@@ -1578,7 +1578,7 @@ def full_test_results(request):
 
 
 def privacy_policy(request):
-    return render(request, 'privacy.html')
+    return redirect('privacy_policy', permanent=True)
 
 
 def privacy_policy_redirect(request):
@@ -1633,6 +1633,30 @@ def ads_txt(request):
     except FileNotFoundError:
         content = 'google.com, pub-3880021540956659, DIRECT, f08c47fec0942fa0'
     return HttpResponse(content, content_type='text/plain')
+
+
+def llms_txt(request):
+    content = (
+        "# CEE MCQ\n\n"
+        "> Free CEE practice questions for Nepal's Common Entrance Examination (CEE).\n\n"
+        "CEE MCQ (https://pandeyramu.com.np) is a free, ad-supported practice platform for students preparing "
+        "for the Common Entrance Examination conducted by Nepal's Medical Education Commission (MEC). It offers "
+        "47,000+ chapter-wise MCQs across Physics, Chemistry, Zoology, Botany and MAT, each with a step-by-step "
+        "solution. Every test applies the real exam's negative marking (+1 / -0.25) and a timer.\n\n"
+        "## Key facts\n"
+        "- Exam format: 200 MCQs in 3 hours - Physics 50, Chemistry 50, Biology (Zoology + Botany) 80, MAT 20.\n"
+        "- Marking: +1 for a correct answer, -0.25 for an incorrect answer, maximum score 200.\n"
+        "- Highest weightage topics: Human Biology and Physiology (15), Physical Chemistry (17), Organic Chemistry (17), Modern Physics (12), Mechanics (10).\n"
+        "- The Biology section is split equally: Zoology 40 questions, Botany 40 questions.\n\n"
+        "## Core pages\n"
+        "- Home: https://pandeyramu.com.np/\n"
+        "- All subjects: https://pandeyramu.com.np/all-subjects/\n"
+        "- Full mock test: https://pandeyramu.com.np/full-test/\n"
+        "- About: https://pandeyramu.com.np/about/\n"
+        "- Contact: https://pandeyramu.com.np/contact/\n"
+        "- Blog: https://pandeyramu.com.np/blog/\n"
+    )
+    return HttpResponse(content, content_type='text/plain; charset=utf-8')
 
 
 def blog_index(request):

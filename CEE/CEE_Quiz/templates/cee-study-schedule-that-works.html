@@ -24,13 +24,17 @@ How to Build a CEE Study Schedule That Actually Works | CEE MCQ
 <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
 
 <style>
+.blog-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+}
 .blog-content-box {
-    margin-top: 1.5rem;
-    background: linear-gradient(180deg, #ffffff 0%, rgba(192,75,98,.05) 100%);
-    border: 1px solid rgba(192,75,98,.18);
-    border-radius: 14px;
-    padding: 1.3rem;
-    box-shadow: 0 8px 18px rgba(15,58,91,.06);
+    margin-top: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
 }
 .blog-category {
     display: inline-block;
@@ -72,8 +76,15 @@ How to Build a CEE Study Schedule That Actually Works | CEE MCQ
 .topic-table tbody tr:nth-child(even) { background: rgba(192,75,98,.05); }
 .topic-table tbody tr:hover { background: rgba(192,75,98,.10); transition: .2s ease; }
 @media(max-width: 768px) {
-    .topic-table { display: block; overflow-x: auto; white-space: nowrap; }
-    .blog-content-box { padding: 1rem; }
+    .topic-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        max-width: 100%;
+    }
+    .topic-table th, .topic-table td { white-space: nowrap; }
+    .blog-content-box { padding: 0; }
 }
 .ad-slot {
     max-width: 100%;
@@ -139,6 +150,19 @@ How to Build a CEE Study Schedule That Actually Works | CEE MCQ
     A good CEE schedule is not about packing the most hours into every day. It is about creating a sustainable rhythm that covers the syllabus, builds in revision, and survives contact with real life.
   </p>
 </section>
+
+<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
+    <script>
+        atOptions = {
+            'key' : 'df9cb8b660db27eb9c3f41733b195570',
+            'format' : 'iframe',
+            'height' : 250,
+            'width' : 300,
+            'params' : {}
+        };
+    </script>
+    <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
+</div>
 
 <div class="tip-box">
   <p><strong>The 80 percent rule:</strong> Never schedule more than 80 percent of your available study time. If you have 6 hours available on a given day, schedule only 4.8 hours of actual study. The remaining time absorbs unexpected delays, difficult topics that need extra time, and the mental rest that prevents burnout.</p>
@@ -238,18 +262,7 @@ How to Build a CEE Study Schedule That Actually Works | CEE MCQ
 </section>
 
 </div>
-<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
-    <script>
-        atOptions = {
-            'key' : 'df9cb8b660db27eb9c3f41733b195570',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-        };
-    </script>
-    <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
-</div>
+
 
 </article>
 </main>

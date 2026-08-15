@@ -57,7 +57,9 @@ window.MathJax = {
 </script>
 
 <script>
-    // Only load MathJax when quiz is active or results are shown
+    // Only load MathJax when quiz is active or results are shown.
+    // For an active quiz, typeset only the first question block so the page
+    // never pays the cost of typesetting all 180 questions at once.
     (function() {
         var qForm = document.getElementById('full-test-form');
         var hasActiveQuiz = qForm && !qForm.classList.contains('submitted') && qForm.style.display !== 'none';
@@ -68,7 +70,14 @@ window.MathJax = {
             s.defer = true;
             s.onload = function() {
                 if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
-                    window.MathJax.typesetPromise();
+                    var activeBlock = qForm && !qForm.classList.contains('submitted')
+                        ? qForm.querySelector('.question-block.active') || qForm.querySelector('.question-block')
+                        : null;
+                    if (activeBlock) {
+                        window.MathJax.typesetPromise([activeBlock]).catch(function() {});
+                    } else {
+                        window.MathJax.typesetPromise();
+                    }
                 }
             };
             document.head.appendChild(s);
@@ -96,7 +105,7 @@ window.MathJax = {
 
 
 
-<link rel="stylesheet" href="{% static 'css/full_test.css' %}?v=20260801-3">
+<link rel="stylesheet" href="{% static 'css/full_test.css' %}?v=20260815-7">
 
 
 <style>
@@ -107,30 +116,6 @@ body {
 }
 
 
-.full-test-footer {
-    border-top:1px solid rgba(255,255,255,0.1);
-    background:linear-gradient(135deg,#0c2f4a,#184f79);
-    margin-top:2rem;
-    padding:1rem;
-    color:rgba(255,255,255,0.88);
-}
-.full-test-footer .footer-nav {
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:0.8rem;
-    margin-bottom:0.7rem;
-}
-.full-test-footer .footer-nav a {
-    color:rgba(255,255,255,0.85);
-    text-decoration:none;
-    font-size:0.9rem;
-    font-weight:500;
-    transition:color .2s;
-}
-.full-test-footer .footer-nav a:hover {
-    color:#ffd94d;
-}
 .page-intro {
     background:#f0f7ff;
     border-left:4px solid #1458a6;
@@ -149,19 +134,6 @@ body {
     font-weight:700;
     margin:0 0 .5rem;
     line-height:1.4;
-}
-
-
-.full-test-footer .footer-container {
-    max-width:880px;
-    margin:auto;
-    text-align:center;
-}
-
-
-.footer-copy {
-    margin-top:.85rem;
-    font-size:.9rem;
 }
 
 
@@ -212,6 +184,130 @@ body {
     margin-top:1rem;
 }
 
+.start-actions {
+    background: linear-gradient(160deg, #eef6ff 0%, #ffffff 60%);
+    border: 2px solid #1458a6;
+    border-radius: 14px;
+    padding: 1.8rem 1.4rem;
+    max-width: 520px;
+    margin: 1.6rem auto 0;
+    box-shadow: 0 8px 22px rgba(20, 88, 166, 0.16);
+    position: relative;
+}
+
+.start-actions::before {
+    content: "BEGIN TEST";
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffd94d;
+    color: #0c2f4a;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    padding: .28rem .9rem;
+    border-radius: 999px;
+    box-shadow: 0 3px 10px rgba(15, 58, 91, 0.25);
+}
+
+.start-actions .start-heading {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.start-actions .start-heading h3 {
+    margin: 0 0 .25rem;
+    font-size: 1.15rem;
+    color: #0c2f4a;
+}
+
+.start-actions .start-heading p {
+    margin: 0;
+    font-size: .85rem;
+    color: #5a6b7c;
+}
+
+/* Light floating symbols behind the page title (CSS only, no JS) */
+.page-fx {
+    position: relative;
+    overflow: hidden;
+    margin: -1.6rem -1.6rem 1.5rem;
+    padding: 1.8rem 1rem;
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
+    color: #fff;
+    text-align: center;
+    border-radius: 16px 16px 0 0;
+}
+
+.page-fx > * {
+    position: relative;
+    z-index: 1;
+}
+
+.page-fx h1 {
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.page-fx p {
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 0;
+}
+
+.page-fx .fx-float {
+    position: absolute;
+    bottom: -30px;
+    z-index: 0;
+    color: rgba(255, 217, 77, 0.22);
+    font-weight: 700;
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+    animation: fx-rise linear infinite;
+}
+
+.page-fx .fx-float:nth-child(1) { left: 6%;  font-size: 1.1rem; animation-duration: 12s; animation-delay: 0s; }
+.page-fx .fx-float:nth-child(2) { left: 18%; font-size: 1.5rem; animation-duration: 15s; animation-delay: 3s; color: rgba(255, 255, 255, 0.15); }
+.page-fx .fx-float:nth-child(3) { left: 32%; font-size: 1.0rem; animation-duration: 13s; animation-delay: 6s; }
+.page-fx .fx-float:nth-child(4) { left: 47%; font-size: 1.6rem; animation-duration: 16s; animation-delay: 1s; color: rgba(255, 255, 255, 0.15); }
+.page-fx .fx-float:nth-child(5) { left: 62%; font-size: 1.1rem; animation-duration: 12s; animation-delay: 5s; }
+.page-fx .fx-float:nth-child(6) { left: 76%; font-size: 1.4rem; animation-duration: 14s; animation-delay: 8s; color: rgba(255, 217, 77, 0.18); }
+.page-fx .fx-float:nth-child(7) { left: 88%; font-size: 1.0rem; animation-duration: 15s; animation-delay: 2s; }
+
+@keyframes fx-rise {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    15%  { opacity: 1; }
+    80%  { opacity: 0.9; }
+    100% { transform: translateY(-260px) rotate(12deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-fx .fx-float {
+        animation: none;
+    }
+}
+
+@media (max-width: 720px) {
+    .page-fx {
+        margin: -1.2rem -1.2rem 1.2rem;
+        border-radius: 12px 12px 0 0;
+    }
+}
+
+/* Keep native ad width aligned with the content column so it never dwarfs the content */
+.ad-slot.ad-native {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.ad-slot.ad-native iframe,
+.ad-slot.ad-native img,
+.ad-slot.ad-native > div {
+    max-width: 100% !important;
+    overflow: hidden;
+}
+
 </style>
 
 
@@ -236,11 +332,16 @@ data-exit-url="{% url 'full_test_exit' %}"
 
 <div class="quiz-watermark" id="quiz-watermark"></div>
 
-<div class="container {% if score is not None %}result-page{% endif %}">
-
-
-
-<h1>Full Test</h1>
+<div class="page-fx">
+    <span class="fx-float">A</span>
+    <span class="fx-float">?</span>
+    <span class="fx-float">CEE</span>
+    <span class="fx-float">B</span>
+    <span class="fx-float">MCQ</span>
+    <span class="fx-float">+</span>
+    <span class="fx-float">D</span>
+    <h1>Full Test</h1>
+</div>
 
 {% if score is None and not quiz_started %}
 
@@ -256,26 +357,12 @@ data-exit-url="{% url 'full_test_exit' %}"
     <div id="container-adc88700d9882d5a0a0c17db1b1131df"></div>
 </div>
 
-<div class="page-intro">
-<h2>How the Full Test Mirrors the Real CEE</h2>
-<p>The real CEE is a 3 hour, 200 question exam. This mock uses 180 questions and a 2.5 hour timer to keep the per question pace identical, approximately 50 seconds per question. The subject distribution matches the official blueprint: Physics (50), Chemistry (50), Zoology (40), and Botany (40). Every question is multiple choice with a single correct answer, and the negative marking scheme of &minus;0.25 per wrong answer is applied exactly as in the real exam.</p>
-<p>Unlike chapter wise tests where you focus on one topic at a time, the full test forces you to switch between subjects and question types without warning. One moment you are solving a Mechanics numerical, the next you are identifying a Biology process or recalling an Organic Chemistry reaction. This randomised switching is intentional; it trains your brain to stay focused and retrieve information across the full breadth of the syllabus under time pressure, which is the core challenge of the actual CEE.</p>
-</div>
-
-<div class="page-intro">
-<h2>Scoring Strategy and Common Mistakes</h2>
-<p>The most common mistake students make in the full test is spending too long on difficult questions early on. With 180 questions in 150 minutes, every minute counts. If a question takes more than 60 seconds, flag it, mark your best guess, and move on. Coming back to flagged questions after completing the easier ones almost always leads to a higher score than grinding through hard questions while easy ones wait untouched.</p>
-<p>Another frequent error is attempting every question because the negative marking feels small at &minus;0.25. In reality, if you are guessing between four options with no knowledge of the topic, the expected value of guessing is &minus;0.0625 per question, which adds up across 180 questions. A better approach is to only guess when you can eliminate at least one option. Questions where you have no idea should be left unanswered to protect your score.</p>
-<p>After each test, spend time reviewing the solutions carefully. The detailed explanations show not only why the correct answer is right, but why each wrong option is wrong. This is where the deepest learning happens. Keep a notebook of questions you got wrong and revisit them weekly; this habit alone can improve your score by 15 to 25 marks over a month of consistent practice.</p>
-</div>
-
-<div class="page-intro">
-<h2>How to Use This Test Effectively</h2>
-<p>Practicing the full test regularly helps you build exam stamina, manage your time across 180 questions under real exam pressure, and identify which subjects need more revision. Many students find that their first full test score is significantly lower than their target. This is normal. The goal is to take the test repeatedly, review your mistakes with the detailed solutions, and watch your score improve steadily over time.</p>
-<p>For the best results, take the full test once a week during your preparation period. Treat it exactly like the real exam: sit at a desk, set a timer, do not use your phone, and do not take breaks. The discipline you build during practice transfers directly to exam day. After the test, compare your score with your previous attempts using the score history feature to track your progress and identify persistent weak areas.</p>
-</div>
-
 <div class="start-actions">
+
+<div class="start-heading">
+    <h3>Ready to start?</h3>
+    <p>Enter your name to begin the Full Test.</p>
+</div>
 
 <form method="post" class="start-form">
 
@@ -308,13 +395,28 @@ Back to Home
 
 </div>
 
+<div class="page-intro">
+<h2>How the Full Test Mirrors the Real CEE</h2>
+<p>The real CEE is a 3 hour, 200 question exam. This mock uses 180 questions and a 2.5 hour timer to keep the per question pace identical, approximately 50 seconds per question. The subject distribution matches the official blueprint: Physics (50), Chemistry (50), Zoology (40), and Botany (40). Every question is multiple choice with a single correct answer, and the negative marking scheme of &minus;0.25 per wrong answer is applied exactly as in the real exam.</p>
+<p>Unlike chapter wise tests where you focus on one topic at a time, the full test forces you to switch between subjects and question types without warning. One moment you are solving a Mechanics numerical, the next you are identifying a Biology process or recalling an Organic Chemistry reaction. This randomised switching is intentional; it trains your brain to stay focused and retrieve information across the full breadth of the syllabus under time pressure, which is the core challenge of the actual CEE.</p>
+</div>
+
+<div class="page-intro">
+<h2>Scoring Strategy and Common Mistakes</h2>
+<p>The most common mistake students make in the full test is spending too long on difficult questions early on. With 180 questions in 150 minutes, every minute counts. If a question takes more than 60 seconds, flag it, mark your best guess, and move on. Coming back to flagged questions after completing the easier ones almost always leads to a higher score than grinding through hard questions while easy ones wait untouched.</p>
+<p>Another frequent error is attempting every question because the negative marking feels small at &minus;0.25. In reality, if you are guessing between four options with no knowledge of the topic, the expected value of guessing is &minus;0.0625 per question, which adds up across 180 questions. A better approach is to only guess when you can eliminate at least one option. Questions where you have no idea should be left unanswered to protect your score.</p>
+<p>After each test, spend time reviewing the solutions carefully. The detailed explanations show not only why the correct answer is right, but why each wrong option is wrong. This is where the deepest learning happens. Keep a notebook of questions you got wrong and revisit them weekly; this habit alone can improve your score by 15 to 25 marks over a month of consistent practice.</p>
+</div>
+
+<div class="page-intro">
+<h2>How to Use This Test Effectively</h2>
+<p>Practicing the full test regularly helps you build exam stamina, manage your time across 180 questions under real exam pressure, and identify which subjects need more revision. Many students find that their first full test score is significantly lower than their target. This is normal. The goal is to take the test repeatedly, review your mistakes with the detailed solutions, and watch your score improve steadily over time.</p>
+<p>For the best results, take the full test once a week during your preparation period. Treat it exactly like the real exam: sit at a desk, set a timer, do not use your phone, and do not take breaks. The discipline you build during practice transfers directly to exam day. After the test, review your score breakdown and the detailed solutions to track your progress and identify persistent weak areas.</p>
+</div>
+
 {% endif %}
 
 {% if questions %}
-
-{% if score is None %}
-<div id="full_test_timer" style="display:block;"></div>
-{% endif %}
 
 
 
@@ -614,180 +716,11 @@ Cancel
 </section>
 {% if score is not None %}
 
-<div class="result-layout"
-     style="position:relative; padding-bottom:4.5rem;">
-
-
-
-<!-- ================= HISTORY SIDEBAR ================= -->
-
-<aside class="history-sidebar">
-
-
-<div class="history-sidebar-header">
-
-<p class="history-eyebrow">
-Your last 5 test attempts
-</p>
-
-
-<h2 class="history-title">
-
-Exact name:
-{{ history_user_name|default:user_name|default:'User' }}
-
-</h2>
-
-
-<p class="history-note">
-
-Matches only the exact submitted name across all tests.
-
-</p>
-
-
-</div>
-
-
-
-
-{% if history_entries %}
-
-
-<div class="history-table-wrap">
-
-
-<table class="history-table">
-
-
-<thead>
-
-<tr>
-
-<th>Test</th>
-<th>Attempted</th>
-<th>Marks</th>
-<th>Accuracy</th>
-<th>Speed</th>
-
-</tr>
-
-</thead>
-
-
-
-
-<tbody>
-
-
-{% for entry in history_entries %}
-
-
-<tr class="{% if forloop.first %}latest-attempt{% endif %}">
-
-
-<td>
-
-<span class="history-topic">
-{{ entry.topic }}
-</span>
-
-
-<span class="history-meta">
-{{ entry.created_at|date:"d M, H:i" }}
-</span>
-
-
-{% if forloop.first %}
-
-<span class="history-badge">
-Recent
-</span>
-
-{% endif %}
-
-
-</td>
-
-
-
-<td>
-{{ entry.total_attempted }}
-</td>
-
-
-<td>
-{{ entry.score }}
-</td>
-
-
-<td>
-{{ entry.accuracy_display }}
-</td>
-
-
-<td>
-
-<span class="history-speed">
-{{ entry.time_taken_display }}
-</span>
-
-
-<span class="history-meta">
-{{ entry.per_question_time_display }}/q
-</span>
-
-
-</td>
-
-
-
-</tr>
-
-
-{% endfor %}
-
-
-</tbody>
-
-
-</table>
-
-
-</div>
-
-
-{% else %}
-
-
-<div class="history-empty">
-
-No previous tests found for this exact name yet.
-
-</div>
-
-
-{% endif %}
-
-
-
-</aside>
-
-
-
-
-
-
-<!-- ================= RESULT MAIN ================= -->
-
-
 <div class="result-main">
 
 
 
 <section class="score-card">
-
-
 <h2 class="score-title">
 
 Test Results for {{ user_name|default:'User' }}
@@ -984,17 +917,12 @@ Completion:
 
 </section>
 
-<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
-    <script>
-        atOptions = {
-            'key' : 'df9cb8b660db27eb9c3f41733b195570',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-        };
-    </script>
-    <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
+<div class="ad-slot ad-native" style="margin: 24px auto 4px; text-align:center;">
+
+    <script async="async" data-cfasync="false" src="https://pl30821229.effectivecpmnetwork.com/adc88700d9882d5a0a0c17db1b1131df/invoke.js"></script>
+
+    <div id="container-adc88700d9882d5a0a0c17db1b1131df"></div>
+
 </div>
 
 {% endif %}
@@ -1003,6 +931,56 @@ Completion:
 
 
 
+
+
+{# ================= QUIZ TOP: TIMER + QUESTION COUNTER (active test only) ================= #}
+
+
+{% if score is None %}
+
+<div class="quiz-topbar" id="quiz-topbar">
+
+<div class="quiz-topbar-card" id="quiz-topbar-time-card">
+
+    <span class="quiz-topbar-card-label">Time Left</span>
+
+    <div id="full_test_timer" style="display:block;">--:--:--</div>
+
+</div>
+
+<div class="quiz-topbar-card" id="quiz-topbar-counter-card">
+
+    <div class="quiz-topbar-counter-row">
+
+        <span class="quiz-topbar-card-label">Question</span>
+
+        <span class="quiz-topbar-counter-num" id="quiz-nav-count">1 of 180</span>
+
+    </div>
+
+    <div class="quiz-topbar-counter-bar">
+
+        <span class="quiz-topbar-answered" id="quiz-answered-count">0 answered</span>
+
+        <div class="quiz-progress-track">
+            <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="ad-slot ad-native" style="margin: 24px auto 4px; text-align:center;">
+
+    <script async="async" data-cfasync="false" src="https://pl30821229.effectivecpmnetwork.com/adc88700d9882d5a0a0c17db1b1131df/invoke.js"></script>
+
+    <div id="container-adc88700d9882d5a0a0c17db1b1131df"></div>
+
+</div>
+
+{% endif %}
 
 
 <!-- ================= QUESTIONS ================= -->
@@ -1177,13 +1155,53 @@ No solution for this question
 
 {% endfor %}
 
+{# ================= QUIZ CONTROLS + PALETTE (active test only) ================= #}
+
+
 {% if score is None %}
+
+<div class="quiz-controls" id="quiz-controls">
+
+<button type="button"
+        class="quiz-control-btn prev"
+        id="prev-question-btn"
+        aria-label="Previous question">
+
+&larr; Prev
+
+</button>
+
+<button type="button"
+        class="quiz-control-btn next"
+        id="next-question-btn"
+        aria-label="Next question">
+
+Next &rarr;
+
+</button>
+
+</div>
+
+<div class="question-palette" id="question-palette">
+
+<div class="question-palette-head">
+    <span class="question-palette-title">Questions</span>
+    <span class="question-palette-legend">
+        <span class="legend-pair"><span class="legend-dot legend-answered"></span>Answered</span>
+        <span class="legend-pair"><span class="legend-dot legend-flagged"></span>Flagged</span>
+        <span class="legend-pair"><span class="legend-dot legend-current"></span>Current</span>
+    </span>
+</div>
+
+<div class="question-jump-grid" id="question-jump-grid"></div>
+
+</div>
 
 <button type="submit"
         class="submit-btn"
         id="submit-full-test-btn">
 
-Submit
+Submit Test
 
 </button>
 
@@ -1231,11 +1249,7 @@ Back to Home
 
 </div>
 
-</div>
-
-
 {% endif %}
-
 
 
 
@@ -1257,14 +1271,6 @@ No questions available for this test.
 
 {% endif %}
 
-
-
-</div>
-
-
-
-
-
 {% endblock content %}
 
 
@@ -1275,7 +1281,7 @@ No questions available for this test.
 {% block extra_js %}
 
 
-<script src="{% static 'js/full_test.js' %}?v=20260801-1"></script>
+<script src="{% static 'js/full_test.js' %}?v=20260815-7"></script>
 
 
 {% endblock extra_js %}

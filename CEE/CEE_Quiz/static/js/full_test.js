@@ -5,6 +5,14 @@ let allowDirectSubmit = false;
 let currentTimeLeft = 9000;
 let activeFlagPayload = null;
 let submissionLocked = false;
+let currentQuestionNumber = 1;
+let questionBlockList = [];
+const prevQuestionBtn = document.getElementById('prev-question-btn');
+const nextQuestionBtn = document.getElementById('next-question-btn');
+const quizNavCount = document.getElementById('quiz-nav-count');
+const quizAnsweredCount = document.getElementById('quiz-answered-count');
+const quizProgressFill = document.getElementById('quiz-progress-fill');
+const questionJumpGrid = document.getElementById('question-jump-grid');
 
 const FULL_TEST_DURATION_SECONDS = 9000;
 const timerDisplay = document.getElementById('full_test_timer');
@@ -70,6 +78,12 @@ function focusQuestionFromLink(linkElement) {
 
     const questionElement = document.querySelector(questionHash);
     if (!questionElement) {
+        return;
+    }
+
+    if (isActiveQuestionMode()) {
+        const qNum = Number(questionElement.dataset.questionNumber);
+        showQuestion(Number.isNaN(qNum) ? 1 : qNum);
         return;
     }
 
@@ -286,7 +300,7 @@ function afterSubmit() {
 
     if (timerDisplay) {
         timerDisplay.style.display = 'block';
-        timerDisplay.textContent = 'Calculating......';
+        timerDisplay.textContent = 'Calculating...';
         timerDisplay.classList.remove('timer-safe', 'timer-warning', 'timer-critical');
         timerDisplay.classList.add('timer-done');
     }
@@ -356,7 +370,7 @@ function updateTimer() {
     const minutes = String(Math.floor((timeLeft % 3600) / 60)).padStart(2, '0');
     const seconds = String(timeLeft % 60).padStart(2, '0');
 
-    timerDisplay.textContent = `Time Left: ${hours}:${minutes}:${seconds}`;
+    timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
     applyTimerMood(timeLeft);
 
     if (currentUserName) {
@@ -453,16 +467,22 @@ function updateSaveIndicator(count) {
     if (!indicator) {
         indicator = document.createElement('div');
         indicator.id = 'save-indicator';
-        indicator.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; font-size: 14px; z-index: 9999; box-shadow: 0 2px 5px rgba(0,0,0,0.3); transition: opacity 0.3s; font-family: Arial, sans-serif;';
+        indicator.setAttribute('role', 'status');
+        indicator.setAttribute('aria-live', 'polite');
         document.body.appendChild(indicator);
     }
 
+    if (indicator._hideTimer) {
+        window.clearTimeout(indicator._hideTimer);
+    }
     const savedTime = new Date().toLocaleTimeString();
-    indicator.innerHTML = `Auto-saved ${count} answers at ${savedTime}`;
-    indicator.style.opacity = '1';
-    setTimeout(() => {
-        indicator.style.opacity = '0.4';
-    }, 3000);
+    indicator.textContent = `Auto-saved ${count} answers at ${savedTime}`;
+    indicator.classList.add('visible');
+    indicator.classList.remove('hidden');
+    indicator._hideTimer = window.setTimeout(() => {
+        indicator.classList.remove('visible');
+        indicator.classList.add('hidden');
+    }, 2500);
 }
 
 async function sendQuestionReport() {
@@ -513,6 +533,7 @@ async function sendQuestionReport() {
         reported.add(activeFlagPayload.questionId);
         persistReportedQuestions(reported);
         updateReportedCount();
+        updateQuestionGridState();
 
        const targetButton = quizForm?.querySelector(
     `.flag-question-btn[data-question-number="${activeFlagPayload.questionNumber}"]`
@@ -660,6 +681,150 @@ function setupFlagButtonListeners() {
     // production: debug log removed
 }
 
+function isActiveQuestionMode() {
+    return Boolean(quizForm && !quizForm.classList.contains('submitted') && questionBlockList.length > 1);
+}
+
+function collectQuestionBlocks() {
+    questionBlockList = quizForm ? Array.from(quizForm.querySelectorAll('.question-block[data-question-number]')) : [];
+}
+
+function typeSetQuestionBlock(block) {
+    if (block && window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+        window.MathJax.typesetPromise([block]).catch(() => {});
+    }
+}
+
+function showQuestion(number) {
+    const target = Number(number);
+    if (!isActiveQuestionMode() || Number.isNaN(target)) {
+        return;
+    }
+    const clamped = Math.min(Math.max(target, 1), questionBlockList.length);
+    currentQuestionNumber = clamped;
+
+    questionBlockList.forEach((block) => {
+        block.classList.toggle('active', Number(block.dataset.questionNumber) === clamped);
+    });
+
+    if (quizNavCount) {
+        quizNavCount.textContent = `${clamped} of ${questionBlockList.length}`;
+    }
+    updateQuizProgress();
+    updateQuestionGridState();
+    typeSetQuestionBlock(questionBlockList[clamped - 1]);
+
+    if (currentUserName) {
+        localStorage.setItem(`${storagePrefix()}_${currentUserName}_${attemptReference}_current_question`, String(clamped));
+    }
+
+    if (prevQuestionBtn) {
+        prevQuestionBtn.disabled = clamped <= 1;
+    }
+    if (nextQuestionBtn) {
+        nextQuestionBtn.disabled = clamped >= questionBlockList.length;
+    }
+
+    const activeBlock = questionBlockList[clamped - 1];
+    if (activeBlock) {
+        activeBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function getAnsweredCount() {
+    if (!quizForm) {
+        return 0;
+    }
+    return quizForm.querySelectorAll('input[type="radio"]:checked').length;
+}
+
+function updateQuizProgress() {
+    const total = questionBlockList.length || 1;
+    const answered = getAnsweredCount();
+
+    if (quizAnsweredCount) {
+        quizAnsweredCount.textContent = `${answered} answered`;
+    }
+    if (quizProgressFill) {
+        const pct = Math.min(100, Math.round((answered / total) * 100));
+        quizProgressFill.style.width = `${pct}%`;
+    }
+}
+
+function buildQuestionGrid() {
+    if (!questionJumpGrid) {
+        return;
+    }
+    questionJumpGrid.innerHTML = '';
+    questionBlockList.forEach((block) => {
+        const qNum = Number(block.dataset.questionNumber);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.dataset.questionNumber = String(qNum);
+        button.textContent = String(qNum);
+        button.setAttribute('aria-label', `Go to question ${qNum}`);
+        button.addEventListener('click', () => {
+            showQuestion(qNum);
+        });
+        questionJumpGrid.appendChild(button);
+    });
+}
+
+function updateQuestionGridState() {
+    if (!questionJumpGrid) {
+        return;
+    }
+    const reportedSet = getReportedQuestions();
+    questionBlockList.forEach((block) => {
+        const qNum = Number(block.dataset.questionNumber);
+        const button = questionJumpGrid.querySelector(`button[data-question-number="${qNum}"]`);
+        if (!button) {
+            return;
+        }
+        const qId = Number(block.dataset.questionId);
+        const isAnswered = Boolean(block.querySelector('input[type="radio"]:checked'));
+        const isFlagged = reportedSet.has(qId);
+        button.classList.remove('qj-answered', 'qj-flagged', 'qj-current');
+        if (qNum === currentQuestionNumber) {
+            button.classList.add('qj-current');
+            const gridRect = questionJumpGrid.getBoundingClientRect();
+            const buttonRect = button.getBoundingClientRect();
+            if (buttonRect.top < gridRect.top) {
+                questionJumpGrid.scrollTop += (buttonRect.top - gridRect.top) - 4;
+            } else if (buttonRect.bottom > gridRect.bottom) {
+                questionJumpGrid.scrollTop += (buttonRect.bottom - gridRect.bottom) + 4;
+            }
+        }
+        if (isAnswered) {
+            button.classList.add('qj-answered');
+        }
+        if (isFlagged) {
+            button.classList.add('qj-flagged');
+        }
+    });
+}
+
+function setupActiveQuestionMode() {
+    collectQuestionBlocks();
+    if (!isActiveQuestionMode()) {
+        return;
+    }
+
+    quizForm.classList.add('active-question-mode');
+    buildQuestionGrid();
+
+    const savedNumber = Number(localStorage.getItem(`${storagePrefix()}_${currentUserName}_${attemptReference}_current_question`) || '1');
+    showQuestion(Number.isNaN(savedNumber) ? 1 : savedNumber);
+
+    prevQuestionBtn?.addEventListener('click', () => {
+        showQuestion(currentQuestionNumber - 1);
+    });
+    nextQuestionBtn?.addEventListener('click', () => {
+        showQuestion(currentQuestionNumber + 1);
+    });
+    updateQuizProgress();
+}
+
 function setupNonCopyProtection() {
     if (!quizForm || quizForm.classList.contains('submitted')) {
         return;
@@ -729,6 +894,14 @@ document.addEventListener('change', (event) => {
         if (questionBlock) {
             questionBlock.querySelectorAll('.option').forEach((label) => label.classList.remove('selected'));
             event.target.closest('.option')?.classList.add('selected');
+            updateQuestionGridState();
+            updateQuizProgress();
+        }
+
+        if (isActiveQuestionMode() && currentQuestionNumber < questionBlockList.length) {
+            window.setTimeout(() => {
+                showQuestion(currentQuestionNumber + 1);
+            }, 350);
         }
     }
 });
@@ -769,6 +942,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSubmitReviewActions();
     setupFlagModalActions();
     setupFlagButtonListeners();
+    setupActiveQuestionMode();
 
     if (quizForm) {
         quizForm.querySelectorAll('.flag-question-btn').forEach((button) => {
@@ -795,6 +969,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hasActiveQuiz) {
         pingKeepalive();
         setInterval(pingKeepalive, 900000);
+    }
+
+    const quizTopBar = document.getElementById('quiz-topbar');
+    if (quizTopBar) {
+        const currentScrollY = () => window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const updateCompactState = () => {
+            quizTopBar.classList.toggle('quiz-topbar--compact', currentScrollY() > 200);
+        };
+        window.addEventListener('scroll', updateCompactState, { capture: true, passive: true });
+        document.addEventListener('scroll', updateCompactState, { capture: true, passive: true });
+        window.setTimeout(updateCompactState, 500);
     }
 });
 

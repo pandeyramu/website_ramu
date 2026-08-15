@@ -32,6 +32,12 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pl30821229.effectivecpmnetwork.com">
+    <link rel="preconnect" href="https://www.highperformanceformat.com">
+    <link rel="preconnect" href="https://resources.infolinks.com">
+    <link rel="dns-prefetch" href="https://pl30821229.effectivecpmnetwork.com">
+    <link rel="dns-prefetch" href="https://www.highperformanceformat.com">
+    <link rel="dns-prefetch" href="https://resources.infolinks.com">
 
     <script type="application/ld+json">
     {
@@ -82,8 +88,10 @@
         .site-header {
             background: linear-gradient(135deg, #0c2f4a, #184f79);
             color: #fff;
-            padding: 1rem 1.2rem;
+            padding: 0.7rem 1.2rem;
             box-shadow: 0 10px 28px rgba(15, 58, 91, 0.18);
+            position: relative;
+            z-index: 1;
         }
 
         .site-header-inner,
@@ -120,53 +128,164 @@
 
 
         .brand img {
-            width: 45px;
-            height: 45px;
+            width: 52px;
+            height: 52px;
             object-fit: contain;
-        }
-
-        .nav-links {
-            display: flex;
-            flex: 1;
-            min-width: 0;
-            gap: 0.5rem;
-            flex-wrap: nowrap;
-            justify-content: flex-end;
-        }
-
-        .nav-links a,
-        .nav-links .current-page {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.98);
-            text-decoration: none;
-            font-size: .85rem;
-            padding: 0.42rem 0.75rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            background: rgba(255, 255, 255, 0.08);
-            white-space: nowrap;
-            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-            transform: translateY(-1px);
-        }
-
-        .nav-links .current-page {
-            background: #ffd94d;
-            color: #0f2742;
-            border-color: #ffd94d;
-            font-weight: 700;
         }
 
         main.page-wrap {
             padding: 2rem 1.1rem 2.5rem;
             flex: 1 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ambient animated page background (all pages) */
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .ambient-bg .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.5;
+            animation: orb-drift 26s ease-in-out infinite alternate;
+        }
+
+        .ambient-bg .orb-1 {
+            width: 460px;
+            height: 460px;
+            top: -140px;
+            left: -120px;
+            background: radial-gradient(circle, rgba(20, 88, 166, 0.35), transparent 70%);
+        }
+
+        .ambient-bg .orb-2 {
+            width: 420px;
+            height: 420px;
+            bottom: -120px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(255, 217, 77, 0.28), transparent 70%);
+            animation-delay: -9s;
+        }
+
+        .ambient-bg .orb-3 {
+            width: 360px;
+            height: 360px;
+            top: 40%;
+            left: 60%;
+            background: radial-gradient(circle, rgba(24, 79, 121, 0.3), transparent 70%);
+            animation-delay: -17s;
+        }
+
+        .ambient-bg .dot {
+            position: absolute;
+            border-radius: 50%;
+            background: #1458a6;
+            opacity: 0.22;
+            animation: dot-float linear infinite;
+        }
+
+        .ambient-bg .dot-1 { width: 7px; height: 7px; top: 22%; left: 12%; animation-duration: 10s; }
+        .ambient-bg .dot-2 { width: 5px; height: 5px; top: 68%; left: 22%; background: #ffd94d; animation-duration: 13s; animation-delay: -5s; }
+        .ambient-bg .dot-3 { width: 8px; height: 8px; top: 14%; left: 72%; animation-duration: 11s; animation-delay: -8s; }
+        .ambient-bg .dot-4 { width: 5px; height: 5px; top: 55%; left: 84%; background: #ffd94d; animation-duration: 14s; animation-delay: -3s; }
+        .ambient-bg .dot-5 { width: 6px; height: 6px; top: 38%; left: 36%; animation-duration: 12s; animation-delay: -10s; }
+        .ambient-bg .dot-6 { width: 4px; height: 4px; top: 82%; left: 58%; animation-duration: 15s; animation-delay: -7s; }
+
+        /* Twinkling stars / sparkles drifting up the side free space */
+        .ambient-bg .spark {
+            position: absolute;
+            user-select: none;
+            pointer-events: auto;
+            animation: spark-rise linear infinite;
+        }
+
+        .ambient-bg .spark .sg {
+            display: inline-block;
+            color: #1458a6;
+            text-shadow: 0 0 8px rgba(20, 88, 166, 0.55);
+            transition: transform 0.25s ease, color 0.25s ease, text-shadow 0.25s ease;
+        }
+
+        .ambient-bg .spark.gold .sg { color: #ffd94d; text-shadow: 0 0 8px rgba(255, 217, 77, 0.6); }
+
+        .ambient-bg .spark-1  { left: 2%;  top: 8%;  font-size: 17px; animation-duration: 14s; animation-delay: 0s; }
+        .ambient-bg .spark-2  { left: 5%;  top: 34%; font-size: 13px; animation-duration: 17s; animation-delay: -4s; }
+        .ambient-bg .spark-3  { left: 3%;  top: 58%; font-size: 15px; animation-duration: 15s; animation-delay: -8s; }
+        .ambient-bg .spark-4  { left: 6%;  top: 80%; font-size: 12px; animation-duration: 18s; animation-delay: -2s; }
+        .ambient-bg .spark-5  { left: 94%; top: 12%; font-size: 14px; animation-duration: 16s; animation-delay: -6s; }
+        .ambient-bg .spark-6  { left: 97%; top: 40%; font-size: 18px; animation-duration: 13s; animation-delay: -1s; }
+        .ambient-bg .spark-7  { left: 95%; top: 62%; font-size: 13px; animation-duration: 17s; animation-delay: -9s; }
+        .ambient-bg .spark-8  { left: 98%; top: 85%; font-size: 15px; animation-duration: 15s; animation-delay: -5s; }
+        .ambient-bg .spark-9  { left: 1%;  top: 22%; font-size: 13px; animation-duration: 16s; animation-delay: -11s; }
+        .ambient-bg .spark-10 { left: 4%;  top: 47%; font-size: 16px; animation-duration: 14s; animation-delay: -7s; }
+        .ambient-bg .spark-11 { left: 6%;  top: 68%; font-size: 12px; animation-duration: 18s; animation-delay: -13s; }
+        .ambient-bg .spark-12 { left: 2%;  top: 91%; font-size: 14px; animation-duration: 15s; animation-delay: -3s; }
+        .ambient-bg .spark-13 { left: 93%; top: 24%; font-size: 15px; animation-duration: 15s; animation-delay: -10s; }
+        .ambient-bg .spark-14 { left: 96%; top: 50%; font-size: 13px; animation-duration: 18s; animation-delay: -4s; }
+        .ambient-bg .spark-15 { left: 94%; top: 73%; font-size: 16px; animation-duration: 14s; animation-delay: -12s; }
+        .ambient-bg .spark-16 { left: 98%; top: 92%; font-size: 12px; animation-duration: 17s; animation-delay: -8s; }
+        .ambient-bg .spark-17 { left: 3%;  top: 15%; font-size: 18px; animation-duration: 16s; animation-delay: -5s; }
+        .ambient-bg .spark-18 { left: 97%; top: 28%; font-size: 14px; animation-duration: 15s; animation-delay: -14s; }
+        .ambient-bg .spark-19 { left: 2%;  top: 74%; font-size: 17px; animation-duration: 18s; animation-delay: -9s; }
+        .ambient-bg .spark-20 { left: 95%; top: 88%; font-size: 13px; animation-duration: 14s; animation-delay: -6s; }
+        .ambient-bg .spark-21 { left: 3%;  top: 10%; font-size: 14px; animation-duration: 16s; animation-delay: -2s; }
+        .ambient-bg .spark-22 { left: 96%; top: 33%; font-size: 16px; animation-duration: 14s; animation-delay: -9s; }
+        .ambient-bg .spark-23 { left: 5%;  top: 55%; font-size: 13px; animation-duration: 18s; animation-delay: -15s; }
+        .ambient-bg .spark-24 { left: 94%; top: 78%; font-size: 15px; animation-duration: 15s; animation-delay: -6s; }
+        .ambient-bg .spark-25 { left: 2%;  top: 25%; font-size: 17px; animation-duration: 17s; animation-delay: -12s; }
+        .ambient-bg .spark-26 { left: 98%; top: 45%; font-size: 12px; animation-duration: 14s; animation-delay: -3s; }
+        .ambient-bg .spark-27 { left: 6%;  top: 65%; font-size: 16px; animation-duration: 18s; animation-delay: -10s; }
+        .ambient-bg .spark-28 { left: 93%; top: 86%; font-size: 13px; animation-duration: 15s; animation-delay: -7s; }
+        .ambient-bg .spark-29 { left: 4%;  top: 38%; font-size: 15px; animation-duration: 16s; animation-delay: -14s; }
+        .ambient-bg .spark-30 { left: 97%; top: 60%; font-size: 14px; animation-duration: 17s; animation-delay: -5s; }
+
+        .ambient-bg .spark:hover {
+            animation-play-state: paused;
+        }
+
+        .ambient-bg .spark:hover .sg {
+            transform: scale(1.9);
+            color: #ffd94d;
+            text-shadow: 0 0 14px rgba(255, 217, 77, 0.95);
+        }
+
+        @media (max-width: 720px) {
+            .ambient-bg .spark {
+                font-size: 16px;
+            }
+        }
+
+        @keyframes orb-drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 30px) scale(1.12); }
+        }
+
+        @keyframes dot-float {
+            0% { transform: translateY(0); opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { transform: translateY(-140px); opacity: 0.1; }
+        }
+
+        @keyframes spark-rise {
+            0%   { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+            20%  { opacity: 1; }
+            65%  { opacity: 0.85; }
+            100% { transform: translateY(-180px) rotate(40deg) scale(1.15); opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ambient-bg .orb,
+            .ambient-bg .dot,
+            .ambient-bg .spark {
+                animation: none;
+            }
         }
 
         .page-card {
@@ -175,6 +294,20 @@
             border-radius: 16px;
             padding: 1.6rem;
             box-shadow: 0 12px 30px rgba(15, 58, 91, 0.08);
+            animation: card-in 0.4s ease backwards;
+        }
+
+        @keyframes card-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .page-card,
+            .hero-subject-pill,
+            .rotate-words {
+                animation: none;
+            }
         }
 
         .page-card h1 {
@@ -268,45 +401,144 @@
         footer.site-footer {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             background: linear-gradient(135deg, #0c2f4a, #184f79);
-            padding: 1.4rem 1.2rem;
+            position: relative;
+            z-index: 1;
+            padding: 1.2rem 1.2rem 0.9rem;
             color: rgba(255, 255, 255, 0.88);
-            text-align: center;
+            text-align: left;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 0.8fr 1.2fr;
+            gap: 1.2rem;
+            align-items: start;
+        }
+
+        .footer-brand .brand {
+            font-size: 1rem;
+        }
+
+        .footer-tag {
+            margin: 0.5rem 0 0;
+            font-size: 0.8rem;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 380px;
+        }
+
+        .footer-made {
+            margin: 0.5rem 0 0;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.55);
         }
 
         .footer-nav {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-bottom: 0.7rem;
+            flex-direction: column;
+            gap: 0.4rem;
+            align-items: flex-start;
+            margin: 0;
+        }
+
+        .footer-nav-title {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.55);
+            margin-bottom: 0.1rem;
         }
 
         .footer-nav a {
-            color: rgba(255, 255, 255, 0.85);
+            color: #ffd94d;
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.28rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 217, 77, 0.5);
+            transition: background 0.2s, color 0.2s;
         }
 
         .footer-nav a:hover {
-                background: rgba(255, 255, 255, 0.1);
+            background: #ffd94d;
+            color: #0c2f4a;
+        }
+
+        .footer-side {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.7rem;
+            text-align: right;
+            width: fit-content;
+            justify-self: end;
+        }
+
+        .footer-side .footer-social {
+            justify-content: flex-end;
+        }
+
+        .footer-blog-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.2rem;
+            padding: 0.55rem 0.8rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 217, 77, 0.45);
+            background: rgba(255, 217, 77, 0.08);
+            color: #fff;
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .footer-blog-box:hover {
+            background: rgba(255, 217, 77, 0.16);
+            border-color: #ffd94d;
+        }
+
+        .footer-blog-box .fb-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
             color: #ffd94d;
+            font-weight: 700;
+        }
+
+        .footer-blog-box .fb-title-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-blog-box .fb-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .footer-blog-box .fb-arrow {
+            font-size: 0.95rem;
+            color: #ffd94d;
+            transition: transform 0.2s;
+        }
+
+        .footer-blog-box:hover .fb-arrow {
+            transform: translateX(3px);
         }
 
         .footer-social {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.6rem;
+            gap: 0.45rem;
         }
 
         .footer-social-link {
             color: #ffd94d;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            padding: 0.35rem 0.9rem;
+            padding: 0.28rem 0.7rem;
             border-radius: 999px;
             border: 1px solid rgba(255, 217, 77, 0.5);
             transition: background 0.2s, color 0.2s;
@@ -317,10 +549,258 @@
             color: #0c2f4a;
         }
 
-        .copyright {
-            margin: 0;
-            font-size: 0.92rem;
-            color: rgba(255, 255, 255, 0.88);
+        .menu-toggle {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        .menu-toggle:hover {
+            background: #ffd94d;
+            border-color: #ffd94d;
+            transform: translateY(-1px);
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            border-radius: 2px;
+            background: #fff;
+            transition: transform 0.25s, opacity 0.25s, background 0.25s;
+        }
+
+        .menu-toggle:hover span {
+            background: #0c2f4a;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 960;
+            background: rgba(8, 24, 40, 0.55);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-overlay.open {
+            opacity: 1;
+        }
+
+        .menu-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: min(320px, 86vw);
+            background: #0c2f4a;
+            color: #fff;
+            padding: 1.4rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: -14px 0 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .menu-overlay.open .menu-panel {
+            transform: translateX(0);
+        }
+
+        .menu-close {
+            align-self: flex-end;
+            background: none;
+            border: none;
+            color: #ffd94d;
+            font-size: 1.9rem;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0 0 0.4rem;
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .menu-links a {
+            color: rgba(255, 255, 255, 0.92);
+            text-decoration: none;
+            font-size: 1.02rem;
+            font-weight: 600;
+            padding: 0.7rem 0.6rem;
+            border-radius: 10px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .menu-links a:hover {
+            background: rgba(255, 217, 77, 0.14);
+            color: #ffd94d;
+        }
+
+        .menu-links a.active {
+            background: rgba(255, 217, 77, 0.18);
+            color: #ffd94d;
+            box-shadow: inset 3px 0 0 #ffd94d;
+        }
+
+        .menu-cta {
+            margin-top: auto;
+            text-align: center;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            background: #ffd94d;
+            color: #0c2f4a;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .menu-cta:hover {
+            background: #ffe27a;
+        }
+
+        .menu-cta.active {
+            box-shadow: inset 0 -3px 0 #0c2f4a;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 720px) {
+            .site-header {
+                padding: 0.55rem 0.9rem;
+            }
+
+            .brand {
+                font-size: 1.05rem;
+            }
+
+            .brand img {
+                width: 38px;
+                height: 38px;
+            }
+
+            .menu-toggle {
+                width: 38px;
+                height: 38px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem 0;
+            }
+
+            .footer-brand {
+                grid-column: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-tag {
+                max-width: 100%;
+            }
+
+            .footer-nav,
+            .footer-side {
+                min-width: 0;
+            }
+
+            .footer-side {
+                align-items: flex-start;
+                text-align: left;
+                justify-self: stretch;
+                width: auto;
+            }
+
+            .footer-side .footer-social {
+                justify-content: flex-start;
+            }
+
+            .footer-nav a {
+                font-size: 0.66rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .footer-blog-box {
+                max-width: 100%;
+            }
+
+            .footer-social {
+                flex-wrap: wrap;
+                gap: 0.3rem;
+            }
+
+            .footer-social-link {
+                font-size: 0.66rem;
+                padding: 0.2rem 0.5rem;
+                white-space: nowrap;
+            }
+
+            footer.site-footer {
+                padding: 1.1rem 0.9rem 0.9rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            footer.site-footer {
+                padding: 0.9rem 0.6rem 0.7rem;
+            }
+
+            .footer-tag {
+                font-size: 0.72rem;
+                line-height: 1.45;
+            }
+
+            .footer-made {
+                font-size: 0.64rem;
+            }
+
+            .footer-nav-title {
+                font-size: 0.58rem;
+            }
+
+            .footer-nav {
+                gap: 0.3rem;
+            }
+
+            .footer-nav a {
+                font-size: 0.6rem;
+                padding: 0.18rem 0.45rem;
+            }
+
+            .footer-social {
+                gap: 0.25rem;
+            }
+
+            .footer-social-link {
+                font-size: 0.6rem;
+                padding: 0.18rem 0.45rem;
+            }
+
+            .footer-blog-box {
+                padding: 0.45rem 0.6rem;
+            }
+
+            .footer-blog-box .fb-title {
+                font-size: 0.76rem;
+            }
+
+            .footer-side {
+                gap: 0.5rem;
+            }
         }
 
         .messages {
@@ -355,22 +835,7 @@
             }
 
             .brand-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.6rem;
-            }
-
-            .nav-links {
-                width: 100%;
-                flex: none;
-                gap: 0.4rem;
-                flex-wrap: wrap;
-            }
-
-            .nav-links a,
-            .nav-links .current-page {
-                font-size: 0.82rem;
-                padding: 0.35rem 0.6rem;
+                gap: 0.5rem;
             }
         }
 
@@ -528,64 +993,57 @@
 </head>
 
 <body {% block body_attributes %}{% endblock %}>
+    <div class="ambient-bg" aria-hidden="true">
+        <span class="orb orb-1"></span>
+        <span class="orb orb-2"></span>
+        <span class="orb orb-3"></span>
+        <span class="dot dot-1"></span>
+        <span class="dot dot-2"></span>
+        <span class="dot dot-3"></span>
+        <span class="dot dot-4"></span>
+        <span class="dot dot-5"></span>
+        <span class="dot dot-6"></span>
+        <span class="spark spark-1"><span class="sg">✦</span></span>
+        <span class="spark spark-2 gold"><span class="sg">+</span></span>
+        <span class="spark spark-3"><span class="sg">✧</span></span>
+        <span class="spark spark-4 gold"><span class="sg">•</span></span>
+        <span class="spark spark-5 gold"><span class="sg">★</span></span>
+        <span class="spark spark-6"><span class="sg">◇</span></span>
+        <span class="spark spark-7 gold"><span class="sg">+</span></span>
+        <span class="spark spark-8"><span class="sg">•</span></span>
+        <span class="spark spark-9 gold"><span class="sg">✦</span></span>
+        <span class="spark spark-10"><span class="sg">✺</span></span>
+        <span class="spark spark-11"><span class="sg">◆</span></span>
+        <span class="spark spark-12 gold"><span class="sg">•</span></span>
+        <span class="spark spark-13"><span class="sg">☆</span></span>
+        <span class="spark spark-14 gold"><span class="sg">+</span></span>
+        <span class="spark spark-15"><span class="sg">✧</span></span>
+        <span class="spark spark-16 gold"><span class="sg">✦</span></span>
+        <span class="spark spark-17 gold"><span class="sg">✺</span></span>
+        <span class="spark spark-18"><span class="sg">◆</span></span>
+        <span class="spark spark-19 gold"><span class="sg">☆</span></span>
+        <span class="spark spark-20"><span class="sg">◇</span></span>
+        <span class="spark spark-21 gold"><span class="sg">✦</span></span>
+        <span class="spark spark-22"><span class="sg">★</span></span>
+        <span class="spark spark-23 gold"><span class="sg">✧</span></span>
+        <span class="spark spark-24"><span class="sg">+</span></span>
+        <span class="spark spark-25"><span class="sg">◆</span></span>
+        <span class="spark spark-26 gold"><span class="sg">•</span></span>
+        <span class="spark spark-27"><span class="sg">☆</span></span>
+        <span class="spark spark-28 gold"><span class="sg">✺</span></span>
+        <span class="spark spark-29"><span class="sg">◇</span></span>
+        <span class="spark spark-30 gold"><span class="sg">✦</span></span>
+    </div>
     {% block header %}
     <header class="site-header">
         <div class="site-header-inner brand-row">
             <a class="brand" href="/">
-                <img src="{% static 'images/logo-84.webp' %}" alt="CEE MCQ Logo" width="42" height="42" loading="lazy">
+                <img src="{% static 'images/logo-84.webp' %}" alt="CEE MCQ Logo" width="52" height="52" loading="eager">
                 <span>CEE MCQ</span>
             </a>
-            <nav class="nav-links" aria-label="Main navigation">
-
-                {% if request.resolver_match.url_name == 'home' %}
-                <span class="current-page" aria-current="page">Home</span>
-                {% else %}
-                <a href="/">Home</a>
-                {% endif %}
-
-                {% if request.resolver_match.url_name == 'all_subjects' %}
-                <span class="current-page" aria-current="page">All Subjects</span>
-                {% else %}
-                <a href="/all-subjects/">All Subjects</a>
-                {% endif %}
-
-                {% if request.resolver_match.url_name == 'about' %}
-                <span class="current-page" aria-current="page">About Us</span>
-                {% else %}
-                <a href="/about/">About Us</a>
-                {% endif %}
-
-                {% if request.resolver_match.url_name == 'contact' %}
-                <span class="current-page" aria-current="page">Contact</span>
-                {% else %}
-                <a href="/contact/">Contact</a>
-                {% endif %}
-
-                {% if request.resolver_match.url_name == 'privacy_policy' %}
-                <span class="current-page" aria-current="page">Privacy Policy</span>
-                {% else %}
-                <a href="/privacy-policy/">Privacy Policy</a>
-                {% endif %}
-
-                {% if request.resolver_match.url_name == 'disclaimer' %}
-                <span class="current-page" aria-current="page">Disclaimer</span>
-                {% else %}
-                <a href="/disclaimer/">Disclaimer</a>
-                {% endif %}
-
-                {% if request.resolver_match.url_name == 'terms_of_service' %}
-                <span class="current-page" aria-current="page">Terms of Service</span>
-                {% else %}
-                <a href="/terms-of-service/">Terms of Service</a>
-                {% endif %}
-
-                {% if request.resolver_match.url_name == 'blog' %}
-                <span class="current-page" aria-current="page">Blog</span>
-                {% else %}
-                <a href="/blog/">Blog</a>
-                {% endif %}
-
-            </nav>
+            <button id="menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
     {% endblock %}
@@ -606,24 +1064,56 @@
     {% block footer %}
     <footer class="site-footer">
         <div class="site-footer-inner">
-            <nav class="footer-nav" aria-label="Footer navigation">
-                <a href="/">Home</a>
-                <a href="/about/">About Us</a>
-                <a href="/contact/">Contact</a>
-                <a href="/privacy-policy/">Privacy Policy</a>
-                <a href="/disclaimer/">Disclaimer</a>
-                <a href="/terms-of-service/">Terms of Service</a>
-                <a href="/blog/">Blog</a>
-            </nav>
-            <div class="footer-social" style="margin: 0.7rem 0;">
-                <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener" class="footer-social-link">Facebook</a>
-                <a href="https://www.linkedin.com/in/ramu-pandey-6b5904337/" target="_blank" rel="noopener" class="footer-social-link">LinkedIn</a>
-                <a href="https://github.com/pandeyramu" target="_blank" rel="noopener" class="footer-social-link">GitHub</a>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a class="brand" href="/">
+                        <img src="{% static 'images/logo-84.webp' %}" alt="CEE MCQ Logo" width="44" height="44">
+                        <span>CEE MCQ</span>
+                    </a>
+                    <p class="footer-tag">Free practice for Nepal's Common Entrance Examination. Chapter wise MCQs, mock tests and step by step solutions.</p>
+                    <p class="footer-made">Built by Ramu Pandey · © 2026 · Last updated August 2026</p>
+                </div>
+                <nav class="footer-nav" aria-label="Legal">
+                    <span class="footer-nav-title">Policies</span>
+                    <a href="/privacy-policy/">Privacy Policy</a>
+                    <a href="/disclaimer/">Disclaimer</a>
+                    <a href="/terms-of-service/">Terms of Service</a>
+                </nav>
+                <div class="footer-side">
+                    <a href="/blog/" class="footer-blog-box">
+                        <span class="fb-label">Blog</span>
+                        <span class="fb-title-row">
+                            <span class="fb-title">CEE Prep Guides &amp; Tips</span>
+                            <span class="fb-arrow">→</span>
+                        </span>
+                    </a>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/ramu.pandey38" target="_blank" rel="noopener" class="footer-social-link">Facebook</a>
+                        <a href="https://www.linkedin.com/in/ramu-pandey-6b5904337/" target="_blank" rel="noopener" class="footer-social-link">LinkedIn</a>
+                        <a href="https://github.com/pandeyramu" target="_blank" rel="noopener" class="footer-social-link">GitHub</a>
+                    </div>
+                </div>
             </div>
-            <p class="copyright">Made with ❤️ by Ramu Pandey · © 2026 Ramu Pandey. All Rights Reserved.</p>
         </div>
     </footer>
     {% endblock %}
+
+    <div id="menu-overlay" class="menu-overlay" hidden>
+        <div class="menu-panel" role="dialog" aria-modal="true" aria-label="Site menu">
+            <button type="button" class="menu-close" aria-label="Close menu">×</button>
+            <nav class="menu-links" aria-label="Menu">
+                <a href="/" class="{% if request.path == '/' or request.path == '/index.html' %}active{% endif %}">Home</a>
+                <a href="/all-subjects/" class="{% if request.path == '/all-subjects/' or request.path|slice:':9' == '/subject/' or request.path|slice:':9' == '/chapter/' %}active{% endif %}">All Subjects</a>
+                <a href="/about/" class="{% if request.path == '/about/' %}active{% endif %}">About</a>
+                <a href="/contact/" class="{% if request.path == '/contact/' or request.path|slice:':9' == '/contact/' %}active{% endif %}">Contact</a>
+                <a href="/blog/" class="{% if request.path|slice:':6' == '/blog/' %}active{% endif %}">Blog</a>
+                <a href="/privacy-policy/" class="{% if request.path == '/privacy-policy/' %}active{% endif %}">Privacy Policy</a>
+                <a href="/disclaimer/" class="{% if request.path == '/disclaimer/' %}active{% endif %}">Disclaimer</a>
+                <a href="/terms-of-service/" class="{% if request.path == '/terms-of-service/' %}active{% endif %}">Terms of Service</a>
+            </nav>
+            <a href="{% url 'full_test' %}?new=1" class="menu-cta {% if request.path|slice:':11' == '/full-test/' %}active{% endif %}">Start Full Test</a>
+        </div>
+    </div>
 
     <div id="cookie-banner" role="dialog" aria-label="Cookie consent">
         <div class="cb-text">
@@ -643,7 +1133,47 @@
         var infolinks_pid = 3447050;
         var infolinks_wsid = 0;
     </script>
-    <script type="text/javascript" src="https://resources.infolinks.com/js/infolinks_main.js"></script>
+    <script type="text/javascript" async src="https://resources.infolinks.com/js/infolinks_main.js"></script>
+
+    <script>
+        (function () {
+            var toggle = document.getElementById('menu-toggle');
+            var overlay = document.getElementById('menu-overlay');
+            if (!toggle || !overlay) return;
+
+            function openMenu() {
+                overlay.hidden = false;
+                requestAnimationFrame(function () {
+                    overlay.classList.add('open');
+                    toggle.setAttribute('aria-expanded', 'true');
+                    toggle.style.pointerEvents = 'none';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            function closeMenu() {
+                overlay.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.style.pointerEvents = '';
+                document.body.style.overflow = '';
+                setTimeout(function () { overlay.hidden = true; }, 300);
+            }
+
+            toggle.addEventListener('click', function () {
+                overlay.hidden ? openMenu() : closeMenu();
+            });
+
+            overlay.addEventListener('click', function (e) {
+                if (e.target === overlay || e.target.closest('.menu-close') || e.target.closest('.menu-links a') || e.target.closest('.menu-cta')) {
+                    closeMenu();
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeMenu();
+            });
+        })();
+    </script>
 </body>
 
 </html>
