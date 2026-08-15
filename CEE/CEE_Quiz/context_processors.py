@@ -1,11 +1,52 @@
 from types import SimpleNamespace
 
+from django.core.cache import cache
+
 from .models import Chapter, PageSEO, SubChapter, Subject
 from .seo_provider import get_supabase_page_seo
 from django.conf import settings
 
 
 SITE_NAME = 'CEE MCQ'
+
+
+def _cached_page_seo_row(page_slug):
+    """PageSEO rows are near-static; cache the lookup to avoid a DB hit on every page render."""
+    cache_key = f'seo_row:{page_slug}'
+    cached = cache.get(cache_key)
+    if cached is None:
+        cached = PageSEO.objects.filter(page_slug=page_slug).first()
+        cache.set(cache_key, cached, timeout=6 * 3600)
+    return cached
+
+
+def _cached_chapter_meta(chapter_slug):
+    """Return (chapter_name, subject_name) or None, cached per slug."""
+    cache_key = f'chapter_meta:{chapter_slug}'
+    cached = cache.get(cache_key)
+    if cached is None:
+        chapter = Chapter.objects.select_related('subject').filter(slug=chapter_slug).only(
+            'name', 'subject__name'
+        ).first()
+        cached = (chapter.name, chapter.subject.name) if chapter and chapter.subject else None
+        cache.set(cache_key, cached, timeout=6 * 3600)
+    return cached
+
+
+def _cached_subchapter_meta(subchapter_slug):
+    """Return (subchapter_name, chapter_name, seo_description) or None, cached per slug."""
+    cache_key = f'subchapter_meta:{subchapter_slug}'
+    cached = cache.get(cache_key)
+    if cached is None:
+        subchapter = SubChapter.objects.select_related('chapter__subject').filter(slug=subchapter_slug).only(
+            'name', 'seo_description', 'chapter__name'
+        ).first()
+        if subchapter and subchapter.chapter:
+            cached = (subchapter.name, subchapter.chapter.name, subchapter.seo_description)
+        else:
+            cached = None
+        cache.set(cache_key, cached, timeout=6 * 3600)
+    return cached
 
 
 def _defaults(*, title, description, keywords, og_title='', og_description=''):
@@ -146,7 +187,7 @@ def _safe_lookup(request):
                 og_description=supabase_seo.get('og_description') or supabase_seo.get('meta_description', ''),
             )
 
-        seo = PageSEO.objects.filter(page_slug=page_slug).first()
+        seo = _cached_page_seo_row(page_slug)
         if seo:
             return seo
 
@@ -160,17 +201,18 @@ def _safe_lookup(request):
 
         if route_name == 'quiz':
             chapter_slug = (resolver.kwargs or {}).get('slug') if resolver else ''
-            chapter = Chapter.objects.select_related('subject').filter(slug=chapter_slug).first()
-            if chapter and chapter.subject:
-                return _chapter_quiz_defaults(chapter.name, chapter.subject.name)
+            chapter_meta = _cached_chapter_meta(chapter_slug)
+            if chapter_meta:
+                return _chapter_quiz_defaults(chapter_meta[0], chapter_meta[1])
 
         if route_name == 'subchapter_quiz':
             subchapter_slug = (resolver.kwargs or {}).get('slug') if resolver else ''
-            subchapter = SubChapter.objects.select_related('chapter__subject').filter(slug=subchapter_slug).first()
-            if subchapter and subchapter.chapter and subchapter.chapter.subject:
-                defaults = _subchapter_quiz_defaults(subchapter.name, subchapter.chapter.name)
-                if subchapter.seo_description:
-                    desc = subchapter.seo_description.strip()
+            subchapter_meta = _cached_subchapter_meta(subchapter_slug)
+            if subchapter_meta:
+                subchapter_name, chapter_name, seo_description = subchapter_meta
+                defaults = _subchapter_quiz_defaults(subchapter_name, chapter_name)
+                if seo_description:
+                    desc = seo_description.strip()
                     if len(desc) > 158:
                         desc = desc[:158].rsplit(' ', 1)[0]
                     defaults.meta_description = desc

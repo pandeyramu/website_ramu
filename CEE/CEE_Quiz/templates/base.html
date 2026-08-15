@@ -96,7 +96,8 @@
 
         .site-header-inner,
         .site-footer-inner,
-        .page-wrap {
+        main.page-wrap {
+            width: 100%;
             max-width: 1050px;
             margin: 0 auto;
         }
@@ -698,12 +699,12 @@
             }
 
             .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem 0;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem 0.9rem;
             }
 
             .footer-brand {
-                grid-column: auto;
+                grid-column: 1 / -1;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;

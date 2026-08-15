@@ -164,6 +164,21 @@ USE_I18N = True
 
 USE_TZ = True
 
+# In-process cache for immutable quiz question sets, full-test id buckets, and
+# near-static SEO lookup rows. Keeps repeat page loads (active quiz refreshes,
+# results pages) off Postgres and cuts Supabase database egress.
+# LocMemCache is per-process; fine for a single web instance on Render.
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'cee-quiz-cache',
+        'TIMEOUT': 3600,
+        'OPTIONS': {
+            'MAX_ENTRIES': 20000,
+        },
+    },
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 

@@ -54,13 +54,14 @@
 
     .hub-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 1.5rem;
         margin-top: 1.75rem;
     }
 
     .hub-card {
         display: block;
+        position: relative;
         padding: 1.1rem 1.15rem;
         border-radius: 16px;
         border: 1px solid #d8e2ef;
@@ -69,6 +70,22 @@
         text-decoration: none;
         color: #15324a;
         transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .hub-card-arrow {
+        position: absolute;
+        top: 1rem;
+        right: 1.15rem;
+        color: #1458a6;
+        font-size: 1.15rem;
+        font-weight: 700;
+        line-height: 1;
+        transition: transform 0.2s ease;
+    }
+
+    .hub-card:hover .hub-card-arrow,
+    .hub-card:focus-visible .hub-card-arrow {
+        transform: translateX(4px);
     }
 
     .hub-card:hover,
@@ -85,6 +102,7 @@
 
     .hub-card h2 {
         margin: 0 0 0.45rem;
+        padding-right: 1.4rem;
         font-size: 1.1rem;
         line-height: 1.35;
     }
@@ -224,6 +242,12 @@
         outline-offset: 2px;
     }
 
+    @media (max-width: 860px) {
+        .hub-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
     @media (max-width: 640px) {
         .hub-grid,
         .hub-cta-grid {
@@ -259,6 +283,7 @@
 <div class="hub-grid">
     {% for item in hub_items %}
         <a class="hub-card" href="{{ item.url }}">
+            <span class="hub-card-arrow" aria-hidden="true">→</span>
             <h2>{{ item.name }}</h2>
             <p>{{ item.description }}</p>
             {% if item.chapters %}
@@ -278,7 +303,7 @@
             'params' : {}
         };
     </script>
-    <script src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
+    <script async src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
 </div>
 
 <section class="hub-section">

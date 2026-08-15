@@ -399,7 +399,7 @@ header {
 
 .button-group {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 15px;
     margin: 30px 0;
 }
@@ -472,7 +472,7 @@ header {
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
@@ -564,7 +564,7 @@ header {
 /* Responsive buttons for smaller screens */
 @media (max-width: 768px) {
     .button-group {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .btn-subject {
@@ -593,6 +593,11 @@ img, video, iframe, table {
 
     .welcome-text p {
         font-size: 14px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 
     .config-section h2 {
@@ -672,6 +677,10 @@ img, video, iframe, table {
 
     .welcome-text p {
         font-size: 13px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
     }
 
     .config-section {

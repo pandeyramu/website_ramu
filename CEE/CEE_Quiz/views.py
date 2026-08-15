@@ -4,15 +4,17 @@ import re
 import uuid
 import json
 import socket
+import hashlib
 import logging
 from functools import lru_cache
 import requests
+from django.core.cache import cache
 from django.contrib.sites.requests import RequestSite
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import Http404, HttpResponse, JsonResponse
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import never_cache
 from django.db import connection, IntegrityError
 from django.db.utils import DatabaseError
 from django.core.mail import send_mail
@@ -331,6 +333,52 @@ def _pick_random_questions(base_queryset, limit=50):
     return [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
 
 
+def _load_questions_by_ids(question_ids, *, include_solution=True):
+    """Load questions in id order, caching the immutable set in-process.
+
+    The same attempt re-loads the exact same question set across the active
+    page, submission, and results view, so caching by the id-set digest turns
+    several repeat DB transfers into a single one. Question content only
+    changes via admin/sync scripts, so a 1h TTL is safe.
+    """
+    ids = [int(qid) for qid in question_ids]
+    if not ids:
+        return []
+
+    digest = hashlib.md5(','.join(str(qid) for qid in ids).encode('ascii')).hexdigest()
+    cache_key = f'qset:{'full' if include_solution else 'lite'}:{digest}'
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    qs = (
+        Question.objects
+        .filter(id__in=ids, verified=True)
+        .select_related('chapter', 'sub_chapter')
+    )
+    if include_solution:
+        fetched = list(qs)
+    else:
+        fetched = list(qs.only(
+            'id',
+            'chapter_id',
+            'sub_chapter_id',
+            'question_text',
+            'option_a',
+            'option_b',
+            'option_c',
+            'option_d',
+            'correct_option',
+            'chapter__name',
+            'sub_chapter__name',
+        ))
+
+    id_to_question = {q.id: q for q in fetched}
+    ordered = [id_to_question[qid] for qid in ids if qid in id_to_question]
+    cache.set(cache_key, ordered, timeout=3600)
+    return ordered
+
+
 FULL_TEST_BLUEPRINT = {
     'Physics': {
         'Mechanics': 10,
@@ -372,21 +420,29 @@ FULL_TEST_BLUEPRINT = {
 
 
 def _build_full_test_question_ids():
-    """Collect random question IDs per chapter in 2 queries instead of 23."""
+    """Collect random question IDs per chapter in 2 queries instead of 23.
+
+    The per-chapter id buckets are immutable between syncs, so they are cached
+    in-process (30 min TTL) to avoid re-transferring every question id in the
+    DB on each full-test start.
+    """
     from collections import defaultdict
 
-    # 1 query: load all question IDs grouped by (subject_name, chapter_name)
-    qs = Question.objects.filter(verified=True).values_list(
-        'chapter__subject__name', 'chapter__name', 'id'
-    )
-    chapter_buckets = defaultdict(list)
-    for subj, chap, qid in qs:
-        chapter_buckets[(subj, chap)].append(qid)
+    buckets = cache.get('ft_id_buckets')
+    if buckets is None:
+        # 1 query: load all question IDs grouped by (subject_name, chapter_name)
+        qs = Question.objects.filter(verified=True).values_list(
+            'chapter__subject__name', 'chapter__name', 'id'
+        )
+        buckets = defaultdict(list)
+        for subj, chap, qid in qs:
+            buckets[(subj, chap)].append(qid)
+        cache.set('ft_id_buckets', dict(buckets), timeout=1800)
 
     selected_ids = []
     for subject_name, chapters_config in FULL_TEST_BLUEPRINT.items():
         for chapter_name, question_count in chapters_config.items():
-            bucket = chapter_buckets.get((subject_name, chapter_name), [])
+            bucket = buckets.get((subject_name, chapter_name), [])
             if bucket:
                 selected_ids.extend(
                     random.sample(bucket, min(question_count, len(bucket)))
@@ -581,17 +637,14 @@ def _save_test_result(*, user_name, topic, total_attempted, total_correct, time_
 
 
 def keepalive(request):
-    """Keep database connection alive - for Uptime Robot and client pings"""
-    try:
-        # Ensure database connection is active
-        connection.ensure_connection()
-        # Use a minimal probe query to keep connection warm.
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT 1")
-        return HttpResponse("OK", status=200)
-    except Exception as e:
-        logger.exception('keepalive probe failed')
-        return HttpResponse('Service Unavailable', status=503)
+    """No-DB liveness probe for Uptime Robot / client pings.
+
+    Deliberately avoids any database query so monitoring traffic adds zero
+    Postgres egress. Render keeps the instance awake on any HTTP hit.
+    """
+    return HttpResponse("OK", status=200)
+
+
 def report_question(request):
     try:
         if request.method != 'POST':
@@ -698,10 +751,13 @@ def report_question(request):
     except Exception:
         logger.exception('Unexpected error in report_question')
         return JsonResponse({'ok': False, 'message': 'An unexpected error occurred. Please try again later.'}, status=500)
-@cache_page(0)  # Disable caching for development
+@never_cache  # Never serve a stale home page (page content is versioned in templates)
 def home(request):
     subject_list = _ordered_subjects()
-    total_questions = Question.objects.count()
+    total_questions = cache.get('home_total_questions')
+    if total_questions is None:
+        total_questions = Question.objects.count()
+        cache.set('home_total_questions', total_questions, timeout=900)
     page_default_title = 'CEE MCQ | Free Practice Questions | CEE MCQ'
     page_default_description = "Free CEE MCQ practice. Chapter wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination."
     page_default_keywords = 'CEE MCQ, CEE Nepal, Chapter wise MCQ Questions, Biology, Chemistry, Physics, MAT'
@@ -887,7 +943,7 @@ def quiz(request, slug):
     chapter = get_object_or_404(Chapter.objects.select_related('subject'), slug=slug)
     chapter_id = chapter.id
     attempt_key_prefix = f'quiz_{chapter_id}'
-    attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
+    attempt_reference = request.session.get(f'{attempt_key_prefix}_attempt_reference', '')
     request.page_slug = slug
     page_default_title = f'{chapter.name} MCQ | {chapter.subject.name} | CEE MCQ'
     page_default_description = f'Practice the {chapter.name} MCQ for the Common Entrance Examination. Track your performance with detailed results.'
@@ -941,9 +997,7 @@ def quiz(request, slug):
                 messages.error(request, 'Session expired. Please restart the quiz.')
                 return redirect('quiz', slug=chapter.slug)
 
-            questions_qs = Question.objects.filter(id__in=questions_ids, verified=True).select_related('chapter', 'sub_chapter')
-            id_to_question = {q.id: q for q in questions_qs}
-            questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
+            questions = _load_questions_by_ids(questions_ids, include_solution=True)
 
             if not questions:
                 messages.error(request, 'Session data is stale. Please restart the quiz.')
@@ -1044,9 +1098,7 @@ def quiz(request, slug):
         preview_questions = []
 
         if quiz_started:
-            questions_qs = Question.objects.filter(id__in=stored_ids, verified=True).select_related('chapter', 'sub_chapter')
-            id_to_question = {q.id: q for q in questions_qs}
-            questions = [id_to_question[qid] for qid in stored_ids if qid in id_to_question]
+            questions = _load_questions_by_ids(stored_ids, include_solution=False)
             if not questions:
                 request.session.pop(f'quiz_questions_{chapter_id}', None)
                 request.session.pop(f'quiz_name_{chapter_id}', None)
@@ -1086,7 +1138,7 @@ def subchapter_quiz(request, slug):
     chapter = sub_chapter.chapter
     session_key = f'quiz_questions_sub_{subchapter_id}'
     attempt_key_prefix = f'subchapter_{subchapter_id}'
-    attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
+    attempt_reference = request.session.get(f'{attempt_key_prefix}_attempt_reference', '')
     request.page_slug = slug
     page_default_title = f'{sub_chapter.name} MCQ | {chapter.name} | CEE MCQ'
     page_default_description = f'Practice the {sub_chapter.name} MCQ from {chapter.name} for the Common Entrance Examination. Track your performance with detailed results.'
@@ -1140,9 +1192,7 @@ def subchapter_quiz(request, slug):
                 messages.error(request, 'Session expired. Please restart the quiz.')
                 return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
-            questions_qs = Question.objects.filter(id__in=questions_ids, verified=True).select_related('chapter', 'sub_chapter')
-            id_to_question = {q.id: q for q in questions_qs}
-            questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
+            questions = _load_questions_by_ids(questions_ids, include_solution=True)
 
             if not questions:
                 messages.error(request, 'Session data is stale. Please restart the quiz.')
@@ -1246,9 +1296,7 @@ def subchapter_quiz(request, slug):
         preview_questions = []
 
         if quiz_started:
-            questions_qs = Question.objects.filter(id__in=stored_ids, verified=True).select_related('chapter', 'sub_chapter')
-            id_to_question = {q.id: q for q in questions_qs}
-            questions = [id_to_question[qid] for qid in stored_ids if qid in id_to_question]
+            questions = _load_questions_by_ids(stored_ids, include_solution=False)
             if not questions:
                 request.session.pop(session_key, None)
                 request.session.pop(f'quiz_name_sub_{subchapter_id}', None)
@@ -1285,7 +1333,7 @@ def subchapter_quiz(request, slug):
 def full_test(request):
     result_session_key = 'full_test_result_data'
     attempt_key_prefix = 'full_test'
-    attempt_reference = _attempt_reference(request.session, attempt_key_prefix)
+    attempt_reference = request.session.get(f'{attempt_key_prefix}_attempt_reference', '')
     request.page_slug = 'full-test'
     page_default_title = 'CEE Full Mock Test | 180 Questions Online | CEE MCQ'
     page_default_description = 'Take a full CEE mock test online with 180 questions, negative marking, and a 2.5 hour timer. Simulate the real MEC entrance exam experience.'
@@ -1299,9 +1347,7 @@ def full_test(request):
 
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
             selected_ids = _build_full_test_question_ids()
-            questions_qs = Question.objects.filter(id__in=selected_ids, verified=True).select_related('chapter', 'sub_chapter')
-            id_to_question = {q.id: q for q in questions_qs}
-            questions = [id_to_question[qid] for qid in selected_ids if qid in id_to_question]
+            questions = _load_questions_by_ids(selected_ids, include_solution=False)
 
             request.session['full_test_questions'] = [q.id for q in questions]
             request.session['full_test_user_name'] = user_name
@@ -1340,10 +1386,7 @@ def full_test(request):
                 messages.error(request, 'Session expired. Please restart the test.')
                 return redirect('full_test')
 
-            questions_qs = Question.objects.filter(id__in=questions_ids, verified=True).select_related('chapter', 'sub_chapter')
-            questions = list(questions_qs)
-            id_to_question = {q.id: q for q in questions}
-            questions = [id_to_question[qid] for qid in questions_ids if qid in id_to_question]
+            questions = _load_questions_by_ids(questions_ids, include_solution=True)
 
             if not questions:
                 messages.error(request, 'Session data is stale. Please restart the test.')
@@ -1452,9 +1495,7 @@ def full_test(request):
                 **_crawl_navigation_links(),
             })
 
-        questions_qs = Question.objects.filter(id__in=stored_ids, verified=True).select_related('chapter', 'sub_chapter')
-        id_to_question = {q.id: q for q in questions_qs}
-        questions = [id_to_question[qid] for qid in stored_ids if qid in id_to_question]
+        questions = _load_questions_by_ids(stored_ids, include_solution=False)
 
         if not questions:
             request.session.pop('full_test_questions', None)
@@ -1523,9 +1564,7 @@ def full_test_results(request):
 
     try:
         connection.ensure_connection()
-        questions_qs = Question.objects.filter(id__in=question_ids, verified=True).select_related('chapter', 'sub_chapter')
-        id_to_question = {q.id: q for q in questions_qs}
-        questions = [id_to_question[qid] for qid in question_ids if qid in id_to_question]
+        questions = _load_questions_by_ids(question_ids, include_solution=True)
     except Exception as error:
         logger.exception('Failed to load test results')
         messages.error(request, 'Unable to load test results. Please retake the test.')
