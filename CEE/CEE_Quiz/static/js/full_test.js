@@ -2,7 +2,7 @@ let endTime;
 let timerInterval;
 let currentUserName;
 let allowDirectSubmit = false;
-let currentTimeLeft = 9000;
+let currentTimeLeft = 10800;
 let activeFlagPayload = null;
 let submissionLocked = false;
 let currentQuestionNumber = 1;
@@ -14,7 +14,7 @@ const quizAnsweredCount = document.getElementById('quiz-answered-count');
 const quizProgressFill = document.getElementById('quiz-progress-fill');
 const questionJumpGrid = document.getElementById('question-jump-grid');
 
-const FULL_TEST_DURATION_SECONDS = 9000;
+const FULL_TEST_DURATION_SECONDS = 10800;
 const timerDisplay = document.getElementById('full_test_timer');
 const quizForm = document.getElementById('full-test-form');
 const submitReviewPanel = document.getElementById('submit-review-panel');

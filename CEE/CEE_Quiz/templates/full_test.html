@@ -34,7 +34,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Full CEE MCQ Test | CEE MCQ">
 <meta name="twitter:description"
-      content="Take the full CEE MCQ test online with 180 questions and detailed scoring.">
+      content="Take the full CEE MCQ test online with 200 questions and detailed scoring.">
 <meta name="twitter:image"
       content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.ico' %}">
 
@@ -59,7 +59,7 @@ window.MathJax = {
 <script>
     // Only load MathJax when quiz is active or results are shown.
     // For an active quiz, typeset only the first question block so the page
-    // never pays the cost of typesetting all 180 questions at once.
+    // never pays the cost of typesetting all 200 questions at once.
     (function() {
         var qForm = document.getElementById('full-test-form');
         var hasActiveQuiz = qForm && !qForm.classList.contains('submitted') && qForm.style.display !== 'none';
@@ -93,7 +93,7 @@ window.MathJax = {
     "@context": "https://schema.org",
     "@type": "Quiz",
     "name": "Full CEE MCQ Test",
-    "description": "Full CEE practice test with 180 questions and detailed results.",
+    "description": "Full CEE practice test with 200 questions and detailed results.",
     "url": "{{ request.build_absolute_uri }}",
     "author": {
         "@type": "Person",
@@ -347,9 +347,9 @@ data-exit-url="{% url 'full_test_exit' %}"
 
 <div class="page-intro">
 <h2>What is the CEE Full Mock Test?</h2>
-<p>This full length mock test simulates the actual Common Entrance Examination (CEE) conducted by the Medical Education Commission (MEC) in Nepal. It contains <strong>180 questions</strong> covering Physics, Chemistry, Botany, and Zoology, matching the real exam blueprint as closely as possible.</p>
-<p>Each question carries <strong>+1 mark</strong> for a correct answer and <strong>&minus;0.25 marks</strong> for a wrong answer. You have <strong>2.5 hours</strong> to complete the test. The timer starts as soon as you begin, and your score, accuracy, and per question speed are calculated automatically after submission.</p>
-<p>The questions in this test are drawn from across all chapters in the CEE syllabus. Physics and Chemistry questions carry 50 marks each, while Botany and Zoology questions carry 40 marks each, reflecting the approximate weightage of each subject in the actual exam. Negative marking is applied uniformly: every incorrect answer reduces your score by 0.25 marks, so answering strategically is just as important as answering correctly.</p>
+<p>This full length mock test simulates the actual Common Entrance Examination (CEE) conducted by the Medical Education Commission (MEC) in Nepal. It contains <strong>200 questions</strong> covering Physics, Chemistry, Botany, Zoology, and MAT, matching the real exam blueprint as closely as possible.</p>
+<p>Each question carries <strong>+1 mark</strong> for a correct answer and <strong>&minus;0.25 marks</strong> for a wrong answer. You have <strong>3 hours</strong> to complete the test. The timer starts as soon as you begin, and your score, accuracy, and per question speed are calculated automatically after submission.</p>
+<p>The questions in this test are drawn from across all chapters in the CEE syllabus. Physics and Chemistry questions carry 50 marks each, Botany and Zoology questions carry 40 marks each, and the Mental Agility Test (MAT) carries 20 marks, reflecting the approximate weightage of each subject in the actual exam. Negative marking is applied uniformly: every incorrect answer reduces your score by 0.25 marks, so answering strategically is just as important as answering correctly.</p>
 </div>
 
 <div class="ad-slot ad-native" style="margin: 24px auto; text-align:center;">
@@ -397,20 +397,20 @@ Back to Home
 
 <div class="page-intro">
 <h2>How the Full Test Mirrors the Real CEE</h2>
-<p>The real CEE is a 3 hour, 200 question exam. This mock uses 180 questions and a 2.5 hour timer to keep the per question pace identical, approximately 50 seconds per question. The subject distribution matches the official blueprint: Physics (50), Chemistry (50), Zoology (40), and Botany (40). Every question is multiple choice with a single correct answer, and the negative marking scheme of &minus;0.25 per wrong answer is applied exactly as in the real exam.</p>
+<p>The real CEE is a 3 hour, 200 question exam. This mock uses 200 questions and a 3 hour timer to keep the per question pace identical to the real exam. The subject distribution matches the official blueprint: Physics (50), Chemistry (50), Zoology (40), Botany (40), and MAT (20). Every question is multiple choice with a single correct answer, and the negative marking scheme of &minus;0.25 per wrong answer is applied exactly as in the real exam.</p>
 <p>Unlike chapter wise tests where you focus on one topic at a time, the full test forces you to switch between subjects and question types without warning. One moment you are solving a Mechanics numerical, the next you are identifying a Biology process or recalling an Organic Chemistry reaction. This randomised switching is intentional; it trains your brain to stay focused and retrieve information across the full breadth of the syllabus under time pressure, which is the core challenge of the actual CEE.</p>
 </div>
 
 <div class="page-intro">
 <h2>Scoring Strategy and Common Mistakes</h2>
-<p>The most common mistake students make in the full test is spending too long on difficult questions early on. With 180 questions in 150 minutes, every minute counts. If a question takes more than 60 seconds, flag it, mark your best guess, and move on. Coming back to flagged questions after completing the easier ones almost always leads to a higher score than grinding through hard questions while easy ones wait untouched.</p>
-<p>Another frequent error is attempting every question because the negative marking feels small at &minus;0.25. In reality, if you are guessing between four options with no knowledge of the topic, the expected value of guessing is &minus;0.0625 per question, which adds up across 180 questions. A better approach is to only guess when you can eliminate at least one option. Questions where you have no idea should be left unanswered to protect your score.</p>
+<p>The most common mistake students make in the full test is spending too long on difficult questions early on. With 200 questions in 180 minutes, every minute counts. If a question takes more than 60 seconds, flag it, mark your best guess, and move on. Coming back to flagged questions after completing the easier ones almost always leads to a higher score than grinding through hard questions while easy ones wait untouched.</p>
+<p>Another frequent error is attempting every question because the negative marking feels small at &minus;0.25. In reality, if you are guessing between four options with no knowledge of the topic, the expected value of guessing is &minus;0.0625 per question, which adds up across 200 questions. A better approach is to only guess when you can eliminate at least one option. Questions where you have no idea should be left unanswered to protect your score.</p>
 <p>After each test, spend time reviewing the solutions carefully. The detailed explanations show not only why the correct answer is right, but why each wrong option is wrong. This is where the deepest learning happens. Keep a notebook of questions you got wrong and revisit them weekly; this habit alone can improve your score by 15 to 25 marks over a month of consistent practice.</p>
 </div>
 
 <div class="page-intro">
 <h2>How to Use This Test Effectively</h2>
-<p>Practicing the full test regularly helps you build exam stamina, manage your time across 180 questions under real exam pressure, and identify which subjects need more revision. Many students find that their first full test score is significantly lower than their target. This is normal. The goal is to take the test repeatedly, review your mistakes with the detailed solutions, and watch your score improve steadily over time.</p>
+<p>Practicing the full test regularly helps you build exam stamina, manage your time across 200 questions under real exam pressure, and identify which subjects need more revision. Many students find that their first full test score is significantly lower than their target. This is normal. The goal is to take the test repeatedly, review your mistakes with the detailed solutions, and watch your score improve steadily over time.</p>
 <p>For the best results, take the full test once a week during your preparation period. Treat it exactly like the real exam: sit at a desk, set a timer, do not use your phone, and do not take breaks. The discipline you build during practice transfers directly to exam day. After the test, review your score breakdown and the detailed solutions to track your progress and identify persistent weak areas.</p>
 </div>
 
@@ -502,8 +502,8 @@ Full Test
 
 <p class="submit-review-meta">
 
-Total Questions: 180 |
-Time: 2.5 hours |
+Total Questions: {{ questions|length }} |
+Time: 3 hours |
 Negative Marking: 0.25 per wrong answer
 
 </p>
@@ -932,6 +932,66 @@ Completion:
 
 </section>
 
+
+
+<section class="subject-breakdown">
+
+<h3 class="subject-breakdown-title">
+Subject-wise Performance
+</h3>
+
+<div class="subject-breakdown-grid">
+
+{% for sb in subject_breakdown %}
+
+<div class="subject-card">
+
+<div class="subject-card-head">
+
+<span class="subject-card-name">
+{{ sb.name }}
+</span>
+
+<span class="subject-card-excellence">
+{{ sb.accuracy_percent }}%
+</span>
+
+</div>
+
+<div class="subject-bar-track">
+
+<div class="subject-bar-fill"
+     style="width: {{ sb.accuracy_percent }}%;"></div>
+
+</div>
+
+<div class="subject-card-stats">
+
+<div class="subject-card-stat">
+Attempted:
+<strong>{{ sb.attempted }} / {{ sb.total }}</strong>
+</div>
+
+<div class="subject-card-stat">
+Correct:
+<strong>{{ sb.correct }} / {{ sb.attempted }}</strong>
+</div>
+
+<div class="subject-card-stat">
+Excellence:
+<strong>{{ sb.accuracy_percent }}%</strong>
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</section>
+
 {% endif %}
 
 
@@ -961,7 +1021,7 @@ Completion:
 
         <span class="quiz-topbar-card-label">Question</span>
 
-        <span class="quiz-topbar-counter-num" id="quiz-nav-count">1 of 180</span>
+        <span class="quiz-topbar-counter-num" id="quiz-nav-count">1 of {{ questions|length }}</span>
 
     </div>
 
@@ -1222,6 +1282,21 @@ Submit Test
     <script async="async" data-cfasync="false" src="https://pl30821229.effectivecpmnetwork.com/adc88700d9882d5a0a0c17db1b1131df/invoke.js"></script>
 
     <div id="container-adc88700d9882d5a0a0c17db1b1131df"></div>
+
+</div>
+
+<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
+
+    <script>
+        atOptions = {
+            'key' : 'df9cb8b660db27eb9c3f41733b195570',
+            'format' : 'iframe',
+            'height' : 250,
+            'width' : 300,
+            'params' : {}
+        };
+    </script>
+    <script async src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
 
 </div>
 

@@ -367,7 +367,7 @@
         </div>
         <div class="feature-card">
             <h3>Full Length Mock Tests</h3>
-            <p>Simulate the real CEE with a 180 question mock test covering all 4 subjects. The timer and negative marking mirror the actual exam conditions, helping you build the stamina and strategy needed for the 3 hour paper.</p>
+            <p>Simulate the real CEE with a 200 question mock test covering all 5 subjects. The timer and negative marking mirror the actual exam conditions, helping you build the stamina and strategy needed for the 3 hour paper.</p>
         </div>
         <div class="feature-card">
             <h3>Detailed Solutions</h3>
@@ -404,7 +404,7 @@
 <section class="subjects">
     <h2>Free CEE Chapter wise MCQ Questions</h2>
     <p>Select a subject and start practicing!</p>
-    <p class="total-question-count">Total questions available: {{ total_questions }}</p>
+    <p class="total-question-count">Total questions available: {{ total_questions_display }}</p>
     <div class="button-group">
         {% for sub in subjects %}
             <a href="{% url 'chapters' sub.slug %}" class="btn btn-subject">{{ sub.name }}</a>

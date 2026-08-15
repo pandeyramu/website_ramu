@@ -1113,6 +1113,81 @@ table {
     margin-top: 15px;
 }
 
+.subject-breakdown {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.subject-breakdown-title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.subject-breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 15px;
+}
+
+.subject-card {
+    background: white;
+    border-radius: 6px;
+    padding: 14px 16px;
+    border-top: 4px solid #3498db;
+}
+
+.subject-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.subject-card-name {
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.subject-card-excellence {
+    font-weight: 700;
+    color: #27ae60;
+}
+
+.subject-bar-track {
+    background: #ecf0f1;
+    border-radius: 4px;
+    height: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.subject-bar-fill {
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+    height: 100%;
+    border-radius: 4px;
+    min-width: 2px;
+}
+
+.subject-card-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.subject-card-stat {
+    font-size: 0.9em;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subject-card-stat strong {
+    color: #2c3e50;
+}
+
 body.review-modal-open .full-test-footer,
 body.review-modal-open footer.site-footer {
     display: none !important;

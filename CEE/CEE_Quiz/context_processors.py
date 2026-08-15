@@ -102,11 +102,11 @@ def _subchapter_quiz_defaults(subchapter_name, chapter_name):
 
 def _full_test_defaults():
     return _defaults(
-        title='CEE Full Mock Test | 180 Questions Online | CEE MCQ',
-        description='Take a full CEE mock test online with 180 questions, negative marking, and a 2.5 hour timer. Simulate the real MEC entrance exam experience.',
-        keywords='CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 180 questions, CEE practice exam',
-        og_title='CEE Full Mock Test | 180 Questions Online | CEE MCQ',
-        og_description='Take a full CEE mock test online with 180 questions, negative marking, and a 2.5 hour timer.',
+        title='CEE Full Mock Test | 200 Questions Online | CEE MCQ',
+        description='Take a full CEE mock test online with 200 questions, negative marking, and a 3 hour timer. Simulate the real MEC entrance exam experience.',
+        keywords='CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 200 questions, CEE practice exam',
+        og_title='CEE Full Mock Test | 200 Questions Online | CEE MCQ',
+        og_description='Take a full CEE mock test online with 200 questions, negative marking, and a 3 hour timer.',
     )
 
 

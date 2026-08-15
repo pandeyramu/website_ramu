@@ -326,6 +326,7 @@ def _pick_random_questions(base_queryset, limit=50):
             'option_d',
             'correct_option',
             'chapter__name',
+            'chapter__subject__name',
             'sub_chapter__name',
         )
     )
@@ -354,7 +355,7 @@ def _load_questions_by_ids(question_ids, *, include_solution=True):
     qs = (
         Question.objects
         .filter(id__in=ids, verified=True)
-        .select_related('chapter', 'sub_chapter')
+        .select_related('chapter', 'sub_chapter', 'chapter__subject')
     )
     if include_solution:
         fetched = list(qs)
@@ -370,6 +371,7 @@ def _load_questions_by_ids(question_ids, *, include_solution=True):
             'option_d',
             'correct_option',
             'chapter__name',
+            'chapter__subject__name',
             'sub_chapter__name',
         ))
 
@@ -415,6 +417,12 @@ FULL_TEST_BLUEPRINT = {
         'Microbial Diseases and Immunology': 4,
         'Medical Technology and Applied Biology': 2,
         'Biota, Environment and Conservation': 2,
+    },
+    'MAT': {
+        'Verbal Reasoning Test': 5,
+        'Numerical Reasoning': 5,
+        'Logical Sequencing': 5,
+        'Spatial Relation/Abstract Reasoning': 5,
     },
 }
 
@@ -515,6 +523,40 @@ def _build_result_metrics(*, total_questions, total_attempted, total_correct, ti
         'time_taken_display': _format_duration(time_taken_seconds),
         'per_question_time_display': f"{per_question_seconds}s" if total_attempted else '0s',
     }
+
+
+SUBJECT_ORDER = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'MAT']
+
+
+def _build_full_test_subject_breakdown(questions, user_answers):
+    """Per-subject stats for the full test results graph.
+
+    Returns a list of dicts ordered by SUBJECT_ORDER, each with:
+    name, total, attempted, correct, accuracy_percent.
+    Subjects with no questions are still included so the 5-subject
+    breakdown is always shown once MAT questions are available.
+    """
+    breakdown = []
+    for subject_name in SUBJECT_ORDER:
+        subject_questions = [q for q in questions if q.chapter.subject.name == subject_name]
+        total = len(subject_questions)
+        attempted = 0
+        correct = 0
+        for q in subject_questions:
+            answer = user_answers.get(q.id)
+            if answer:
+                attempted += 1
+                if answer == q.correct_option:
+                    correct += 1
+        accuracy = round((correct / attempted) * 100, 1) if attempted else 0.0
+        breakdown.append({
+            'name': subject_name,
+            'total': total,
+            'attempted': attempted,
+            'correct': correct,
+            'accuracy_percent': accuracy,
+        })
+    return breakdown
 
 
 def _normalize_exact_name(value):
@@ -758,6 +800,7 @@ def home(request):
     if total_questions is None:
         total_questions = Question.objects.count()
         cache.set('home_total_questions', total_questions, timeout=900)
+    total_questions_display = f"{total_questions // 10000 * 10000:,}+"
     page_default_title = 'CEE MCQ | Free Practice Questions | CEE MCQ'
     page_default_description = "Free CEE MCQ practice. Chapter wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination."
     page_default_keywords = 'CEE MCQ, CEE Nepal, Chapter wise MCQ Questions, Biology, Chemistry, Physics, MAT'
@@ -765,6 +808,7 @@ def home(request):
     return render(request, 'home.html', {
         'subjects': subject_list,
         'total_questions': total_questions,
+        'total_questions_display': total_questions_display,
         'crawl_hubs': _crawl_hubs(),
         'page_slug': 'home',
         'page_default_title': page_default_title,
@@ -1335,9 +1379,9 @@ def full_test(request):
     attempt_key_prefix = 'full_test'
     attempt_reference = request.session.get(f'{attempt_key_prefix}_attempt_reference', '')
     request.page_slug = 'full-test'
-    page_default_title = 'CEE Full Mock Test | 180 Questions Online | CEE MCQ'
-    page_default_description = 'Take a full CEE mock test online with 180 questions, negative marking, and a 2.5 hour timer. Simulate the real MEC entrance exam experience.'
-    page_default_keywords = 'CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 180 questions, CEE practice exam'
+    page_default_title = 'CEE Full Mock Test | 200 Questions Online | CEE MCQ'
+    page_default_description = 'Take a full CEE mock test online with 200 questions, negative marking, and a 3 hour timer. Simulate the real MEC entrance exam experience.'
+    page_default_keywords = 'CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 200 questions, CEE practice exam'
     if request.method == "POST":
         if request.POST.get('start') == '1':
             user_name = _normalize_exact_name(request.POST.get('name', ''))
@@ -1548,9 +1592,9 @@ def subchapter_quiz_exit(request, slug):
 def full_test_results(request):
     request.page_slug = 'full-test'
     # Default page metadata for full test results
-    page_default_title = 'CEE Full Mock Test | 180 Questions Online | CEE MCQ'
-    page_default_description = 'Take a full CEE mock test online with 180 questions, negative marking, and a 2.5 hour timer. Simulate the real MEC entrance exam experience.'
-    page_default_keywords = 'CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 180 questions, CEE practice exam'
+    page_default_title = 'CEE Full Mock Test | 200 Questions Online | CEE MCQ'
+    page_default_description = 'Take a full CEE mock test online with 200 questions, negative marking, and a 3 hour timer. Simulate the real MEC entrance exam experience.'
+    page_default_keywords = 'CEE full test, CEE mock test Nepal, CEE online test, MEC full mock test, CEE 200 questions, CEE practice exam'
     # Consume the stored result data so visiting the results URL directly won't re-show old results.
     result_payload = request.session.pop('full_test_result_data', None)
     if not result_payload:
@@ -1587,6 +1631,7 @@ def full_test_results(request):
     user_name = result_payload.get('user_name', '')
     attempt_reference = result_payload.get('attempt_reference', '')
     history_entries = _get_test_history(user_name=user_name)
+    subject_breakdown = _build_full_test_subject_breakdown(questions, user_answers)
 
     return render(request, 'full_test.html', {
         'questions': questions,
@@ -1611,6 +1656,7 @@ def full_test_results(request):
         'page_default_keywords': page_default_keywords,
         'page_default_og_title': page_default_title,
         'page_default_og_description': page_default_description,
+        'subject_breakdown': subject_breakdown,
         **_crawl_navigation_links(),
         **result_metrics,
     })
