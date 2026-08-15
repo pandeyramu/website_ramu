@@ -800,7 +800,6 @@ def home(request):
     if total_questions is None:
         total_questions = Question.objects.count()
         cache.set('home_total_questions', total_questions, timeout=900)
-    total_questions_display = f"{total_questions // 10000 * 10000:,}+"
     page_default_title = 'CEE MCQ | Free Practice Questions | CEE MCQ'
     page_default_description = "Free CEE MCQ practice. Chapter wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination."
     page_default_keywords = 'CEE MCQ, CEE Nepal, Chapter wise MCQ Questions, Biology, Chemistry, Physics, MAT'
@@ -808,7 +807,6 @@ def home(request):
     return render(request, 'home.html', {
         'subjects': subject_list,
         'total_questions': total_questions,
-        'total_questions_display': total_questions_display,
         'crawl_hubs': _crawl_hubs(),
         'page_slug': 'home',
         'page_default_title': page_default_title,

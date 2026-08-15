@@ -404,7 +404,7 @@
 <section class="subjects">
     <h2>Free CEE Chapter wise MCQ Questions</h2>
     <p>Select a subject and start practicing!</p>
-    <p class="total-question-count">Total questions available: {{ total_questions_display }}</p>
+    <p class="total-question-count">Total questions available: {{ total_questions }}</p>
     <div class="button-group">
         {% for sub in subjects %}
             <a href="{% url 'chapters' sub.slug %}" class="btn btn-subject">{{ sub.name }}</a>
