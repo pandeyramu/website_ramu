@@ -845,7 +845,7 @@ def all_subjects(request):
         hub_heading='All Subject Entry Points',
         hub_intro=(
     "This page gives you a single place to jump into every CEE subject: Physics, Chemistry, "
-    "Botany, and Zoology. Each subject is broken into chapters, and chapters with many topics "
+    "Botany, Zoology, and MAT. Each subject is broken into chapters, and chapters with many topics "
     "are split into subchapters, so you can drill down to exactly the area you want to practise. "
     "Every MCQ comes with an answer and a step by step solution, and every test applies the real "
     "exam's negative marking."
