@@ -105,7 +105,7 @@ window.MathJax = {
 
 
 
-<link rel="stylesheet" href="{% static 'css/full_test.css' %}?v=20260815-7">
+<link rel="stylesheet" href="{% static 'css/full_test.css' %}?v=20260815-8">
 
 
 <style>
@@ -946,10 +946,16 @@ Subject-wise Performance
 
 <div class="subject-card">
 
-<div class="subject-card-head">
+<div class="subject-card-row">
 
 <span class="subject-card-name">
 {{ sb.name }}
+</span>
+
+<span class="subject-card-metrics">
+Attempted <strong>{{ sb.attempted }}/{{ sb.total }}</strong>
+<span class="subject-card-divider"></span>
+Correct <strong>{{ sb.correct }}/{{ sb.attempted }}</strong>
 </span>
 
 <span class="subject-card-excellence">
@@ -962,25 +968,6 @@ Subject-wise Performance
 
 <div class="subject-bar-fill"
      style="width: {{ sb.accuracy_percent }}%;"></div>
-
-</div>
-
-<div class="subject-card-stats">
-
-<div class="subject-card-stat">
-Attempted:
-<strong>{{ sb.attempted }} / {{ sb.total }}</strong>
-</div>
-
-<div class="subject-card-stat">
-Correct:
-<strong>{{ sb.correct }} / {{ sb.attempted }}</strong>
-</div>
-
-<div class="subject-card-stat">
-Excellence:
-<strong>{{ sb.accuracy_percent }}%</strong>
-</div>
 
 </div>
 
@@ -1214,7 +1201,31 @@ No solution for this question
 
 {% if forloop.counter == 5 and score is not None %}
 
-<div class="ad-slot ad-native" style="margin: 24px auto 4px; text-align:center;">
+<div class="ad-slot ad-native" style="margin: 24px auto 12px; text-align:center;">
+
+    <script async="async" data-cfasync="false" src="https://pl30821229.effectivecpmnetwork.com/adc88700d9882d5a0a0c17db1b1131df/invoke.js"></script>
+
+    <div id="container-adc88700d9882d5a0a0c17db1b1131df"></div>
+
+</div>
+
+{% endif %}
+
+{% if forloop.counter == 20 and score is not None %}
+
+<div class="ad-slot ad-native" style="margin: 32px auto 16px; text-align:center;">
+
+    <script async="async" data-cfasync="false" src="https://pl30821229.effectivecpmnetwork.com/adc88700d9882d5a0a0c17db1b1131df/invoke.js"></script>
+
+    <div id="container-adc88700d9882d5a0a0c17db1b1131df"></div>
+
+</div>
+
+{% endif %}
+
+{% if forloop.counter == 45 and score is not None %}
+
+<div class="ad-slot ad-native" style="margin: 40px auto 20px; text-align:center;">
 
     <script async="async" data-cfasync="false" src="https://pl30821229.effectivecpmnetwork.com/adc88700d9882d5a0a0c17db1b1131df/invoke.js"></script>
 
@@ -1277,26 +1288,11 @@ Submit Test
 
 </button>
 
-<div class="ad-slot ad-native" style="margin: 24px auto 4px; text-align:center;">
+    <div class="ad-slot ad-native" style="margin: 32px auto 8px; text-align:center;">
 
     <script async="async" data-cfasync="false" src="https://pl30821229.effectivecpmnetwork.com/adc88700d9882d5a0a0c17db1b1131df/invoke.js"></script>
 
     <div id="container-adc88700d9882d5a0a0c17db1b1131df"></div>
-
-</div>
-
-<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
-
-    <script>
-        atOptions = {
-            'key' : 'df9cb8b660db27eb9c3f41733b195570',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-        };
-    </script>
-    <script async src="https://www.highperformanceformat.com/df9cb8b660db27eb9c3f41733b195570/invoke.js"></script>
 
 </div>
 
@@ -1342,7 +1338,7 @@ Back to Home
 
 </div>
 
-<div class="ad-slot ad-banner-300x250" style="margin: 24px auto; text-align:center;">
+<div class="ad-slot ad-banner-300x250" style="margin: 36px auto 8px; text-align:center;">
 
     <script>
         atOptions = {
@@ -1391,7 +1387,7 @@ No questions available for this test.
 {% block extra_js %}
 
 
-<script src="{% static 'js/full_test.js' %}?v=20260815-7"></script>
+<script src="{% static 'js/full_test.js' %}?v=20260815-8"></script>
 
 
 {% endblock extra_js %}

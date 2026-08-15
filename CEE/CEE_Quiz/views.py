@@ -449,14 +449,19 @@ def _build_full_test_question_ids():
 
     selected_ids = []
     for subject_name, chapters_config in FULL_TEST_BLUEPRINT.items():
+        subject_ids = []
         for chapter_name, question_count in chapters_config.items():
             bucket = buckets.get((subject_name, chapter_name), [])
             if bucket:
-                selected_ids.extend(
+                subject_ids.extend(
                     random.sample(bucket, min(question_count, len(bucket)))
                 )
+        # Keep questions grouped by subject (Physics, Chemistry, Botany,
+        # Zoology, MAT) so the paper reads in exam order, but vary the order
+        # inside each subject block between attempts.
+        random.shuffle(subject_ids)
+        selected_ids.extend(subject_ids)
 
-    random.shuffle(selected_ids)
     return selected_ids
 
 

@@ -122,7 +122,7 @@ function answerStorageKey() {
 }
 
 function timerStorageKey() {
-    return `${storagePrefix()}_${currentUserName}_${attemptReference}_end_time`;
+    return `${storagePrefix()}_${currentUserName}_${attemptReference}_end_time_v${FULL_TEST_DURATION_SECONDS}`;
 }
 
 function saveTimeStorageKey() {

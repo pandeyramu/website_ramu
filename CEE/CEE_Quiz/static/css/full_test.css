@@ -1116,39 +1116,60 @@ table {
 .subject-breakdown {
     background: #f8f9fa;
     border-radius: 8px;
-    padding: 20px;
+    padding: 16px 20px;
     margin: 20px 0;
 }
 
 .subject-breakdown-title {
     text-align: center;
     color: #2c3e50;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    font-size: 1.15em;
 }
 
 .subject-breakdown-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .subject-card {
     background: white;
     border-radius: 6px;
-    padding: 14px 16px;
-    border-top: 4px solid #3498db;
+    padding: 10px 14px;
+    border-left: 4px solid #3498db;
 }
 
-.subject-card-head {
+.subject-card-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
     margin-bottom: 8px;
+    flex-wrap: wrap;
 }
 
 .subject-card-name {
     font-weight: 700;
     color: #2c3e50;
+}
+
+.subject-card-metrics {
+    font-size: 0.85em;
+    color: #555;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.subject-card-metrics strong {
+    color: #2c3e50;
+}
+
+.subject-card-divider {
+    width: 1px;
+    height: 14px;
+    background: #cfd8dc;
 }
 
 .subject-card-excellence {
@@ -1159,9 +1180,8 @@ table {
 .subject-bar-track {
     background: #ecf0f1;
     border-radius: 4px;
-    height: 10px;
+    height: 8px;
     overflow: hidden;
-    margin-bottom: 10px;
 }
 
 .subject-bar-fill {
@@ -1169,23 +1189,6 @@ table {
     height: 100%;
     border-radius: 4px;
     min-width: 2px;
-}
-
-.subject-card-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.subject-card-stat {
-    font-size: 0.9em;
-    color: #555;
-    display: flex;
-    justify-content: space-between;
-}
-
-.subject-card-stat strong {
-    color: #2c3e50;
 }
 
 body.review-modal-open .full-test-footer,
