@@ -1174,20 +1174,6 @@
         })();
     </script>
 
-    <!-- Popunder: once per session (passive CPM), no redirects -->
-    <script>
-        (function () {
-            try {
-                if (document.cookie.indexOf('cee_pp=1') !== -1) return;
-                document.cookie = 'cee_pp=1;path=/;SameSite=Lax';
-                var s = document.createElement('script');
-                s.async = true;
-                s.src = 'https://molecularshindy.com/fb/46/96/fb46964dab6c457c3ebaf274275d391a.js';
-                document.head.appendChild(s);
-            } catch (e) {}
-        })();
-    </script>
-
     <!-- Social bar: desktop only, floats in the free space outside the content -->
     <script>
         (function () {
