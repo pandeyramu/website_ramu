@@ -32,11 +32,9 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://pl30821229.effectivecpmnetwork.com">
-    <link rel="preconnect" href="https://www.highperformanceformat.com">
+    <link rel="preconnect" href="https://molecularshindy.com">
     <link rel="preconnect" href="https://resources.infolinks.com">
-    <link rel="dns-prefetch" href="https://pl30821229.effectivecpmnetwork.com">
-    <link rel="dns-prefetch" href="https://www.highperformanceformat.com">
+    <link rel="dns-prefetch" href="https://molecularshindy.com">
     <link rel="dns-prefetch" href="https://resources.infolinks.com">
 
     <script type="application/ld+json">
@@ -1173,6 +1171,35 @@
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') closeMenu();
             });
+        })();
+    </script>
+
+    <!-- Popunder: once per session (passive CPM), no redirects -->
+    <script>
+        (function () {
+            try {
+                if (document.cookie.indexOf('cee_pp=1') !== -1) return;
+                document.cookie = 'cee_pp=1;path=/;SameSite=Lax';
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://molecularshindy.com/fb/46/96/fb46964dab6c457c3ebaf274275d391a.js';
+                document.head.appendChild(s);
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- Social bar: desktop only, floats in the free space outside the content -->
+    <script>
+        (function () {
+            try {
+                if (window.innerWidth < 1024) return;
+                setTimeout(function () {
+                    var s = document.createElement('script');
+                    s.async = true;
+                    s.src = 'https://molecularshindy.com/5c/78/d0/5c78d0888f1e8981cc283694696b8875.js';
+                    document.head.appendChild(s);
+                }, 1500);
+            } catch (e) {}
         })();
     </script>
 </body>
