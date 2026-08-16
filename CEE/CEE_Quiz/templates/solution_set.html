@@ -152,13 +152,13 @@
 {% if questions %}
     {% for q in questions %}
     <article class="solved-block">
-        <p class="question-text">{{ forloop.counter }}. {{ q.question_text }}</p>
+        <p class="question-text">{{ forloop.counter }}. {{ q.question_text|safe }}</p>
         <ul class="options">
             {% for opt in "ABCD" %}
             {% with option_text=q|get_option_text:opt %}
             <li{% if opt == q.correct_option %} class="correct"{% endif %}>
                 <span class="opt-label">{{ opt }}.</span>
-                <span>{{ option_text }}</span>
+                <span>{{ option_text|safe }}</span>
                 {% if opt == q.correct_option %}
                 <span class="answer-badge">Correct Answer</span>
                 {% endif %}
@@ -169,7 +169,7 @@
         <div class="solution-box">
             <p class="solution-title">Solution:</p>
             {% if q.solution %}
-            <p class="solution-text">{{ q.solution|linebreaksbr }}</p>
+            <p class="solution-text">{{ q.solution|safe }}</p>
             {% else %}
             <p class="solution-text muted">No solution available for this question.</p>
             {% endif %}

@@ -523,17 +523,17 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
     {% for q in preview_questions %}
     <article class="preview-question-block">
         <p class="preview-q-number">Question {{ forloop.counter }}</p>
-        <p class="preview-q-text">{{ q.question_text }}</p>
+        <p class="preview-q-text">{{ q.question_text|safe }}</p>
         <ul class="preview-options">
-            {% if q.option_a %}<li><strong>A.</strong> {{ q.option_a }}</li>{% endif %}
-            {% if q.option_b %}<li><strong>B.</strong> {{ q.option_b }}</li>{% endif %}
-            {% if q.option_c %}<li><strong>C.</strong> {{ q.option_c }}</li>{% endif %}
-            {% if q.option_d %}<li><strong>D.</strong> {{ q.option_d }}</li>{% endif %}
+            {% if q.option_a %}<li><strong>A.</strong> {{ q.option_a|safe }}</li>{% endif %}
+            {% if q.option_b %}<li><strong>B.</strong> {{ q.option_b|safe }}</li>{% endif %}
+            {% if q.option_c %}<li><strong>C.</strong> {{ q.option_c|safe }}</li>{% endif %}
+            {% if q.option_d %}<li><strong>D.</strong> {{ q.option_d|safe }}</li>{% endif %}
         </ul>
         {% if q.solution %}
         <div class="preview-solution">
             <p class="solution-label">Answer: {{ q.correct_option }}</p>
-            <p class="solution-text">{{ q.solution }}</p>
+            <p class="solution-text">{{ q.solution|safe }}</p>
         </div>
         {% endif %}
     </article>
@@ -806,7 +806,7 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
         <p>
             <strong>
-                {{ forloop.counter }}. {{ q.question_text }}
+                {{ forloop.counter }}. {{ q.question_text|safe }}
             </strong>
         </p>
 
@@ -841,7 +841,7 @@ selected
                    {% if user_choice|default:'' == opt %} checked {% endif %}>
 
             <span class="option-text">
-                {{ opt }}. {{ option_text }}
+                {{ opt }}. {{ option_text|safe }}
             </span>
 
         </label>
@@ -858,13 +858,7 @@ selected
             <p class="solution-title">
                 Solution:
             </p>
-            <p class="solution-text">
-                {% if q.solution %}
-                {{ q.solution|linebreaksbr }}
-                {% else %}
-                No solution for this question
-                {% endif %}
-            </p>
+            <p class="solution-text">{{ q.solution|safe }}</p>
         </div>
 
         {% endif %}

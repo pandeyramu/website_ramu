@@ -1067,7 +1067,7 @@ Flag for review
 <strong>
 
 {{ forloop.counter }}.
-{{ q.question_text }}
+{{ q.question_text|safe }}
 
 </strong>
 
@@ -1133,7 +1133,7 @@ checked
 
 <span class="option-text">
 
-{{ opt }}. {{ option_text }}
+{{ opt }}. {{ option_text|safe }}
 
 </span>
 
@@ -1172,7 +1172,7 @@ Solution:
 
 {% if q.solution %}
 
-{{ q.solution|linebreaksbr }}
+{{ q.solution|safe }}
 
 
 {% else %}
