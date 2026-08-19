@@ -304,9 +304,31 @@ BLOG_POST_META = {
     },
 }
 
-def _pick_random_questions(base_queryset, limit=50):
-    """Sample random questions efficiently by sampling IDs first."""
-    question_ids = list(base_queryset.values_list('id', flat=True))
+def _get_chapter_question_ids(chapter_id):
+    cache_key = f'chapter_qids:{chapter_id}'
+    ids = cache.get(cache_key)
+    if ids is None:
+        ids = list(
+            Question.objects.filter(chapter_id=chapter_id, verified=True)
+            .values_list('id', flat=True)
+        )
+        cache.set(cache_key, ids, timeout=3600)
+    return ids
+
+
+def _get_subchapter_question_ids(subchapter_id):
+    cache_key = f'subchapter_qids:{subchapter_id}'
+    ids = cache.get(cache_key)
+    if ids is None:
+        ids = list(
+            Question.objects.filter(sub_chapter_id=subchapter_id, verified=True)
+            .values_list('id', flat=True)
+        )
+        cache.set(cache_key, ids, timeout=3600)
+    return ids
+
+
+def _pick_random_questions(question_ids, limit=50):
     if not question_ids:
         return []
 
@@ -635,6 +657,12 @@ def _get_test_history(*, user_name, limit=TEST_HISTORY_LIMIT):
     if not exact_name:
         return []
 
+    name_hash = hashlib.md5(exact_name.lower().encode()).hexdigest()
+    cache_key = f'thist:{name_hash}:{limit}'
+    cached_result = cache.get(cache_key)
+    if cached_result is not None:
+        return cached_result
+
     try:
         if _testresult_has_columns('total_correct', 'time_taken_seconds'):
             history_qs = TestResult.objects.filter(name__iexact=exact_name).order_by('-created_at', '-id')[:limit]
@@ -645,9 +673,8 @@ def _get_test_history(*, user_name, limit=TEST_HISTORY_LIMIT):
                 'total_attempted',
                 'created_at',
             ).order_by('-created_at', '-id')[:limit]
-        return _build_test_history_entries(history_qs)
+        entries = _build_test_history_entries(history_qs)
     except DatabaseError:
-        # Handle environments where migration state and runtime schema are temporarily out of sync.
         _refresh_testresult_columns_cache()
         fallback_qs = TestResult.objects.filter(name__iexact=exact_name).values(
             'topic',
@@ -655,7 +682,10 @@ def _get_test_history(*, user_name, limit=TEST_HISTORY_LIMIT):
             'total_attempted',
             'created_at',
         ).order_by('-created_at', '-id')[:limit]
-        return _build_test_history_entries(fallback_qs)
+        entries = _build_test_history_entries(fallback_qs)
+
+    cache.set(cache_key, entries, timeout=300)
+    return entries
 
 
 def _save_test_result(*, user_name, topic, total_attempted, total_correct, time_taken_seconds, score):
@@ -671,7 +701,7 @@ def _save_test_result(*, user_name, topic, total_attempted, total_correct, time_
             payload['total_correct'] = total_correct
             payload['time_taken_seconds'] = time_taken_seconds
 
-        return TestResult.objects.create(**payload)
+        result = TestResult.objects.create(**payload)
     except DatabaseError:
         _refresh_testresult_columns_cache()
         safe_payload = {
@@ -680,7 +710,14 @@ def _save_test_result(*, user_name, topic, total_attempted, total_correct, time_
             'score': score,
             'total_attempted': total_attempted,
         }
-        return TestResult.objects.create(**safe_payload)
+        result = TestResult.objects.create(**safe_payload)
+
+    exact_name = _normalize_exact_name(user_name)
+    if exact_name:
+        name_hash = hashlib.md5(exact_name.lower().encode()).hexdigest()
+        cache.delete(f'thist:{name_hash}:{TEST_HISTORY_LIMIT}')
+
+    return result
 
 
 def keepalive(request):
@@ -1004,8 +1041,8 @@ def quiz(request, slug):
                 return redirect('quiz', slug=chapter.slug)
 
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
-            questions_qs = Question.objects.filter(chapter=chapter, verified=True)
-            questions = _pick_random_questions(questions_qs, limit=50)
+            question_ids = _get_chapter_question_ids(chapter_id)
+            questions = _pick_random_questions(question_ids, limit=50)
             if not questions:
                 messages.error(request, 'No questions are available for this chapter yet. Please try again later.')
                 return redirect('quiz', slug=chapter.slug)
@@ -1199,8 +1236,8 @@ def subchapter_quiz(request, slug):
                 return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
-            questions_qs = Question.objects.filter(sub_chapter=sub_chapter, verified=True)
-            questions = _pick_random_questions(questions_qs, limit=50)
+            question_ids = _get_subchapter_question_ids(subchapter_id)
+            questions = _pick_random_questions(question_ids, limit=50)
             if not questions:
                 messages.error(request, 'No questions are available for this subchapter yet. Please try again later.')
                 return redirect('subchapter_quiz', slug=sub_chapter.slug)

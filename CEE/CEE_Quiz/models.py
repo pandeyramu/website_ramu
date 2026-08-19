@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.core.cache import cache
 
 
 class Subject(models.Model):
@@ -125,10 +126,17 @@ class SolutionSet(models.Model):
         return f"{self.chapter.name} - Set {self.set_number}"
 
     def get_questions(self):
+        cache_key = f'solset_qs:{self.id}'
+        cached = cache.get(cache_key)
+        if cached is not None:
+            return cached
+
         ids = [int(x.strip()) for x in self.question_ids.split(',') if x.strip().isdigit()]
         questions = Question.objects.filter(id__in=ids, verified=True).select_related('chapter', 'sub_chapter')
         id_map = {q.id: q for q in questions}
-        return [id_map[qid] for qid in ids if qid in id_map]
+        result = [id_map[qid] for qid in ids if qid in id_map]
+        cache.set(cache_key, result, timeout=3600)
+        return result
 
 
 class QuestionReport(models.Model):

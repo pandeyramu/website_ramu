@@ -115,6 +115,7 @@ DATABASES = {
 }
 
 # Session Configuration - Extended for long tests
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 SESSION_COOKIE_AGE = 14400  # 4 hours in seconds
 SESSION_SAVE_EVERY_REQUEST = False  # Avoid DB write on every request for better response times
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
