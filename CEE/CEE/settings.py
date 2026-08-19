@@ -124,7 +124,7 @@ if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql':
         try:
             _ipv4 = _socket.getaddrinfo(_host, None, _socket.AF_INET)
             if _ipv4:
-                DATABASES['default']['HOST'] = _ipv4[0][4][0]
+                DATABASES['default']['OPTIONS']['hostaddr'] = _ipv4[0][4][0]
         except OSError:
             pass
 
