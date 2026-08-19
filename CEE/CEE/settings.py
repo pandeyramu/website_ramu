@@ -106,6 +106,8 @@ WSGI_APPLICATION = 'CEE.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+import socket as _socket
+
 DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL', f'sqlite:///{BASE_DIR}/db.sqlite3'),
@@ -117,6 +119,14 @@ DATABASES = {
 if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql':
     DATABASES['default'].setdefault('OPTIONS', {})
     DATABASES['default']['OPTIONS']['options'] = '-c search_path=public'
+    _host = DATABASES['default'].get('HOST', '')
+    if _host:
+        try:
+            _ipv4 = _socket.getaddrinfo(_host, None, _socket.AF_INET)
+            if _ipv4:
+                DATABASES['default']['HOST'] = _ipv4[0][4][0]
+        except OSError:
+            pass
 
 # Session Configuration - Extended for long tests
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
