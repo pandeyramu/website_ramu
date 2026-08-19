@@ -118,7 +118,6 @@ DATABASES = {
 
 if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql':
     DATABASES['default'].setdefault('OPTIONS', {})
-    DATABASES['default']['OPTIONS']['options'] = '-c search_path=public'
     _host = DATABASES['default'].get('HOST', '')
     if _host:
         try:
