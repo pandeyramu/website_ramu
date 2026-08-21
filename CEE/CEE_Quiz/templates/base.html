@@ -11,6 +11,9 @@
     <meta name="author" content="Ramu Pandey">
     <meta name="theme-color" content="#1458a6">
     <link rel="canonical" href="https://pandeyramu.com.np{{ request.path }}">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
+         crossorigin="anonymous"></script>
     <meta property="og:type" content="website">
     <meta property="og:title" content="{% block og_title %}{% if page_seo %}{{ page_seo.og_title|default:page_seo.meta_title }}{% else %}CEE MCQ{% endif %}{% endblock %}">
     <meta property="og:description"
@@ -32,10 +35,6 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://molecularshindy.com">
-    <link rel="preconnect" href="https://resources.infolinks.com">
-    <link rel="dns-prefetch" href="https://molecularshindy.com">
-    <link rel="dns-prefetch" href="https://resources.infolinks.com">
 
     <script type="application/ld+json">
     {
@@ -43,7 +42,7 @@
       "@type": "EducationalOrganization",
       "name": "CEE MCQ",
       "url": "https://pandeyramu.com.np",
-      "description": "Free CEE MCQ practice platform for Nepal with 47,000+ chapter wise questions in Physics, Chemistry, Biology and MAT",
+      "description": "Free CEE MCQ practice platform for Nepal with 56,000+ chapter wise questions in Physics, Chemistry, Biology and MAT",
       "foundingDate": "2025",
       "founder": {
         "@type": "Person",
@@ -1127,13 +1126,6 @@
     {% block extra_body %}{% endblock %}
     {% block extra_js %}{% endblock %}
 
-    <!-- Infolinks integration -->
-    <script type="text/javascript">
-        var infolinks_pid = 3447050;
-        var infolinks_wsid = 0;
-    </script>
-    <script type="text/javascript" async src="https://resources.infolinks.com/js/infolinks_main.js"></script>
-
     <script>
         (function () {
             var toggle = document.getElementById('menu-toggle');
@@ -1171,21 +1163,6 @@
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') closeMenu();
             });
-        })();
-    </script>
-
-    <!-- Social bar: desktop only, floats in the free space outside the content -->
-    <script>
-        (function () {
-            try {
-                if (window.innerWidth < 1024) return;
-                setTimeout(function () {
-                    var s = document.createElement('script');
-                    s.async = true;
-                    s.src = 'https://molecularshindy.com/5c/78/d0/5c78d0888f1e8981cc283694696b8875.js';
-                    document.head.appendChild(s);
-                }, 1500);
-            } catch (e) {}
         })();
     </script>
 </body>
