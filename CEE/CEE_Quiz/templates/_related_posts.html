@@ -1,0 +1,40 @@
+<style>
+.related-posts {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+.related-posts h2 {
+    font-size: 1.15rem;
+    margin-bottom: .9rem;
+}
+.related-posts ul { list-style: none; padding: 0; margin: 0; }
+.related-posts li { margin-bottom: .55rem; }
+.related-posts a {
+    color: #1458a6;
+    text-decoration: none;
+    font-weight: 600;
+}
+.related-posts a:hover { text-decoration: underline; }
+.related-posts .rp-tag {
+    display: inline-block;
+    font-size: .72rem;
+    font-weight: 700;
+    color: #6b7280;
+    background: #f3f4f6;
+    border-radius: 999px;
+    padding: .1rem .55rem;
+    margin-right: .45rem;
+    vertical-align: middle;
+}
+</style>
+{% if related_posts %}
+<section class="related-posts">
+  <h2>Keep reading</h2>
+  <ul>
+    {% for rp in related_posts %}
+    <li><span class="rp-tag">{{ rp.tag }}</span><a href="/blog/{{ rp.slug }}/">{{ rp.title }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}

@@ -1,6 +1,5 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from django.utils import timezone
 from CEE_Quiz.models import Subject, Chapter, SubChapter, SolutionSet
 
 class StaticViewSitemap(Sitemap):
@@ -19,7 +18,7 @@ class SubjectSitemap(Sitemap):
     changefreq = 'weekly'
 
     def items(self):
-        return Subject.objects.all()
+        return Subject.objects.order_by('id')
 
     def location(self, obj):
         return f'/subject/{obj.slug}/'
@@ -29,7 +28,7 @@ class ChapterSitemap(Sitemap):
     changefreq = 'weekly'
 
     def items(self):
-        return Chapter.objects.all()
+        return Chapter.objects.order_by('id')
 
     def location(self, obj):
         return f'/chapter/{obj.slug}/'
@@ -39,7 +38,7 @@ class SubChapterSitemap(Sitemap):
     changefreq = 'weekly'
 
     def items(self):
-        return SubChapter.objects.all()
+        return SubChapter.objects.order_by('id')
 
     def location(self, obj):
         return f'/mcq/{obj.slug}/'
@@ -49,13 +48,10 @@ class SolutionSetSitemap(Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        return SolutionSet.objects.select_related('chapter').all()
+        return SolutionSet.objects.select_related('chapter').order_by('id')
 
     def location(self, obj):
         return f'/chapter/{obj.chapter.slug}/solved-set/{obj.set_number}/'
-
-    def lastmod(self, obj):
-        return None
 
 
 class BlogSitemap(Sitemap):
@@ -64,13 +60,19 @@ class BlogSitemap(Sitemap):
 
     def items(self):
         from CEE_Quiz.views import BLOG_POST_ORDER
-        return BLOG_POST_ORDER  
+        return BLOG_POST_ORDER
 
     def location(self, obj):
         return f'/blog/{obj}/'
 
     def lastmod(self, obj):
-        return timezone.now().date()
+        import datetime
+
+        from CEE_Quiz.views import BLOG_PUBLISH_DATES
+        raw = BLOG_PUBLISH_DATES.get(obj)
+        if not raw:
+            return None
+        return datetime.date(*raw)
 sitemaps = {
     "static": StaticViewSitemap,
     "subjects": SubjectSitemap,

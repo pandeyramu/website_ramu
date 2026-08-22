@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+CEE Seats, Quota and Cutoffs: How Selection Actually Works | CEE MCQ
+{% endblock %}
+
+{% block extra_head %}
+
+<meta name="description" content="How CEE selection really works: why cutoffs rise and fall, how seats and quota categories shape the score you need, and how to set a realistic target rank.">
+<meta name="keywords" content="CEE seats, CEE quota system Nepal, CEE cutoff score, CEE rank vs marks, CEE reservation categories">
+<meta name="author" content="Ramu Pandey">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+<meta property="og:title" content="CEE Seats, Quota and Cutoffs: How Selection Actually Works | CEE MCQ">
+<meta property="og:description" content="Cutoffs are not magic numbers. They are the output of seats, quotas and applicant behaviour. Understanding that changes how you prepare.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CEE Seats, Quota and Cutoffs: How Selection Actually Works | CEE MCQ">
+<meta name="twitter:description" content="Why the same score gets selected one year and not the next. A plain explanation of CEE seats, quotas and cutoff movement.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
+
+<style>
+.blog-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+}
+.blog-content-box {
+    margin-top: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+}
+.blog-category {
+    display: inline-block;
+    background: #35619e;
+    color: white;
+    padding: .22rem .7rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    margin-bottom: .7rem;
+}
+.tip-box {
+    background: rgba(53,97,158,.06);
+    border-left: 4px solid #35619e;
+    padding: 1rem 1.2rem;
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+}
+.tip-box strong { color: #35619e; }
+.topic-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(53,97,158,.22);
+    background: white;
+}
+.topic-table th {
+    background: #35619e;
+    color: white;
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+}
+.topic-table td { padding: .65rem 1rem; border-bottom: 1px solid #e5e7eb; }
+.topic-table tr:last-child td { border-bottom: none; }
+.topic-table tbody tr:nth-child(even) { background: rgba(53,97,158,.05); }
+.topic-table tbody tr:hover { background: rgba(53,97,158,.10); transition: .2s ease; }
+@media(max-width: 768px) {
+    .topic-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        max-width: 100%;
+    }
+    .topic-table th, .topic-table td { white-space: nowrap; }
+    .blog-content-box { padding: 0; }
+}
+</style>
+{% endblock extra_head %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "CEE Seats, Quota and Cutoffs: How Selection Actually Works",
+  "description": "How CEE selection works: why cutoffs move, how seat counts and quota categories shape the score needed, and how to set a realistic target.",
+  "author": { "@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np" },
+  "publisher": { "@type": "Organization", "name": "CEE MCQ", "url": "https://pandeyramu.com.np" },
+  "datePublished": "2026-08-14",
+  "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock structured_data %}
+
+{% block content %}
+<main class="blog-wrap">
+<article class="article-card">
+<div class="blog-content-box">
+
+<span class="blog-category">Exam Info</span>
+
+<h1>CEE Seats, Quota and Cutoffs: How Selection Actually Works</h1>
+
+<p class="excerpt">
+  During my own preparation I obsessed over last year's cutoff without understanding what produced it. When I finally understood seats and quotas, my target became calmer and more useful. Here is the mental model I wish I had on day one.
+</p>
+
+<p class="muted">By Ramu Pandey · Published: August 14, 2026 · 8 min read</p>
+
+<section>
+  <p>
+    Somewhere around the middle of my preparation, a senior told me his entrance score from three years earlier. It was lower than what people were calling "safe" for my cycle that year, yet he had been selected comfortably. For a while I assumed standards had simply risen. Later I learned his programme had added dozens of seats since then. Nothing mystical had happened between his year and mine. The supply of chairs had changed.
+  </p>
+  <p>
+    That is the core idea of this post: a cutoff is not a fixed standard of merit. It is the score of the last person who got a chair, and it moves whenever chairs, rules, or the crowd change. Once you see it this way, several confusing things about entrance exams stop being confusing.
+  </p>
+</section>
+
+<section>
+  <h2>Cutoffs are an output, not an input</h2>
+  <p>
+    Nobody at the examination board decides in advance that the cutoff will be a particular score. The sequence runs the other way. Seats are fixed first by capacity and approval decisions. Thousands of candidates then take the exam. Everyone is ranked. Candidates are called in order until the chairs run out. The score of the final called candidate becomes "this year's cutoff".
+  </p>
+  <p>
+    This explains the yearly anxiety perfectly. If the paper is hard, scores shift down across the whole crowd and the cutoff follows them down. If the paper is easy, the opposite happens. A college adding or losing even a modest number of seats can move its cutoff visibly. None of this reflects whether students of your generation are smarter than the previous one.
+  </p>
+  <p>
+    The practical consequence is important: last year's cutoff is a rough guide, not a target you can rely on. Preparing to "beat 142 because the cutoff was 141" is preparing against the wrong number.
+  </p>
+</section>
+
+<div class="tip-box">
+  <p><strong>Better question:</strong> instead of asking "what was the cutoff?", ask "how many seats were there, and roughly where did I stand among mock-test candidates?" Rank thinking travels across years far better than mark thinking does.</p>
+</div>
+
+<section>
+  <h2>Quota categories split the competition</h2>
+  <p>
+    The second thing that changed my understanding was learning how quota categories work. Most public entrance systems do not fill every seat from one giant open list. Seats are typically divided into an open competition portion plus reserved categories defined by government policy, which have historically included groups such as women, candidates from specific communities or regions, and persons with disabilities, among others. The exact list and percentages are published in each notice, and they are not identical across institutions.
+  </p>
+  <p>
+    Why does this matter for preparation? Because two candidates with the same score can have very different outcomes. Someone just below the open-competition line may be comfortably inside a category they legitimately belong to. I watched this play out with a study partner whose score looked marginal on paper; under her category she had real room. She nearly skipped applying for a scholarship stream she was fully eligible for, purely because she was comparing herself to the open list.
+  </p>
+  <table class="topic-table">
+    <thead>
+      <tr><th>List type</th><th>Who competes</th><th>Cutoff behaviour</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Open competition</td><td>Everyone regardless of category</td><td>Usually the highest line of the year</td></tr>
+      <tr><td>Reserved categories</td><td>Only verified members of that category</td><td>Varies with applicant pool size; often lower but not always dramatically</td></tr>
+      <tr><td>Institution-specific streams</td><td>Depends on the stream's own rules</td><td>Can differ noticeably from the general list</td></tr>
+    </tbody>
+  </table>
+  <p>
+    The honest takeaway: know your categories early, get documents ready, and use every list you genuinely qualify for. This is not gaming the system. The categories exist precisely so that different pools compete fairly within themselves.
+  </p>
+</section>
+
+<section>
+  <h2>What actually determines the score you need</h2>
+  <p>
+    Putting it together, the score worth aiming at is shaped by four forces.
+  </p>
+  <ol>
+    <li><strong>Total seats.</strong> More approved capacity means lower lines, all else equal. Watch for new colleges or expanded intake in your field.</li>
+    <li><strong>Applicant volume.</strong> A surge of candidates squeezes every list tighter; a thinner field loosens it.</li>
+    <li><strong>Paper difficulty.</strong> Moves absolute marks up or down while leaving rank order mostly intact.</li>
+    <li><strong>Your lists.</strong> Open plus any reserved categories you belong to. Each has its own line.</li>
+  </ol>
+  <p>
+    Notice that only one of these four is about you. You cannot control seat policy, the crowd size, or the paper's difficulty. This is why rank-focused preparation beats cutoff-focused preparation: ranks absorb all four forces automatically, while raw marks mislead whenever any force shifts.
+  </p>
+</section>
+
+<section>
+  <h2>How I would set a target if I started again</h2>
+  <p>
+    With the model above, setting a target becomes simpler and less superstitious.
+  </p>
+  <p>
+    First, find out roughly how many total candidates your exam draws and how many seats exist across the institutions you would accept. Even approximate figures give you a ratio. Second, convert that ratio into a mock-test percentile goal: if the ratio suggests you need to be inside the top slice of candidates, check your full-length mocks against that slice rather than against a memory of someone's marks. Third, revisit after every major mock, not after every rumour.
+  </p>
+  <p>
+    My own error was targeting a number I overheard. A better version of me would have targeted a position, tracked it across five full tests, and adjusted calmly. The chapters-and-marks logic behind such targets is laid out in the <a href="/blog/chapter-wise-marks-distribution/">chapter wise distribution guide</a>, and turning a target into daily work is exactly what the <a href="/blog/cee-study-schedule-that-works/">schedule post</a> covers.
+  </p>
+</section>
+
+<div class="tip-box">
+  <p><strong>On waiting lists:</strong> many systems publish more names than there are immediate seats, because some selected candidates decline or switch programmes. Students below the initial line regularly get called as lists move. If your name lands on a waiting list, the game is not over; stay reachable and watch official updates until the cycle formally closes.</p>
+</div>
+
+<section>
+  <h2>The calm summary</h2>
+  <p>
+    Seats are finite, quotas divide the field, difficulty wobbles, and cutoffs simply record the outcome. You prepare best when you aim at a defensible position rather than a folklore number, claim every list you legitimately belong to, and let mock percentiles, not anecdotes, tell you where you stand. The exam measures a few hours of performance. Everything else about selection is arithmetic happening above your head, and arithmetic rewards the people who understand it.
+  </p>
+</section>
+
+</div>
+
+
+
+{% include "_related_posts.html" %}
+
+</article>
+</main>
+{% endblock content %}

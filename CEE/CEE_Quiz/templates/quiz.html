@@ -456,8 +456,8 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 <section class="chapter-topics">
     <h2>What You Will Practice</h2>
     <div class="topic-content">
-        <p>This practice test is built from the verified {{ chapter.name }} question bank for Nepal's Common Entrance Examination (CEE). Each attempt selects a fresh set of up to 50 questions, and the test mirrors the real exam's negative marking: <strong>+1 for a correct answer, −0.25 for a wrong one</strong>.</p>
-        <p>When you submit the test you instantly get your score, accuracy, speed, and a full review where every question shows its correct answer and a step by step solution. The solved sample questions below show the level of detail you get in every explanation.</p>
+        <p>{{ quiz_blurb_1 }}</p>
+        <p>{{ quiz_blurb_2 }}</p>
     </div>
 </section>
 
@@ -500,7 +500,7 @@ data-exit-url="{% if sub_chapter %}{% url 'subchapter_quiz_exit' sub_chapter.slu
 
 <section class="preview-questions">
     <h2>Solved Sample Questions</h2>
-    <p class="preview-subtitle">Here are solved practice questions with step by step explanations. Take the full test to see your score and detailed solutions for every question.</p>
+    <p class="preview-subtitle">{{ preview_subtitle }}</p>
 
     {% for q in preview_questions %}
     <article class="preview-question-block">

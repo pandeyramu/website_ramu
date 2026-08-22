@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+CEE vs NEET for Nepali Students: What I Learned Comparing Both | CEE MCQ
+{% endblock %}
+
+{% block extra_head %}
+
+<meta name="description" content="A Nepali student's comparison of CEE and NEET: syllabus overlap, exam pattern differences, who needs which, and how to decide between studying in Nepal or India.">
+<meta name="keywords" content="CEE vs NEET, NEET for Nepali students, study MBBS Nepal or India, NEET eligibility Nepal citizens, medical entrance Nepal India">
+<meta name="author" content="Ramu Pandey">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+<meta property="og:title" content="CEE vs NEET for Nepali Students: What I Learned Comparing Both | CEE MCQ">
+<meta property="og:description" content="Syllabus overlap, pattern differences, and the paperwork nobody mentions. What I found while weighing CEE against NEET.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CEE vs NEET for Nepali Students: What I Learned Comparing Both | CEE MCQ">
+<meta name="twitter:description" content="A calm first-person comparison of CEE and NEET for Nepali students, including the registration details people discover too late.">
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/banner.png' %}">
+
+<style>
+.blog-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+}
+.blog-content-box {
+    margin-top: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+}
+.blog-category {
+    display: inline-block;
+    background: #1f8a4c;
+    color: white;
+    padding: .22rem .7rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    margin-bottom: .7rem;
+}
+.tip-box {
+    background: rgba(31,138,76,.06);
+    border-left: 4px solid #1f8a4c;
+    padding: 1rem 1.2rem;
+    border-radius: 0 10px 10px 0;
+    margin: 1.5rem 0;
+}
+.tip-box strong { color: #1f8a4c; }
+.topic-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(31,138,76,.22);
+    background: white;
+}
+.topic-table th {
+    background: #1f8a4c;
+    color: white;
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+}
+.topic-table td { padding: .65rem 1rem; border-bottom: 1px solid #e5e7eb; }
+.topic-table tr:last-child td { border-bottom: none; }
+.topic-table tbody tr:nth-child(even) { background: rgba(31,138,76,.05); }
+.topic-table tbody tr:hover { background: rgba(31,138,76,.10); transition: .2s ease; }
+@media(max-width: 768px) {
+    .topic-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        max-width: 100%;
+    }
+    .topic-table th, .topic-table td { white-space: nowrap; }
+    .blog-content-box { padding: 0; }
+}
+</style>
+{% endblock extra_head %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "CEE vs NEET for Nepali Students: What I Learned Comparing Both",
+  "description": "Syllabus overlap, exam pattern differences, and registration realities of choosing between CEE and NEET as a Nepali student.",
+  "author": { "@type": "Person", "name": "Ramu Pandey", "url": "https://pandeyramu.com.np" },
+  "publisher": { "@type": "Organization", "name": "CEE MCQ", "url": "https://pandeyramu.com.np" },
+  "datePublished": "2026-08-19",
+  "mainEntityOfPage": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock structured_data %}
+
+{% block content %}
+<main class="blog-wrap">
+<article class="article-card">
+<div class="blog-content-box">
+
+<span class="blog-category">Decisions</span>
+
+<h1>CEE vs NEET for Nepali Students: What I Learned Comparing Both</h1>
+
+<p class="excerpt">
+  Half my classmates filled a NEET form the same autumn I started CEE practice. I spent months hearing both sides before realising the exams overlap more than their reputations suggest, yet differ in ways that decide careers. This is that comparison, from someone who sat on the CEE side and studied the other closely.
+</p>
+
+<p class="muted">By Ramu Pandey · Published: August 19, 2026 · 9 min read</p>
+
+<section>
+  <p>
+    The question arrives in every batch sooner or later: should I prepare for Nepal's entrance or write NEET and aim for India? Family opinions, consultancy brochures, and Telegram groups all have strong answers. I did not want opinions, so during my own preparation I collected facts about both examinations whenever one crossed my path. Below is what I gathered, with the caveat that rules shift almost yearly; verify anything you act on against current official notices.
+  </p>
+</section>
+
+<section>
+  <h2>First, what each exam actually is</h2>
+  <p>
+    CEE is Nepal's common entrance route into health-professions programmes run under its national examination framework, taken by students who completed 10+2 with Physics, Chemistry, and Biology. NEET is India's national medical entrance, open to Indian nationals as well as eligible foreign nationals including Nepali citizens, and it gates admission to Indian medical colleges.
+  </p>
+  <p>
+    One nuance surprised me early: NEET is not only for people who want to study in India. A Nepali student who completes an MBBS in India will face licensing requirements back home, and conversely, foreign nationals studying in Nepali institutions can face home-country requirements of their own. The exam you write is tied to where you intend to register and practise, not merely where you study. That single fact reframes the whole decision.
+  </p>
+</section>
+
+<section>
+  <h2>The syllabus overlap is enormous</h2>
+  <p>
+    Here is the good news for anyone torn between the two: the academic core of both exams is nearly the same territory. Physics and Chemistry follow the 10+2 science syllabus in both countries, and Biology draws from the same NCERT-influenced canon that Nepali curricula also track closely. A student preparing seriously for either exam is, at topic level, preparing for both.
+  </p>
+  <p>
+    The differences live at the edges. NEET's biology leans heavily on precise NCERT phrasing, to the point that specific sentences from the textbook become answer keys. Nepal's exam has historically leaned more on applied understanding and local curriculum emphasis. Numerical difficulty in physics tends to run slightly deeper in NEET papers. Neither gap requires different textbooks; they require slightly different revision emphases late in preparation.
+  </p>
+  <table class="topic-table">
+    <thead>
+      <tr><th>Aspect</th><th>CEE (Nepal)</th><th>NEET (India)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Core subjects</td><td>Physics, Chemistry, Botany, Zoology plus aptitude components depending on programme</td><td>Physics, Chemistry, Biology (Botany + Zoology combined)</td></tr>
+      <tr><td>Question style</td><td>Mixed recall and application</td><td>NCERT-anchored recall with application layers</td></tr>
+      <tr><td>Negative marking</td><td>Deducts a fraction per wrong answer per its notice</td><td>Deducts one quarter of a question's marks per wrong answer</td></tr>
+      <tr><td>Competition pool</td><td>Nepali candidate pool plus quota structures</td><td>One of the largest candidate pools in the world</td></tr>
+      <tr><td>Language</td><td>English, per notice conventions</td><td>Multiple languages including English</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="tip-box">
+  <p><strong>The overlap advantage:</strong> because roughly eighty percent of study effort transfers between the two exams, students genuinely torn between them can defer the final choice until well into preparation. The point of no return arrives with application deadlines, not with the first chapter of physics.</p>
+</div>
+
+<section>
+  <h2>The competition mathematics differ sharply</h2>
+  <p>
+    This was the biggest practical difference I found. Nepal's entrance system runs on a smaller candidate pool divided across many institutions and programmes, with quota categories splitting lists further. NEET pools millions of candidates against a comparatively fixed seat count, which pushes its top-percentile requirements far higher. A rank that feels unremarkable within NEET's ocean can sit comfortably inside CEE's pond.
+  </p>
+  <p>
+    Neither situation is easier in any absolute sense. They are different games with different odds distributions, and the honest question is not "which exam is harder" but "inside which distribution does my realistic performance land me where I want to be". My post on <a href="/blog/cee-seats-quota-cutoff-explained/">seats, quotas and cutoffs</a> unpacks how the Nepali side of that arithmetic works.
+  </p>
+</section>
+
+<section>
+  <h2>Practical matters people discover too late</h2>
+  <p>
+    Three logistical realities came up again and again while I listened to friends who went the NEET route.
+  </p>
+  <ol>
+    <li><strong>Registration windows.</strong> NEET's application window closes months before the exam, entirely online, with document specifications that reject casual scans. Missing it ends the option for that year regardless of readiness.</li>
+    <li><strong>Counselling separately from qualifying.</strong> Qualifying NEET does not itself grant a seat; separate counselling rounds allocate seats, including state-level processes and dedicated foreign-national provisions, each with their own paperwork.</li>
+    <li><strong>Licensing loops.</strong> Graduating abroad eventually means satisfying licensing exam requirements to practise back home. Students who research this path early plan for it calmly; students who discover it after graduation describe it as a trap sprung on them.</li>
+  </ol>
+  <p>
+    On the CEE side, the parallel realities are the eligibility clauses and quota documentation I covered in the <a href="/blog/cee-eligibility-gpa-requirements/">eligibility post</a>. Every pathway has bureaucracy. There is no bureaucracy-free route, whatever consultancies imply.
+  </p>
+</section>
+
+<section>
+  <h2>How I would frame the decision today</h2>
+  <p>
+    Strip away the prestige narratives and three questions remain. Where do you want to live and practise during your working years? Whose fee structure fits your family without wrecking it? And in which competition pool does your mock-test percentile place you inside reach of acceptable options? Answer those three and the exam choice mostly answers itself.
+  </p>
+  <p>
+    For me the answers pointed home, and CEE became my target. For classmates whose answers pointed across the border, NEET was equally rational. What I respect now, watching from the far side, is neither choice. It is the students who made the choice deliberately, early enough to commit, instead of drifting between both preparations and finishing neither properly. Preparation capacity is finite; split focus taxes both exams.
+  </p>
+</section>
+
+<section>
+  <h2>A closing note for the undecided</h2>
+  <p>
+    If you are reading this early in 10+2, you have time to keep both doors open while studying one syllabus, because they share it. Drill your sciences, build MCQ speed, and let the institutional details mature until application season forces precision. If you are reading this late, pick the door already most open to you and walk through it at full commitment. Either way, the daily work looks identical: chapters, questions, error logs, and calm repetition. The exam hall only ever asks what you can do in those hours, never which flag you planned to fly afterwards.
+  </p>
+</section>
+
+</div>
+
+
+
+{% include "_related_posts.html" %}
+
+</article>
+</main>
+{% endblock content %}

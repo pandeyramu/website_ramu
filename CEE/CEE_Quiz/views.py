@@ -150,29 +150,39 @@ BLOG_POST_TEMPLATES = {
     'improving-cee-score-practical-guide': 'improving-cee-score-practical-guide.html',
     'time-management-200-questions-cee': 'time-management-200-questions-cee.html',
     'common-mistakes-cee-biology': 'common-mistakes-cee-biology.html',
+    'cee-eligibility-gpa-requirements': 'cee-eligibility-gpa-requirements.html',
+    'cee-seats-quota-cutoff-explained': 'cee-seats-quota-cutoff-explained.html',
+    'cee-mat-micro-syllabus': 'cee-mat-micro-syllabus.html',
+    'cee-best-books-resources': 'cee-best-books-resources.html',
+    'cee-vs-neet-nepali-students': 'cee-vs-neet-nepali-students.html',
 }
 
 BLOG_POST_ORDER = [
-    'chapter-wise-marks-distribution',
-    'last-30-days-cee-prep-plan',
-    'how-to-remember-organic-reactions',
-    'how-to-prepare-for-cee',
-    'human-biology-cee-questions',
-    'organic-chemistry-cee-tips',
-    'physics-high-weightage-topics',
-    'mat-section-tips',
-    'cee-exam-day-strategy',
-    'biology-diagram-revision-cee',
-    'chemistry-reaction-map-cee',
-    'past-papers-smart-practice-cee',
-    'negative-marking-strategy-cee',
-    'cee-study-schedule-that-works',
-    'botany-key-topics-cee',
-    'inorganic-chemistry-memorise-cee',
+    'cee-vs-neet-nepali-students',
+    'cee-best-books-resources',
+    'cee-mat-micro-syllabus',
+    'cee-seats-quota-cutoff-explained',
+    'cee-eligibility-gpa-requirements',
     'night-before-cee-preparation',
-    'improving-cee-score-practical-guide',
+    'last-30-days-cee-prep-plan',
     'time-management-200-questions-cee',
+    'improving-cee-score-practical-guide',
+    'cee-study-schedule-that-works',
+    'negative-marking-strategy-cee',
+    'inorganic-chemistry-memorise-cee',
+    'organic-chemistry-cee-tips',
     'common-mistakes-cee-biology',
+    'botany-key-topics-cee',
+    'cee-exam-day-strategy',
+    'past-papers-smart-practice-cee',
+    'chemistry-reaction-map-cee',
+    'biology-diagram-revision-cee',
+    'how-to-remember-organic-reactions',
+    'human-biology-cee-questions',
+    'mat-section-tips',
+    'physics-high-weightage-topics',
+    'how-to-prepare-for-cee',
+    'chapter-wise-marks-distribution',
 ]
 
 BLOG_POST_META = {
@@ -302,7 +312,177 @@ BLOG_POST_META = {
         'excerpt': 'The 5 most common Biology mistakes in CEE cost students easy marks. Learn to avoid them with specific examples.',
         'accent': '#1f8a4c', 'accent_soft': 'rgba(31, 138, 76, 0.08)', 'accent_border': 'rgba(31, 138, 76, 0.22)',
     },
+    'cee-eligibility-gpa-requirements': {
+        'title': 'CEE Eligibility with Low GPA: Can You Apply with D Grades?',
+        'tag': 'Eligibility',
+        'excerpt': 'A plain explanation of CEE eligibility with a low GPA or D grades, based on what I found while helping a relative check his options.',
+        'accent': '#0f7a8a', 'accent_soft': 'rgba(15, 122, 138, 0.08)', 'accent_border': 'rgba(15, 122, 138, 0.22)',
+    },
+    'cee-seats-quota-cutoff-explained': {
+        'title': 'CEE Seats, Quota and Cutoffs: How Selection Actually Works',
+        'tag': 'Exam Info',
+        'excerpt': 'Cutoffs are not magic numbers. They are outputs of seat counts, quota categories and applicant behaviour. Rank thinking beats mark thinking.',
+        'accent': '#35619e', 'accent_soft': 'rgba(53, 97, 158, 0.08)', 'accent_border': 'rgba(53, 97, 158, 0.22)',
+    },
+    'cee-mat-micro-syllabus': {
+        'title': 'MAT Micro Syllabus for CEE: Every Question Type Explained',
+        'tag': 'MAT',
+        'excerpt': 'All four MAT reasoning areas with every question type inside them, which ones are fast marks, and how to drill each one efficiently.',
+        'accent': '#7a4dc7', 'accent_soft': 'rgba(122, 77, 199, 0.08)', 'accent_border': 'rgba(122, 77, 199, 0.22)',
+    },
+    'cee-best-books-resources': {
+        'title': 'CEE Preparation Books and Resources: What I Used and What I Skipped',
+        'tag': 'Resources',
+        'excerpt': 'An honest inventory of my CEE books: which three earned their shelf space, what I skipped without regret, and the free resources that carried real weight.',
+        'accent': '#b36a00', 'accent_soft': 'rgba(179, 106, 0, 0.08)', 'accent_border': 'rgba(179, 106, 0, 0.24)',
+    },
+    'cee-vs-neet-nepali-students': {
+        'title': 'CEE vs NEET for Nepali Students: What I Learned Comparing Both',
+        'tag': 'Decisions',
+        'excerpt': 'Syllabus overlap is enormous but competition mathematics differ sharply. A calm comparison covering patterns, paperwork and licensing loops.',
+        'accent': '#1f8a4c', 'accent_soft': 'rgba(31, 138, 76, 0.08)', 'accent_border': 'rgba(31, 138, 76, 0.22)',
+    },
 }
+
+BLOG_RELATED = {
+    'chapter-wise-marks-distribution': ['physics-high-weightage-topics', 'botany-key-topics-cee', 'cee-study-schedule-that-works'],
+    'last-30-days-cee-prep-plan': ['night-before-cee-preparation', 'time-management-200-questions-cee', 'cee-best-books-resources'],
+    'how-to-remember-organic-reactions': ['chemistry-reaction-map-cee', 'organic-chemistry-cee-tips', 'inorganic-chemistry-memorise-cee'],
+    'how-to-prepare-for-cee': ['cee-study-schedule-that-works', 'cee-eligibility-gpa-requirements', 'mat-section-tips'],
+    'human-biology-cee-questions': ['common-mistakes-cee-biology', 'biology-diagram-revision-cee', 'botany-key-topics-cee'],
+    'organic-chemistry-cee-tips': ['how-to-remember-organic-reactions', 'chemistry-reaction-map-cee', 'cee-best-books-resources'],
+    'physics-high-weightage-topics': ['time-management-200-questions-cee', 'negative-marking-strategy-cee', 'chapter-wise-marks-distribution'],
+    'mat-section-tips': ['cee-mat-micro-syllabus', 'negative-marking-strategy-cee', 'time-management-200-questions-cee'],
+    'cee-exam-day-strategy': ['night-before-cee-preparation', 'negative-marking-strategy-cee', 'improving-cee-score-practical-guide'],
+    'biology-diagram-revision-cee': ['botany-key-topics-cee', 'human-biology-cee-questions', 'common-mistakes-cee-biology'],
+    'chemistry-reaction-map-cee': ['how-to-remember-organic-reactions', 'organic-chemistry-cee-tips', 'cee-best-books-resources'],
+    'past-papers-smart-practice-cee': ['cee-study-schedule-that-works', 'improving-cee-score-practical-guide', 'last-30-days-cee-prep-plan'],
+    'negative-marking-strategy-cee': ['time-management-200-questions-cee', 'cee-exam-day-strategy', 'mat-section-tips'],
+    'cee-study-schedule-that-works': ['last-30-days-cee-prep-plan', 'how-to-prepare-for-cee', 'past-papers-smart-practice-cee'],
+    'botany-key-topics-cee': ['biology-diagram-revision-cee', 'human-biology-cee-questions', 'common-mistakes-cee-biology'],
+    'inorganic-chemistry-memorise-cee': ['how-to-remember-organic-reactions', 'chemistry-reaction-map-cee', 'cee-best-books-resources'],
+    'night-before-cee-preparation': ['cee-exam-day-strategy', 'last-30-days-cee-prep-plan', 'time-management-200-questions-cee'],
+    'improving-cee-score-practical-guide': ['past-papers-smart-practice-cee', 'cee-study-schedule-that-works', 'negative-marking-strategy-cee'],
+    'time-management-200-questions-cee': ['negative-marking-strategy-cee', 'cee-exam-day-strategy', 'physics-high-weightage-topics'],
+    'common-mistakes-cee-biology': ['human-biology-cee-questions', 'botany-key-topics-cee', 'biology-diagram-revision-cee'],
+    'cee-eligibility-gpa-requirements': ['cee-vs-neet-nepali-students', 'how-to-prepare-for-cee', 'cee-seats-quota-cutoff-explained'],
+    'cee-seats-quota-cutoff-explained': ['cee-eligibility-gpa-requirements', 'cee-vs-neet-nepali-students', 'chapter-wise-marks-distribution'],
+    'cee-mat-micro-syllabus': ['mat-section-tips', 'negative-marking-strategy-cee', 'time-management-200-questions-cee'],
+    'cee-best-books-resources': ['last-30-days-cee-prep-plan', 'how-to-prepare-for-cee', 'cee-mat-micro-syllabus'],
+    'cee-vs-neet-nepali-students': ['cee-eligibility-gpa-requirements', 'cee-seats-quota-cutoff-explained', 'how-to-prepare-for-cee'],
+}
+
+QUIZ_OPENERS = [
+    "Every attempt on this page draws a fresh set of up to 50 questions from the verified {sub} material in our {ch} bank.",
+    "This test pulls its items from the checked {ch} collection covering {sub}, reshuffled every time you begin.",
+    "Each start assembles up to 50 {sub} MCQs selected at random from the reviewed {ch} question bank.",
+    "Questions here come from the verified {ch} pool for {sub}; no two attempts contain the same mix.",
+    "The quiz samples up to 50 items on {sub} each run, all sourced from our vetted {ch} material.",
+    "A new combination of {sub} questions is chosen at every attempt from the curated {ch} bank.",
+    "When you begin, the system picks up to 50 randomised {sub} questions drawn from {ch}.",
+    "This drill serves a randomly chosen slice of the {ch} questions tagged {sub}, capped at 50 per round.",
+]
+
+QUIZ_MARKING = [
+    "Scoring follows the real CEE convention: one mark for every correct answer and a 0.25 deduction for every wrong one.",
+    "Marking mirrors the actual exam, so correct answers add a full mark while incorrect ones cost a quarter.",
+    "The score sheet works like the real paper: plus one when right, minus a quarter when wrong, nothing when left blank.",
+    "Attempt rules match exam day conditions, including the penalty of 0.25 marks for each incorrect response.",
+    "Correct responses are worth one mark each, wrong responses deduct 0.25, and skipped questions stay neutral, just like CEE itself.",
+    "We apply genuine entrance marking: a single mark per correct choice offset by a small quarter-mark cut for mistakes.",
+]
+
+QUIZ_RESULTS = [
+    "On submission you immediately see your total score along with accuracy and pace figures, then every item opens its worked solution for review.",
+    "Your result appears the moment you finish: score, accuracy percentage, time used, and a question-by-question walkthrough with reasons.",
+    "Finishing unlocks the summary sheet first, and beneath it the complete answer key explaining why each option stands or falls.",
+    "Once submitted, the report shows where marks were gained or lost and attaches a step by step justification to each question.",
+    "The instant report card covers score and speed, while the review section underneath dissects all answers one at a time.",
+]
+
+QUIZ_SAMPLES = [
+    "Work through these solved examples first; they show exactly how much reasoning each explanation carries.",
+    "A short set of fully solved samples follows, written in the same style as the solutions you unlock after the test.",
+    "Below sit a few sample items with their complete working, so you can judge the depth before committing to a timed run.",
+    "These starter questions include finished solutions, giving you a feel for the format without starting the clock.",
+    "Before racing the clock, skim these worked samples; each one demonstrates how our explanations handle the options in turn.",
+]
+
+QUIZ_RESULT_TAILS = [
+    "Treat the review as part of the learning, not just the verdict.",
+    "Most students gain more from reading the missed explanations than from the score itself.",
+    "Repeat attempts feel different because the draw changes every time.",
+    "Short regular sessions here compound faster than one long weekly grind.",
+]
+
+QUIZ_SAMPLE_TAILS = [
+    "The full test follows the same pattern at scale.",
+    "Nothing in the timed paper will stray beyond what these represent.",
+    "If these feel comfortable, you are ready for a scored run.",
+    "They are drawn from the same verified pool the live quiz uses.",
+]
+
+QUIZ_META_DESCRIPTIONS = [
+    "Free online {sub} MCQ practice from {ch}. Randomised 50-question attempts with real CEE marking and worked solutions after submission.",
+    "Attempt {sub} multiple choice questions from {ch} under timed conditions. Instant scoring with step by step answer review.",
+    "{sub} quiz drawn from our verified {ch} bank for CEE preparation. Fresh mix every attempt, full explanations on completion.",
+    "Practise {sub} MCQs online with exam-style negative marking. Part of the {ch} practice series for Nepal's CEE.",
+    "Timed {sub} objective questions with immediate results and per-question explanations. One of the {ch} sets built for CEE aspirants.",
+    "Test yourself on {sub} through randomised draws from the reviewed {ch} collection. Score, accuracy and solutions appear instantly.",
+    "{ch} practice covering {sub}: up to 50 shuffled MCQs per attempt, marked like the real examination with detailed review.",
+    "Sharpen {sub} with repeated randomised quizzes sourced from verified {ch} questions, each answered response explained in full.",
+]
+
+SOLVED_META_DESCRIPTIONS = [
+    "Worked solutions for {sub} set {set_no}: every MCQ answered with a step by step explanation for CEE revision.",
+    "Browse set {set_no} of the {sub} solved series. Each question shows its correct option plus the full reasoning behind it.",
+    "{sub} solved question set {set_no} from {ch}, with answers and explanations ideal for checking yourself after a timed attempt.",
+    "Study {sub} through solved MCQs, set {set_no}: correct answers alongside explanations written to teach the method.",
+    "Set {set_no} of {sub} solved MCQs from {ch}. Review each explanation and note the reasoning patterns examiners favour.",
+    "{sub} questions solved in detail, set {set_no}. Attempt first, then compare your approach against the worked answer.",
+]
+
+SUBCHAPTERS_META_DESCRIPTIONS = [
+    "All {sub} topics in one place. Pick a subchapter to start focused MCQ practice with instant scoring.",
+    "Choose a {sub} subchapter for targeted drills drawn from verified CEE-style {ch} questions.",
+    "Topic wise {sub} practice: every subchapter links to a randomised quiz with worked solutions afterwards.",
+    "Break {ch} into {sub} subtopics and drill each one separately before moving to mixed chapter tests.",
+    "A clean index of {sub} subchapters within {ch}, each with its own quiz page and solved material.",
+]
+
+
+BLOG_PUBLISH_DATES = {
+    'chapter-wise-marks-distribution': (2026, 1, 12),
+    'how-to-prepare-for-cee': (2026, 1, 27),
+    'physics-high-weightage-topics': (2026, 2, 5),
+    'mat-section-tips': (2026, 2, 16),
+    'human-biology-cee-questions': (2026, 2, 24),
+    'how-to-remember-organic-reactions': (2026, 3, 6),
+    'biology-diagram-revision-cee': (2026, 3, 17),
+    'chemistry-reaction-map-cee': (2026, 3, 30),
+    'past-papers-smart-practice-cee': (2026, 4, 9),
+    'cee-exam-day-strategy': (2026, 4, 21),
+    'botany-key-topics-cee': (2026, 5, 4),
+    'common-mistakes-cee-biology': (2026, 5, 14),
+    'organic-chemistry-cee-tips': (2026, 5, 26),
+    'inorganic-chemistry-memorise-cee': (2026, 6, 8),
+    'negative-marking-strategy-cee': (2026, 6, 18),
+    'cee-study-schedule-that-works': (2026, 6, 29),
+    'improving-cee-score-practical-guide': (2026, 7, 9),
+    'time-management-200-questions-cee': (2026, 7, 20),
+    'last-30-days-cee-prep-plan': (2026, 7, 30),
+    'night-before-cee-preparation': (2026, 8, 11),
+    'cee-eligibility-gpa-requirements': (2026, 8, 13),
+    'cee-seats-quota-cutoff-explained': (2026, 8, 14),
+    'cee-mat-micro-syllabus': (2026, 8, 17),
+    'cee-best-books-resources': (2026, 8, 18),
+    'cee-vs-neet-nepali-students': (2026, 8, 19),
+}
+
+
+def _stable_variant(key, pools):
+    digest = hashlib.sha256(key.encode("utf-8")).digest()
+    return tuple(pool[digest[i] % len(pool)] for i, pool in enumerate(pools))
 
 def _get_chapter_question_ids(chapter_id):
     cache_key = f'chapter_qids:{chapter_id}'
@@ -974,10 +1154,18 @@ def subchapters(request, slug):
     subchapter_list = SubChapter.objects.filter(chapter=chapter).order_by('order')
     solution_sets = SolutionSet.objects.filter(chapter=chapter)
     request.page_slug = slug
+    sc_meta = _stable_variant(
+        f'scmeta:{chapter.slug}',
+        (SUBCHAPTERS_META_DESCRIPTIONS,),
+    )[0]
+    page_default_description = sc_meta.format(
+        sub=chapter.name, ch=chapter.subject.name,
+    )
     return render(request, 'subchapter.html', {
         'chapter': chapter,
         'subchapters': subchapter_list,
         'solution_sets': solution_sets,
+        'page_default_description': page_default_description,
         **_crawl_navigation_links(chapter.subject.slug),
     })
 
@@ -994,7 +1182,13 @@ def solution_set(request, slug, set_number):
     previous_set = SolutionSet.objects.filter(chapter=chapter, set_number=set_number - 1).first()
     next_set = SolutionSet.objects.filter(chapter=chapter, set_number=set_number + 1).first()
     page_default_title = f'{chapter.name} Solved MCQs | Set {set_number} | CEE MCQ'
-    page_default_description = f'Solved MCQs for {chapter.name} | Set {set_number}. Practice with answers and explanations for CEE preparation.'
+    ss_meta = _stable_variant(
+        f'ssmeta:{slug}:{set_number}',
+        (SOLVED_META_DESCRIPTIONS,),
+    )[0]
+    page_default_description = ss_meta.format(
+        sub=chapter.name, ch=chapter.subject.name, set_no=set_number,
+    )
     page_default_keywords = f'CEE MCQ, {chapter.name}, Solved MCQs, Set {set_number}, Practice Questions'
     request.page_slug = f'{slug}-solved-set-{set_number}'
     return render(request, 'solution_set.html', {
@@ -1030,7 +1224,13 @@ def quiz(request, slug):
     attempt_reference = request.session.get(f'{attempt_key_prefix}_attempt_reference', '')
     request.page_slug = slug
     page_default_title = f'{chapter.name} MCQ | {chapter.subject.name} | CEE MCQ'
-    page_default_description = f'Practice the {chapter.name} MCQ for the Common Entrance Examination. Track your performance with detailed results.'
+    ch_meta_variant = _stable_variant(
+        f'chmeta:{chapter.slug}',
+        (QUIZ_META_DESCRIPTIONS,),
+    )[0]
+    page_default_description = ch_meta_variant.format(
+        sub=chapter.name, ch=chapter.subject.name,
+    )
     page_default_keywords = f'CEE MCQ, {chapter.name} MCQ, {chapter.subject.name}, Chapter wise Questions, Online Practice'
 
     if request.method == 'POST':
@@ -1189,13 +1389,32 @@ def quiz(request, slug):
                 quiz_started = False
         else:
             preview_questions = list(
-                Question.objects.filter(chapter=chapter, verified=True, solution__gt='').order_by('id')[:10]
+                Question.objects.filter(chapter=chapter, verified=True, solution__gt='').order_by('-id')[:10]
             )
-        
+
+        opener_v, marking_v = _stable_variant(
+            f'chblurb1:{chapter.slug}', (QUIZ_OPENERS, QUIZ_MARKING),
+        )
+        results_v, tail_v = _stable_variant(
+            f'chblurb2:{chapter.slug}', (QUIZ_RESULTS, QUIZ_RESULT_TAILS),
+        )
+        samples_v, stail_v = _stable_variant(
+            f'chblurbS:{chapter.slug}', (QUIZ_SAMPLES, QUIZ_SAMPLE_TAILS),
+        )
+        blurb_1 = ' '.join([
+            opener_v.format(sub=chapter.name, ch=chapter.subject.name),
+            marking_v,
+        ])
+        blurb_2 = ' '.join([results_v, tail_v])
+        preview_subtitle = ' '.join([samples_v, stail_v])
+
         return render(request, 'quiz.html', {
             'chapter': chapter,
             'questions': questions,
             'preview_questions': preview_questions,
+            'quiz_blurb_1': blurb_1,
+            'quiz_blurb_2': blurb_2,
+            'preview_subtitle': preview_subtitle,
             'score': None,
             'user_answers': {},
             'quiz_started': quiz_started,
@@ -1225,7 +1444,13 @@ def subchapter_quiz(request, slug):
     attempt_reference = request.session.get(f'{attempt_key_prefix}_attempt_reference', '')
     request.page_slug = slug
     page_default_title = f'{sub_chapter.name} MCQ | {chapter.name} | CEE MCQ'
-    page_default_description = f'Practice the {sub_chapter.name} MCQ from {chapter.name} for the Common Entrance Examination. Track your performance with detailed results.'
+    meta_variant = _stable_variant(
+        f'mcq:{sub_chapter.slug}',
+        (QUIZ_META_DESCRIPTIONS,),
+    )[0]
+    page_default_description = meta_variant.format(
+        sub=sub_chapter.name, ch=chapter.name,
+    )
     page_default_keywords = f'CEE MCQ, {sub_chapter.name} MCQ, {chapter.name} MCQ, Chapter wise Questions, Online Practice'
 
     if request.method == 'POST':
@@ -1390,6 +1615,22 @@ def subchapter_quiz(request, slug):
                 Question.objects.filter(sub_chapter=sub_chapter, verified=True, solution__gt='').order_by('id')[:10]
             )
 
+        opener_v, marking_v = _stable_variant(
+            f'blurb1:{sub_chapter.slug}', (QUIZ_OPENERS, QUIZ_MARKING),
+        )
+        results_v, tail_v = _stable_variant(
+            f'blurb2:{sub_chapter.slug}', (QUIZ_RESULTS, QUIZ_RESULT_TAILS),
+        )
+        samples_v, stail_v = _stable_variant(
+            f'blurbS:{sub_chapter.slug}', (QUIZ_SAMPLES, QUIZ_SAMPLE_TAILS),
+        )
+        blurb_1 = ' '.join([
+            opener_v.format(sub=sub_chapter.name, ch=chapter.name),
+            marking_v,
+        ])
+        blurb_2 = ' '.join([results_v, tail_v])
+        preview_subtitle = ' '.join([samples_v, stail_v])
+
         return render(request, 'quiz.html', {
             'chapter': chapter,
             'sub_chapter': sub_chapter,
@@ -1405,6 +1646,9 @@ def subchapter_quiz(request, slug):
             'history_entries': [],
             'history_user_name': user_name,
             'question_ids_csv': ','.join(str(q.id) for q in questions),
+            'quiz_blurb_1': blurb_1,
+            'quiz_blurb_2': blurb_2,
+            'preview_subtitle': preview_subtitle,
             'page_slug': slug,
             'page_default_title': page_default_title,
             'page_default_description': page_default_description,
@@ -1806,4 +2050,14 @@ def blog_post(request, slug):
     if not template_name:
         raise Http404('Blog post not found')
 
-    return render(request, template_name, {'slug': slug})
+    related = []
+    for related_slug in BLOG_RELATED.get(slug, []):
+        meta = BLOG_POST_META[related_slug]
+        related.append({
+            'slug': related_slug,
+            'title': meta['title'],
+            'tag': meta['tag'],
+            'accent': meta['accent'],
+        })
+
+    return render(request, template_name, {'slug': slug, 'related_posts': related})
