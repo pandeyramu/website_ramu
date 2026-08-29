@@ -271,9 +271,9 @@ BLOG_POST_META = {
         'accent': '#c04b62', 'accent_soft': 'rgba(192, 75, 98, 0.08)', 'accent_border': 'rgba(192, 75, 98, 0.22)',
     },
     'cee-study-schedule-that-works': {
-        'title': 'How to Build a CEE Study Schedule That Actually Works',
+        'title': 'CEE Daily Study Routine: A 10-11 Hour Day Schedule',
         'tag': 'Study Tips',
-        'excerpt': 'Most study schedules fail because they are too rigid. Build a flexible plan with buffer days and revision cycles.',
+        'excerpt': 'A first-person CEE daily study routine: 10-11 focused hours a day, a full mock test on Saturday, and 7 hours of sleep. A day-wise schedule covering every subject.',
         'accent': '#1458a6', 'accent_soft': 'rgba(20, 88, 166, 0.08)', 'accent_border': 'rgba(20, 88, 166, 0.22)',
     },
     'botany-key-topics-cee': {
