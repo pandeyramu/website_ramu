@@ -97,6 +97,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'CEE_Quiz.context_processors.page_seo',
                 'CEE_Quiz.context_processors.site_url',
+                'CEE_Quiz.context_processors.site_totals',
             ],
         },
     },

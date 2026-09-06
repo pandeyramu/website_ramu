@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 from django.core.cache import cache
 
-from .models import Chapter, PageSEO, SubChapter, Subject
+from .models import Chapter, PageSEO, Question, SubChapter, Subject
 from .seo_provider import get_supabase_page_seo
 from django.conf import settings
 
@@ -248,6 +248,19 @@ def _safe_lookup(request):
 
 def page_seo(request):
     return {'page_seo': _safe_lookup(request)}
+
+
+def site_totals(request):
+    # Cached live question count so templates never expose a stale total.
+    count = cache.get('home_total_questions')
+    if count is None:
+        try:
+            count = Question.objects.count()
+        except Exception:
+            count = None
+        else:
+            cache.set('home_total_questions', count, timeout=900)
+    return {'question_count': count}
 
 
 def site_url(request):

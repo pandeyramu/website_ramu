@@ -1022,8 +1022,11 @@ def home(request):
     if total_questions is None:
         total_questions = Question.objects.count()
         cache.set('home_total_questions', total_questions, timeout=900)
-    page_default_title = 'CEE MCQ | Free Practice Questions | CEE MCQ'
-    page_default_description = "Free CEE MCQ practice. Chapter wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination."
+    page_default_title = f'CEE MCQ Nepal - {total_questions:,}+ Free Practice Questions | MEC'
+    page_default_description = (
+        f"Free CEE MCQ practice for Nepal's MEC entrance. {total_questions:,}+ chapter-wise "
+        "questions in Physics, Chemistry, Zoology, Botany & MAT with answers. Start now - no login"
+    )
     page_default_keywords = 'CEE MCQ, CEE Nepal, Chapter wise MCQ Questions, Biology, Chemistry, Physics, MAT'
     request.page_slug = 'home'
     return render(request, 'home.html', {
@@ -1034,8 +1037,8 @@ def home(request):
         'page_default_title': page_default_title,
         'page_default_description': page_default_description,
         'page_default_keywords': page_default_keywords,
-        'page_default_og_title': 'CEE MCQ | Free CEE MCQ Questions',
-        'page_default_og_description': "Free CEE entrance MCQ practice. Chapter wise MCQ questions in Biology, Chemistry, Physics and MAT for Nepal's Common Entrance Examination.",
+        'page_default_og_title': page_default_title,
+        'page_default_og_description': page_default_description,
     })
 
 
