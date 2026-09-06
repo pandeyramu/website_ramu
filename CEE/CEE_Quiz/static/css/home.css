@@ -32,12 +32,8 @@ body {
     }
 }
 
-main, header, #site-footer {
+main, #site-footer {
     animation: rocketLanding 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-header {
-    animation-delay: 0s;
 }
 
 main {
@@ -49,37 +45,9 @@ main {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    main, header, #site-footer {
+    main, #site-footer {
         animation: none;
     }
-}
-
-header {
-    background: #001a4d;
-    color: white;
-    padding: 40px 20px;
-    text-align: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.welcome-text {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.welcome-text h1 {
-    margin: 0 0 15px 0;
-    font-size: 32px;
-    font-weight: 800;
-    color: #FFD700;
-}
-
-.welcome-text p {
-    margin: 0;
-    font-size: 16px;
-    line-height: 1.6;
-    opacity: 0.95;
 }
 
 /* ==============================
@@ -95,7 +63,7 @@ header {
 .config-section h2 {
     text-align: center;
     font-size: 32px;
-    color: #FFD700;
+    color: #0c2f4a;
     margin-bottom: 40px;
     font-weight: 700;
 }
@@ -466,8 +434,16 @@ header {
 
 .features h2 {
     font-size: 26px;
-    color: #1a237e;
-    margin-bottom: 30px;
+    color: #0c2f4a;
+    margin-bottom: 10px;
+}
+
+.section-intro {
+    max-width: 760px;
+    margin: 0 auto 30px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #445168;
 }
 
 .features-grid {
@@ -495,7 +471,17 @@ header {
 .feature-card h3 {
     margin: 0 0 8px;
     font-size: 17px;
-    color: #1a237e;
+    color: #0c2f4a;
+}
+
+.card-kicker {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1458a6;
 }
 
 .feature-card p {
@@ -520,7 +506,7 @@ header {
 .author-bio h2 {
     margin: 0 0 8px;
     font-size: 20px;
-    color: #1a237e;
+    color: #0c2f4a;
 }
 
 .author-bio p {
@@ -551,7 +537,7 @@ header {
 .prep-tips h2 {
     margin: 0 0 12px;
     font-size: 20px;
-    color: #1a237e;
+    color: #0c2f4a;
 }
 
 .prep-tips p {

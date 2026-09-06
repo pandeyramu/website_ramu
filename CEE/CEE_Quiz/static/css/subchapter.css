@@ -23,7 +23,7 @@ body {
 /* Header */
 .header-container {
     background: transparent;
-    color: #1a237e;
+    color: #0c2f4a;
     text-align: center;
     padding: 20px 20px 10px;
 }
@@ -46,14 +46,14 @@ body {
 }
 
 .breadcrumb a {
-    color: #1a237e;
+    color: #0c2f4a;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s;
 }
 
 .breadcrumb a:hover {
-    color: #3949ab;
+    color: #184f79;
 }
 
 .breadcrumb span {
@@ -125,8 +125,8 @@ body {
 
 .subchapter-card:hover {
     transform: translateX(6px);
-    box-shadow: 0 8px 28px rgba(26, 35, 126, 0.18);
-    background: #e8eaf6;
+    box-shadow: 0 8px 28px rgba(12, 47, 74, 0.18);
+    background: #edf3fa;
 }
 
 .subchapter-card {
@@ -135,7 +135,7 @@ body {
 
 /* Card Number */
 .card-number {
-    background: linear-gradient(135deg, #1a237e, #3949ab);
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
     color: #fff;
     font-weight: 700;
     font-size: 18px;
@@ -162,7 +162,7 @@ body {
     justify-content: space-between;
     gap: 12px;
     text-decoration: none;
-    color: #1a237e;
+    color: #0c2f4a;
     margin: 0 0 4px;
 }
 
@@ -181,7 +181,7 @@ body {
     flex: none;
     font-size: 20px;
     font-weight: 700;
-    color: #1a237e;
+    color: #0c2f4a;
     transition: transform 0.2s;
 }
 
@@ -230,12 +230,13 @@ body {
 }
 
 .btn-back {
-    background-color: #344a84;
+    background-color: #1458a6;
     color: #fff;
 }
 
 .btn-back:hover {
-    background-color: #46c467;
+    background-color: #ffd94d;
+    color: #0c2f4a;
     transform: translateY(-3px);
 }
 
@@ -243,7 +244,7 @@ body {
 .footer {
     margin-top: 24px;
     padding: 18px 20px;
-    background: #1a237e;
+    background: #0c2f4a;
     color: #fff;
     text-align: center;
     font-size: 16px;

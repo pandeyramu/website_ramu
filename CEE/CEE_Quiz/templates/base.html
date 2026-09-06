@@ -14,7 +14,7 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880021540956659"
          crossorigin="anonymous"></script>
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:title" content="{% block og_title %}{% if page_seo %}{{ page_seo.og_title|default:page_seo.meta_title }}{% else %}CEE MCQ{% endif %}{% endblock %}">
     <meta property="og:description"
         content="{% block og_description %}{% if page_seo %}{{ page_seo.og_description|default:page_seo.meta_description }}{% else %}Free CEE practice MCQs and preparation resources for Nepali students.{% endif %}{% endblock %}">
@@ -69,6 +69,37 @@
             color: #1f2937;
             background: linear-gradient(180deg, #f4f8fc 0%, #ffffff 60%);
             line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: rgba(20, 88, 166, 0.18);
+        }
+
+        /* Accessible focus ring */
+        :focus-visible {
+            outline: 3px solid #ffd94d;
+            outline-offset: 2px;
+        }
+
+        :focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        /* Skip-to-content link for keyboard users */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 10000;
+            padding: 0.7rem 1.1rem;
+            background: #ffd94d;
+            color: #0c2f4a;
+            font-weight: 700;
+            border-radius: 0 0 10px 0;
+            text-decoration: none;
+        }
+
+        .skip-link:focus {
+            left: 0;
         }
 
         body,
@@ -136,6 +167,7 @@
             flex: 1 0 auto;
             position: relative;
             z-index: 1;
+            scroll-margin-top: 0.5rem;
         }
 
         /* Ambient animated page background (all pages) */
@@ -402,6 +434,7 @@
         }
 
         footer.site-footer {
+            width: 100%;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             background: linear-gradient(135deg, #0c2f4a, #184f79);
             position: relative;
@@ -681,9 +714,66 @@
             opacity: 0.9;
         }
 
+        /* Desktop navigation */
+        .site-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            margin-left: auto;
+        }
+
+        .site-nav a {
+            color: rgba(255, 255, 255, 0.92);
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 600;
+            padding: 0.5rem 0.8rem;
+            border-radius: 999px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .site-nav a:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffd94d;
+        }
+
+        .site-nav a.active {
+            background: rgba(255, 217, 77, 0.18);
+            color: #ffd94d;
+        }
+
+        .site-nav .site-nav-cta {
+            background: #ffd94d;
+            color: #0c2f4a;
+            margin-left: 0.5rem;
+            box-shadow: 0 2px 6px rgba(15, 58, 91, 0.18);
+        }
+
+        .site-nav .site-nav-cta:hover {
+            background: #ffe27a;
+            color: #0c2f4a;
+        }
+
+        @media (max-width: 1020px) and (min-width: 721px) {
+            .site-nav {
+                gap: 0.1rem;
+            }
+            .site-nav a {
+                font-size: 0.84rem;
+                padding: 0.45rem 0.55rem;
+            }
+            .site-nav .site-nav-cta {
+                margin-left: 0.3rem;
+            }
+        }
+
         @media (max-width: 720px) {
             .site-header {
                 padding: 0.55rem 0.9rem;
+            }
+
+            .site-nav {
+                display: none;
             }
 
             .brand {
@@ -826,6 +916,12 @@
             background: #fef2f2;
             color: #991b1b;
             border: 1px solid #fecaca;
+        }
+
+        @media (min-width: 721px) {
+            .menu-toggle {
+                display: none;
+            }
         }
 
         @media (max-width: 720px) {
@@ -1026,6 +1122,7 @@
 </head>
 
 <body {% block body_attributes %}{% endblock %}>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="ambient-bg" aria-hidden="true">
         <span class="orb orb-1"></span>
         <span class="orb orb-2"></span>
@@ -1074,6 +1171,14 @@
                 <img src="{% static 'images/logo-84.webp' %}" alt="CEE MCQ Logo" width="52" height="52" loading="eager">
                 <span>CEE MCQ</span>
             </a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="/" class="{% if request.path == '/' or request.path == '/index.html' %}active{% endif %}">Home</a>
+                <a href="/all-subjects/" class="{% if request.path == '/all-subjects/' or request.path|slice:':9' == '/subject/' or request.path|slice:':9' == '/chapter/' %}active{% endif %}">All Subjects</a>
+                <a href="/about/" class="{% if request.path == '/about/' %}active{% endif %}">About</a>
+                <a href="/contact/" class="{% if request.path == '/contact/' or request.path|slice:':9' == '/contact/' %}active{% endif %}">Contact</a>
+                <a href="/blog/" class="{% if request.path|slice:':6' == '/blog/' %}active{% endif %}">Blog</a>
+                <a href="{% url 'full_test' %}?new=1" class="site-nav-cta {% if request.path|slice:':11' == '/full-test/' %}active{% endif %}">Start Full Test</a>
+            </nav>
             <button id="menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
@@ -1081,7 +1186,7 @@
     </header>
     {% endblock %}
 
-    <main class="page-wrap">
+    <main class="page-wrap" id="main-content">
         <section class="page-card">
             {% if messages %}
             <div class="messages">

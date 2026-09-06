@@ -879,20 +879,23 @@ selected
 
     </div>
 
-    <div class="question-palette" id="question-palette">
+    <details class="question-palette" id="question-palette" open>
 
-        <div class="question-palette-head">
+        <summary class="question-palette-head">
             <span class="question-palette-title">Questions</span>
             <span class="question-palette-legend">
                 <span class="legend-pair"><span class="legend-dot legend-answered"></span>Answered</span>
                 <span class="legend-pair"><span class="legend-dot legend-flagged"></span>Flagged</span>
                 <span class="legend-pair"><span class="legend-dot legend-current"></span>Current</span>
             </span>
-        </div>
+            <span class="question-palette-toggle" aria-hidden="true">▾</span>
+        </summary>
 
         <div class="question-jump-grid" id="question-jump-grid"></div>
 
-    </div>
+        <p class="shortcut-hint">Tip: press &larr; &rarr; to move, and A, B, C or D to answer.</p>
+
+    </details>
 
     <button type="submit"
             class="submit-btn"

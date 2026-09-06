@@ -829,6 +829,60 @@ function setupActiveQuestionMode() {
     updateQuizProgress();
 }
 
+function setupQuestionPalette() {
+    const palette = document.getElementById('question-palette');
+    if (!palette) {
+        return;
+    }
+    if (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) {
+        palette.open = false;
+    } else {
+        palette.open = true;
+    }
+}
+
+function handleQuizShortcuts(event) {
+    if (!quizForm || quizForm.classList.contains('submitted')) {
+        return;
+    }
+
+    const targetTag = event.target?.tagName;
+    if (targetTag === 'INPUT' || targetTag === 'TEXTAREA' || targetTag === 'SELECT' || event.target?.isContentEditable) {
+        return;
+    }
+    if (event.metaKey || event.ctrlKey || event.altKey) {
+        return;
+    }
+    if (submitReviewPanel && !submitReviewPanel.hidden) {
+        return;
+    }
+    if (flagReviewPanel && !flagReviewPanel.hidden) {
+        return;
+    }
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        if (isActiveQuestionMode()) {
+            showQuestion(currentQuestionNumber + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+        return;
+    }
+
+    const letter = event.key.toLowerCase();
+    if (letter === 'a' || letter === 'b' || letter === 'c' || letter === 'd') {
+        if (!isActiveQuestionMode()) {
+            return;
+        }
+        const block = questionBlockList[currentQuestionNumber - 1];
+        const radios = block?.querySelectorAll('input[type="radio"]');
+        const radio = radios ? radios[letter.charCodeAt(0) - 97] : null;
+        if (radio && !radio.disabled) {
+            radio.checked = true;
+            radio.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+}
+
 function setupNonCopyProtection() {
     if (!quizForm || quizForm.classList.contains('submitted')) {
         return;
@@ -947,6 +1001,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFlagModalActions();
     setupFlagButtonListeners();
     setupActiveQuestionMode();
+    setupQuestionPalette();
+    document.addEventListener('keydown', handleQuizShortcuts);
 
     if (quizForm) {
         quizForm.querySelectorAll('.flag-question-btn').forEach((button) => {

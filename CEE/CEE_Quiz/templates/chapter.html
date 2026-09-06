@@ -118,6 +118,23 @@
     margin-bottom: 6px;
 }
 
+.page-fx .breadcrumb {
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 10px;
+}
+
+.page-fx .breadcrumb a {
+    color: #ffd94d;
+}
+
+.page-fx .breadcrumb a:hover {
+    color: #ffe27a;
+}
+
+.page-fx .breadcrumb span {
+    color: rgba(255, 255, 255, 0.9);
+}
+
 .page-fx p {
     color: rgba(255, 255, 255, 0.85);
     margin-bottom: 0;
@@ -173,6 +190,13 @@
         <h1>Chapters for {{ subject.name }}</h1>
         <p>
             Practice multiple choice questions and exercises for better preparation!
+        </p>
+        <p class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a>
+            &raquo;
+            <a href="{{ all_subjects_url }}">All Subjects</a>
+            &raquo;
+            <span>{{ subject.name }}</span>
         </p>
     </header>
 </div>

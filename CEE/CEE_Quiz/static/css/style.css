@@ -44,6 +44,10 @@ html, body {
     width: 100%;
 }
 
+html, body {
+    overflow-x: clip;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(180deg, #eef5fb 0%, #f9fbff 100%);

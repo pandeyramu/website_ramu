@@ -104,7 +104,7 @@ table {
 /* Header */
 .header-container h1 {
     font-size: 36px;
-    color: #1a237e;
+    color: #0c2f4a;
     margin-bottom: 10px;
     text-align: center;
 }
@@ -168,7 +168,7 @@ table {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1a237e, #3949ab);
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
     color: #fff;
     font-size: 18px;
     font-weight: 700;
@@ -176,7 +176,7 @@ table {
 }
 
 .chapter-card:hover .chapter-index {
-    background: linear-gradient(135deg, #283593, #5c6bc0);
+    background: linear-gradient(135deg, #1458a6, #2a6ba8);
 }
 
 .chapter-name {
@@ -187,7 +187,7 @@ table {
 .chapter-arrow {
     flex: none;
     font-size: 20px;
-    color: #1a237e;
+    color: #0c2f4a;
     transition: transform 0.25s;
 }
 
@@ -247,7 +247,7 @@ table {
 }
 
 .botany-card .chapter-index {
-    background: linear-gradient(135deg, #1a237e, #3949ab);
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
     color: #fff;
 }
 
@@ -256,7 +256,7 @@ table {
 }
 
 .botany-card:hover .chapter-index {
-    background: linear-gradient(135deg, #283593, #5c6bc0);
+    background: linear-gradient(135deg, #1458a6, #2a6ba8);
     color: #fff;
 }
 
@@ -278,7 +278,7 @@ table {
 }
 
 .zoology-card .chapter-index {
-    background: linear-gradient(135deg, #1a237e, #3949ab);
+    background: linear-gradient(135deg, #0c2f4a, #184f79);
     color: #fff;
 }
 
@@ -287,7 +287,7 @@ table {
 }
 
 .zoology-card:hover .chapter-index {
-    background: linear-gradient(135deg, #283593, #5c6bc0);
+    background: linear-gradient(135deg, #1458a6, #2a6ba8);
     color: #fff;
 }
 
@@ -302,7 +302,7 @@ table {
 
 .back-button a {
     display: inline-block;
-    background-color: #344a84;
+    background-color: #1458a6;
     color: #fff;
     padding: 14px 30px;
     border-radius: 10px;
@@ -313,7 +313,8 @@ table {
 }
 
 .back-button a:hover {
-    background-color: #46c467;
+    background-color: #ffd94d;
+    color: #0c2f4a;
     transform: translateY(-3px);
 }
 
@@ -321,7 +322,7 @@ table {
 .footer {
     margin-top: 50px;
     padding: 30px 20px;
-    background: #1a237e;
+    background: #0c2f4a;
     color: #fff;
     text-align: center;
     font-size: 16px;
