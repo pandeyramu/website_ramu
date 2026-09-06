@@ -1,6 +1,7 @@
 from types import SimpleNamespace
 
 from django.core.cache import cache
+from django.db.models import Count
 
 from .models import Chapter, PageSEO, Question, SubChapter, Subject
 from .seo_provider import get_supabase_page_seo
@@ -250,17 +251,40 @@ def page_seo(request):
     return {'page_seo': _safe_lookup(request)}
 
 
+def _comma(num):
+    return f"{num:,}"
+
+
 def site_totals(request):
-    # Cached live question count so templates never expose a stale total.
-    count = cache.get('home_total_questions')
-    if count is None:
+    # Cached live question counts so templates never expose a stale total.
+    counts = cache.get('site_question_counts')
+    if counts is None:
         try:
-            count = Question.objects.count()
+            total = Question.objects.count()
+            subject_counts = {
+                s.slug: s.question_count
+                for s in Subject.objects.annotate(
+                    question_count=Count('chapter__question')
+                )
+            }
         except Exception:
-            count = None
+            counts = None
         else:
-            cache.set('home_total_questions', count, timeout=900)
-    return {'question_count': count}
+            counts = {'total': total, 'subjects': subject_counts}
+            cache.set('site_question_counts', counts, timeout=900)
+    if counts is None:
+        return {
+            'question_count': None,
+            'question_count_display': None,
+            'subject_question_counts': None,
+        }
+    return {
+        'question_count': counts['total'],
+        'question_count_display': _comma(counts['total']),
+        'subject_question_counts': {
+            slug: _comma(n) for slug, n in counts['subjects'].items()
+        },
+    }
 
 
 def site_url(request):

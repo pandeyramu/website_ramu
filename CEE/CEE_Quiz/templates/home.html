@@ -386,7 +386,7 @@
 <section class="subjects">
     <h2>Free CEE Chapter wise MCQ Questions</h2>
     <p>Select a subject and start practicing!</p>
-    <p class="total-question-count">Total questions available: {{ total_questions }}</p>
+    <p class="total-question-count">Total questions available: {{ question_count_display|default:total_questions }}</p>
     <div class="button-group">
         {% for sub in subjects %}
             <a href="{% url 'chapters' sub.slug %}" class="btn btn-subject">{{ sub.name }}</a>
@@ -401,7 +401,7 @@
 
 <section class="author-bio">
     <h2>About the maker</h2>
-    <p><strong>Ramu Pandey</strong> is a student from a computer science background in Nepal who built this site while learning web development. It started as a hands-on project to sharpen real development skills and grew into a free study tool for CEE aspirants. The platform now hosts {{ question_count|default:"56,000" }}+ original questions across Biology, Chemistry, Physics, and MAT, organised chapter wise to mirror the official CEE syllabus.</p>
+    <p><strong>Ramu Pandey</strong> is a student from a computer science background in Nepal who built this site while learning web development. It started as a hands-on project to sharpen real development skills and grew into a free study tool for CEE aspirants. The platform now hosts {{ question_count_display|default:"56,000" }}+ original questions across Biology, Chemistry, Physics, and MAT, organised chapter wise to mirror the official CEE syllabus.</p>
     <p>Everything here is made and maintained by hand, one feature at a time, and questions are reviewed as the MEC syllabus changes. Most improvements come directly from students who use the site and report what is missing or incorrect. If you spot an error or want a topic covered better, your feedback shapes what gets built next. <a href="/about/">More about the project</a>.</p>
 </section>
 {% endblock %}
