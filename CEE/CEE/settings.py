@@ -53,6 +53,10 @@ CSRF_TRUSTED_ORIGINS = [
 # Canonical site URL used in templates and structured data
 SITE_URL = os.environ.get('SITE_URL', 'https://pandeyramu.com.np')
 
+# IndexNow protocol key for automated Bing/Yandex/Seznam URL submission.
+# The key file must be reachable at https://<host>/<INDEXNOW_KEY>.txt
+INDEXNOW_KEY = os.environ.get('INDEXNOW_KEY', '269aae0d94b54833a372c045aaf20a2b')
+
 # Application definition
 
 INSTALLED_APPS = [

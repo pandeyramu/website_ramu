@@ -2031,6 +2031,13 @@ def llms_txt(request):
     return HttpResponse(content, content_type='text/plain; charset=utf-8')
 
 
+def indexnow_key(request, key):
+    expected = getattr(settings, 'INDEXNOW_KEY', '')
+    if key != expected:
+        raise Http404('Not found')
+    return HttpResponse(expected, content_type='text/plain')
+
+
 def blog_index(request):
     request.page_slug = 'blog'
     posts = []

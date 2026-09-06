@@ -1,6 +1,12 @@
+import datetime
+
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from CEE_Quiz.models import Subject, Chapter, SubChapter, SolutionSet
+
+CONTENT_LAST_MOD = datetime.date(2026, 8, 18)
+SITE_OUTAGE_LAST_MOD = datetime.date(2026, 9, 6)
+
 
 class StaticViewSitemap(Sitemap):
     priority = 1.0
@@ -13,6 +19,9 @@ class StaticViewSitemap(Sitemap):
     def location(self, item):
         return reverse(item)
 
+    def lastmod(self, item):
+        return SITE_OUTAGE_LAST_MOD
+
 class SubjectSitemap(Sitemap):
     priority = 0.8
     changefreq = 'weekly'
@@ -22,6 +31,9 @@ class SubjectSitemap(Sitemap):
 
     def location(self, obj):
         return f'/subject/{obj.slug}/'
+
+    def lastmod(self, obj):
+        return CONTENT_LAST_MOD
 
 class ChapterSitemap(Sitemap):
     priority = 0.7
@@ -33,6 +45,9 @@ class ChapterSitemap(Sitemap):
     def location(self, obj):
         return f'/chapter/{obj.slug}/'
 
+    def lastmod(self, obj):
+        return CONTENT_LAST_MOD
+
 class SubChapterSitemap(Sitemap):
     priority = 0.6
     changefreq = 'weekly'
@@ -43,6 +58,9 @@ class SubChapterSitemap(Sitemap):
     def location(self, obj):
         return f'/mcq/{obj.slug}/'
 
+    def lastmod(self, obj):
+        return CONTENT_LAST_MOD
+
 class SolutionSetSitemap(Sitemap):
     priority = 0.6
     changefreq = 'monthly'
@@ -52,6 +70,9 @@ class SolutionSetSitemap(Sitemap):
 
     def location(self, obj):
         return f'/chapter/{obj.chapter.slug}/solved-set/{obj.set_number}/'
+
+    def lastmod(self, obj):
+        return CONTENT_LAST_MOD
 
 
 class BlogSitemap(Sitemap):
