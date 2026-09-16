@@ -978,7 +978,6 @@ def _turnstile_passes(request):
             data={
                 'secret': settings.TURNSTILE_SECRET_KEY,
                 'response': token,
-                'remoteip': _get_client_ip(request),
             },
             timeout=10,
         )
