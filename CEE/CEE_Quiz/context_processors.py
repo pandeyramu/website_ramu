@@ -291,3 +291,16 @@ def site_url(request):
     # Provide SITE_URL to templates; fall back to request host if missing
     url = getattr(settings, 'SITE_URL', '') or f"{request.scheme}://{request.get_host()}"
     return {'SITE_URL': url}
+
+
+def turnstile(request):
+    """Expose Cloudflare Turnstile widget context to templates.
+
+    The site key is public; the secret never leaves the server. Widgets render
+    only when Turnstile is enabled so non-quiz pages stay clean.
+    """
+    enabled = settings.TURNSTILE_ENABLED
+    return {
+        'TURNSTILE_ENABLED': enabled,
+        'TURNSTILE_SITE_KEY': settings.TURNSTILE_SITE_KEY if enabled else '',
+    }

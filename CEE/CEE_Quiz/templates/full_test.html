@@ -329,6 +329,10 @@ data-exit-url="{% url 'full_test_exit' %}"
 
 {% block content %}
 
+{% if TURNSTILE_ENABLED %}
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{% endif %}
+
 <div class="quiz-watermark" id="quiz-watermark"></div>
 
 <div class="page-fx">
@@ -361,6 +365,10 @@ data-exit-url="{% url 'full_test_exit' %}"
 <form method="post" class="start-form">
 
 {% csrf_token %}
+
+{% if TURNSTILE_ENABLED %}
+<div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" data-action="quiz_start" style="margin:10px 0;"></div>
+{% endif %}
 
 <input type="text"
        name="name"
@@ -420,6 +428,8 @@ Back to Home
       id="full-test-form">
 
 {% csrf_token %}
+
+<input type="text" name="website" value="" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
 
 
 <input type="hidden"
@@ -1235,6 +1245,10 @@ Next &rarr;
 <p class="shortcut-hint">Tip: press &larr; &rarr; to move, and A, B, C or D to answer.</p>
 
 </details>
+
+{% if TURNSTILE_ENABLED %}
+<div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" data-action="quiz_submit" style="margin:14px 0;"></div>
+{% endif %}
 
 <button type="submit"
         class="submit-btn"

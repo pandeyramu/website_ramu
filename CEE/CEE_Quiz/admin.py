@@ -123,7 +123,7 @@ class SolutionSetAdmin(admin.ModelAdmin):
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'topic', 'score', 'total_attempted', 'total_correct', 'time_taken_seconds', 'created_at')
+    list_display = ('id', 'name', 'topic', 'score', 'total_attempted', 'total_correct', 'time_taken_seconds', 'client_ip', 'created_at')
 
 
 admin.site.register(Subject, SubjectAdmin)

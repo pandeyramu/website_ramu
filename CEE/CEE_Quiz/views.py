@@ -6,6 +6,7 @@ import json
 import socket
 import hashlib
 import logging
+from datetime import datetime, timedelta
 from functools import lru_cache
 import requests
 from django.core.cache import cache
@@ -17,6 +18,7 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.views.decorators.cache import never_cache
 from django.db import connection, IntegrityError
 from django.db.utils import DatabaseError
+from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Subject, Chapter, SubChapter, Question, TestResult, PageSEO, QuestionReport, SolutionSet
@@ -27,6 +29,8 @@ from .context_processors import _subject_defaults
 
 logger = logging.getLogger(__name__)
 TEST_HISTORY_LIMIT = 5
+# Abuse guardrail limits live in settings (env-tunable): SUBMIT_NAME_DAILY_LIMIT,
+# SUBMIT_IP_DAILY_LIMIT, QUIZ_MIN_SECONDS, CLIENT_IP_XFF_HOP.
 
 
 @lru_cache(maxsize=1)
@@ -868,12 +872,138 @@ def _get_test_history(*, user_name, limit=TEST_HISTORY_LIMIT):
     return entries
 
 
-def _save_test_result(*, user_name, topic, total_attempted, total_correct, time_taken_seconds, score):
+def _get_client_ip(request):
+    """Best-effort real client IP.
+
+    Render proxies requests over loopback (REMOTE_ADDR == 127.0.0.1) so the true
+    IP sits in X-Forwarded-For. Once Cloudflare sits in front,
+    CF-Connecting-IP is the authoritative address. Which XFF hop to trust is
+    configurable via settings.CLIENT_IP_XFF_HOP ('last' = proxy-appended,
+    'first' = original client-supplied trace).
+    """
+    for header in ('HTTP_CF_CONNECTING_IP', 'HTTP_X_REAL_IP'):
+        value = (request.META.get(header) or '').strip()
+        if value:
+            ip = value.strip().split(',')[-1].strip()
+            if ip:
+                return ip[:45]
+    forwarded = request.META.get('HTTP_X_FORWARDED_FOR', '')
+    parts = [part.strip() for part in forwarded.split(',') if part.strip()]
+    if parts:
+        use_last = settings.CLIENT_IP_XFF_HOP != 'first'
+        return (parts[-1] if use_last else parts[0])[:45]
+    return (request.META.get('REMOTE_ADDR') or '')[:45]
+
+
+def _stamp_quiz_start(request, key):
+    """Record when the quiz page was first served for this attempt. Only the
+    first load stamps, so refresh/keepalive hits cannot extend the window."""
+    session_key = f'quiz_served_{key}'
+    if not request.session.get(session_key):
+        request.session[session_key] = timezone.now().isoformat()
+
+
+def _quiz_elapsed_seconds(request, key):
+    raw = request.session.get(f'quiz_served_{key}')
+    if not raw:
+        return None
+    try:
+        started = datetime.fromisoformat(raw)
+    except (TypeError, ValueError):
+        return None
+    return (timezone.now() - started).total_seconds()
+
+
+def _quiz_too_fast(request, key, question_count=0):
+    elapsed = _quiz_elapsed_seconds(request, key)
+    if elapsed is None:
+        return False
+    floor = settings.QUIZ_MIN_SECONDS
+    if question_count and settings.MIN_SECONDS_PER_QUESTION:
+        floor = max(floor, question_count * settings.MIN_SECONDS_PER_QUESTION)
+    return elapsed < floor
+
+
+def _submission_blocked(*, user_name, client_ip):
+    """Return True when a quiz submission should be dropped as abuse traffic."""
+    window_start = timezone.now() - timedelta(hours=24)
+    try:
+        if settings.SUBMIT_NAME_DAILY_LIMIT > 0:
+            name_count = TestResult.objects.filter(
+                name=user_name, created_at__gte=window_start
+            ).count()
+            if name_count >= settings.SUBMIT_NAME_DAILY_LIMIT:
+                logger.warning(
+                    'Rate limit: name "%s" exceeded %s submissions in 24h',
+                    user_name, settings.SUBMIT_NAME_DAILY_LIMIT,
+                )
+                return True
+        if client_ip and settings.SUBMIT_IP_DAILY_LIMIT > 0:
+            ip_count = TestResult.objects.filter(
+                name=user_name, client_ip=client_ip, created_at__gte=window_start
+            ).count()
+            if ip_count >= settings.SUBMIT_IP_DAILY_LIMIT:
+                logger.warning(
+                    'Rate limit: name "%s" from %s exceeded %s submissions in 24h',
+                    user_name, client_ip, settings.SUBMIT_IP_DAILY_LIMIT,
+                )
+                return True
+    except Exception:
+        logger.exception('Submission rate-limit check failed')
+    return False
+
+
+TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
+
+
+def _turnstile_passes(request):
+    """Return True when the POST carries a valid Cloudflare Turnstile token.
+
+    Enforcement is a no-op unless both TURNSTILE_ENABLED and a
+    TURNSTILE_SECRET_KEY are configured (rollout fail-open). A missing or
+    invalid token fails closed so bots get dropped; a network error during
+    siteverify fails open so a Cloudflare outage never blocks students.
+    """
+    if not settings.TURNSTILE_ENABLED or not settings.TURNSTILE_SECRET_KEY:
+        return True
+
+    token = (request.POST.get('cf-turnstile-response') or '').strip()
+    if not token:
+        logger.warning('Turnstile rejected: missing response token')
+        return False
+
+    try:
+        response = requests.post(
+            TURNSTILE_VERIFY_URL,
+            data={
+                'secret': settings.TURNSTILE_SECRET_KEY,
+                'response': token,
+                'remoteip': _get_client_ip(request),
+            },
+            timeout=10,
+        )
+        result = response.json()
+    except Exception:
+        logger.exception('Turnstile siteverify failed; failing open')
+        return True
+
+    if result.get('success'):
+        return True
+
+    logger.warning('Turnstile rejected token: error-codes=%s', result.get('error-codes'))
+    return False
+
+
+def _save_test_result(*, user_name, topic, total_attempted, total_correct, time_taken_seconds, score, client_ip=''):
+    if _submission_blocked(user_name=user_name, client_ip=client_ip):
+        return None
+
     payload = {
         'name': user_name,
         'topic': topic,
         'score': score,
         'total_attempted': total_attempted,
+        'client_ip': client_ip,
     }
 
     try:
@@ -889,6 +1019,7 @@ def _save_test_result(*, user_name, topic, total_attempted, total_correct, time_
             'topic': topic,
             'score': score,
             'total_attempted': total_attempted,
+            'client_ip': client_ip,
         }
         result = TestResult.objects.create(**safe_payload)
 
@@ -1243,7 +1374,12 @@ def quiz(request, slug):
                 messages.error(request, 'Name is required to start the test.')
                 return redirect('quiz', slug=chapter.slug)
 
+            if not _turnstile_passes(request):
+                messages.error(request, 'Human verification required. Please complete the verification box and try again.')
+                return redirect('quiz', slug=chapter.slug)
+
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
+            request.session.pop(f'quiz_served_{chapter_id}', None)
             question_ids = _get_chapter_question_ids(chapter_id)
             questions = _pick_random_questions(question_ids, limit=50)
             if not questions:
@@ -1259,6 +1395,13 @@ def quiz(request, slug):
             messages.error(request, 'Name is required to submit the quiz.')
             return redirect('quiz', slug=chapter.slug)
 
+        if request.POST.get('website'):
+            return redirect('quiz', slug=chapter.slug)
+
+        if not _turnstile_passes(request):
+            messages.error(request, 'Human verification required. Please refresh the page and submit again.')
+            return redirect('quiz', slug=chapter.slug)
+
         posted_attempt_reference = (request.POST.get('attempt_reference') or '').strip()
         if posted_attempt_reference != attempt_reference:
             messages.warning(request, 'This quiz attempt is no longer active. Please start a new attempt.')
@@ -1267,6 +1410,11 @@ def quiz(request, slug):
         if _is_attempt_already_submitted(request.session, attempt_key_prefix, posted_attempt_reference):
             messages.warning(request, 'This quiz attempt was already submitted.')
             return redirect('chapters', slug=chapter.subject.slug)
+
+        _question_count = len(request.session.get(f'quiz_questions_{chapter_id}', []))
+        if _quiz_too_fast(request, chapter_id, _question_count):
+            messages.error(request, 'Submission received too soon after the quiz loaded. Please review the questions before submitting.')
+            return redirect('quiz', slug=chapter.slug)
 
         try:
             connection.ensure_connection()
@@ -1322,22 +1470,26 @@ def quiz(request, slug):
                 time_taken_seconds=time_taken_seconds,
             )
 
+            saved_result = None
             try:
-                _save_test_result(
+                saved_result = _save_test_result(
                     user_name=user_name,
                     topic=chapter.name,
                     score=final_score,
                     total_attempted=total_attempted,
                     total_correct=total_correct,
                     time_taken_seconds=time_taken_seconds,
+                    client_ip=_get_client_ip(request),
                 )
             except Exception as db_error:
                 logger.error('DB save failed for chapter quiz', exc_info=True)
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
+            if saved_result is None:
+                messages.warning(request, 'Daily submission limit reached for this name/IP. This result was not recorded.')
+                return redirect('quiz', slug=chapter.slug)
 
             history_entries = _get_test_history(user_name=user_name)
             user_answers = _stringify_answer_keys(user_answers)
-
             request.session.pop(f'quiz_questions_{chapter_id}', None)
 
             return render(request, 'quiz.html', {
@@ -1386,6 +1538,7 @@ def quiz(request, slug):
 
         if quiz_started:
             questions = _load_questions_by_ids(stored_ids, include_solution=False)
+            _stamp_quiz_start(request, chapter_id)
             if not questions:
                 request.session.pop(f'quiz_questions_{chapter_id}', None)
                 request.session.pop(f'quiz_name_{chapter_id}', None)
@@ -1463,7 +1616,12 @@ def subchapter_quiz(request, slug):
                 messages.error(request, 'Name is required to start the test.')
                 return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
+            if not _turnstile_passes(request):
+                messages.error(request, 'Human verification required. Please complete the verification box and try again.')
+                return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
+            request.session.pop(f'quiz_served_sub_{subchapter_id}', None)
             question_ids = _get_subchapter_question_ids(subchapter_id)
             questions = _pick_random_questions(question_ids, limit=50)
             if not questions:
@@ -1479,6 +1637,13 @@ def subchapter_quiz(request, slug):
             messages.error(request, 'Name is required to submit the quiz.')
             return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
+        if request.POST.get('website'):
+            return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
+        if not _turnstile_passes(request):
+            messages.error(request, 'Human verification required. Please refresh the page and submit again.')
+            return redirect('subchapter_quiz', slug=sub_chapter.slug)
+
         posted_attempt_reference = (request.POST.get('attempt_reference') or '').strip()
         if posted_attempt_reference != attempt_reference:
             messages.warning(request, 'This quiz attempt is no longer active. Please start a new attempt.')
@@ -1487,6 +1652,11 @@ def subchapter_quiz(request, slug):
         if _is_attempt_already_submitted(request.session, attempt_key_prefix, posted_attempt_reference):
             messages.warning(request, 'This quiz attempt was already submitted.')
             return redirect('chapters', slug=chapter.subject.slug)
+
+        _question_count = len(request.session.get(session_key, []))
+        if _quiz_too_fast(request, f'sub_{subchapter_id}', _question_count):
+            messages.error(request, 'Submission received too soon after the quiz loaded. Please review the questions before submitting.')
+            return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
         try:
             connection.ensure_connection()
@@ -1542,18 +1712,23 @@ def subchapter_quiz(request, slug):
                 time_taken_seconds=time_taken_seconds,
             )
 
+            saved_result = None
             try:
-                _save_test_result(
+                saved_result = _save_test_result(
                     user_name=user_name,
                     topic=f"{chapter.name} - {sub_chapter.name}",
                     score=final_score,
                     total_attempted=total_attempted,
                     total_correct=total_correct,
                     time_taken_seconds=time_taken_seconds,
+                    client_ip=_get_client_ip(request),
                 )
             except Exception as db_error:
                 logger.error('DB save failed for subchapter quiz', exc_info=True)
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
+            if saved_result is None:
+                messages.warning(request, 'Daily submission limit reached for this name/IP. This result was not recorded.')
+                return redirect('subchapter_quiz', slug=sub_chapter.slug)
 
             history_entries = _get_test_history(user_name=user_name)
             user_answers = _stringify_answer_keys(user_answers)
@@ -1609,6 +1784,7 @@ def subchapter_quiz(request, slug):
 
         if quiz_started:
             questions = _load_questions_by_ids(stored_ids, include_solution=False)
+            _stamp_quiz_start(request, f'sub_{subchapter_id}')
             if not questions:
                 request.session.pop(session_key, None)
                 request.session.pop(f'quiz_name_sub_{subchapter_id}', None)
@@ -1676,6 +1852,10 @@ def full_test(request):
                 messages.error(request, 'Name is required to start the test.')
                 return redirect('full_test')
 
+            if not _turnstile_passes(request):
+                messages.error(request, 'Human verification required. Please complete the verification box and try again.')
+                return redirect('full_test')
+
             attempt_reference = _attempt_reference(request.session, attempt_key_prefix, force_new=True)
             selected_ids = _build_full_test_question_ids()
             questions = _load_questions_by_ids(selected_ids, include_solution=False)
@@ -1683,11 +1863,19 @@ def full_test(request):
             request.session['full_test_questions'] = [q.id for q in questions]
             request.session['full_test_user_name'] = user_name
             request.session.pop(result_session_key, None)
+            request.session.pop('quiz_served_full', None)
             return redirect('full_test')
 
         user_name = _normalize_exact_name(request.POST.get('name', ''))
         if not user_name:
             messages.error(request, 'Name is required to submit the test.')
+            return redirect('full_test')
+
+        if request.POST.get('website'):
+            return redirect('full_test')
+
+        if not _turnstile_passes(request):
+            messages.error(request, 'Human verification required. Please refresh the page and submit again.')
             return redirect('full_test')
 
         posted_attempt_reference = (request.POST.get('attempt_reference') or '').strip()
@@ -1698,7 +1886,12 @@ def full_test(request):
         if _is_attempt_already_submitted(request.session, attempt_key_prefix, posted_attempt_reference):
             messages.warning(request, 'This full test attempt was already submitted.')
             return redirect('home')
-        
+
+        _question_count = len(request.session.get('full_test_questions', []))
+        if _quiz_too_fast(request, 'full', _question_count):
+            messages.error(request, 'Submission received too soon after the test loaded. Please review the questions before submitting.')
+            return redirect('full_test')
+
         try:
             # Ensure database connection is active
             connection.ensure_connection()
@@ -1756,18 +1949,23 @@ def full_test(request):
             )
             
             # Save result with retry logic
+            saved_result = None
             try:
-                _save_test_result(
+                saved_result = _save_test_result(
                     user_name=user_name,
                     topic="Full Test",
                     score=final_score,
                     total_attempted=total_attempted,
                     total_correct=total_correct,
                     time_taken_seconds=time_taken_seconds,
+                    client_ip=_get_client_ip(request),
                 )
             except Exception as db_error:
                 logger.error('DB save failed for full test', exc_info=True)
                 messages.warning(request, 'Result calculated but may not be saved. Please contact admin.')
+            if saved_result is None:
+                messages.warning(request, 'Daily submission limit reached for this name/IP. This result was not recorded.')
+                return redirect('full_test')
 
             user_answers = _stringify_answer_keys(user_answers)
             request.session.pop('full_test_questions', None)
@@ -1827,6 +2025,7 @@ def full_test(request):
             })
 
         questions = _load_questions_by_ids(stored_ids, include_solution=False)
+        _stamp_quiz_start(request, 'full')
 
         if not questions:
             request.session.pop('full_test_questions', None)

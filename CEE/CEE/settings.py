@@ -102,6 +102,7 @@ TEMPLATES = [
                 'CEE_Quiz.context_processors.page_seo',
                 'CEE_Quiz.context_processors.site_url',
                 'CEE_Quiz.context_processors.site_totals',
+                'CEE_Quiz.context_processors.turnstile',
             ],
         },
     },
@@ -197,6 +198,32 @@ CACHES = {
         },
     },
 }
+
+# Client-IP / abuse guardrails. Tunable via env so Render's dashboard can
+# adjust without a redeploy. CLIENT_IP_XFF_HOP: which X-Forwarded-For hop is
+# the real client ('last' = proxy-appended, 'first' = original). Once
+# Cloudflare proxies the site, CF-Connecting-IP is preferred automatically.
+CLIENT_IP_XFF_HOP = os.environ.get('CLIENT_IP_XFF_HOP', 'last').strip().lower()
+# Name-only cap is deliberately high (and 0 disables it): many real students use
+# single-word names ("Ramu", "Sita", "ns") and several may share them, so the
+# name cap must never be a tight guard. The real bot defense is the server-side
+# per-question time floor (QUIZ_MIN_SECONDS/MIN_SECONDS_PER_QUESTION) plus the
+# name+IP cap below, both immune to shared/common names.
+SUBMIT_NAME_DAILY_LIMIT = int(os.environ.get('SUBMIT_NAME_DAILY_LIMIT', '30'))
+SUBMIT_IP_DAILY_LIMIT = int(os.environ.get('SUBMIT_IP_DAILY_LIMIT', '12'))
+QUIZ_MIN_SECONDS = int(os.environ.get('QUIZ_MIN_SECONDS', '10'))
+MIN_SECONDS_PER_QUESTION = int(os.environ.get('MIN_SECONDS_PER_QUESTION', '3'))
+
+# Cloudflare Turnstile bot check on quiz start/submit forms.
+# TURNSTILE_SITE_KEY is public and may default in code; TURNSTILE_SECRET_KEY is
+# read from the environment only and is never committed. Enforcement activates
+# automatically once the secret is set on the host. With only the site key
+# present, widgets render but verification is skipped (fail-open), so a deploy
+# can never lock students out mid-rollout; a host with the secret set fails
+# closed on missing/invalid tokens.
+TURNSTILE_ENABLED = (os.environ.get('TURNSTILE_ENABLED', 'True') or 'True').strip().lower() in ('1', 'true', 'yes')
+TURNSTILE_SITE_KEY = (os.environ.get('TURNSTILE_SITE_KEY') or '0x4AAAAAAE36nwBOnUs-1_W7').strip()
+TURNSTILE_SECRET_KEY = (os.environ.get('TURNSTILE_SECRET_KEY') or '').strip()
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/

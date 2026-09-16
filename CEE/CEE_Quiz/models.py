@@ -107,6 +107,7 @@ class TestResult(models.Model):
     total_attempted = models.IntegerField()
     total_correct = models.IntegerField(default=0)
     time_taken_seconds = models.IntegerField(default=0)
+    client_ip = models.CharField(max_length=45, blank=True, default='', help_text='Client IP from X-Forwarded-For')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
