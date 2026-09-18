@@ -19,7 +19,7 @@ import os
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import path
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseGone
 from CEE_Quiz import views
 from django.views.static import serve
 from django.conf import settings
@@ -46,6 +46,25 @@ urlpatterns = [
     path('chapter/<int:chapter_id>/', views.quiz_redirect),
     path('chapter/<int:chapter_id>/subchapters/', views.subchapters_redirect),
     path('subchapter/<int:subchapter_id>/quiz/', views.subchapter_quiz_redirect),
+    # Legacy .html URLs from the previous site on this domain (301 to current pages,
+    # 410 Gone for old-content that has no equivalent so Google archives them cleanly)
+    path('privacy.html', lambda r, **_: HttpResponsePermanentRedirect('/privacy-policy/')),
+    path('contact.html', lambda r, **_: HttpResponsePermanentRedirect('/contact/')),
+    path('blog.html', lambda r, **_: HttpResponsePermanentRedirect('/blog/')),
+    path(
+        'blog/how-negative-marking-works-in-cee-nepal-and-how-to-handle-it.html',
+        lambda r, **_: HttpResponsePermanentRedirect('/blog/negative-marking-strategy-cee/'),
+    ),
+    path(
+        'blog/how-i-built-cee-mcq-platform.html',
+        lambda r, **_: HttpResponsePermanentRedirect('/about/'),
+    ),
+    path(
+        'blog/cee-preparation-tips.html',
+        lambda r, **_: HttpResponsePermanentRedirect('/blog/how-to-prepare-for-cee/'),
+    ),
+    path('blog/<str:old_slug>.html', lambda r, **_: HttpResponseGone()),
+    path('<str:old_page>.html', lambda r, **_: HttpResponseGone()),
     # Slug-based SEO-friendly URLs
     path('subject/<slug:slug>/', views.chapters, name='chapters'),
     path('chapter/<slug:slug>/solved-set/<int:set_number>/', views.solution_set, name='solution_set'),
