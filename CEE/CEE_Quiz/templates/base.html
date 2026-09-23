@@ -1188,6 +1188,9 @@
 
     <main class="page-wrap" id="main-content">
         <section class="page-card">
+            {% if standby_mode %}
+            <div class="message error" role="status">Maintenance mode: we are temporarily serving from a read-only backup while the main database recovers. Quizzes are paused; solved sets, chapters and blog remain available.</div>
+            {% endif %}
             {% if messages %}
             <div class="messages">
                 {% for message in messages %}

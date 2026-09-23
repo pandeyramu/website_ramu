@@ -18,6 +18,11 @@ backup.json
 staticfiles/
 *.log
 
+# Scratch / debug scripts and one-off data dumps
+scripts/_*
+scripts/intros/db_rows.json
+scripts/intros/kit_*.json
+
 # Export / migration artefacts — never commit these
 sqlite_csv_exports/
 export_*.csv

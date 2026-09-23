@@ -1,3 +1,39 @@
+import os
+
+
+class StandbyReadOnlyMiddleware:
+    """Blocks writes while the app is running against the read-only standby DB.
+
+    Set DB_STANDBY=1 in the environment (the failover watchdog does this) when
+    DATABASE_URL points at the standby. Reads stay fully served (static content,
+    solved sets, chapters); anything that would write to the standby -- quiz
+    submits, admin actions, contact posts -- gets a 503 with Retry-After.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if os.environ.get('DB_STANDBY') == '1' and request.method not in ('GET', 'HEAD', 'OPTIONS'):
+            from django.http import JsonResponse
+            response = JsonResponse(
+                {
+                    'error': 'maintenance_backup',
+                    'message': (
+                        'The main database is temporarily unavailable and we are '
+                        'serving from a read-only backup. Taking quizzes is paused '
+                        'until it recovers. Try again in a few minutes.'
+                    ),
+                },
+                status=503,
+            )
+            response['Retry-After'] = '300'
+            if request.path.startswith('/admin/'):
+                return response
+            return response
+        return self.get_response(request)
+
+
 class SecurityHeadersMiddleware:
     """Adds security headers (CSP, Referrer-Policy, X-Content-Type-Options).
 

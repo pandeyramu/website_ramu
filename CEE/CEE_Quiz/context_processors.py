@@ -1,5 +1,7 @@
 from types import SimpleNamespace
 
+import os
+
 from django.core.cache import cache
 from django.db.models import Count
 
@@ -304,3 +306,8 @@ def turnstile(request):
         'TURNSTILE_ENABLED': enabled,
         'TURNSTILE_SITE_KEY': settings.TURNSTILE_SITE_KEY if enabled else '',
     }
+
+
+def standby_mode(request):
+    """Expose standby (failover) mode to templates for a banner + disclaimers."""
+    return {'standby_mode': os.environ.get('DB_STANDBY') == '1'}
